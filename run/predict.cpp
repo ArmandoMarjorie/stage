@@ -43,6 +43,8 @@ int main(int argc, char** argv)
         // Load Dataset 
         Data test_set(argv[1]);
         Embeddings embedding(argv[2], model, static_cast<unsigned>(atoi(argv[4])), true);
+        
+        test_set.print_infos(3); //3 = test set
 
         int systeme = atoi(argv[7]);
         // Create model

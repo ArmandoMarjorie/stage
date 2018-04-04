@@ -12,22 +12,22 @@ using namespace dynet;
 
 void usage(char* exe_name)
 {
-        cerr << "\n**USAGE**\n\t" << exe_name << " train_file dev_file nb_layers input_dim hidden_dim dropout nb_epoch batch_size"
-                 << " systeme output_embedding_filename\n\n";
-        cerr << "train_file <string> : train file containing exemples of 2 sentences and their labels\n";//1
-        cerr << "dev_file <string> : dev file containing exemples of 2 sentences and their labels\n";    //2
-        cerr << "nb_layers <int> : number of layers\n";                                                                                            //3
-        cerr << "input_dim <int> : dimension of the word embedding\n";                                                                   //4
-        cerr << "hidden_dim <int> : dimension  of the hidden states ht and ct\n";                                                //5
-        cerr << "dropout <float> : dropout rate (between 0 and 1)\n";                                                                    //6
-        cerr << "nb_epoch <int> : number of times the program will do the training phase\n";                     //7
-        cerr << "batch_size <int> : size of batches\n";                                                                                            //8
-        cerr << "systeme <int> : which system you want to use (1, 2 or 3=KIM)\n";                                                //9
-        cerr << "embedding_file <string> : file containing word embeddings\n";                                                   //10
-        cerr << "output_embedding_filename <string> : [optionnal] name of the file containing the word " //11
-                 << "embedding trained during the training phase. This file have to be used in the testing phase\n\n";
+	cerr << "\n**USAGE**\n\t" << exe_name << " train_file dev_file nb_layers input_dim hidden_dim dropout nb_epoch batch_size"
+		 << " systeme output_embedding_filename\n\n";
+	cerr << "train_file <string> : train file containing exemples of 2 sentences and their labels\n"; //1
+	cerr << "dev_file <string> : dev file containing exemples of 2 sentences and their labels\n";     //2
+	cerr << "nb_layers <int> : number of layers\n";                                                   //3
+	cerr << "input_dim <int> : dimension of the word embedding\n";                                    //4
+	cerr << "hidden_dim <int> : dimension  of the hidden states ht and ct\n";                         //5
+	cerr << "dropout <float> : dropout rate (between 0 and 1)\n";                                     //6
+	cerr << "nb_epoch <int> : number of times the program will do the training phase\n";              //7
+	cerr << "batch_size <int> : size of batches\n";                                                   //8
+	cerr << "systeme <int> : which system you want to use (1, 2 or 3=KIM)\n";                         //9
+	cerr << "embedding_file <string> : file containing word embeddings\n";                            //10
+	cerr << "output_embedding_filename <string> : [optionnal] name of the file containing the word "  //11
+		 << "embedding trained during the training phase. This file have to be used in the testing phase\n\n";
 
-        exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char** argv) 
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
                 cerr << "Usage pour entrainer :\n " 
                 << argv[0] << " train_file " << " dev_file "
                 << " nb_layers " << " input_dim " << " hidden_dim " 
-                << " dropout " << " nb_epochs " << " batch_size " << " systeme " << " output_embedding_filename\n";
+                << " dropout " << " nb_epochs " << " batch_size " << " systeme " << " embedding_file " << " output_embedding_filename\n";
                 exit(EXIT_FAILURE);
         }
 
@@ -54,6 +54,9 @@ int main(int argc, char** argv)
         Data train_set(argv[1]);
         Data dev_set(argv[2]);
         Embeddings embedding(argv[10], model, static_cast<unsigned>(atoi(argv[4])), false);
+        
+        train_set.print_infos(0);
+        dev_set.print_infos(1);
 
         int systeme = atoi(argv[9]);
         // Build LSTM -------------------------------------------------------------------------------------
