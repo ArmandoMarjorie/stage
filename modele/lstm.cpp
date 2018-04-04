@@ -142,20 +142,39 @@ void LSTM::run_predict(ParameterCollection& model, Data& test_set, Embeddings& e
 	cerr << "Parameters loaded !\n";
 
 	cerr << "Testing ...\n";
+	
 	unsigned positive = 0;
+	unsigned positive_inf = 0;
+	unsigned positive_neutral = 0;
+	unsigned positive_contradiction = 0;
 	unsigned label_predicted;
+	const double nb_of_inf = static_cast<double>(test_set.get_nb_inf());
+	const double nb_of_contradiction = static_cast<double>(test_set.get_nb_contradiction());
+	const double nb_of_neutral = static_cast<double>(test_set.get_nb_neutral());
 	unsigned nb_of_sentences = test_set.get_nb_sentences();
 	disable_dropout();
 	for (unsigned i=0; i<nb_of_sentences; ++i)
 	{
 		ComputationGraph cg;
 		label_predicted = predict(test_set, embedding, i, cg);
-		if (label_predicted == test_set.get_label(i))
+		if (label_predicted == dev_set.get_label(i))
+		{
 			positive++;
+			if(dev_set.get_label(i) == NEUTRAL)
+				++positive_neutral;
+			else if(dev_set.get_label(i) == INFERENCE)
+				++positive_inf;
+			else
+				++positive_contradiction;
+		}
 	}
 
 	// Print informations
-	cerr << "Accuracy = " << (positive / (double) nb_of_sentences) << endl;
+	cerr << "Accuracy in general = " << positive / (double) nb_of_sentences_dev << endl;
+	
+	cerr << "\tContradiction Accuracy = " << positive_contradiction / nb_of_contradiction << endl;
+	cerr << "\tInference Accuracy = " << positive_inf / nb_of_inf << endl;
+	cerr << "\tNeutral Accuracy = " << positive_neutral / nb_of_neutral << endl;
 	//predicted_file.close();
 }
 
