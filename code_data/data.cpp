@@ -53,6 +53,42 @@ Data::Data(char* data_filename)
 	data_file.close();
 }
 
+Data::Data(bool verbose)
+{
+	//read the label
+	unsigned labels;
+	cin >> labels; 
+	if(labels > 2 || labels < 0)
+	{
+		cerr << "label must be : (0 : neutral, 1 : inference, or 2 : contradiction)\n";
+		exit(EXIT_FAILURE);
+	}
+	label.push_back(labels);
+	
+	int val=0;
+	while(val != -2) //read a label
+	{
+		for(unsigned sentence=0; sentence<2; ++sentence)
+		{
+			vector<unsigned> tmp_data;
+			cin >> val; //read a word id
+			while(val != -1)
+			{
+				/*if(val == -2 && sentence==0)
+					exit(EXIT_FAILURE);*/
+				tmp_data.push_back(static_cast<unsigned>(val));
+				cin >> val;
+			}
+			if(sentence==0)
+				sentence1.push_back(tmp_data);
+			else
+				sentence2.push_back(tmp_data);
+		}
+		cin >> val; //read -2
+	}
+	
+}
+
 void inline Data::init_rate(unsigned label)
 {
 	switch(label)

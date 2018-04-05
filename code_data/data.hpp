@@ -61,6 +61,7 @@
 
 		public:
 			Data(char* data_filename);
+			Data(bool verbose);
 			unsigned get_word_id(unsigned sentence, unsigned num_sentence, unsigned word_position);
 			unsigned get_label(unsigned num_sentence);
 			unsigned get_nb_words(unsigned sentence, unsigned num_sentence);

@@ -157,12 +157,12 @@ void LSTM::run_predict(ParameterCollection& model, Data& test_set, Embeddings& e
 	{
 		ComputationGraph cg;
 		label_predicted = predict(test_set, embedding, i, cg);
-		if (label_predicted == dev_set.get_label(i))
+		if (label_predicted == test_set.get_label(i))
 		{
 			positive++;
-			if(dev_set.get_label(i) == NEUTRAL)
+			if(test_set.get_label(i) == NEUTRAL)
 				++positive_neutral;
-			else if(dev_set.get_label(i) == INFERENCE)
+			else if(test_set.get_label(i) == INFERENCE)
 				++positive_inf;
 			else
 				++positive_contradiction;
@@ -170,12 +170,41 @@ void LSTM::run_predict(ParameterCollection& model, Data& test_set, Embeddings& e
 	}
 
 	// Print informations
-	cerr << "Accuracy in general = " << positive / (double) nb_of_sentences_dev << endl;
+	cerr << "Accuracy in general = " << positive / (double) nb_of_sentences << endl;
 	
 	cerr << "\tContradiction Accuracy = " << positive_contradiction / nb_of_contradiction << endl;
 	cerr << "\tInference Accuracy = " << positive_inf / nb_of_inf << endl;
 	cerr << "\tNeutral Accuracy = " << positive_neutral / nb_of_neutral << endl;
 	//predicted_file.close();
+}
+
+void LSTM::usage_predict_verbose()
+{
+	cerr << "Enter id label\n";
+	cerr << "Enter id word to form a sentence and -1 to end your sentence\n";
+	cerr << "The first sentence is the premise, the second is the hypothesis\n";
+	cerr << "Enter -2 to end the program\n";
+	
+}
+
+
+void LSTM::run_predict_verbose(ParameterCollection& model, Data& verbose_set, Embeddings& embedding, char* parameters_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n\n";
+
+	cerr << "\t** Testing : Verbose Mode **\n";
+	usage_predict_verbose();
+	unsigned label_predicted;
+	
+	disable_dropout();
+	ComputationGraph cg;
+	label_predicted = predict(verbose_set, embedding, 0, cg);
+	
+	cerr << "True label = " << verbose_set.get_label(0) << ", label predicted = " << label_predicted << endl;
+
 }
 
 void LSTM::run_train(ParameterCollection& model, Data& train_set, Data& dev_set, Embeddings& embedding, char* output_emb_filename, unsigned nb_epoch, unsigned batch_size)
@@ -229,7 +258,7 @@ void LSTM::run_train(ParameterCollection& model, Data& train_set, Data& dev_set,
 }
 
 void LSTM::train_score(Data& train_set, Embeddings& embedding, unsigned nb_batches, unsigned& nb_samples, unsigned batch_size, unsigned completed_epoch,
-                                           unsigned nb_of_sentences, Trainer* trainer, vector<unsigned>& order, unsigned& numero_sentence)
+    unsigned nb_of_sentences, Trainer* trainer, vector<unsigned>& order, unsigned& numero_sentence)
 {
 	double loss = 0;
 

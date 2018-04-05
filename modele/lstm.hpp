@@ -51,11 +51,15 @@
 
 			void train_score(Data& train_set, Embeddings& embedding, unsigned nb_batches, 
 				unsigned& nb_samples, unsigned batch_size, unsigned completed_epoch, unsigned nb_of_sentences, dynet::Trainer* trainer, std::vector<unsigned>& order, unsigned& numero_sentence);
+				
+			void usage_predict_verbose();
 
 		public:
 			LSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned systeme, dynet::ParameterCollection& model);
 
 			void run_predict(dynet::ParameterCollection& model, Data& test_set, Embeddings& embedding, char* parameters_filename);
+			
+			void run_predict_verbose(dynet::ParameterCollection& model, Data& verbose_set, Embeddings& embedding, char* parameters_filename);
 
 			void run_train(dynet::ParameterCollection& model, Data& train_set, Data& dev_set, Embeddings& embedding, char* output_emb_filename, unsigned nb_epoch, unsigned batch_size);
 
