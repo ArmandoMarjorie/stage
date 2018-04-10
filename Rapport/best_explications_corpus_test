@@ -158,7 +158,7 @@ A doctor is looking at a book -1 7
 	# il fait bien la différence entre book et dog, donc il arrive bien à relier manuals et book
 
 
-neutral
+neutral FAIT
 A man playing an electric guitar on stage . -1 9
 A man is performing for cash . -1 7
 # Mots importants : "man playing" et "man is performing" pour dire que c'est la même personne qui fait la même action, "for cash" dans l'hypothèse car aucune info n'est donnée là dessus dans la prémisse.
@@ -179,7 +179,7 @@ A man is performing for cash . -1 7
 	# c'est bien "for cash" qui donne la neutralité
 
 
-contradiction
+contradiction FAIT
 A man playing an electric guitar on stage . -1 9
 A man playing banjo on the floor . -1 8
 # Mots importants : "man playing" dans les 2 phrases pour dire que c'est la même personne qui fait la même action, 
