@@ -53,7 +53,7 @@ Data::Data(char* data_filename)
 	data_file.close();
 }
 
-Data::Data(bool verbose)
+Data::Data(unsigned mode)
 {
 	//read the label
 	unsigned labels;
@@ -66,7 +66,7 @@ Data::Data(bool verbose)
 	label.push_back(labels);
 	
 	int val=0;
-	while(val != -2) //read a label
+	while(val != -2)
 	{
 		for(unsigned sentence=0; sentence<2; ++sentence)
 		{
@@ -85,6 +85,53 @@ Data::Data(bool verbose)
 				sentence2.push_back(tmp_data);
 		}
 		cin >> val; //read -2
+	}
+	
+}
+
+Data::Data(unsigned mode, char* lexique_filename)
+{
+	//read the label
+	unsigned labels;
+	cin >> labels; 
+	if(labels > 2 || labels < 0)
+	{
+		cerr << "label must be : (0 : neutral, 1 : inference, or 2 : contradiction)\n";
+		exit(EXIT_FAILURE);
+	}
+	label.push_back(labels);
+	
+	ifstream lexique_file(lexique_filename, ios::in);
+	if(!lexique_file)
+	{ 
+		cerr << "Impossible to open the file " << lexique_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	cerr << "Reading " << lexique_filename << endl;
+	
+	string word;
+	unsigned id;
+	map<string, unsigned> word_to_id;
+	while(lexique_file >> word && lexique_file >> id)
+		word_to_id[word] = id;
+	cerr << lexique_filename << " has been read" << endl;
+
+	for(unsigned sentence=0; sentence<2; ++sentence)
+	{
+		vector<unsigned> tmp_data;
+		cin >> word; //read a word
+		while(word != "-1")
+		{
+			std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
+			//cerr << word << " ";
+			tmp_data.push_back( word_to_id[word] );
+			cin >> word;
+		}
+		if(sentence==0)
+			sentence1.push_back(tmp_data);
+		else
+			sentence2.push_back(tmp_data);
 	}
 	
 }

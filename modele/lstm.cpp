@@ -112,16 +112,18 @@ Expression LSTM::get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned 
 }
 
 unsigned LSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, 
-        ComputationGraph& cg)
+        ComputationGraph& cg, vector<float>& proba)
 {
 	Expression x = run(set, embedding, num_sentence, cg);
 	vector<float> probs = as_vector(cg.forward(x));
 	unsigned argmax=0;
 
 	for (unsigned k = 0; k < probs.size(); ++k) 
+	{
+		proba[k] = probs[k];
 		if (probs[k] > probs[argmax])
 			argmax = k;
-
+	}
 	return argmax;
 }
 
@@ -153,10 +155,11 @@ void LSTM::run_predict(ParameterCollection& model, Data& test_set, Embeddings& e
 	const double nb_of_neutral = static_cast<double>(test_set.get_nb_neutral());
 	unsigned nb_of_sentences = test_set.get_nb_sentences();
 	disable_dropout();
+	vector<float> probas(NB_CLASSES);
 	for (unsigned i=0; i<nb_of_sentences; ++i)
 	{
 		ComputationGraph cg;
-		label_predicted = predict(test_set, embedding, i, cg);
+		label_predicted = predict(test_set, embedding, i, cg, probas);
 		if (label_predicted == test_set.get_label(i))
 		{
 			positive++;
@@ -196,14 +199,17 @@ void LSTM::run_predict_verbose(ParameterCollection& model, Data& verbose_set, Em
 	cerr << "Parameters loaded !\n\n";
 
 	cerr << "\t** Testing : Verbose Mode **\n";
-	usage_predict_verbose();
+//	usage_predict_verbose();
 	unsigned label_predicted;
 	
 	disable_dropout();
 	ComputationGraph cg;
-	label_predicted = predict(verbose_set, embedding, 0, cg);
+	vector<float> probas(NB_CLASSES);
+	label_predicted = predict(verbose_set, embedding, 0, cg, probas);
 	
 	cerr << "True label = " << verbose_set.get_label(0) << ", label predicted = " << label_predicted << endl;
+	for(unsigned i=0; i<NB_CLASSES; ++i)
+		cerr << "Probas[ " << i << "] = " << probas[i] << endl;
 
 }
 
@@ -305,11 +311,12 @@ void LSTM::dev_score(ParameterCollection& model, Data& dev_set, Embeddings& embe
 	const double nb_of_inf = static_cast<double>(dev_set.get_nb_inf());
 	const double nb_of_contradiction = static_cast<double>(dev_set.get_nb_contradiction());
 	const double nb_of_neutral = static_cast<double>(dev_set.get_nb_neutral());
+	vector<float> proba(NB_CLASSES);
 
 	for (unsigned i=0; i<nb_of_sentences_dev; ++i)
 	{
 		ComputationGraph cg;
-		label_predicted = predict(dev_set, embedding, i, cg);
+		label_predicted = predict(dev_set, embedding, i, cg, proba);
 		if (label_predicted == dev_set.get_label(i))
 		{
 			positive++;

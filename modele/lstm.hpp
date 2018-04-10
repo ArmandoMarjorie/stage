@@ -41,7 +41,7 @@
 
 			dynet::Expression get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
 
-			unsigned predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
+			unsigned predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, std::vector<float>& proba);
 
 			void enable_dropout();
 
