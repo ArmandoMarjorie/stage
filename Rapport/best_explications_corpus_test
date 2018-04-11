@@ -212,7 +212,7 @@ A man playing banjo on the floor . -1 8
 	# "A man playing" prend le label inférence et c'est lui qui l'emporte (plus de mot en faveur de l'inférence que de mot en faveur à la contradiction)
 
 
-contradiction
+contradiction FAIT
 A land rover is being driven across a river . -1 10
 A sedan is stuck in the middle of a river . -1 11
 # Mots importants : "land rover" et "sedan" car ce sont 2 voitures (pour dire que l'on parle de la même voiture), "is being driven" et "stuck" car ils se contredisent
