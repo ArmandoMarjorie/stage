@@ -209,7 +209,26 @@ void LSTM::run_predict_verbose(ParameterCollection& model, Data& verbose_set, Em
 	cerr << "True label = " << verbose_set.get_label(0) << ", label predicted = " << label_predicted << endl;
 
 }
+/**
+void LSTM::run_predict_interpretation(ParameterCollection& model, Data& test_interprete_set, Embeddings& embedding, char* parameters_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n\n";
 
+	cerr << "\t** Testing : Interpretation Mode **\n";
+//	usage_predict_verbose();
+	unsigned label_predicted;
+	
+	disable_dropout();
+	ComputationGraph cg;
+	label_predicted = predict(verbose_set, embedding, 0, cg, true);
+	
+	cerr << "True label = " << verbose_set.get_label(0) << ", label predicted = " << label_predicted << endl;
+
+}
+*/
 void LSTM::run_train(ParameterCollection& model, Data& train_set, Data& dev_set, Embeddings& embedding, char* output_emb_filename, unsigned nb_epoch, unsigned batch_size)
 {
 	Trainer* trainer = new AdamTrainer(model);

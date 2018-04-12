@@ -53,6 +53,12 @@
 			std::vector< std::vector<unsigned> > sentence1; /*!< list of premises (sentence2[i] is the hypothesis of sentence1[i])*/ 
 			std::vector< std::vector<unsigned> > sentence2; /*!< list of hypothesis (sentence1[i] is the premise of sentence2[i]*/ 
 			std::vector<unsigned> label; /*!< list of labels (label[i] = label of the i_th sample)*/ 
+			
+			/* Ex : 
+			 * words_sentence1[0] = {22,8,507} (at a church
+			 * words_sentence2[0] = {22,8,1395,182}
+			std::vector< std::vector<unsigned> > words_sentence1; 
+			std::vector< std::vector<unsigned> > words_sentence2;*/
 			unsigned nb_contradiction=0;
 			unsigned nb_inference=0;
 			unsigned nb_neutral=0;
