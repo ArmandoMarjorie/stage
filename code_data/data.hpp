@@ -64,8 +64,8 @@
 	class Data
 	{
 		private:
-			std::vector< std::vector<unsigned> > sentence1; /*!< list of premises (sentence2[i] is the hypothesis of sentence1[i])*/ 
-			std::vector< std::vector<unsigned> > sentence2; /*!< list of hypothesis (sentence1[i] is the premise of sentence2[i]*/ 
+			std::vector< std::vector<unsigned> > premise; /*!< list of premises (hypothesis[i] is the hypothesis of premise[i])*/ 
+			std::vector< std::vector<unsigned> > hypothesis; /*!< list of hypothesis (premise[i] is the premise of hypothesis[i]*/ 
 			std::vector<unsigned> label; /*!< list of labels (label[i] = label of the i_th sample)*/ 
 			
 			std::vector< Couple > important_couples;

@@ -45,9 +45,9 @@ Data::Data(char* data_filename)
 			}
 			data_file >> val; //read the sentence's length
 			if(sentence==0)
-				sentence1.push_back(tmp_data);
+				premise.push_back(tmp_data);
 			else
-				sentence2.push_back(tmp_data);
+				hypothesis.push_back(tmp_data);
 		}
 	}
 	
@@ -81,9 +81,9 @@ Data::Data(char* test_explication_filename, unsigned mode)
 			}
 			test_explication >> val; //read the sentence's length
 			if(sentence==0)
-				sentence1.push_back(tmp_data);
+				premise.push_back(tmp_data);
 			else
-				sentence2.push_back(tmp_data);
+				hypothesis.push_back(tmp_data);
 		}
 		Couple cpl(test_explication);
 		
@@ -196,9 +196,9 @@ Data::Data(Data& original_set, unsigned num_couples_to_remove)
 			for(unsigned j=0; j<original_set.get_nb_words(sentence, i); ++j)
 				tmp.push_back(original_set.get_word_id(sentence,i,j));
 			if(sentence==1)
-				sentence1.push_back(tmp);
+				premise.push_back(tmp);
 			else
-				sentence2.push_back(tmp);
+				hypothesis.push_back(tmp);
 		}
 	}
 	vector<unsigned>::iterator it;
@@ -211,28 +211,28 @@ Data::Data(Data& original_set, unsigned num_couples_to_remove)
 		{
 			if( original_set.get_couple_nb_words(sample, cpt_couple, true) == 1 )
 			{
-				it = find( sentence1[sample].begin(), sentence1[sample].end(), original_set.get_couple_id(sample, cpt_couple, 0, true) );
-				if( it != sentence1[sample].end() )
-					sentence1[sample].erase(it);
+				it = find( premise[sample].begin(), premise[sample].end(), original_set.get_couple_id(sample, cpt_couple, 0, true) );
+				if( it != premise[sample].end() )
+					premise[sample].erase(it);
 			}
 			if( original_set.get_couple_nb_words(sample, cpt_couple, false) == 1 )
 			{
-				it = find( sentence2[sample].begin(), sentence2[sample].end(), original_set.get_couple_id(sample, cpt_couple, 0, false) );
-				if( it != sentence2[sample].end() )
-					sentence2[sample].erase(it);
+				it = find( hypothesis[sample].begin(), hypothesis[sample].end(), original_set.get_couple_id(sample, cpt_couple, 0, false) );
+				if( it != hypothesis[sample].end() )
+					hypothesis[sample].erase(it);
 			}
 		}
 		
 	}
 	/*
 	cerr << "\n premise = \n";
-	for(unsigned i=0; i<sentence1.size(); ++i)
-		for(unsigned j=0; j<sentence1[i].size(); ++j)
-			cerr << sentence1[i][j] << " ";
+	for(unsigned i=0; i<premise.size(); ++i)
+		for(unsigned j=0; j<premise[i].size(); ++j)
+			cerr << premise[i][j] << " ";
 	cerr << "\n hypothesis = \n";
-	for(unsigned i=0; i<sentence2.size(); ++i)
-		for(unsigned j=0; j<sentence2[i].size(); ++j)
-			cerr << sentence2[i][j] << " ";*/
+	for(unsigned i=0; i<hypothesis.size(); ++i)
+		for(unsigned j=0; j<hypothesis[i].size(); ++j)
+			cerr << hypothesis[i][j] << " ";*/
 }
 
 Data::Data(unsigned mode)
@@ -262,9 +262,9 @@ Data::Data(unsigned mode)
 				cin >> val;
 			}
 			if(sentence==0)
-				sentence1.push_back(tmp_data);
+				premise.push_back(tmp_data);
 			else
-				sentence2.push_back(tmp_data);
+				hypothesis.push_back(tmp_data);
 		}
 		cin >> val; //read -2
 	}
@@ -311,9 +311,9 @@ Data::Data(unsigned mode, char* lexique_filename)
 			cin >> word;
 		}
 		if(sentence==0)
-			sentence1.push_back(tmp_data);
+			premise.push_back(tmp_data);
 		else
-			sentence2.push_back(tmp_data);
+			hypothesis.push_back(tmp_data);
 	}
 	
 }
@@ -373,8 +373,8 @@ void Data::print_infos(unsigned type)
 unsigned Data::get_word_id(unsigned sentence, unsigned num_sentence, unsigned word_position)
 {
 	if(sentence==1)
-		return sentence1[num_sentence][word_position];
-	return sentence2[num_sentence][word_position];
+		return premise[num_sentence][word_position];
+	return hypothesis[num_sentence][word_position];
 }
 
 /**
@@ -403,8 +403,8 @@ unsigned Data::get_label(unsigned num_sentence)
 unsigned Data::get_nb_words(unsigned sentence, unsigned num_sentence)
 {
 	if(sentence==1)
-		return sentence1[num_sentence].size();
-	return sentence2[num_sentence].size();
+		return premise[num_sentence].size();
+	return hypothesis[num_sentence].size();
 }
 
 /**
@@ -415,7 +415,7 @@ unsigned Data::get_nb_words(unsigned sentence, unsigned num_sentence)
 */
 unsigned Data::get_nb_sentences()
 {
-	return sentence1.size();
+	return premise.size();
 }
 
 /**
@@ -436,17 +436,17 @@ void Data::print_sentences(char* name)
 		cerr << "Problem with the output file "<< name << endl;
 		exit(EXIT_FAILURE);
 	}
-	for(unsigned i=0; i<sentence1.size(); ++i)
+	for(unsigned i=0; i<premise.size(); ++i)
 	{
 		output_file << label[i] << endl;
 		for(unsigned k=0; k<2; ++k)
 		{
-			for(unsigned j=0; j<sentence1[0].size(); ++j)
+			for(unsigned j=0; j<premise[0].size(); ++j)
 			{
 				if(k==0)
-					output_file << sentence1[i][j] <<' ';
+					output_file << premise[i][j] <<' ';
 				else
-					output_file << sentence2[i][j] <<' ';
+					output_file << hypothesis[i][j] <<' ';
 			}
 			output_file << endl;
 		}
