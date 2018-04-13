@@ -71,7 +71,8 @@ int main(int argc, char** argv)
 		else if(mode==3)
 		{
 			Data explication_set(argv[1], 3); 
-			//rnn.run_predict_explication(model, explication_set, embedding, argv[6]);
+			Data new_set(explication_set, 1);
+			rnn.run_predict_explication(model, explication_set, embedding, argv[6]);
 		}
 	}
 	else

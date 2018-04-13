@@ -181,6 +181,33 @@ void LSTM::run_predict(ParameterCollection& model, Data& test_set, Embeddings& e
 	//predicted_file.close();
 }
 
+void LSTM::run_predict_explication(dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	disable_dropout();
+	Data new_set(explication_set, 1);
+	for(unsigned i=0; i<nb_of_sentences; ++i)
+	{
+		ComputationGraph cg;
+		label_predicted = predict(explication_set, embedding, i, cg, true);
+		cerr << "True label = " << explication_set.get_label(i) << ", label predicted = " << label_predicted << endl;
+		
+		cerr << "Now testing new sample ...\n";
+		label_predicted = predict(new_set, embedding, i, cg, true);
+		cerr << "label predicted for new sample " << i << " = " << label_predicted << endl << endl;
+		
+	}
+	
+}
+
+
 void LSTM::usage_predict_verbose()
 {
 	cerr << "Enter id label\n";

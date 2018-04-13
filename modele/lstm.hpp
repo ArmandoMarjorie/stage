@@ -60,6 +60,8 @@
 			void run_predict(dynet::ParameterCollection& model, Data& test_set, Embeddings& embedding, char* parameters_filename);
 			
 			void run_predict_verbose(dynet::ParameterCollection& model, Data& verbose_set, Embeddings& embedding, char* parameters_filename);
+			
+			void run_predict_explication(dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);
 
 			void run_train(dynet::ParameterCollection& model, Data& train_set, Data& dev_set, Embeddings& embedding, char* output_emb_filename, unsigned nb_epoch, unsigned batch_size);
 

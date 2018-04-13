@@ -65,7 +65,7 @@ void write_output_couple(string sentence, map<string, unsigned>& word_to_id, ofs
 				//	cerr << word << " ";
 					std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
 					if(word == "-1")
-						output << "-1 ";
+						output << "0 ";
 					else
 						output << word_to_id[word] << " ";
 					std::stringstream().swap(word_ss); // flush word_ss
@@ -80,7 +80,7 @@ void write_output_couple(string sentence, map<string, unsigned>& word_to_id, ofs
 				string word = word_ss.str();
 				std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
 				if(word == "-1")
-					output << "-4";
+					output << "0";
 				else
 					output << word_to_id[word]; 
 				if(sentence[i] == ',')

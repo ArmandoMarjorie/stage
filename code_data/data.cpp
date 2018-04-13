@@ -1,4 +1,5 @@
 #include "data.hpp"
+#include <algorithm>
 
 using namespace std;
 using namespace dynet;
@@ -145,6 +146,93 @@ void Couple::print_couples()
 			cerr << imp_word_hypothesis[i][j] << " ";
 		cerr << endl;
 	}
+}
+
+unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
+{
+	if(premise)
+		return imp_word_premise[num_couple][num_mot]; 
+	return imp_word_hypothesis[num_couple][num_mot];
+}
+
+unsigned Couple::get_nb_words(unsigned num_couple, bool premise)
+{
+	if(premise)
+		return imp_word_premise[num_couple].size(); 
+	return imp_word_hypothesis[num_couple].size();
+}
+
+unsigned Couple::get_nb_couple()
+{
+	return imp_word_hypothesis.size();
+}
+
+unsigned Data::get_nb_couple(unsigned num_sample)
+{
+	return important_couples[num_sample].get_nb_couple();
+}
+
+unsigned Data::get_couple_nb_words(unsigned num_sample, unsigned num_couple, bool premise)
+{
+	return important_couples[num_sample].get_nb_words(num_couple, premise);
+}
+
+unsigned Data::get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise)
+{
+	return important_couples[num_sample].get_id(num_couple, num_mot, premise);
+}
+
+Data::Data(Data& original_set, unsigned num_couples_to_remove)
+{
+	unsigned nb_samples = original_set.get_nb_sentences();
+	unsigned nb_couples;
+	
+	// copy data
+	for(unsigned i=0; i<nb_samples; ++i)
+	{
+		for(unsigned sentence=1; sentence<=2; ++sentence)
+		{
+			vector<unsigned> tmp;
+			for(unsigned j=0; j<original_set.get_nb_words(sentence, i); ++j)
+				tmp.push_back(original_set.get_word_id(sentence,i,j));
+			if(sentence==1)
+				sentence1.push_back(tmp);
+			else
+				sentence2.push_back(tmp);
+		}
+	}
+	vector<unsigned>::iterator it;
+	
+	for(unsigned sample=0; sample<nb_samples; ++sample)
+	{
+		nb_couples = original_set.get_nb_couple(sample);
+		
+		for(unsigned cpt_couple = 0; cpt_couple<nb_couples; ++cpt_couple)
+		{
+			if( original_set.get_couple_nb_words(sample, cpt_couple, true) == 1 )
+			{
+				it = find( sentence1[sample].begin(), sentence1[sample].end(), original_set.get_couple_id(sample, cpt_couple, 0, true) );
+				if( it != sentence1[sample].end() )
+					sentence1[sample].erase(it);
+			}
+			if( original_set.get_couple_nb_words(sample, cpt_couple, false) == 1 )
+			{
+				it = find( sentence2[sample].begin(), sentence2[sample].end(), original_set.get_couple_id(sample, cpt_couple, 0, false) );
+				if( it != sentence2[sample].end() )
+					sentence2[sample].erase(it);
+			}
+		}
+		
+	}
+	/*
+	cerr << "\n premise = \n";
+	for(unsigned i=0; i<sentence1.size(); ++i)
+		for(unsigned j=0; j<sentence1[i].size(); ++j)
+			cerr << sentence1[i][j] << " ";
+	cerr << "\n hypothesis = \n";
+	for(unsigned i=0; i<sentence2.size(); ++i)
+		for(unsigned j=0; j<sentence2[i].size(); ++j)
+			cerr << sentence2[i][j] << " ";*/
 }
 
 Data::Data(unsigned mode)

@@ -52,6 +52,9 @@
 		public:
 			Couple(std::ifstream& test_explication);
 			void print_couples();
+			unsigned get_id(unsigned num_couple, unsigned num_mot, bool premise);
+			unsigned get_nb_words(unsigned num_couple, bool premise);
+			unsigned get_nb_couple();
 	};
 
 	/** 
@@ -78,6 +81,12 @@
 			Data(unsigned mode);
 			Data(unsigned mode, char* lexique_filename);
 			Data(char* test_explication_filename, unsigned mode);
+			Data(Data& original_set, unsigned num_couples_to_remove);
+			
+			unsigned get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise);
+			unsigned get_couple_nb_words(unsigned num_sample, unsigned num_couple, bool premise);
+			unsigned get_nb_couple(unsigned num_sample);
+			
 			unsigned get_word_id(unsigned sentence, unsigned num_sentence, unsigned word_position);
 			unsigned get_label(unsigned num_sentence);
 			unsigned get_nb_words(unsigned sentence, unsigned num_sentence);
