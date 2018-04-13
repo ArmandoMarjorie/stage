@@ -53,17 +53,111 @@ Data::Data(char* data_filename)
 	data_file.close();
 }
 
+Data::Data(char* test_explication_filename, unsigned mode)
+{
+	ifstream test_explication(test_explication_filename, ios::in);
+	if(!test_explication)
+	{ 
+		cerr << "Impossible to open the file " << test_explication_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	int val;
+	cerr << "Reading data from " << test_explication_filename << " ...\n";
+	//unsigned cpt=0;
+	while(test_explication >> val) //read a label
+	{
+		label.push_back(val);
+		//init_rate(val);
+		
+		for(unsigned sentence=0; sentence<2; ++sentence)
+		{
+			vector<unsigned> tmp_data;
+			test_explication >> val; //read a word id
+			while(val != -1)
+			{
+				tmp_data.push_back(static_cast<unsigned>(val));
+				test_explication >> val;
+			}
+			test_explication >> val; //read the sentence's length
+			if(sentence==0)
+				sentence1.push_back(tmp_data);
+			else
+				sentence2.push_back(tmp_data);
+		}
+		Couple cpl(test_explication);
+		
+		/*cerr << "couples du sample " << cpt+1 << endl;
+		++cpt;
+		cpl.print_couples();*/
+		important_couples.push_back(cpl);
+	}
+	
+	test_explication.close();
+}
+
+/* Ex couple :
+	8343 -2 798 -1 
+	4888 -2 798 -1 
+	1447 -2 798 -1 
+	22 8 507 -2 507 -1 
+	0 -2 2550 -1 
+	-3
+*/
+Couple::Couple(ifstream& test_explication)
+{
+	int val = 0;
+	bool ok;
+	while(val != -3)
+	{
+		test_explication >> val;
+		if(val == -3)
+			continue;
+		ok = true;
+		vector<unsigned> tmp;
+		while(ok && val != -1)
+		{
+			tmp.push_back(static_cast<unsigned>(val));
+			test_explication >> val;
+			if(val == -2)
+			{
+				imp_word_premise.push_back(tmp);
+				ok = false;
+			}
+		}
+		if(val == -1)
+			imp_word_hypothesis.push_back(tmp);
+	}	
+}
+
+void Couple::print_couples()
+{
+	cerr << "Premise : \n";
+	for(unsigned i=0; i<imp_word_premise.size(); ++i)
+	{
+		for(unsigned j=0; j<imp_word_premise[i].size(); ++j)
+			cerr << imp_word_premise[i][j] << " ";
+		cerr << endl;
+	}
+	cerr << "\nHypothesis : \n";
+	for(unsigned i=0; i<imp_word_hypothesis.size(); ++i)
+	{
+		for(unsigned j=0; j<imp_word_hypothesis[i].size(); ++j)
+			cerr << imp_word_hypothesis[i][j] << " ";
+		cerr << endl;
+	}
+}
+
 Data::Data(unsigned mode)
 {
 	//read the label
-	unsigned labels;
+	int labels;
 	cin >> labels; 
 	if(labels > 2 || labels < 0)
 	{
 		cerr << "label must be : (0 : neutral, 1 : inference, or 2 : contradiction)\n";
 		exit(EXIT_FAILURE);
 	}
-	label.push_back(labels);
+	label.push_back(static_cast<unsigned>(labels));
 	
 	int val=0;
 	while(val != -2)
@@ -92,14 +186,14 @@ Data::Data(unsigned mode)
 Data::Data(unsigned mode, char* lexique_filename)
 {
 	//read the label
-	unsigned labels;
+	int labels;
 	cin >> labels; 
 	if(labels > 2 || labels < 0)
 	{
 		cerr << "label must be : (0 : neutral, 1 : inference, or 2 : contradiction)\n";
 		exit(EXIT_FAILURE);
 	}
-	label.push_back(labels);
+	label.push_back(static_cast<unsigned>(labels));
 	
 	ifstream lexique_file(lexique_filename, ios::in);
 	if(!lexique_file)

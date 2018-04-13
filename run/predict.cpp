@@ -68,6 +68,11 @@ int main(int argc, char** argv)
 			Data verbose_set(2, argv[1]);
 			rnn.run_predict_verbose(model, verbose_set, embedding, argv[6]);
 		}
+		else if(mode==3)
+		{
+			Data explication_set(argv[1], 3); 
+			//rnn.run_predict_explication(model, explication_set, embedding, argv[6]);
+		}
 	}
 	else
 	{

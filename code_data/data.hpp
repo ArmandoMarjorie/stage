@@ -42,6 +42,17 @@
 			void print_embedding(char* output_filename);
 			dynet::Expression get_embedding_expr(dynet::ComputationGraph& cg, unsigned index);
 	};
+	
+	class Couple
+	{
+		private:
+			std::vector< std::vector<unsigned> > imp_word_premise;
+			std::vector< std::vector<unsigned> > imp_word_hypothesis;
+		
+		public:
+			Couple(std::ifstream& test_explication);
+			void print_couples();
+	};
 
 	/** 
 	 * \class Data
@@ -54,11 +65,8 @@
 			std::vector< std::vector<unsigned> > sentence2; /*!< list of hypothesis (sentence1[i] is the premise of sentence2[i]*/ 
 			std::vector<unsigned> label; /*!< list of labels (label[i] = label of the i_th sample)*/ 
 			
-			/* Ex : 
-			 * words_sentence1[0] = {22,8,507} (at a church
-			 * words_sentence2[0] = {22,8,1395,182}
-			std::vector< std::vector<unsigned> > words_sentence1; 
-			std::vector< std::vector<unsigned> > words_sentence2;*/
+			std::vector< Couple > important_couples;
+			
 			unsigned nb_contradiction=0;
 			unsigned nb_inference=0;
 			unsigned nb_neutral=0;
@@ -69,6 +77,7 @@
 			Data(char* data_filename);
 			Data(unsigned mode);
 			Data(unsigned mode, char* lexique_filename);
+			Data(char* test_explication_filename, unsigned mode);
 			unsigned get_word_id(unsigned sentence, unsigned num_sentence, unsigned word_position);
 			unsigned get_label(unsigned num_sentence);
 			unsigned get_nb_words(unsigned sentence, unsigned num_sentence);
