@@ -2,8 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
-#include "../modele/lstm.hpp"
-#include "../modele/bilstm.hpp"
+#include "../modele/rnn.hpp"
 
 using namespace std;
 using namespace dynet;
@@ -51,36 +50,36 @@ int main(int argc, char** argv)
 	// Create model
 	if(systeme < 3)
 	{
-		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
+		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, model, static_cast<unsigned>(systeme));
 		if(mode==0)
 		{
 			Data test_set(argv[1]);
 			test_set.print_infos(3); //3 = test set
-			rnn.run_predict(model, test_set, embedding, argv[6]);
+			run_predict(rnn, model, test_set, embedding, argv[6]);
 		}
-		else if(mode==1)
+	/*	else if(mode==1)
 		{
 			Data verbose_set(1);
-			rnn.run_predict_verbose(model, verbose_set, embedding, argv[6]);
+			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
 		}
 		else if(mode==2)
 		{
 			Data verbose_set(2, argv[1]);
-			rnn.run_predict_verbose(model, verbose_set, embedding, argv[6]);
+			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
 		}
 		else if(mode==3)
 		{
 			Data explication_set(argv[1], 3); 
 			Data new_set(explication_set, 1);
-			rnn.run_predict_explication(model, explication_set, embedding, argv[6]);
-		}
+			run_predict_explication(rnn, model, explication_set, embedding, argv[6]);
+		}*/
 	}
 	else
 	{
 		Data test_set(argv[1]);
 		test_set.print_infos(3);
 		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, model);
-		rnn.run_predict(model, test_set, embedding, argv[6]);
+		run_predict(rnn, model, test_set, embedding, argv[6]);
 	}
 
 	return 0;
