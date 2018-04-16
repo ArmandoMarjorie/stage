@@ -93,10 +93,10 @@ Data::Data(char* test_explication_filename, unsigned mode)
 		important_couples.push_back(cpl);
 		
 		/* marquage */
-		vector<bool> tmp;
+		/*vector<bool> tmp;
 		for(unsigned i = 0; i< cpl.get_size(); ++i)
 			tmp.push_back(false);
-		marquage_couple_supp.push_back(tmp);
+		marquage_couple_supp.push_back(tmp);*/
 	}
 	
 	test_explication.close();
@@ -124,22 +124,25 @@ Couple::Couple(ifstream& test_explication)
 {
 	int val = 0;
 	bool ok;
+	int position = 0;
 	while(val != -3)
 	{
 		test_explication >> val;
 		if(val == -3)
 			continue;
+		test_explication >> position;
 		ok = true;
-		vector<unsigned> tmp;
+		vector<pair<unsigned,int>> tmp;
 		while(ok && val != -1)
 		{
-			tmp.push_back(static_cast<unsigned>(val));
+			tmp.push_back(make_pair(static_cast<unsigned>(val) , position));
 			test_explication >> val;
 			if(val == -2)
 			{
 				imp_word_premise.push_back(tmp);
 				ok = false;
 			}
+			test_explication >> position;
 		}
 		if(val == -1)
 			imp_word_hypothesis.push_back(tmp);
@@ -152,14 +155,14 @@ void Couple::print_couples()
 	for(unsigned i=0; i<imp_word_premise.size(); ++i)
 	{
 		for(unsigned j=0; j<imp_word_premise[i].size(); ++j)
-			cerr << imp_word_premise[i][j] << " ";
+			cerr << imp_word_premise[i][j].first << " ";
 		cerr << endl;
 	}
 	cerr << "\nHypothesis : \n";
 	for(unsigned i=0; i<imp_word_hypothesis.size(); ++i)
 	{
 		for(unsigned j=0; j<imp_word_hypothesis[i].size(); ++j)
-			cerr << imp_word_hypothesis[i][j] << " ";
+			cerr << imp_word_hypothesis[i][j].first << " ";
 		cerr << endl;
 	}
 }
@@ -167,8 +170,8 @@ void Couple::print_couples()
 unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
 {
 	if(premise)
-		return imp_word_premise[num_couple][num_mot]; 
-	return imp_word_hypothesis[num_couple][num_mot];
+		return imp_word_premise[num_couple][num_mot].first; 
+	return imp_word_hypothesis[num_couple][num_mot].first;
 }
 
 unsigned Couple::get_nb_words(unsigned num_couple, bool premise)

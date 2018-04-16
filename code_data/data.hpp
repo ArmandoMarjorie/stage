@@ -46,8 +46,10 @@
 	class Couple
 	{
 		private:
-			std::vector< std::vector<unsigned> > imp_word_premise;
-			std::vector< std::vector<unsigned> > imp_word_hypothesis;
+		
+			// unsigned ==> word, int ===> position of the word
+			std::vector< std::vector< std::pair<unsigned,int> > > imp_word_premise;
+			std::vector< std::vector< std::pair<unsigned,int> > > imp_word_hypothesis;
 		
 		public:
 			Couple(std::ifstream& test_explication);
@@ -69,7 +71,7 @@
 			std::vector<unsigned> label; /*!< list of labels (label[i] = label of the i_th sample)*/ 
 			
 			std::vector< Couple > important_couples;
-			std::vector< std::vector<bool> > marquage_couple_supp;
+			//std::vector< std::vector<bool> > marquage_couple_supp;
 			
 			unsigned nb_contradiction=0;
 			unsigned nb_inference=0;

@@ -46,55 +46,84 @@ void write_output(string sentence, map<string, unsigned>& word_to_id, ofstream& 
 
 void write_output_couple(string sentence, map<string, unsigned>& word_to_id, ofstream& output)
 {
-	bool parenthesis=false;
+	bool premise = true;
+	unsigned j;
+	string w;
+	
 	for(unsigned i=0; i<sentence.size(); ++i)
 	{
 		if(sentence[i] == '(' || sentence[i] == ',')
-		{
-			//cerr << "Read a ( \n";
 			continue;
-		}
-		while(sentence[i] != ')')
+		stringstream word_ss;
+		stringstream position_ss;
+		
+		// extracting words
+		for(;sentence[i] != '['; ++i)
+			word_ss << sentence[i];
+		++i;
+		
+		// extracting words' positions
+		for(;sentence[i] != ']'; ++i)
+			position_ss << sentence[i];
+		++i;
+
+		string word = word_ss.str();
+		vector<string> words;
+		std::stringstream().swap(word_ss); // flush word_ss
+		string position = position_ss.str();
+		vector<string> positions;
+		std::stringstream().swap(position_ss); // flush position_ss
+		
+		// words
+		for(j=0; j<word.size(); ++j)
 		{
-			stringstream word_ss;
-			for(; i<sentence.size() && (sentence[i] != ',' && sentence[i] != ')'); ++i)
+			if(word[j] == ' ')
 			{
-				if(sentence[i] == ' ')
-				{
-					string word = word_ss.str();
-				//	cerr << word << " ";
-					std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
-					if(word == "-1")
-						output << "0 ";
-					else
-						output << word_to_id[word] << " ";
-					std::stringstream().swap(word_ss); // flush word_ss
-					++i;
-				}
-				word_ss << sentence[i];
-				//cerr << "i = " << i << ", lettre = " << sentence[i] << endl;
+				w = word_ss.str();
+				std::transform(w.begin(), w.end(), w.begin(), ::tolower); 
+				words.push_back(w);
+				std::stringstream().swap(word_ss); // flush word_ss
+				++j;
 			}
-			//cerr << "sortie\n";
-			if(sentence[i] == ',' || sentence[i] == ')') 
+			word_ss << word[j];
+		}
+		w = word_ss.str();
+		std::transform(w.begin(), w.end(), w.begin(), ::tolower); 
+		words.push_back(w);
+		
+		// words' positions
+		for(j=0; j<position.size(); ++j)
+		{
+			if(position[j] == ' ')
 			{
-				string word = word_ss.str();
-				std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
-				if(word == "-1")
-					output << "0";
-				else
-					output << word_to_id[word]; 
-				if(sentence[i] == ',')
-				{
-					++i; //read the ',' (comma)
-					//cerr << word << " -2 ";
-					output << " -2 ";
-				}
-				else
-				{
-					//cerr << word << endl;
-					output << " -1 " << endl;
-				}
+				w = position_ss.str();
+				positions.push_back(w);
+				std::stringstream().swap(position_ss); // flush position_ss
+				++j;
 			}
+			position_ss << position[j];			
+		}
+		w = position_ss.str();
+		if(w.size() == 0)
+			w = "-4";
+		positions.push_back(w);
+
+		for(j=0; j<words.size(); ++j)
+		{
+			if(words[j] == "-1")
+				output << "0 " << positions[j] << " ";
+			else
+				output << word_to_id[words[j]] << " " << positions[j] << " ";
+		}
+		if(premise)
+		{
+			premise = false;
+			output << "-2 ";
+		}
+		else
+		{
+			premise = true;
+			output << "-1\n";
 		}
 	}
 	output << "-3\n";
@@ -132,9 +161,11 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 	
 	getline(explication_file, word); //read the label of each column in the csv file
 	unsigned cpt_guillemet;
+	//unsigned cpt=0;
 	while(getline(explication_file, word))
 	{
 		cpt_guillemet=0;
+	//	++cpt;
 		// Extracting label, premise, hypothesis and couple
 		for(unsigned i=0; i<word.size(); ++i)
 		{
@@ -185,7 +216,7 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 					couple_ss << word[i];		
 				string couple = couple_ss.str();
 				--i;
-			//	cerr << "couple = " << couple << "\n\n";
+				//cerr << "sample " << cpt << "\n\n";
 				write_output_couple(couple, word_to_id, output);
 			}
 		}
