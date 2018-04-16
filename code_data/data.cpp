@@ -91,10 +91,26 @@ Data::Data(char* test_explication_filename, unsigned mode)
 		++cpt;
 		cpl.print_couples();*/
 		important_couples.push_back(cpl);
+		
+		/* marquage */
+		vector<bool> tmp;
+		for(unsigned i = 0; i< cpl.get_size(); ++i)
+			tmp.push_back(false);
+		marquage_couple_supp.push_back(tmp);
 	}
 	
 	test_explication.close();
 }
+
+/* Si all == true ==> on enlève tout */
+void Data::remove_couple(vector<int>& num_couple, bool all)
+{
+	for(unsigned i=0; i<marquage_couple_supp.size(); ++i) //for each sample
+		for(unsigned j=0; j<marquage_couple_supp[i].size(); ++j) //numero couple
+			if(all || std::find(num_couple.begin(), num_couple.end(), j) != num_couple.end() ) 
+				marquage_couple_supp[i][j] = true;
+}
+
 
 /* Ex couple :
 	8343 -2 798 -1 
@@ -162,7 +178,7 @@ unsigned Couple::get_nb_words(unsigned num_couple, bool premise)
 	return imp_word_hypothesis[num_couple].size();
 }
 
-unsigned Couple::get_nb_couple()
+unsigned Couple::get_size()
 {
 	return imp_word_hypothesis.size();
 }
@@ -180,59 +196,6 @@ unsigned Data::get_couple_nb_words(unsigned num_sample, unsigned num_couple, boo
 unsigned Data::get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise)
 {
 	return important_couples[num_sample].get_id(num_couple, num_mot, premise);
-}
-
-Data::Data(Data& original_set, unsigned num_couples_to_remove)
-{
-	unsigned nb_samples = original_set.get_nb_sentences();
-	unsigned nb_couples;
-	
-	// copy data
-	for(unsigned i=0; i<nb_samples; ++i)
-	{
-		for(unsigned sentence=1; sentence<=2; ++sentence)
-		{
-			vector<unsigned> tmp;
-			for(unsigned j=0; j<original_set.get_nb_words(sentence, i); ++j)
-				tmp.push_back(original_set.get_word_id(sentence,i,j));
-			if(sentence==1)
-				premise.push_back(tmp);
-			else
-				hypothesis.push_back(tmp);
-		}
-	}
-	vector<unsigned>::iterator it;
-	
-	for(unsigned sample=0; sample<nb_samples; ++sample)
-	{
-		nb_couples = original_set.get_nb_couple(sample);
-		
-		for(unsigned cpt_couple = 0; cpt_couple<nb_couples; ++cpt_couple)
-		{
-			if( original_set.get_couple_nb_words(sample, cpt_couple, true) == 1 )
-			{
-				it = find( premise[sample].begin(), premise[sample].end(), original_set.get_couple_id(sample, cpt_couple, 0, true) );
-				if( it != premise[sample].end() )
-					premise[sample].erase(it);
-			}
-			if( original_set.get_couple_nb_words(sample, cpt_couple, false) == 1 )
-			{
-				it = find( hypothesis[sample].begin(), hypothesis[sample].end(), original_set.get_couple_id(sample, cpt_couple, 0, false) );
-				if( it != hypothesis[sample].end() )
-					hypothesis[sample].erase(it);
-			}
-		}
-		
-	}
-	/*
-	cerr << "\n premise = \n";
-	for(unsigned i=0; i<premise.size(); ++i)
-		for(unsigned j=0; j<premise[i].size(); ++j)
-			cerr << premise[i][j] << " ";
-	cerr << "\n hypothesis = \n";
-	for(unsigned i=0; i<hypothesis.size(); ++i)
-		for(unsigned j=0; j<hypothesis[i].size(); ++j)
-			cerr << hypothesis[i][j] << " ";*/
 }
 
 Data::Data(unsigned mode)

@@ -54,7 +54,7 @@
 			void print_couples();
 			unsigned get_id(unsigned num_couple, unsigned num_mot, bool premise);
 			unsigned get_nb_words(unsigned num_couple, bool premise);
-			unsigned get_nb_couple();
+			unsigned get_size();
 	};
 
 	/** 
@@ -69,6 +69,7 @@
 			std::vector<unsigned> label; /*!< list of labels (label[i] = label of the i_th sample)*/ 
 			
 			std::vector< Couple > important_couples;
+			std::vector< std::vector<bool> > marquage_couple_supp;
 			
 			unsigned nb_contradiction=0;
 			unsigned nb_inference=0;
@@ -81,7 +82,8 @@
 			Data(unsigned mode);
 			Data(unsigned mode, char* lexique_filename);
 			Data(char* test_explication_filename, unsigned mode);
-			Data(Data& original_set, unsigned num_couples_to_remove);
+			/*Data(Data& original_set);
+			Data(Data& original_set, unsigned num_couples_to_remove);*/
 			
 			unsigned get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise);
 			unsigned get_couple_nb_words(unsigned num_sample, unsigned num_couple, bool premise);

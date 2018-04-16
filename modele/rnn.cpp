@@ -5,7 +5,7 @@
 using namespace std;
 using namespace dynet;
 
-/* Constructors */
+	/* Constructors */
 
 RNN::RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, ParameterCollection& model) :
 	nb_layers(nblayer), input_dim(inputdim), hidden_dim(hiddendim), dropout_rate(dropout)
@@ -31,6 +31,7 @@ BiLSTM::BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dr
 	p_W = model.add_parameters({NB_CLASSES, 4*hidden_dim});
 }
 
+	/* Getters and setters */
 
 void RNN::disable_dropout()
 {
@@ -42,8 +43,17 @@ void RNN::enable_dropout()
 	apply_dropout = true;
 }
 
+
+float RNN::get_dropout_rate(){ return dropout_rate; }
+unsigned RNN::get_nb_layers(){ return nb_layers; }
+unsigned RNN::get_input_dim(){ return input_dim; }
+unsigned RNN::get_hidden_dim(){ return hidden_dim; }
+
+	/* Predictions algorithms */
+
 unsigned LSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba)
 {
+	//cerr << "LSTM prediction : system " << systeme << endl;
 	Expression x = run(set, embedding, num_sentence, cg);
 	unsigned argmax = predict_algo(x, cg, print_proba);
 	return argmax;
@@ -51,6 +61,7 @@ unsigned LSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, 
 
 unsigned BiLSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba)
 {
+	//cerr << "BiLSTM prediction \n";
 	Expression x = run_KIM(set, embedding, num_sentence, cg);
 	unsigned argmax = predict_algo(x, cg, print_proba);
 	return argmax;
@@ -86,6 +97,45 @@ void run_predict(RNN& rnn, ParameterCollection& model, Data& test_set, Embedding
 	predict_dev_and_test(rnn, test_set, embedding, nb_of_sentences, best);
 }
 
+unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, unsigned nb_of_sentences_dev, unsigned& best)
+{
+	unsigned positive = 0;
+	unsigned positive_inf = 0;
+	unsigned positive_neutral = 0;
+	unsigned positive_contradiction = 0;
+	unsigned label_predicted;
+	
+	const double nb_of_inf = static_cast<double>(dev_set.get_nb_inf());
+	const double nb_of_contradiction = static_cast<double>(dev_set.get_nb_contradiction());
+	const double nb_of_neutral = static_cast<double>(dev_set.get_nb_neutral());
+
+	for (unsigned i=0; i<nb_of_sentences_dev; ++i)
+	{
+		ComputationGraph cg;
+		label_predicted = rnn.predict(dev_set, embedding, i, cg, false);
+		if (label_predicted == dev_set.get_label(i))
+		{
+			positive++;
+			if(dev_set.get_label(i) == NEUTRAL)
+				++positive_neutral;
+			else if(dev_set.get_label(i) == INFERENCE)
+				++positive_inf;
+			else
+				++positive_contradiction;
+		}
+	}
+
+	cerr << "Accuracy in general = " << positive / (double) nb_of_sentences_dev << endl;
+	
+	cerr << "\tContradiction Accuracy = " << positive_contradiction / nb_of_contradiction << endl;
+	cerr << "\tInference Accuracy = " << positive_inf / nb_of_inf << endl;
+	cerr << "\tNeutral Accuracy = " << positive_neutral / nb_of_neutral << endl;	
+	
+	return positive;
+}
+
+	/* Negative log softmax algorithms */
+
 Expression get_neg_log_softmax(RNN& rnn, Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg)
 {
 	Expression loss_expr = rnn.get_neg_log_softmax(set, embedding, num_sentence, cg);
@@ -114,11 +164,7 @@ Expression RNN::get_neg_log_softmax_algo(Expression& score, unsigned num_sentenc
 	return loss_expr;
 }
 
-
-float RNN::get_dropout_rate(){ return dropout_rate; }
-unsigned RNN::get_nb_layers(){ return nb_layers; }
-unsigned RNN::get_input_dim(){ return input_dim; }
-unsigned RNN::get_hidden_dim(){ return hidden_dim; }
+	/* Training algorithm */
 
 void run_train(RNN& rnn, ParameterCollection& model, Data& train_set, Data& dev_set, Embeddings& embedding, char* output_emb_filename, unsigned nb_epoch, unsigned batch_size)
 {
@@ -197,7 +243,7 @@ void train_score(RNN& rnn, Data& train_set, Embeddings& embedding, unsigned nb_b
 		cg.backward(sum_losses); //backpropagation gradient
 		trainer->update(); //update parameters
 
-		if((batch + 1) % (nb_batches / 160) == 0 || batch==nb_batches-1)
+		if(/*(batch + 1) % (nb_batches / 160) == 0 || */batch==nb_batches-1)
 		{
 			trainer->status();
 			cerr << " Epoch " << completed_epoch+1 << " | E = " << (loss / static_cast<double>(nb_of_sentences))
@@ -221,42 +267,7 @@ void dev_score(RNN& rnn, ParameterCollection& model, Data& dev_set, Embeddings& 
 
 }
 
-unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, unsigned nb_of_sentences_dev, unsigned& best)
-{
-	unsigned positive = 0;
-	unsigned positive_inf = 0;
-	unsigned positive_neutral = 0;
-	unsigned positive_contradiction = 0;
-	unsigned label_predicted;
-	
-	const double nb_of_inf = static_cast<double>(dev_set.get_nb_inf());
-	const double nb_of_contradiction = static_cast<double>(dev_set.get_nb_contradiction());
-	const double nb_of_neutral = static_cast<double>(dev_set.get_nb_neutral());
-
-	for (unsigned i=0; i<nb_of_sentences_dev; ++i)
-	{
-		ComputationGraph cg;
-		label_predicted = rnn.predict(dev_set, embedding, i, cg, false);
-		if (label_predicted == dev_set.get_label(i))
-		{
-			positive++;
-			if(dev_set.get_label(i) == NEUTRAL)
-				++positive_neutral;
-			else if(dev_set.get_label(i) == INFERENCE)
-				++positive_inf;
-			else
-				++positive_contradiction;
-		}
-	}
-
-	cerr << "Accuracy in general = " << positive / (double) nb_of_sentences_dev << endl;
-	
-	cerr << "\tContradiction Accuracy = " << positive_contradiction / nb_of_contradiction << endl;
-	cerr << "\tInference Accuracy = " << positive_inf / nb_of_inf << endl;
-	cerr << "\tNeutral Accuracy = " << positive_neutral / nb_of_neutral << endl;	
-	
-	return positive;
-}
+	/* LSTM system */
 
 Expression LSTM::sentence_representation(Data& set, Embeddings& embedding, unsigned sentence, unsigned num_sentence, 
         ComputationGraph& cg)
@@ -376,6 +387,7 @@ void LSTM::run_predict_verbose(ParameterCollection& model, Data& verbose_set, Em
 
 }*/
 
+	/* Bi-LSTM system */
 
 /* Call this fonction twice (the first time for the premise, the second time for the hypothesis) 
  * sentence_repr[i] = representation of the word nb i by the KIM method
