@@ -91,24 +91,37 @@ Data::Data(char* test_explication_filename, unsigned mode)
 		++cpt;
 		cpl.print_couples();*/
 		important_couples.push_back(cpl);
-		
-		/* marquage */
-		/*vector<bool> tmp;
-		for(unsigned i = 0; i< cpl.get_size(); ++i)
-			tmp.push_back(false);
-		marquage_couple_supp.push_back(tmp);*/
 	}
 	
 	test_explication.close();
 }
 
 /* Si all == true ==> on enlève tout */
-void Data::remove_couple(vector<int>& num_couple, bool all)
+void Data::remove_couple(vector<int>& num_couple, unsigned num_sample, bool all)
 {
-	for(unsigned i=0; i<marquage_couple_supp.size(); ++i) //for each sample
-		for(unsigned j=0; j<marquage_couple_supp[i].size(); ++j) //numero couple
-			if(all || std::find(num_couple.begin(), num_couple.end(), j) != num_couple.end() ) 
-				marquage_couple_supp[i][j] = true;
+	/* Dans la prémise */
+	// i => nb de mots dans un couple (partie prémisse)
+	// j => nb de couple dans num_couple
+	
+	unsigned word;
+	for(unsigned nb_couples=0; nb_couples < num_couple.size(); ++nb_couples) //parcourt des couples à supprimer (ex 0, 1, 2)
+	{
+		/* Parcours les couples à supprimer, spécifier dans num_couple
+		 * ex je veux enlever les couples 0, 1, 2 :
+		 * on parcourt imp_word_premise[nb_couple][word] !
+		 */
+		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], true); ++word)
+		{
+			premise[num_sample][important_couples[num_sample].get_position(nb_couples, word, true)] = 0;
+		}
+		//idem pour l'hypothèse :
+		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], false); ++word)
+		{
+			hypothesis[num_sample][important_couples[num_sample].get_position(nb_couples, word, false)] = 0;
+		}
+				
+	}
+	
 }
 
 
@@ -172,6 +185,13 @@ unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
 	if(premise)
 		return imp_word_premise[num_couple][num_mot].first; 
 	return imp_word_hypothesis[num_couple][num_mot].first;
+}
+
+unsigned Couple::get_position(unsigned num_couple, unsigned num_mot, bool premise)
+{
+	if(premise)
+		return imp_word_premise[num_couple][num_mot].second; 
+	return imp_word_hypothesis[num_couple][num_mot].second;
 }
 
 unsigned Couple::get_nb_words(unsigned num_couple, bool premise)
