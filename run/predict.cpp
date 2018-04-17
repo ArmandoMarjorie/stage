@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 { 
 	if(argc > 0 && !strcmp(argv[1], "-h"))
 		usage(argv[0]);
-	if( argc != 9 )
+	if( argc != 8 )
 	{
 		cerr << "Usage pour tester :\n " 
 		<< argv[0] << " test_file " << " embedding_file " 
@@ -33,6 +33,7 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
+	cout << "HELLO 36 \n";
 	// Fetch dynet params 
 	auto dyparams = dynet::extract_dynet_params(argc, argv);
 	dynet::initialize(dyparams);
@@ -43,14 +44,16 @@ int main(int argc, char** argv)
 	// Load Dataset 
 	Embeddings embedding(argv[2], model, static_cast<unsigned>(atoi(argv[4])), true);
 	
-	unsigned mode=static_cast<unsigned>(atoi(argv[8]));
+	//unsigned mode=static_cast<unsigned>(atoi(argv[8]));
 
 	int systeme = atoi(argv[7]);
+	cout << "HELLO 50 \n";
 	
 	// Create model
 	if(systeme < 3)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, model, static_cast<unsigned>(systeme));
+		cout << "HELLO 55 \n";
 		/*if(mode==0)
 		{
 			Data test_set(argv[1]);
@@ -60,7 +63,7 @@ int main(int argc, char** argv)
 		/* TESTING IF REMOVE_COUPLE() & RESET_COUPLE() IS CORRECT */
 		/*
 		Data test_explication_set(argv[1],0);
-		vector<int> num_couple(2);
+		vector<unsigned> num_couple(2);
 		num_couple[0] = 1;
 		num_couple[1] = 0;
 		
@@ -79,13 +82,13 @@ int main(int argc, char** argv)
 		{
 			Data verbose_set(2, argv[1]);
 			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
-		}
-		else if(mode==3)
-		{
-			Data explication_set(argv[1], 3); 
-			Data new_set(explication_set, 1);
-			run_predict_explication(rnn, model, explication_set, embedding, argv[6]);
 		}*/
+		
+		
+		cout << "hello";
+		Data explication_set(argv[1], 3); 
+		cout << "ok";
+		run_predict_couple(rnn, model, explication_set, embedding, argv[6]);
 	}
 	else
 	{

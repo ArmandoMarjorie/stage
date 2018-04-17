@@ -56,6 +56,12 @@
 	unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, unsigned nb_of_sentences_dev, unsigned& best);
 	void dev_score(RNN& rnn, dynet::ParameterCollection& model, Data& dev_set, Embeddings& embedding, std::string parameter_filename, unsigned nb_of_sentences_dev,
 		unsigned& best, char* output_emb_filename);
+		
+		
+	void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);
+		
+	void save_sentences(Data& explication_set,std::vector<unsigned>& premise,std::vector<unsigned>& hypothesis, unsigned num_sample);
+	void write_couple(std::ofstream& output, Data& explication_set, unsigned num_sample, unsigned num_couple);
 	
 	class LSTM : public RNN
 	{

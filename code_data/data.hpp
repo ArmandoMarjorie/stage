@@ -99,8 +99,10 @@
 			unsigned get_nb_inf();
 			unsigned get_nb_neutral();
 			
-			void remove_couple(std::vector<int>& num_couple, unsigned num_sample);
-			void reset_couple(std::vector<int>& num_couple, unsigned num_sample);
+			void remove_couple(std::vector<unsigned>& num_couple, unsigned num_sample);
+			void reset_couple(std::vector<unsigned>& num_couple, unsigned num_sample);
+			void taking_couple(unsigned num_couple, unsigned num_sample);
+			void reset_sentences(std::vector<unsigned>& original_premise, std::vector<unsigned>& original_hypothesis, unsigned num_sample);
 	};
 
 #endif

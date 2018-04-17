@@ -82,21 +82,6 @@ unsigned RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_proba
 	return argmax;
 }
 
-void run_predict(RNN& rnn, ParameterCollection& model, Data& test_set, Embeddings& embedding, char* parameters_filename)
-{
-	// Load preexisting weights
-	cerr << "Loading parameters ...\n";
-	TextFileLoader loader(parameters_filename);
-	loader.populate(model);
-	cerr << "Parameters loaded !\n";
-
-	cerr << "Testing ...\n";
-	unsigned nb_of_sentences = test_set.get_nb_sentences();
-	unsigned best = 0;
-	rnn.disable_dropout();
-	predict_dev_and_test(rnn, test_set, embedding, nb_of_sentences, best);
-}
-
 unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, unsigned nb_of_sentences_dev, unsigned& best)
 {
 	unsigned positive = 0;
@@ -133,6 +118,174 @@ unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, un
 	
 	return positive;
 }
+
+		/* Predictions algorithms (handlers) */
+
+void run_predict(RNN& rnn, ParameterCollection& model, Data& test_set, Embeddings& embedding, char* parameters_filename)
+{
+	// Load preexisting weights
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned nb_of_sentences = test_set.get_nb_sentences();
+	unsigned best = 0;
+	rnn.disable_dropout();
+	predict_dev_and_test(rnn, test_set, embedding, nb_of_sentences, best);
+}
+
+/* EN CONSTRUCTION ..................... */
+/*
+void LSTM::run_predict_explication(dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	disable_dropout();
+	vector<unsigned> num_couple(1);
+	for(unsigned i=0; i<nb_of_sentences; ++i) //pour un sample ...
+	{
+		ComputationGraph cg;
+		label_predicted = predict(explication_set, embedding, i, cg, true);
+		cerr << "True label = " << explication_set.get_label(i) << ", label predicted = " << label_predicted << endl;
+		
+		// changement ici 
+		
+		
+		// parcours de tous les couples (supprimer 1 par 1, voir lesquels sont les meilleurs)
+		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
+		{
+			num_couple[0] = j;
+			explication_set.remove_couple(num_couple, i);
+			// prédiction avec le nouveau explication_set
+			// il faut récupérer les probas, et regarder les 2 meilleurs couples 
+			
+			// Notion de "bon" couple 
+			// * une mesure de bon couple (DBC = degré de bon couple)
+			// * si un couple a un bon DBC, alors le modèle s'est beaucoup servi de ce couple pour sa prédiction 
+			// * Est ce que c'est plus important qu'un couple supprimé fasse augmenter le label de base et beaucoup augmenter les autres,
+			// * ou qu'un couple supprimé fasse baisser le label de base et augmenter les autres ? 
+			 
+			explication_set.reset_couple(num_couple, i);
+			
+		}
+		// Enlever les 2 meilleurs couples, prédire, conclure 
+		
+		// -------------- 
+	}
+	
+}*/
+/* .......................................... */
+
+void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	rnn.disable_dropout();
+	char const* name = "Files/expl_token";
+	ofstream output(name, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << name << endl;
+		exit(EXIT_FAILURE);
+	}	
+	
+	vector<unsigned> premise;
+	vector<unsigned> hypothesis;
+	
+	
+	for(unsigned i=0; i<nb_of_sentences; ++i) //pour un sample ...
+	{
+		ComputationGraph cg;
+		label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
+		output << explication_set.get_label(i) << endl << label_predicted << endl;
+		save_sentences(explication_set, premise, hypothesis, i);
+		
+		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
+		{
+			explication_set.taking_couple(j,i);
+			label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
+			write_couple(output, explication_set, i, j);
+			output << " -1 " << label_predicted << endl;
+			explication_set.reset_sentences(premise, hypothesis, i);
+		}
+		output << " -3\n";
+	}
+	
+	output.close();
+}
+
+void write_couple(ofstream& output, Data& explication_set, unsigned num_sample, unsigned num_couple)
+{	
+	for(unsigned i=0; i<explication_set.get_couple_nb_words(num_sample,num_couple, true); ++i)
+	{
+		output << explication_set.get_couple_id(num_sample, num_couple, i, true) << " ";
+	}
+	output << "-2 ";
+	for(unsigned i=0; i<explication_set.get_couple_nb_words(num_sample,num_couple, false); ++i)
+	{
+		output << explication_set.get_couple_id(num_sample, num_couple, i, false) << " ";
+	}	
+}
+
+void save_sentences(Data& explication_set,vector<unsigned>& premise,vector<unsigned>& hypothesis, unsigned num_sample)
+{
+	for(unsigned sentence=1; sentence <= 2; ++sentence)
+	{
+		for(unsigned i =0; i<explication_set.get_nb_words(sentence, num_sample); ++i)
+		{
+			if(sentence==1)
+				premise.push_back(explication_set.get_word_id(sentence, num_sample, i));
+			else
+				hypothesis.push_back(explication_set.get_word_id(sentence, num_sample, i));
+		}	
+	}
+}
+
+
+/*
+void LSTM::usage_predict_verbose()
+{
+	cerr << "Enter id label\n";
+	cerr << "Enter id word to form a sentence and -1 to end your sentence\n";
+	cerr << "The first sentence is the premise, the second is the hypothesis\n";
+	cerr << "Enter -2 to end the program\n";
+	
+}
+
+
+void LSTM::run_predict_verbose(ParameterCollection& model, Data& verbose_set, Embeddings& embedding, char* parameters_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n\n";
+
+	cerr << "\t** Testing : Verbose Mode **\n";
+//	usage_predict_verbose();
+	unsigned label_predicted;
+	
+	disable_dropout();
+	ComputationGraph cg;
+	label_predicted = predict(verbose_set, embedding, 0, cg, true);
+	
+	cerr << "True label = " << verbose_set.get_label(0) << ", label predicted = " << label_predicted << endl;
+
+}*/
+
 
 	/* Negative log softmax algorithms */
 
@@ -285,6 +438,8 @@ Expression LSTM::sentence_representation(Data& set, Embeddings& embedding, unsig
 
 	for(unsigned i=0; i<nb_words; ++i)
 	{
+		if(set.get_word_id(sentence, num_sentence, i) == 0) // 0 means "this is not a word, there is no word here !"
+			continue;
 		repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) );
 	}
 
@@ -330,62 +485,6 @@ Expression LSTM::systeme_2(vector<Expression>& h, Expression bias, Expression W)
 
 	return score;
 }
-/*
-void LSTM::run_predict_explication(dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
-{
-	cerr << "Loading parameters ...\n";
-	TextFileLoader loader(parameters_filename);
-	loader.populate(model);
-	cerr << "Parameters loaded !\n";
-
-	cerr << "Testing ...\n";
-	unsigned label_predicted;
-	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
-	disable_dropout();
-	Data new_set(explication_set, 1);
-	for(unsigned i=0; i<nb_of_sentences; ++i)
-	{
-		ComputationGraph cg;
-		label_predicted = predict(explication_set, embedding, i, cg, true);
-		cerr << "True label = " << explication_set.get_label(i) << ", label predicted = " << label_predicted << endl;
-		
-		cerr << "Now testing new sample ...\n";
-		label_predicted = predict(new_set, embedding, i, cg, true);
-		cerr << "label predicted for new sample " << i << " = " << label_predicted << endl << endl;
-		
-	}
-	
-}
-
-
-void LSTM::usage_predict_verbose()
-{
-	cerr << "Enter id label\n";
-	cerr << "Enter id word to form a sentence and -1 to end your sentence\n";
-	cerr << "The first sentence is the premise, the second is the hypothesis\n";
-	cerr << "Enter -2 to end the program\n";
-	
-}
-
-
-void LSTM::run_predict_verbose(ParameterCollection& model, Data& verbose_set, Embeddings& embedding, char* parameters_filename)
-{
-	cerr << "Loading parameters ...\n";
-	TextFileLoader loader(parameters_filename);
-	loader.populate(model);
-	cerr << "Parameters loaded !\n\n";
-
-	cerr << "\t** Testing : Verbose Mode **\n";
-//	usage_predict_verbose();
-	unsigned label_predicted;
-	
-	disable_dropout();
-	ComputationGraph cg;
-	label_predicted = predict(verbose_set, embedding, 0, cg, true);
-	
-	cerr << "True label = " << verbose_set.get_label(0) << ", label predicted = " << label_predicted << endl;
-
-}*/
 
 	/* Bi-LSTM system */
 

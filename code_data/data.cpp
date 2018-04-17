@@ -97,7 +97,7 @@ Data::Data(char* test_explication_filename, unsigned mode)
 }
 
 /* Si all == true ==> on enlève tout */
-void Data::remove_couple(vector<int>& num_couple, unsigned num_sample)
+void Data::remove_couple(vector<unsigned>& num_couple, unsigned num_sample)
 {
 	unsigned word;
 	int position;
@@ -128,7 +128,7 @@ void Data::remove_couple(vector<int>& num_couple, unsigned num_sample)
 	
 }
 
-void Data::reset_couple(vector<int>& num_couple, unsigned num_sample)
+void Data::reset_couple(vector<unsigned>& num_couple, unsigned num_sample)
 {
 	unsigned word;
 	int position;
@@ -154,6 +154,54 @@ void Data::reset_couple(vector<int>& num_couple, unsigned num_sample)
 	}	
 }
 
+void Data::taking_couple(unsigned num_couple, unsigned num_sample)
+{
+	if( num_couple >= important_couples[num_sample].get_size() )
+	{
+		cerr << "Error : couple num " << num_couple << " doesn't exist (nb of couples for the sample " 
+			 << num_sample << " = " << important_couples[num_sample].get_size() << ")\n";
+		return;
+	}
+	unsigned word;
+	unsigned word_in_sentences;
+	bool remove;
+	for(word_in_sentences=0; word_in_sentences < premise[num_sample].size(); ++word_in_sentences)
+	{
+		remove = true;
+		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple, true) && remove; ++word) // parcours des mots du couple (partie prémisse)
+		{
+			if(static_cast<int>(word_in_sentences) != important_couples[num_sample].get_position(num_couple, word, true))
+				remove = true;
+			else
+				remove = false;
+		}
+		if(remove)	
+			premise[num_sample][word_in_sentences] = 0;
+	}
+	
+	//idem pour l'hypothèse :
+	for(word_in_sentences=0; word_in_sentences < hypothesis[num_sample].size(); ++word_in_sentences)
+	{
+		remove = true;
+		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple, false) && remove; ++word) // parcours des mots du couple (partie prémisse)
+		{
+			if(static_cast<int>(word_in_sentences) != important_couples[num_sample].get_position(num_couple, word, false))
+				remove = true;
+			else
+				remove = false;
+		}
+		if(remove)	
+			hypothesis[num_sample][word_in_sentences] = 0;
+	}
+}
+
+void Data::reset_sentences(vector<unsigned>& original_premise,vector<unsigned>& original_hypothesis, unsigned num_sample)
+{
+	for(unsigned j=0; j<original_premise.size(); ++j)
+		premise[num_sample][j] = original_premise[j];
+	for(unsigned j=0; j<original_hypothesis.size(); ++j)
+		hypothesis[num_sample][j] = original_hypothesis[j];
+}
 
 /* Ex couple :
 	22 15 8 16 507 17 -2 507 1 -1
