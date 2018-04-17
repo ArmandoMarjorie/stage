@@ -57,17 +57,19 @@ int main(int argc, char** argv)
 			test_set.print_infos(3); //3 = test set
 			run_predict(rnn, model, test_set, embedding, argv[6]);
 		}*/
-		/* TESTING IF REMOVE_COUPLE() IS CORRECT */
+		/* TESTING IF REMOVE_COUPLE() & RESET_COUPLE() IS CORRECT */
 		/*
 		Data test_explication_set(argv[1],0);
-		vector<int> num_couple(3);
+		vector<int> num_couple(2);
 		num_couple[0] = 1;
 		num_couple[1] = 0;
-		num_couple[2] = 2;
 		
 		test_explication_set.remove_couple(num_couple,0);
 		char const* name = "Files/output_sans_couple_0";
-		test_explication_set.print_sentences(name);*/
+		test_explication_set.print_sentences(name);
+		test_explication_set.reset_couple(num_couple,0);
+		char const* name_2 = "Files/output_reset_couple";
+		test_explication_set.print_sentences(name_2);*/
 	/*	else if(mode==1)
 		{
 			Data verbose_set(1);

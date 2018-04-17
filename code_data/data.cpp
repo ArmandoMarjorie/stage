@@ -97,7 +97,7 @@ Data::Data(char* test_explication_filename, unsigned mode)
 }
 
 /* Si all == true ==> on enlève tout */
-void Data::remove_couple(vector<int>& num_couple, unsigned num_sample, bool all)
+void Data::remove_couple(vector<int>& num_couple, unsigned num_sample)
 {
 	unsigned word;
 	int position;
@@ -108,7 +108,7 @@ void Data::remove_couple(vector<int>& num_couple, unsigned num_sample, bool all)
 		 * on parcourt imp_word_premise[nb_couple][word] !
 		 */
 		//cerr << "couple numero " << num_couple[nb_couples] << endl;
-		if( num_couple[nb_couples] > important_couples[num_sample].get_size() ) //ne pas supprimer un couple qui n'existe pas
+		if( num_couple[nb_couples] >= important_couples[num_sample].get_size() ) //ne pas supprimer un couple qui n'existe pas
 			continue;
 		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], true); ++word) // parcours des mots du couple (partie prémisse)
 		{
@@ -130,7 +130,28 @@ void Data::remove_couple(vector<int>& num_couple, unsigned num_sample, bool all)
 
 void Data::reset_couple(vector<int>& num_couple, unsigned num_sample)
 {
-	
+	unsigned word;
+	int position;
+	for(unsigned nb_couples=0; nb_couples < num_couple.size(); ++nb_couples) //parcourt des couples à remettre (ex 0, 1, 2) dans le vecteur passé en arguments
+	{
+		//cerr << "couple numero " << num_couple[nb_couples] << endl;
+		if( num_couple[nb_couples] >= important_couples[num_sample].get_size() ) //ne pas remettre un couple qui n'existe pas
+			continue;
+		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], true); ++word) // parcours des mots du couple (partie prémisse)
+		{
+			position = important_couples[num_sample].get_position(num_couple[nb_couples], word, true);
+			if(position != -4)
+				premise[num_sample][position] = important_couples[num_sample].get_id(num_couple[nb_couples], word, true);
+		}
+		//idem pour l'hypothèse :
+		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], false); ++word) // parcours des mots du couple (partie hypothèse)
+		{
+			position = important_couples[num_sample].get_position(num_couple[nb_couples], word, false);
+			if(position != -4)
+				hypothesis[num_sample][position] = important_couples[num_sample].get_id(num_couple[nb_couples], word, false);
+		}
+				
+	}	
 }
 
 

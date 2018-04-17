@@ -100,7 +100,7 @@
 			unsigned get_nb_neutral();
 			
 			void remove_couple(std::vector<int>& num_couple, unsigned num_sample);
-			void reset_couple(vector<int>& num_couple, unsigned num_sample);
+			void reset_couple(std::vector<int>& num_couple, unsigned num_sample);
 	};
 
 #endif
