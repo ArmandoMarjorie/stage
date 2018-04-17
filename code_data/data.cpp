@@ -86,7 +86,7 @@ Data::Data(char* test_explication_filename, unsigned mode)
 				hypothesis.push_back(tmp_data);
 		}
 		Couple cpl(test_explication);
-		
+				
 		/*cerr << "couples du sample " << cpt+1 << endl;
 		++cpt;
 		cpl.print_couples();*/
@@ -99,38 +99,45 @@ Data::Data(char* test_explication_filename, unsigned mode)
 /* Si all == true ==> on enlève tout */
 void Data::remove_couple(vector<int>& num_couple, unsigned num_sample, bool all)
 {
-	/* Dans la prémise */
-	// i => nb de mots dans un couple (partie prémisse)
-	// j => nb de couple dans num_couple
-	
 	unsigned word;
-	for(unsigned nb_couples=0; nb_couples < num_couple.size(); ++nb_couples) //parcourt des couples à supprimer (ex 0, 1, 2)
+	int position;
+	for(unsigned nb_couples=0; nb_couples < num_couple.size(); ++nb_couples) //parcourt des couples à supprimer (ex 0, 1, 2) dans le vecteur passé en arguments
 	{
 		/* Parcours les couples à supprimer, spécifier dans num_couple
 		 * ex je veux enlever les couples 0, 1, 2 :
 		 * on parcourt imp_word_premise[nb_couple][word] !
 		 */
-		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], true); ++word)
+		//cerr << "couple numero " << num_couple[nb_couples] << endl;
+		if( num_couple[nb_couples] > important_couples[num_sample].get_size() ) //ne pas supprimer un couple qui n'existe pas
+			continue;
+		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], true); ++word) // parcours des mots du couple (partie prémisse)
 		{
-			premise[num_sample][important_couples[num_sample].get_position(nb_couples, word, true)] = 0;
+			position = important_couples[num_sample].get_position(num_couple[nb_couples], word, true);
+			if(position != -4)
+				premise[num_sample][position] = 0;
 		}
 		//idem pour l'hypothèse :
-		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], false); ++word)
+		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple[nb_couples], false); ++word) // parcours des mots du couple (partie hypothèse)
 		{
-			hypothesis[num_sample][important_couples[num_sample].get_position(nb_couples, word, false)] = 0;
+			position = important_couples[num_sample].get_position(num_couple[nb_couples], word, false);
+			if(position != -4)
+				hypothesis[num_sample][position] = 0;
 		}
 				
 	}
 	
 }
 
+void Data::reset_couple(vector<int>& num_couple, unsigned num_sample)
+{
+	
+}
+
 
 /* Ex couple :
-	8343 -2 798 -1 
-	4888 -2 798 -1 
-	1447 -2 798 -1 
-	22 8 507 -2 507 -1 
-	0 -2 2550 -1 
+	22 15 8 16 507 17 -2 507 1 -1
+	0 -4 -2 8634 3 -1
+	0 -4 -2 5524 6 -1
 	-3
 */
 Couple::Couple(ifstream& test_explication)
@@ -155,7 +162,8 @@ Couple::Couple(ifstream& test_explication)
 				imp_word_premise.push_back(tmp);
 				ok = false;
 			}
-			test_explication >> position;
+			if(ok && val != -1)
+				test_explication >> position;
 		}
 		if(val == -1)
 			imp_word_hypothesis.push_back(tmp);
@@ -165,19 +173,21 @@ Couple::Couple(ifstream& test_explication)
 void Couple::print_couples()
 {
 	cerr << "Premise : \n";
-	for(unsigned i=0; i<imp_word_premise.size(); ++i)
-	{
+	/*for(unsigned i=0; i<imp_word_premise.size(); ++i)
+	{*/
+	unsigned i=1;
 		for(unsigned j=0; j<imp_word_premise[i].size(); ++j)
-			cerr << imp_word_premise[i][j].first << " ";
+			cerr << imp_word_premise[i][j].first << " POSITION[" << imp_word_premise[i][j].second << "] ";
 		cerr << endl;
-	}
-	cerr << "\nHypothesis : \n";
-	for(unsigned i=0; i<imp_word_hypothesis.size(); ++i)
-	{
+	//}
+	cerr << "Hypothesis : \n";
+	/*for(unsigned i=0; i<imp_word_hypothesis.size(); ++i)
+	{*/
 		for(unsigned j=0; j<imp_word_hypothesis[i].size(); ++j)
-			cerr << imp_word_hypothesis[i][j].first << " ";
+			cerr << imp_word_hypothesis[i][j].first << " POSITION[" << imp_word_hypothesis[i][j].second << "] ";
 		cerr << endl;
-	}
+	//}
+	cerr<<endl;
 }
 
 unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
@@ -187,7 +197,7 @@ unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
 	return imp_word_hypothesis[num_couple][num_mot].first;
 }
 
-unsigned Couple::get_position(unsigned num_couple, unsigned num_mot, bool premise)
+int Couple::get_position(unsigned num_couple, unsigned num_mot, bool premise)
 {
 	if(premise)
 		return imp_word_premise[num_couple][num_mot].second; 
@@ -208,7 +218,7 @@ unsigned Couple::get_size()
 
 unsigned Data::get_nb_couple(unsigned num_sample)
 {
-	return important_couples[num_sample].get_nb_couple();
+	return important_couples[num_sample].get_size();
 }
 
 unsigned Data::get_couple_nb_words(unsigned num_sample, unsigned num_couple, bool premise)
@@ -414,7 +424,7 @@ unsigned Data::get_nb_sentences()
 	* Just to debug.
 	* \param name : The name of the output file
 */
-void Data::print_sentences(char* name)
+void Data::print_sentences(char const* name)
 {
 	ofstream output_file(name, ios::out | ios::trunc);
 	if(!output_file)
@@ -422,19 +432,25 @@ void Data::print_sentences(char* name)
 		cerr << "Problem with the output file "<< name << endl;
 		exit(EXIT_FAILURE);
 	}
+	unsigned k;
+	unsigned j;
 	for(unsigned i=0; i<premise.size(); ++i)
 	{
 		output_file << label[i] << endl;
-		for(unsigned k=0; k<2; ++k)
+		for(k=0; k<2; ++k)
 		{
-			for(unsigned j=0; j<premise[0].size(); ++j)
+			if(k==0)
 			{
-				if(k==0)
+				for(j=0; j<premise[i].size(); ++j)
 					output_file << premise[i][j] <<' ';
-				else
-					output_file << hypothesis[i][j] <<' ';
+				output_file << endl;
 			}
-			output_file << endl;
+			else
+			{
+				for(j=0; j<hypothesis[i].size(); ++j)
+					output_file << hypothesis[i][j] <<' ';
+				output_file << endl;
+			}
 		}
 	}
 	output_file.close();

@@ -51,12 +51,23 @@ int main(int argc, char** argv)
 	if(systeme < 3)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, model, static_cast<unsigned>(systeme));
-		if(mode==0)
+		/*if(mode==0)
 		{
 			Data test_set(argv[1]);
 			test_set.print_infos(3); //3 = test set
 			run_predict(rnn, model, test_set, embedding, argv[6]);
-		}
+		}*/
+		/* TESTING IF REMOVE_COUPLE() IS CORRECT */
+		/*
+		Data test_explication_set(argv[1],0);
+		vector<int> num_couple(3);
+		num_couple[0] = 1;
+		num_couple[1] = 0;
+		num_couple[2] = 2;
+		
+		test_explication_set.remove_couple(num_couple,0);
+		char const* name = "Files/output_sans_couple_0";
+		test_explication_set.print_sentences(name);*/
 	/*	else if(mode==1)
 		{
 			Data verbose_set(1);

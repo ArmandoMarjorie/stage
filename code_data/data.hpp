@@ -54,6 +54,7 @@
 			Couple(std::ifstream& test_explication);
 			void print_couples();
 			unsigned get_id(unsigned num_couple, unsigned num_mot, bool premise);
+			int get_position(unsigned num_couple, unsigned num_mot, bool premise);
 			unsigned get_nb_words(unsigned num_couple, bool premise);
 			unsigned get_size();
 	};
@@ -92,11 +93,14 @@
 			unsigned get_label(unsigned num_sentence);
 			unsigned get_nb_words(unsigned sentence, unsigned num_sentence);
 			unsigned get_nb_sentences();
-			void print_sentences(char* name);
+			void print_sentences(char const* name);
 			void print_infos(unsigned type);
 			unsigned get_nb_contradiction();
 			unsigned get_nb_inf();
 			unsigned get_nb_neutral();
+			
+			void remove_couple(std::vector<int>& num_couple, unsigned num_sample);
+			void reset_couple(vector<int>& num_couple, unsigned num_sample);
 	};
 
 #endif
