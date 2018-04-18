@@ -126,17 +126,60 @@ void write_output_couple(string sentence, map<string, unsigned>& word_to_id, ofs
 			output << "-1\n";
 		}
 	}
-	output << "-3\n";
+	output << "-5\n"; //end of the couples list
 }
 
-void generating_tokenizing_explication(char* lexique_filename, char* explication_filename, char* output_filename)
+string extract_sequences_between_guillemet(unsigned& i, string line)
+{
+	stringstream ss;
+	for(; line[i] != '"'; ++i)
+		ss << line[i];		
+	string extraction = ss.str();
+	--i; // unread the "
+	return extraction;
+}
+
+void reading_lexique(char* lexique_filename, map<string, unsigned>& word_to_id)
 {
 	ifstream lexique_file(lexique_filename, ios::in);
 	if(!lexique_file)
 	{ 
 		cerr << "Impossible to open the file " << lexique_filename << endl;
 		exit(EXIT_FAILURE);
+	}	
+	unsigned id;
+	string word;
+	while(lexique_file >> word && lexique_file >> id)
+		word_to_id[word] = id;
+	cerr << lexique_filename << " has been read" << endl;
+	lexique_file.close();
+}
+
+/* have this kind of form : (entailment),(neutral),(contradiction) */
+void write_output_couple_label(string line, ofstream& output)
+{
+	string label;
+	for(unsigned i=0; i<line.size(); ++i)
+	{
+		if(line[i] == '(' || line[i] == ',')
+			continue;
+		stringstream ss;
+		while(line[i] != ')')
+		{
+			ss << line[i];
+			++i;
+		}
+		++i; //read the ')'
+		label = ss.str();
+		write_output(label, output);
 	}
+	output << "-3\n"; //end of the tokenized file
+}
+
+
+void generating_tokenizing_explication(char* lexique_filename, char* explication_filename, char* output_filename)
+{
+
 	ifstream explication_file(explication_filename, ios::in);
 	if(!explication_file)
 	{ 
@@ -152,15 +195,12 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 	cerr << "Reading " << lexique_filename << endl;
 	
 	string word;
-	unsigned id;
 	map<string, unsigned> word_to_id;
-	while(lexique_file >> word && lexique_file >> id)
-		word_to_id[word] = id;
-	cerr << lexique_filename << " has been read" << endl;
-	lexique_file.close();
+	reading_lexique(lexique_filename, word_to_id);
 	
 	getline(explication_file, word); //read the label of each column in the csv file
 	unsigned cpt_guillemet;
+	string extract;
 	//unsigned cpt=0;
 	while(getline(explication_file, word))
 	{
@@ -175,49 +215,30 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 			// label
 			else if(cpt_guillemet == 3)
 			{
-				stringstream label_ss;
-				for(; word[i] != '"'; ++i)
-					label_ss << word[i];
-				string label = label_ss.str();
-				--i; //unread the "
-				//cerr << "label = " << label << endl;
-				write_output(label, output);
+				extract = extract_sequences_between_guillemet(i, word);
+				write_output(extract, output);
 			}
 			
-			// premise
-			else if(cpt_guillemet == 5)
+			// premise and hypothesis
+			else if(cpt_guillemet == 5 || cpt_guillemet == 7)
 			{
-				stringstream premise_ss;
-				for(; word[i] != '"'; ++i)
-					premise_ss << word[i];	
-				string premise = premise_ss.str();
-				--i; //unread the "
-			//	cerr << "premise = " << premise << endl;
-				write_output(premise, word_to_id, output);			
-			}
-			
-			// hypothesis
-			else if(cpt_guillemet == 7)
-			{
-				stringstream hypothesis_ss;
-				for(; word[i] != '"'; ++i)
-					hypothesis_ss << word[i];	
-				string hypothesis = hypothesis_ss.str();
-				--i; //unread the "
-			//	cerr << "hypothesis = " << hypothesis << endl ;
-				write_output(hypothesis, word_to_id, output);			
+				extract = extract_sequences_between_guillemet(i, word);
+				write_output(extract, word_to_id, output);			
 			}
 			
 			// couple ex : "(Male,guy),(blue jacket,blue jacket),(lay,laying)"
 			else if(cpt_guillemet == 13)
 			{
-				stringstream couple_ss;
-				for(; word[i] != '"'; ++i)
-					couple_ss << word[i];		
-				string couple = couple_ss.str();
-				--i;
+				extract = extract_sequences_between_guillemet(i, word);
 				//cerr << "sample " << cpt << "\n\n";
-				write_output_couple(couple, word_to_id, output);
+				write_output_couple(extract, word_to_id, output);
+			}
+			
+			// couple's label
+			else if(cpt_guillemet == 15)
+			{
+				extract =  extract_sequences_between_guillemet(i, word);
+				write_output_couple_label(extract, output); 
 			}
 		}
 	}
@@ -225,6 +246,8 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 	output.close();
 	
 }
+
+
 
 
 int main(int argc, char** argv)

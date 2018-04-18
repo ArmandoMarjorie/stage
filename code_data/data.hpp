@@ -49,6 +49,8 @@
 			// unsigned ==> word, int ==> position of the word
 			std::vector< std::vector< std::pair<unsigned,int> > > imp_word_premise;
 			std::vector< std::vector< std::pair<unsigned,int> > > imp_word_hypothesis;
+			
+			std::vector<unsigned> labels; /*!< label of each couple*/
 		
 		public:
 			Couple(std::ifstream& test_explication);
@@ -57,6 +59,7 @@
 			int get_position(unsigned num_couple, unsigned num_mot, bool premise);
 			unsigned get_nb_words(unsigned num_couple, bool premise);
 			unsigned get_size();
+			unsigned get_label(unsigned num_couple);
 	};
 
 	/** 
@@ -99,6 +102,7 @@
 			unsigned get_nb_contradiction();
 			unsigned get_nb_inf();
 			unsigned get_nb_neutral();
+			unsigned get_couple_label(unsigned num_sample, unsigned num_couple);
 			
 			void remove_couple(std::vector<unsigned>& num_couple, unsigned num_sample);
 			void reset_couple(std::vector<unsigned>& num_couple, unsigned num_sample);

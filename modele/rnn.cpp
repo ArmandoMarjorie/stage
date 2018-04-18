@@ -224,7 +224,7 @@ void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& expli
 
 			label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
 			write_couple(output, explication_set, i, j);
-			output << "-1 " << label_predicted << endl;
+			output << "-1 " << label_predicted << " " << explication_set.get_couple_label(i, j) << endl;
 			explication_set.reset_sentences(premise, hypothesis, i, true);
 			explication_set.reset_sentences(premise, hypothesis, i, false);
 		}

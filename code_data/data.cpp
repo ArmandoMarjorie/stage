@@ -242,10 +242,10 @@ Couple::Couple(ifstream& test_explication)
 	int val = 0;
 	bool ok;
 	int position = 0;
-	while(val != -3) //for a sample...
+	while(val != -5) //read all the couples (-5 = end of the couples list)
 	{
 		test_explication >> val;
-		if(val == -3)
+		if(val == -5)
 			continue;
 		test_explication >> position;
 		ok = true;
@@ -264,7 +264,14 @@ Couple::Couple(ifstream& test_explication)
 		}
 		if(val == -1)
 			imp_word_hypothesis.push_back(tmp);
+			
 	}	
+	test_explication >> val; //read the first label
+	while(val != -3)
+	{
+		labels.push_back(static_cast<unsigned>(val));
+		test_explication >> val;
+	}
 }
 
 void Couple::print_couples()
@@ -312,6 +319,16 @@ unsigned Couple::get_nb_words(unsigned num_couple, bool premise)
 unsigned Couple::get_size()
 {
 	return imp_word_hypothesis.size();
+}
+
+unsigned Couple::get_label(unsigned num_couple)
+{
+	return labels[num_couple];
+}
+
+unsigned Data::get_couple_label(unsigned num_sample, unsigned num_couple)
+{
+	return important_couples[num_sample].get_label(num_couple);
 }
 
 unsigned Data::get_nb_couple(unsigned num_sample)

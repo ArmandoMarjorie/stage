@@ -105,10 +105,13 @@ void detokenizer(char* lexique_filename, char* explication_filename, char* outpu
 				explication_file >> val;
 			}
 			explication_file >> val; //reading label's couple
-			output << " = " << detoken_label(val) << endl << endl;
+			output << " = label predicted : " << detoken_label(val) << " , true label : " ;
+			explication_file >> val;
+			output << detoken_label(val) << endl;
 			explication_file >> val;
 		}
 		++num_sample;
+		output << endl;
 	}
 	
 }
