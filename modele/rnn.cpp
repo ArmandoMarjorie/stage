@@ -217,10 +217,11 @@ void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& expli
 		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
 		{
 			explication_set.taking_couple(j,i);
-			if(explication_set.is_empty(i, true))
+			
+			/*if(explication_set.is_empty(i, true))
 				explication_set.reset_sentences(premise, hypothesis, i, true);
 			if(explication_set.is_empty(i, false))
-				explication_set.reset_sentences(premise, hypothesis, i, false);
+				explication_set.reset_sentences(premise, hypothesis, i, false);*/
 
 			label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
 			write_couple(output, explication_set, i, j);

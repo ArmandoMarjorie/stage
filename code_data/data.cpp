@@ -165,30 +165,50 @@ void Data::taking_couple(unsigned num_couple, unsigned num_sample)
 	unsigned word;
 	unsigned word_in_sentences;
 	bool remove;
-	for(word_in_sentences=0; word_in_sentences < premise[num_sample].size(); ++word_in_sentences)
+	bool not_stoping = true;
+	for(word_in_sentences=0; word_in_sentences < premise[num_sample].size() && not_stoping; ++word_in_sentences)
 	{
 		remove = true;
 		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple, true) && remove; ++word) // parcours des mots du couple (partie prémisse)
 		{
-			if(static_cast<int>(word_in_sentences) != important_couples[num_sample].get_position(num_couple, word, true))
-				remove = true;
-			else
+			if(important_couples[num_sample].get_position(num_couple, word, true) == -4)
+			{
 				remove = false;
+				not_stoping = false;
+			}
+			else
+			{
+				if(static_cast<int>(word_in_sentences) != important_couples[num_sample].get_position(num_couple, word, true))
+					remove = true;
+				else
+					remove = false;
+			}
 		}
 		if(remove)	
 			premise[num_sample][word_in_sentences] = 0;
 	}
 	
+	not_stoping = true;
 	//idem pour l'hypothèse :
-	for(word_in_sentences=0; word_in_sentences < hypothesis[num_sample].size(); ++word_in_sentences)
+	for(word_in_sentences=0; word_in_sentences < hypothesis[num_sample].size() && not_stoping; ++word_in_sentences)
 	{
 		remove = true;
 		for(word=0; word < important_couples[num_sample].get_nb_words(num_couple, false) && remove; ++word) // parcours des mots du couple (partie prémisse)
 		{
-			if(static_cast<int>(word_in_sentences) != important_couples[num_sample].get_position(num_couple, word, false))
-				remove = true;
-			else
+			//si on ne peut pas le mettre en relation avec mot de la phrase adverse, alors on le met en relation avec tte la phrase
+			// couple = ( tte la phrase ; mot )
+			if(important_couples[num_sample].get_position(num_couple, word, false) == -4) 
+			{
 				remove = false;
+				not_stoping = false;				
+			}
+			else
+			{
+				if(static_cast<int>(word_in_sentences) != important_couples[num_sample].get_position(num_couple, word, false))
+					remove = true;
+				else
+					remove = false;
+			}
 		}
 		if(remove)	
 			hypothesis[num_sample][word_in_sentences] = 0;
