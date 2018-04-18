@@ -195,12 +195,40 @@ void Data::taking_couple(unsigned num_couple, unsigned num_sample)
 	}
 }
 
-void Data::reset_sentences(vector<unsigned>& original_premise,vector<unsigned>& original_hypothesis, unsigned num_sample)
+void Data::reset_sentences(vector<unsigned>& original_premise,vector<unsigned>& original_hypothesis, unsigned num_sample, bool is_premise)
 {
-	for(unsigned j=0; j<original_premise.size(); ++j)
-		premise[num_sample][j] = original_premise[j];
-	for(unsigned j=0; j<original_hypothesis.size(); ++j)
-		hypothesis[num_sample][j] = original_hypothesis[j];
+	if(is_premise)
+		for(unsigned j=0; j<original_premise.size(); ++j)
+			premise[num_sample][j] = original_premise[j];
+	else
+		for(unsigned j=0; j<original_hypothesis.size(); ++j)
+			hypothesis[num_sample][j] = original_hypothesis[j];
+
+}
+
+bool Data::is_empty(unsigned num_sample, bool is_premise)
+{
+	if(is_premise)
+	{
+		for(unsigned i=0; i<premise[num_sample].size(); ++i)
+		{
+			
+			if(premise[num_sample][i] != 0)
+				return false;
+		}
+		cerr << endl;
+	}
+	else
+	{
+		for(unsigned i=0; i<hypothesis[num_sample].size(); ++i)
+		{
+			
+			if(hypothesis[num_sample][i] != 0)
+				return false;
+		}
+		cerr << endl;
+	}
+	return true;
 }
 
 /* Ex couple :
@@ -214,7 +242,7 @@ Couple::Couple(ifstream& test_explication)
 	int val = 0;
 	bool ok;
 	int position = 0;
-	while(val != -3)
+	while(val != -3) //for a sample...
 	{
 		test_explication >> val;
 		if(val == -3)
@@ -258,6 +286,7 @@ void Couple::print_couples()
 	//}
 	cerr<<endl;
 }
+
 
 unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
 {
@@ -523,6 +552,24 @@ void Data::print_sentences(char const* name)
 		}
 	}
 	output_file.close();
+}
+
+void Data::print_sentences_of_a_sample(unsigned num_sample)
+{
+
+	unsigned j;
+	cerr << "premise = ";
+
+	for(j=0; j<premise[num_sample].size(); ++j)
+		cerr << premise[num_sample][j] <<' ';
+	cerr << endl;
+	
+	cerr << "hypothesis = ";
+
+	for(j=0; j<hypothesis[num_sample].size(); ++j)
+		cerr << hypothesis[num_sample][j] <<' ';
+	cerr << endl;
+	
 }
 
 /* EMBEDDING CLASS */

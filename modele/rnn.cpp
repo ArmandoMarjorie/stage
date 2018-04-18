@@ -213,15 +213,23 @@ void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& expli
 		label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
 		output << explication_set.get_label(i) << endl << label_predicted << endl;
 		save_sentences(explication_set, premise, hypothesis, i);
-		
+		write_sentences(output, premise, hypothesis);
 		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
 		{
 			explication_set.taking_couple(j,i);
+			if(explication_set.is_empty(i, true))
+				explication_set.reset_sentences(premise, hypothesis, i, true);
+			if(explication_set.is_empty(i, false))
+				explication_set.reset_sentences(premise, hypothesis, i, false);
+
 			label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
 			write_couple(output, explication_set, i, j);
-			output << " -1 " << label_predicted << endl;
-			explication_set.reset_sentences(premise, hypothesis, i);
+			output << "-1 " << label_predicted << endl;
+			explication_set.reset_sentences(premise, hypothesis, i, true);
+			explication_set.reset_sentences(premise, hypothesis, i, false);
 		}
+		premise.clear();
+		hypothesis.clear();
 		output << " -3\n";
 	}
 	
@@ -239,6 +247,17 @@ void write_couple(ofstream& output, Data& explication_set, unsigned num_sample, 
 	{
 		output << explication_set.get_couple_id(num_sample, num_couple, i, false) << " ";
 	}	
+}
+
+void write_sentences(ofstream& output, vector<unsigned>& premise, vector<unsigned>& hypothesis)
+{
+	unsigned i;
+	for(i=0; i<premise.size(); ++i)
+		output << premise[i] << " ";
+	output << "-1\n";
+	for(i=0; i<hypothesis.size(); ++i)
+		output << hypothesis[i] << " ";	
+	output << "-1\n";
 }
 
 void save_sentences(Data& explication_set,vector<unsigned>& premise,vector<unsigned>& hypothesis, unsigned num_sample)

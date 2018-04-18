@@ -62,7 +62,8 @@
 		
 	void save_sentences(Data& explication_set,std::vector<unsigned>& premise,std::vector<unsigned>& hypothesis, unsigned num_sample);
 	void write_couple(std::ofstream& output, Data& explication_set, unsigned num_sample, unsigned num_couple);
-	
+	void write_sentences(std::ofstream& output, std::vector<unsigned>& premise, std::vector<unsigned>& hypothesis);
+
 	class LSTM : public RNN
 	{
 		private:

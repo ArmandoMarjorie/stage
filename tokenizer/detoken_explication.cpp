@@ -10,7 +10,7 @@
 
 
 /** LEXIQUE = VOCABULAIRE + LEUR ID */
-// g++ -std=c++11 tokenize_explication_file_csv.cpp -o Tok_expl_csv
+// g++ -std=c++11 detoken_explication.cpp -o Detok_expl
 
 using namespace std;
 
@@ -66,7 +66,7 @@ void detokenizer(char* lexique_filename, char* explication_filename, char* outpu
 	map<unsigned, string> id_to_word;
 	while(lexique_file >> word && lexique_file >> id)
 		id_to_word[id] = word;
-	id_to_word[0] = "";
+	id_to_word[0] = "every word";
 	cerr << lexique_filename << " has been read" << endl;
 	lexique_file.close();	
 	int val;
@@ -75,9 +75,9 @@ void detokenizer(char* lexique_filename, char* explication_filename, char* outpu
 	
 	while(explication_file >> val)
 	{
-		output << "sample numero " << num_sample << "\nlabel : " << detoken_label(val) << ", ";
+		output << "\tsample numero " << num_sample << "\nlabel : " << detoken_label(val) << ", ";
 		explication_file >> val;
-		output<< "label predicted : " << val<< endl;
+		output<< "label predicted : " << detoken_label(val) << endl;
 		
 		explication_file >> val;
 		for(cpt=0; cpt <2; ++cpt) // reading the premise and the hypothesis
@@ -91,11 +91,11 @@ void detokenizer(char* lexique_filename, char* explication_filename, char* outpu
 				output << id_to_word[val] << " ";
 				explication_file >> val;
 			}
+			explication_file >> val; //read the "-1"
 			output << endl;
 		}
 		while(val != -3)
 		{
-			explication_file >> val;
 			while(val != -1) //reading couple
 			{
 				if(val == -2)
@@ -105,8 +105,10 @@ void detokenizer(char* lexique_filename, char* explication_filename, char* outpu
 				explication_file >> val;
 			}
 			explication_file >> val; //reading label's couple
-			output << " = " << detoken_label(val) << endl;
+			output << " = " << detoken_label(val) << endl << endl;
+			explication_file >> val;
 		}
+		++num_sample;
 	}
 	
 }
@@ -123,7 +125,7 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 	
-	generating_tokenizing_explication(argv[1], argv[2], argv[3]);
+	detokenizer(argv[1], argv[2], argv[3]);
 	
 	return 0;
 }

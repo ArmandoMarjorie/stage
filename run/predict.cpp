@@ -33,7 +33,6 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
-	cout << "HELLO 36 \n";
 	// Fetch dynet params 
 	auto dyparams = dynet::extract_dynet_params(argc, argv);
 	dynet::initialize(dyparams);
@@ -47,13 +46,11 @@ int main(int argc, char** argv)
 	//unsigned mode=static_cast<unsigned>(atoi(argv[8]));
 
 	int systeme = atoi(argv[7]);
-	cout << "HELLO 50 \n";
 	
 	// Create model
 	if(systeme < 3)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, model, static_cast<unsigned>(systeme));
-		cout << "HELLO 55 \n";
 		/*if(mode==0)
 		{
 			Data test_set(argv[1]);
@@ -85,9 +82,7 @@ int main(int argc, char** argv)
 		}*/
 		
 		
-		cout << "hello";
 		Data explication_set(argv[1], 3); 
-		cout << "ok";
 		run_predict_couple(rnn, model, explication_set, embedding, argv[6]);
 	}
 	else

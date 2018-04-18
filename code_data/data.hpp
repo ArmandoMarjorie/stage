@@ -71,7 +71,7 @@
 			std::vector<unsigned> label; /*!< list of labels (label[i] = label of the i_th sample)*/ 
 			
 			std::vector< Couple > important_couples;
-			std::vector< std::vector<unsigned> > couple_supp;
+			//std::vector< std::vector<unsigned> > couple_supp;
 			
 			unsigned nb_contradiction=0;
 			unsigned nb_inference=0;
@@ -94,6 +94,7 @@
 			unsigned get_nb_words(unsigned sentence, unsigned num_sentence);
 			unsigned get_nb_sentences();
 			void print_sentences(char const* name);
+			void print_sentences_of_a_sample(unsigned num_sample);
 			void print_infos(unsigned type);
 			unsigned get_nb_contradiction();
 			unsigned get_nb_inf();
@@ -102,7 +103,8 @@
 			void remove_couple(std::vector<unsigned>& num_couple, unsigned num_sample);
 			void reset_couple(std::vector<unsigned>& num_couple, unsigned num_sample);
 			void taking_couple(unsigned num_couple, unsigned num_sample);
-			void reset_sentences(std::vector<unsigned>& original_premise, std::vector<unsigned>& original_hypothesis, unsigned num_sample);
+			void reset_sentences(std::vector<unsigned>& original_premise, std::vector<unsigned>& original_hypothesis, unsigned num_sample, bool is_premise);
+			bool is_empty(unsigned num_sample, bool is_premise);
 	};
 
 #endif
