@@ -23,17 +23,18 @@
 	class RNN
 	{
 		protected:
-			dynet::Parameter p_W; /*!< weight*/ 
-			dynet::Parameter p_bias; /*!< bias*/
-			dynet::VanillaLSTMBuilder* forward_lstm; /*!< forward LSTM*/ 
 			unsigned nb_layers; /*!< number of layers*/ 
 			unsigned input_dim; /*!< dimention of the input xt (dim of the embedding)*/
 			unsigned hidden_dim; /*!< dimention of the hidden states ht and  ct*/ 
 			float dropout_rate; /*!< dropout rate (between 0 and 1)*/ 
+			unsigned systeme = 1; /*!< 1 or 2 for LSTM, 3 or 4 for BiLSTM*/
 			bool apply_dropout = true; /*!< apllying dropout or not*/ 
-			
+			dynet::Parameter p_W; /*!< weight*/ 
+			dynet::Parameter p_bias; /*!< bias*/
+			dynet::VanillaLSTMBuilder* forward_lstm; /*!< forward LSTM*/ 
+		
 		public:
-			RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, dynet::ParameterCollection& model);
+			RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, dynet::ParameterCollection& model);
 			float get_dropout_rate();
 			unsigned get_nb_layers();
 			unsigned get_input_dim();
@@ -67,7 +68,6 @@
 	class LSTM : public RNN
 	{
 		private:
-			unsigned systeme = 1;
 			dynet::Expression sentence_representation(Data& set, Embeddings& embedding, unsigned sentence, unsigned num_sentence, dynet::ComputationGraph& cg);
 			dynet::Expression run(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
 			dynet::Expression systeme_1(std::vector<dynet::Expression>& h, dynet::Expression bias, dynet::Expression W);
@@ -76,12 +76,7 @@
 			virtual dynet::Expression get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
 
 		public:
-			LSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, dynet::ParameterCollection& model, unsigned systeme);
-			
-			/*void run_predict_verbose(dynet::ParameterCollection& model, Data& verbose_set, Embeddings& embedding, char* parameters_filename);
-			void run_predict_explication(dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);*/
-			
-
+			LSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, dynet::ParameterCollection& model);
 	};
 
 	/** 
@@ -97,6 +92,7 @@
 					dynet::ComputationGraph& cg, unsigned num_sentence, std::vector<dynet::Expression>& sentence_repr);
 			dynet::Expression run_KIM(Data& set, Embeddings& embedding, unsigned num_sentence, 
 					dynet::ComputationGraph& cg);
+			dynet::Expression run_sys4(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
 			void create_attention_matrix(dynet::ComputationGraph& cg, std::vector< std::vector<float> >& matrix, 
 					std::vector<dynet::Expression>& premise_lstm_repr, std::vector<dynet::Expression>& hypothesis_lstm_repr);
 			void compute_beta(dynet::ComputationGraph& cg, std::vector< std::vector<float> >& beta_matrix, 
@@ -112,7 +108,7 @@
 
 
 		public:
-			BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, dynet::ParameterCollection& model);
+			BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, dynet::ParameterCollection& model);
 	};
 
 #endif

@@ -21,7 +21,7 @@ void usage(char* exe_name)
 		 << "dropout <float> : dropout rate (between 0 and 1)\n"                                     //6
 		 << "nb_epoch <int> : number of times the program will do the training phase\n"              //7
 		 << "batch_size <int> : size of batches\n"                                                   //8
-		 << "systeme <int> : which system you want to use (1, 2 or 3=KIM)\n"                         //9
+		 << "systeme <int> : which system you want to use (1, 2, 3=KIM, or 4)\n"                     //9
 		 << "embedding_file <string> : file containing word embeddings\n"                            //10
 		 << "output_embedding_filename <string> : [optionnal] name of the file containing the word "  //11
 		 << "embedding trained during the training phase. This file have to be used in the testing phase\n\n";
@@ -65,14 +65,14 @@ int main(int argc, char** argv)
 		cerr << "** SYSTEM " << systeme << " **\n";
 		/*unsigned batch_size = static_cast<unsigned>(atoi(argv[8]));
 		unsigned nb_epoch=      static_cast<unsigned>(atoi(argv[7]));*/
-		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), model, static_cast<unsigned>(systeme));
+		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), static_cast<unsigned>(systeme), model);
 		run_train(rnn, model, train_set, dev_set, embedding, argv[11], static_cast<unsigned>(atoi(argv[7])), static_cast<unsigned>(atoi(argv[8])));
 	}
 
 	else
 	{
 		cerr << "** SYSTEM KIM **\n";
-		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), model);
+		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), static_cast<unsigned>(systeme), model);
 		run_train(rnn, model, train_set, dev_set, embedding, argv[11], static_cast<unsigned>(atoi(argv[7])), static_cast<unsigned>(atoi(argv[8])) );
 	}
 

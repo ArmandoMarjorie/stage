@@ -8,15 +8,17 @@ using namespace dynet;
  * \file data.cpp
 */
 
-/* DATA CLASS */
+/* ========================= DATA CLASS =========================*/
 
+	/* Constructors */
+	
 /**
-	* \brief Data constructor
+	* \brief Data constructor not used for interpretation
 	* 
 	* \param data_filename : File containing the samples in this form :
 	*       label
-	*       premise
-	*       hypothesis
+	*       premise -1 premise's length
+	*       hypothesis -1 hypothesis' length
 */
 Data::Data(char* data_filename)
 {
@@ -54,6 +56,19 @@ Data::Data(char* data_filename)
 	data_file.close();
 }
 
+/**
+	* \brief Data Constructor used for interpretation
+	* 
+	* \param test_explication_filename : File containing the samples in this form :
+	*       label
+	*       premise -1 premise's length
+	*       hypothesis -1 hypothesis' length
+	* 		premise's words -2 hypothesis' words -1 // list of couples (-2 is a separator, -1 means end of couple)
+	* 		-5 // this means end of couples' list
+	* 		ith couple's label // list of the couple's label
+	* 		-3 // this means end of sample
+	* \param mode : Not really usefull (just to differientiate this constructor from another one)
+*/
 Data::Data(char* test_explication_filename, unsigned mode)
 {
 	ifstream test_explication(test_explication_filename, ios::in);
@@ -96,7 +111,357 @@ Data::Data(char* test_explication_filename, unsigned mode)
 	test_explication.close();
 }
 
-/* Si all == true ==> on enlève tout */
+/**
+	* \brief Data constructor not used for interpretation
+	* read an already-tokenized sample via stdin in this form :
+	* label	premise's words -1 hypothesis' words -1
+*/
+Data::Data()
+{
+	//read the label
+	int labels;
+	cin >> labels; 
+	if(labels > 2 || labels < 0)
+	{
+		cerr << "label must be : (0 : neutral, 1 : inference, or 2 : contradiction)\n";
+		exit(EXIT_FAILURE);
+	}
+	label.push_back(static_cast<unsigned>(labels));
+	
+	int val=0;
+	for(unsigned sentence=0; sentence<2; ++sentence)
+	{
+		vector<unsigned> tmp_data;
+		cin >> val; //read a word id
+		while(val != -1)
+		{
+			/*if(val == -2 && sentence==0)
+				exit(EXIT_FAILURE);*/
+			tmp_data.push_back(static_cast<unsigned>(val));
+			cin >> val;
+		}
+		if(sentence==0)
+			premise.push_back(tmp_data);
+		else
+			hypothesis.push_back(tmp_data);
+	}
+	
+}
+
+/**
+	* \brief Data Constructor not used for interpretation
+	* read a non-tokenized sample via stdin in this form :
+	* label	premise's words -1 hypothesis' words -1
+	* 
+	* \param mode : Not really usefull (just to differientiate this constructor from another one)
+	* \param lexique_filename : File containing the id of each vocabulary's word
+*/
+Data::Data(unsigned mode, char* lexique_filename)
+{
+	//read the label
+	int labels;
+	cin >> labels; 
+	if(labels > 2 || labels < 0)
+	{
+		cerr << "label must be : (0 : neutral, 1 : inference, or 2 : contradiction)\n";
+		exit(EXIT_FAILURE);
+	}
+	label.push_back(static_cast<unsigned>(labels));
+	
+	ifstream lexique_file(lexique_filename, ios::in);
+	if(!lexique_file)
+	{ 
+		cerr << "Impossible to open the file " << lexique_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	cerr << "Reading " << lexique_filename << endl;
+	
+	string word;
+	unsigned id;
+	map<string, unsigned> word_to_id;
+	while(lexique_file >> word && lexique_file >> id)
+		word_to_id[word] = id;
+	cerr << lexique_filename << " has been read" << endl;
+
+	for(unsigned sentence=0; sentence<2; ++sentence)
+	{
+		vector<unsigned> tmp_data;
+		cin >> word; //read a word
+		while(word != "-1")
+		{
+			std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
+			//cerr << word << " ";
+			tmp_data.push_back( word_to_id[word] );
+			cin >> word;
+		}
+		if(sentence==0)
+			premise.push_back(tmp_data);
+		else
+			hypothesis.push_back(tmp_data);
+	}
+	
+}
+
+/**
+	* \name init_rate
+	* \brief Initialize the number of each label in the dataset
+	* Used in the Data constructor
+	* 
+	* \param label : The label
+*/
+void inline Data::init_rate(unsigned label)
+{
+	switch(label)
+	{
+		case NEUTRAL:
+		{
+			++nb_neutral;
+			break;
+		}
+		case INFERENCE:
+		{
+			++nb_inference;
+			break;
+		}
+		case CONTRADICTION:
+		{
+			++nb_contradiction;
+			break;
+		}
+	}
+}
+
+	/* Getters and setters */
+
+/**
+	* \name get_couple_label
+	* \brief Give the label of the couple "num_couple" from the sample "num_sample"
+	* 
+	* \param num_sample : The numero of the sample you're looking at
+	* \param num_couple : The numero of the couple you're looking at
+	* 
+	* \return The label of the couple
+*/
+unsigned Data::get_couple_label(unsigned num_sample, unsigned num_couple)
+{
+	return important_couples[num_sample].get_label(num_couple);
+}
+
+/**
+	* \name get_nb_couple
+	* \brief Give the number of couple for the sample "num_sample"
+	* 
+	* \param num_sample : The numero of the sample you're looking at
+	* 
+	* \return The number of couple
+*/
+unsigned Data::get_nb_couple(unsigned num_sample)
+{
+	return important_couples[num_sample].get_size();
+}
+
+/**
+	* \name get_couple_nb_words
+	* \brief Give the number of words of the couple "num_couple" from the sample "num_sample", for the premise or for the hypothesis
+	* 
+	* \param num_sample : The numero of the sample you're looking at
+	* \param num_couple : The numero of the couple you're looking at 
+	* \param premise : True if you want to look at the important words in the premise, false if it's for the hypothesis
+	* 
+	* \return The number of words in the premise side or in the hypothesis side
+*/
+unsigned Data::get_couple_nb_words(unsigned num_sample, unsigned num_couple, bool premise)
+{
+	return important_couples[num_sample].get_nb_words(num_couple, premise);
+}
+
+/**
+	* \name get_couple_id
+	* \brief Give the id of the word "num_mot" of the couple "num_couple" for the sample "num_sample", for the premise or for the hypothesis
+	* 
+	* \param num_sample : The numero of the sample you're looking at
+	* \param num_couple : The numero of the couple you're looking at 
+	* \param num_mot : Position of the word you want the id from (0 = first word, 1 = second word, ...)
+	* \param premise : True if you want to look at the important words in the premise, false if it's for the hypothesis
+	* 
+	* \return The id of the word
+*/
+unsigned Data::get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise)
+{
+	return important_couples[num_sample].get_id(num_couple, num_mot, premise);
+}
+
+/**
+	* \name get_nb_contradiction
+	* \brief Give the number of contradiction label in the dataset
+*/
+unsigned Data::get_nb_contradiction() { return nb_contradiction; }
+/**
+	* \name get_nb_inf
+	* \brief Give the number of inference label in the dataset
+*/
+unsigned Data::get_nb_inf() { return nb_inference; }
+/**
+	* \name get_nb_neutral
+	* \brief Give the number of neutral label in the dataset
+*/
+unsigned Data::get_nb_neutral() { return nb_neutral; }
+
+/**
+	* \name get_word_id
+	* \brief Give the word id
+	* 
+	* \param sentence : The sentence from where you pick the word (1 if you want the premise, 2 if you want the hypothesis)
+	* \param num_sentence : The number of the sample processed
+	* \param word_position : The position of the word
+	* 
+	* \return The word id
+*/
+unsigned Data::get_word_id(unsigned sentence, unsigned num_sentence, unsigned word_position)
+{
+	if(sentence==1)
+		return premise[num_sentence][word_position];
+	return hypothesis[num_sentence][word_position];
+}
+
+/**
+	* \name get_label
+	* \brief Give the label
+	* 
+	* \param num_sentence : The number of the sample processed
+	* 
+	* \return The label
+*/
+unsigned Data::get_label(unsigned num_sentence) { return label[num_sentence]; }
+
+/**
+	* \name get_nb_words
+	* \brief Give the number of words in the sentence
+	* 
+	* \param sentence : The sentence from where you want to know the number of words 
+	* (1 if you want the premise, 2 if you want the hypothesis)
+	* \param num_sentence : The number of the sample processed
+	* 
+	* \return The number of words in the sentence
+*/
+unsigned Data::get_nb_words(unsigned sentence, unsigned num_sentence)
+{
+	if(sentence==1)
+		return premise[num_sentence].size();
+	return hypothesis[num_sentence].size();
+}
+
+/**
+	* \name get_nb_sentences
+	* \brief Give the number of samples
+	* 
+	* \return The number of samples
+*/
+unsigned Data::get_nb_sentences() { return premise.size(); }
+
+
+	/* Printing functions */
+
+void Data::print_infos(unsigned type)
+{
+	const float nb_samples = static_cast<float>(label.size());
+	
+	if(type==0)
+		cerr << "**TRAIN SET**\n";
+	else if(type==1)
+		cerr << "**DEV SET**\n";
+	else
+		cerr << "**TEST SET**\n";
+	cerr << "\tNumber of samples = " << label.size() << endl;	
+	cerr << "\tContradiction rate = " << nb_contradiction / nb_samples << endl;
+	cerr << "\tInference rate = " << nb_inference / nb_samples << endl;
+	cerr << "\tNeutral rate = " << nb_neutral / nb_samples << endl;
+}
+
+
+/**
+	* \name print_sentences
+	* \brief Print the entire dataset in a file in this form :
+	*       label
+	*       premise
+	*       hypothesis
+	* 
+	* Just to debug.
+	* \param name : The name of the output file
+*/
+void Data::print_sentences(char const* name)
+{
+	ofstream output_file(name, ios::out | ios::trunc);
+	if(!output_file)
+	{
+		cerr << "Problem with the output file "<< name << endl;
+		exit(EXIT_FAILURE);
+	}
+	unsigned k;
+	unsigned j;
+	for(unsigned i=0; i<premise.size(); ++i)
+	{
+		output_file << label[i] << endl;
+		for(k=0; k<2; ++k)
+		{
+			if(k==0)
+			{
+				for(j=0; j<premise[i].size(); ++j)
+					output_file << premise[i][j] <<' ';
+				output_file << endl;
+			}
+			else
+			{
+				for(j=0; j<hypothesis[i].size(); ++j)
+					output_file << hypothesis[i][j] <<' ';
+				output_file << endl;
+			}
+		}
+	}
+	output_file.close();
+}
+
+/**
+	* \name print_sentences
+	* \brief Print a sample in this form :
+	*       premise
+	*       hypothesis
+	* 
+	* Just to debug.
+	* \param num_sample : The numero of the sample you want to print
+*/
+void Data::print_sentences_of_a_sample(unsigned num_sample)
+{
+
+	unsigned j;
+	cerr << "premise = ";
+
+	for(j=0; j<premise[num_sample].size(); ++j)
+		cerr << premise[num_sample][j] <<' ';
+	cerr << endl;
+	
+	cerr << "hypothesis = ";
+
+	for(j=0; j<hypothesis[num_sample].size(); ++j)
+		cerr << hypothesis[num_sample][j] <<' ';
+	cerr << endl;
+	
+}
+
+	/* Functions for interpretation */
+
+/**
+	* \name remove_couple
+	* \brief Remove the couple-s listed in "num_couple" in the sample "num_sample"
+	* For example if the couple in "num_couple" is "dog ; cat"
+	* and premise = "the dog is sleeping" ; hypothesis = "the cat is sleeping"
+	* then we have now premise = "the is sleeping" ; hypothesis = "the is sleeping"
+	* (it does not really remove words, it simply set them to '0' which means 'no word here' for the RNN)
+	* 
+	* \param num_couple : Vector containing the couple's numero that you want to remove
+	* \param num_sample : The numero of the sample from where you want to remove the couple-s
+*/
 void Data::remove_couple(vector<unsigned>& num_couple, unsigned num_sample)
 {
 	unsigned word;
@@ -128,6 +493,13 @@ void Data::remove_couple(vector<unsigned>& num_couple, unsigned num_sample)
 	
 }
 
+/**
+	* \name reset_couple
+	* \brief Reset the couple-s precedently removed, listed in "num_couple" in the sample "num_sample"
+	* 
+	* \param num_couple : Vector containing the couple's numero that you want to reset
+	* \param num_sample : The numero of the sample from where you want to reset the couple-s
+*/
 void Data::reset_couple(vector<unsigned>& num_couple, unsigned num_sample)
 {
 	unsigned word;
@@ -154,6 +526,15 @@ void Data::reset_couple(vector<unsigned>& num_couple, unsigned num_sample)
 	}	
 }
 
+/**
+	* \name taking_couple
+	* \brief Remove all the words in the premise and the hypothesis of the sample "num_sample", except for the words of the couple "num_couple"
+	* For exemple if the couple is "dog ; cat" then the premise is now "dog" and the hypothesis is now "cat"
+	* (it does not really remove words, it simply set them to '0' which means 'no word here' for the RNN)
+	* 
+	* \param num_couple : The couple's numero that you want to take
+	* \param num_sample : The numero of the sample you're looking at
+*/
 void Data::taking_couple(unsigned num_couple, unsigned num_sample)
 {
 	if( num_couple >= important_couples[num_sample].get_size() )
@@ -215,6 +596,15 @@ void Data::taking_couple(unsigned num_couple, unsigned num_sample)
 	}
 }
 
+/**
+	* \name reset_sentences
+	* \brief Reset all the words in the premise or the hypothesis of the sample "num_sample"
+	* 
+	* \param original_premise : The original premise of the sample
+	* \param original_hypothesis : The original hypothesis of the sample
+	* \param num_sample : The numero of the sample you want to reset
+	* \param is_premise : True if you want to reset the premise, false if you want to reset the hypothesis
+*/
 void Data::reset_sentences(vector<unsigned>& original_premise,vector<unsigned>& original_hypothesis, unsigned num_sample, bool is_premise)
 {
 	if(is_premise)
@@ -226,6 +616,14 @@ void Data::reset_sentences(vector<unsigned>& original_premise,vector<unsigned>& 
 
 }
 
+/**
+	* \name is_empty
+	* \brief Detect if a sentence (premise or hypothesis) of the sample "num_sample" is containing 0 words
+	* Could be used for debugging
+	* 
+	* \param num_sample : The numero of the sample you want to check
+	* \param is_premise : True if you want to check the premise, false if you want to check the hypothesis
+*/
 bool Data::is_empty(unsigned num_sample, bool is_premise)
 {
 	if(is_premise)
@@ -251,11 +649,31 @@ bool Data::is_empty(unsigned num_sample, bool is_premise)
 	return true;
 }
 
+
+/* ========================= COUPLE CLASS =========================*/
+
+
+	/* Constructor */
+	
+/**
+	* \brief Couple Constructor 
+	* Initialize the couples with a file. 
+	* This constructor is called by the Data constructor to read and to inizialise the couples for each sample.
+	* 
+	* \param test_explication : File containing the samples in this form :
+	*       label
+	*       premise -1 premise's length
+	*       hypothesis -1 hypothesis' length
+	* 		premise's words -2 hypothesis' words -1 // list of couples (-2 is a separator, -1 means end of couple)
+	* 		-5 // this means end of the couples' list
+	* 		ith couple's label // list of the couple's label
+	* 		-3 // this means end of sample
+*/
 /* Ex couple :
-	22 15 8 16 507 17 -2 507 1 -1
-	0 -4 -2 8634 3 -1
-	0 -4 -2 5524 6 -1
-	-3
+	22 15 8 16 507 17 -2 507 1 -1 1
+	0 -4 -2 8634 3 -1 0
+	0 -4 -2 5524 6 -1 0
+	-5
 */
 Couple::Couple(ifstream& test_explication)
 {
@@ -294,27 +712,18 @@ Couple::Couple(ifstream& test_explication)
 	}
 }
 
-void Couple::print_couples()
-{
-	cerr << "Premise : \n";
-	/*for(unsigned i=0; i<imp_word_premise.size(); ++i)
-	{*/
-	unsigned i=1;
-		for(unsigned j=0; j<imp_word_premise[i].size(); ++j)
-			cerr << imp_word_premise[i][j].first << " POSITION[" << imp_word_premise[i][j].second << "] ";
-		cerr << endl;
-	//}
-	cerr << "Hypothesis : \n";
-	/*for(unsigned i=0; i<imp_word_hypothesis.size(); ++i)
-	{*/
-		for(unsigned j=0; j<imp_word_hypothesis[i].size(); ++j)
-			cerr << imp_word_hypothesis[i][j].first << " POSITION[" << imp_word_hypothesis[i][j].second << "] ";
-		cerr << endl;
-	//}
-	cerr<<endl;
-}
+	/* Getters and setters */
 
-
+/**
+	* \name get_id
+	* \brief Give the id of the word "num_mot" of the couple "num_couple"
+	*
+	* \param num_couple : The numero of the couple
+	* \param num_mot : The position of the word
+	* \param premise : True if you want to get the id of the word from the premise, false if it's from the hypothesis
+	* 
+	* \return The id of the word
+*/
 unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
 {
 	if(premise)
@@ -322,6 +731,16 @@ unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
 	return imp_word_hypothesis[num_couple][num_mot].first;
 }
 
+/**
+	* \name get_position
+	* \brief Give the position of the word "num_mot" of the couple "num_couple"
+	*
+	* \param num_couple : The numero of the couple
+	* \param num_mot : The position of the word in the couple 
+	* \param premise : True if you want to get the position of the word from the premise, false if it's from the hypothesis
+	* 
+	* \return The position of the word in the premise or in the hypothesis
+*/
 int Couple::get_position(unsigned num_couple, unsigned num_mot, bool premise)
 {
 	if(premise)
@@ -329,6 +748,15 @@ int Couple::get_position(unsigned num_couple, unsigned num_mot, bool premise)
 	return imp_word_hypothesis[num_couple][num_mot].second;
 }
 
+/**
+	* \name get_nb_words
+	* \brief Give the number of words in the couple "num_couple"
+	*
+	* \param num_couple : The numero of the couple
+	* \param premise : True if you want to get the number of words in the couple in the premise side, false if it's in the hypothesis side
+	* 
+	* \return The number of words in the premise side or in the hypothesis side
+*/
 unsigned Couple::get_nb_words(unsigned num_couple, bool premise)
 {
 	if(premise)
@@ -336,280 +764,62 @@ unsigned Couple::get_nb_words(unsigned num_couple, bool premise)
 	return imp_word_hypothesis[num_couple].size();
 }
 
+/**
+	* \name get_size
+	* \brief Give the number of couples
+	*
+	* \param num_couple : The numero of the couple
+	* 
+	* \return The number of couples
+*/
 unsigned Couple::get_size()
 {
 	return imp_word_hypothesis.size();
 }
 
+/**
+	* \name get_label
+	* \brief Give the label of the couple
+	*
+	* \param num_couple : The numero of the couple
+	* 
+	* \return The label of the couple
+*/
 unsigned Couple::get_label(unsigned num_couple)
 {
 	return labels[num_couple];
 }
 
-unsigned Data::get_couple_label(unsigned num_sample, unsigned num_couple)
-{
-	return important_couples[num_sample].get_label(num_couple);
-}
-
-unsigned Data::get_nb_couple(unsigned num_sample)
-{
-	return important_couples[num_sample].get_size();
-}
-
-unsigned Data::get_couple_nb_words(unsigned num_sample, unsigned num_couple, bool premise)
-{
-	return important_couples[num_sample].get_nb_words(num_couple, premise);
-}
-
-unsigned Data::get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise)
-{
-	return important_couples[num_sample].get_id(num_couple, num_mot, premise);
-}
-
-Data::Data(unsigned mode)
-{
-	//read the label
-	int labels;
-	cin >> labels; 
-	if(labels > 2 || labels < 0)
-	{
-		cerr << "label must be : (0 : neutral, 1 : inference, or 2 : contradiction)\n";
-		exit(EXIT_FAILURE);
-	}
-	label.push_back(static_cast<unsigned>(labels));
-	
-	int val=0;
-	while(val != -2)
-	{
-		for(unsigned sentence=0; sentence<2; ++sentence)
-		{
-			vector<unsigned> tmp_data;
-			cin >> val; //read a word id
-			while(val != -1)
-			{
-				/*if(val == -2 && sentence==0)
-					exit(EXIT_FAILURE);*/
-				tmp_data.push_back(static_cast<unsigned>(val));
-				cin >> val;
-			}
-			if(sentence==0)
-				premise.push_back(tmp_data);
-			else
-				hypothesis.push_back(tmp_data);
-		}
-		cin >> val; //read -2
-	}
-	
-}
-
-Data::Data(unsigned mode, char* lexique_filename)
-{
-	//read the label
-	int labels;
-	cin >> labels; 
-	if(labels > 2 || labels < 0)
-	{
-		cerr << "label must be : (0 : neutral, 1 : inference, or 2 : contradiction)\n";
-		exit(EXIT_FAILURE);
-	}
-	label.push_back(static_cast<unsigned>(labels));
-	
-	ifstream lexique_file(lexique_filename, ios::in);
-	if(!lexique_file)
-	{ 
-		cerr << "Impossible to open the file " << lexique_filename << endl;
-		exit(EXIT_FAILURE);
-	}
-	
-	cerr << "Reading " << lexique_filename << endl;
-	
-	string word;
-	unsigned id;
-	map<string, unsigned> word_to_id;
-	while(lexique_file >> word && lexique_file >> id)
-		word_to_id[word] = id;
-	cerr << lexique_filename << " has been read" << endl;
-
-	for(unsigned sentence=0; sentence<2; ++sentence)
-	{
-		vector<unsigned> tmp_data;
-		cin >> word; //read a word
-		while(word != "-1")
-		{
-			std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
-			//cerr << word << " ";
-			tmp_data.push_back( word_to_id[word] );
-			cin >> word;
-		}
-		if(sentence==0)
-			premise.push_back(tmp_data);
-		else
-			hypothesis.push_back(tmp_data);
-	}
-	
-}
-
-void inline Data::init_rate(unsigned label)
-{
-	switch(label)
-	{
-		case NEUTRAL:
-		{
-			++nb_neutral;
-			break;
-		}
-		case INFERENCE:
-		{
-			++nb_inference;
-			break;
-		}
-		case CONTRADICTION:
-		{
-			++nb_contradiction;
-			break;
-		}
-	}
-}
-
-unsigned Data::get_nb_contradiction() { return nb_contradiction; }
-unsigned Data::get_nb_inf() { return nb_inference; }
-unsigned Data::get_nb_neutral() { return nb_neutral; }
-
-void Data::print_infos(unsigned type)
-{
-	const float nb_samples = static_cast<float>(label.size());
-	
-	if(type==0)
-		cerr << "**TRAIN SET**\n";
-	else if(type==1)
-		cerr << "**DEV SET**\n";
-	else
-		cerr << "**TEST SET**\n";
-	cerr << "\tNumber of samples = " << label.size() << endl;	
-	cerr << "\tContradiction rate = " << nb_contradiction / nb_samples << endl;
-	cerr << "\tInference rate = " << nb_inference / nb_samples << endl;
-	cerr << "\tNeutral rate = " << nb_neutral / nb_samples << endl;
-}
+	/* Printing functions */
 
 /**
-	* \name get_word_id
-	* \brief Give the word id
-	* 
-	* \param sentence : The sentence from where you pick the word (1 if you want the premise, 2 if you want the hypothesis)
-	* \param num_sentence : The number of the sample processed
-	* \param word_position : The position of the word
-	* 
-	* \return The word id
+	* \name print_couples
+	* \brief Print the couple numero "num_couple" in this form :
+	* 	Premise :
+	* 	word POSITION[position of the word in the original premise] ...
+	*	Hypothesis :
+	* 	word POSITION[position of the word in the original hypothesis] ...
+	*
+	* \param num_couple : The numero of the couple
 */
-unsigned Data::get_word_id(unsigned sentence, unsigned num_sentence, unsigned word_position)
+void Couple::print_couples(unsigned num_couple)
 {
-	if(sentence==1)
-		return premise[num_sentence][word_position];
-	return hypothesis[num_sentence][word_position];
-}
-
-/**
-	* \name get_label
-	* \brief Give the label
-	* 
-	* \param num_sentence : The number of the sample processed
-	* 
-	* \return The label
-*/
-unsigned Data::get_label(unsigned num_sentence)
-{
-	return label[num_sentence];
-}
-
-/**
-	* \name get_nb_words
-	* \brief Give the number of words in the sentence
-	* 
-	* \param sentence : The sentence from where you want to know the number of words 
-	* (1 if you want the premise, 2 if you want the hypothesis)
-	* \param num_sentence : The number of the sample processed
-	* 
-	* \return The number of words in the sentence
-*/
-unsigned Data::get_nb_words(unsigned sentence, unsigned num_sentence)
-{
-	if(sentence==1)
-		return premise[num_sentence].size();
-	return hypothesis[num_sentence].size();
-}
-
-/**
-	* \name get_nb_sentences
-	* \brief Give the number of samples
-	* 
-	* \return The number of samples
-*/
-unsigned Data::get_nb_sentences()
-{
-	return premise.size();
-}
-
-/**
-	* \name print_sentences
-	* \brief Print the entire dataset in a file in this form :
-	*       label
-	*       premise
-	*       hypothesis
-	* 
-	* Just to debug.
-	* \param name : The name of the output file
-*/
-void Data::print_sentences(char const* name)
-{
-	ofstream output_file(name, ios::out | ios::trunc);
-	if(!output_file)
-	{
-		cerr << "Problem with the output file "<< name << endl;
-		exit(EXIT_FAILURE);
-	}
-	unsigned k;
-	unsigned j;
-	for(unsigned i=0; i<premise.size(); ++i)
-	{
-		output_file << label[i] << endl;
-		for(k=0; k<2; ++k)
-		{
-			if(k==0)
-			{
-				for(j=0; j<premise[i].size(); ++j)
-					output_file << premise[i][j] <<' ';
-				output_file << endl;
-			}
-			else
-			{
-				for(j=0; j<hypothesis[i].size(); ++j)
-					output_file << hypothesis[i][j] <<' ';
-				output_file << endl;
-			}
-		}
-	}
-	output_file.close();
-}
-
-void Data::print_sentences_of_a_sample(unsigned num_sample)
-{
-
-	unsigned j;
-	cerr << "premise = ";
-
-	for(j=0; j<premise[num_sample].size(); ++j)
-		cerr << premise[num_sample][j] <<' ';
+	cerr << "Premise : \n";
+	unsigned i=num_couple;
+	for(unsigned j=0; j<imp_word_premise[i].size(); ++j)
+		cerr << imp_word_premise[i][j].first << " POSITION[" << imp_word_premise[i][j].second << "] ";
 	cerr << endl;
-	
-	cerr << "hypothesis = ";
-
-	for(j=0; j<hypothesis[num_sample].size(); ++j)
-		cerr << hypothesis[num_sample][j] <<' ';
+	cerr << "Hypothesis : \n";
+	for(unsigned j=0; j<imp_word_hypothesis[i].size(); ++j)
+		cerr << imp_word_hypothesis[i][j].first << " POSITION[" << imp_word_hypothesis[i][j].second << "] ";
 	cerr << endl;
-	
+	cerr<<endl;
 }
 
-/* EMBEDDING CLASS */
+
+/* ========================= EMBEDDING CLASS =========================*/
+
+	/* Constructors */
 
 /**
 	* \brief Embeddings Constructor (training phase -- random embedding)
@@ -626,7 +836,7 @@ Embeddings::Embeddings(ParameterCollection& model, unsigned dim) : p_c(), dim_em
 }
 
 /**
-	* \brief Embeddings Constructor (testing phase)
+	* \brief Embeddings Constructor (with a file containing pre-trained embedding)
 	* Initialize the word embedding with a file
 	* 
 	* \param embedding_filename : File containing the embedding
@@ -658,28 +868,7 @@ Embeddings::Embeddings(char* embedding_filename, ParameterCollection& model, uns
 	emb_file.close();
 }
 
-/**
-	* \name print_embedding
-	* \brief Print the embedding of each words in a file. Just to debug.
-	*
-	* \param name : The name of the output file
-*/
-void Embeddings::print_embedding(char* output_filename)
-{
-	ComputationGraph cg;
-	ofstream output_file(output_filename, ios::out | ios::trunc);
-	if(!output_file)
-	{
-		cerr << "Problem with the output file " << output_filename << endl;
-		exit(EXIT_FAILURE);
-	}
-	cerr << "Printing embeddings on " << output_filename << "...\n";
-	for(unsigned i=0; i<VOCAB_SIZE; ++i)
-		output_file << "c " << const_lookup(cg, p_c, i).value() << endl; //adding 'c' because the constructor read an emb file with each lines begining with a word
-
-	output_file.close();
-
-}
+	/* Getter */
 
 /**
 	* \name get_embedding_expr
@@ -703,3 +892,30 @@ Expression Embeddings::get_embedding_expr(ComputationGraph& cg, unsigned index)
 		return const_lookup(cg, p_c, num);*/
 	return lookup(cg, p_c, num);
 }
+
+	/* Printing function */
+
+/**
+	* \name print_embedding
+	* \brief Print the embedding of each words in a file. Just to debug.
+	*
+	* \param name : The name of the output file
+*/
+void Embeddings::print_embedding(char* output_filename)
+{
+	ComputationGraph cg;
+	ofstream output_file(output_filename, ios::out | ios::trunc);
+	if(!output_file)
+	{
+		cerr << "Problem with the output file " << output_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	cerr << "Printing embeddings on " << output_filename << "...\n";
+	for(unsigned i=0; i<VOCAB_SIZE; ++i)
+		output_file << "c " << const_lookup(cg, p_c, i).value() << endl; //adding 'c' because the constructor read an emb file with each lines begining with a word
+
+	output_file.close();
+
+}
+
+

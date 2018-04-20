@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 	// Create model
 	if(systeme < 3)
 	{
-		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, model, static_cast<unsigned>(systeme));
+		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
 		/*if(mode==0)
 		{
 			Data test_set(argv[1]);
@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 	{
 		Data test_set(argv[1]);
 		test_set.print_infos(3);
-		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, model);
+		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
 		run_predict(rnn, model, test_set, embedding, argv[6]);
 	}
 

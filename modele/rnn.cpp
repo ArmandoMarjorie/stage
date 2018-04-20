@@ -7,16 +7,16 @@ using namespace dynet;
 
 	/* Constructors */
 
-RNN::RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, ParameterCollection& model) :
-	nb_layers(nblayer), input_dim(inputdim), hidden_dim(hiddendim), dropout_rate(dropout)
+RNN::RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, ParameterCollection& model) :
+	nb_layers(nblayer), input_dim(inputdim), hidden_dim(hiddendim), dropout_rate(dropout), systeme(s)
 {
 	forward_lstm = new VanillaLSTMBuilder(nb_layers, input_dim, hidden_dim, model); 
 	apply_dropout = (dropout != 0);
 	p_bias = model.add_parameters({NB_CLASSES});
 }
 
-LSTM::LSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, ParameterCollection& model, unsigned s) :
-	RNN(nblayer, inputdim, hiddendim, dropout, model), systeme(s)
+LSTM::LSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, ParameterCollection& model) :
+	RNN(nblayer, inputdim, hiddendim, dropout, s, model)
 {
 	if(systeme == 1)
 		p_W = model.add_parameters({NB_CLASSES, 2*hidden_dim});
@@ -24,11 +24,14 @@ LSTM::LSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropou
 		p_W = model.add_parameters({NB_CLASSES, hidden_dim*hidden_dim});
 }
 
-BiLSTM::BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, ParameterCollection& model) :
-	RNN(nblayer, inputdim, hiddendim, dropout, model)
+BiLSTM::BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, ParameterCollection& model) :
+	RNN(nblayer, inputdim, hiddendim, dropout, s, model)
 {
 	backward_lstm = new VanillaLSTMBuilder(nb_layers, input_dim, hidden_dim, model);
-	p_W = model.add_parameters({NB_CLASSES, 4*hidden_dim});
+	if(systeme==3)
+		p_W = model.add_parameters({NB_CLASSES, 4*hidden_dim});
+	else if(systeme==4)
+		p_W = model.add_parameters({NB_CLASSES, (2*hidden_dim)*(2*hidden_dim)});
 }
 
 	/* Getters and setters */
@@ -62,7 +65,12 @@ unsigned LSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, 
 unsigned BiLSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba)
 {
 	//cerr << "BiLSTM prediction \n";
-	Expression x = run_KIM(set, embedding, num_sentence, cg);
+	Expression x;
+	if(systeme==3)
+		x = run_KIM(set, embedding, num_sentence, cg);
+	else if(systeme==4)
+		x = run_sys4(set, embedding, num_sentence, cg);
+		
 	unsigned argmax = predict_algo(x, cg, print_proba);
 	return argmax;
 }
@@ -217,12 +225,6 @@ void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& expli
 		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
 		{
 			explication_set.taking_couple(j,i);
-			
-			/*if(explication_set.is_empty(i, true))
-				explication_set.reset_sentences(premise, hypothesis, i, true);
-			if(explication_set.is_empty(i, false))
-				explication_set.reset_sentences(premise, hypothesis, i, false);*/
-
 			label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
 			write_couple(output, explication_set, i, j);
 			output << "-1 " << label_predicted << " " << explication_set.get_couple_label(i, j) << endl;
@@ -324,7 +326,11 @@ Expression LSTM::get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned 
 
 Expression BiLSTM::get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg)
 {
-	Expression score = run_KIM(set, embedding, num_sentence, cg);
+	Expression score;
+	if(systeme==3)
+		score = run_KIM(set, embedding, num_sentence, cg);
+	else if(systeme==4)
+		score = run_sys4(set, embedding, num_sentence, cg);
 	Expression loss_expr = get_neg_log_softmax_algo(score, num_sentence, set);
 	return loss_expr;
 }
@@ -550,16 +556,20 @@ void BiLSTM::words_representation(Embeddings& embedding, Data& set, unsigned sen
 	/* Run forward LSTM */
 	for(i=0; i<nb_words; ++i)
 	{
+		if(set.get_word_id(sentence, num_sentence, i) == 0)
+			continue;
 		sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) ) );
 	}
 	/* Run backward LSTM */
 	for(j=nb_words-1; j>=0; --j)
 	{
+		if(set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j)) == 0)
+			continue;
 		tmp.push_back(backward_lstm->add_input( 
 				embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j))) ) );
 	}
 	/* Concat */
-	for(i=0; i<nb_words; ++i)
+	for(i=0; i<sentence_repr.size(); ++i)
 	{
 		vector<Expression> input_expr(2);
 		input_expr[0] = sentence_repr[i];
@@ -662,6 +672,34 @@ void BiLSTM::compute_b_context_vector(ComputationGraph& cg, vector< vector<float
 	}
 }
 
+Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg)
+{
+	/* Representation of each word (of the premise and of the hypothesis)
+	 * by the BiLSTM
+	 */
+	vector<Expression> premise_lstm_repr;
+	vector<Expression> hypothesis_lstm_repr;
+	words_representation(embedding, set, 1, cg, num_sentence, premise_lstm_repr);
+	words_representation(embedding, set, 2, cg, num_sentence, hypothesis_lstm_repr);
+	
+	// Computing score 
+	Expression W = parameter(cg, p_W); 
+	Expression bias = parameter(cg, p_bias); 
+	vector<Expression> scores;
+	Expression input;
+	
+	for(unsigned i=0; i<premise_lstm_repr.size(); ++i)
+		for(unsigned j=0; j<hypothesis_lstm_repr.size(); ++j)
+		{
+			input = premise_lstm_repr[i] * transpose(hypothesis_lstm_repr[j]);
+			input = reshape(input, Dim({(2*hidden_dim)*(2*hidden_dim)}, 1));
+			//cerr << "dimension = "<<input.dim() <<endl;
+			scores.push_back(affine_transform({bias, W, input}));
+		}
+		
+	return sum(scores);
+}
+
 Expression BiLSTM::run_KIM(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg) 
 {
 	/* Representation of each word (of the premise and of the hypothesis)
@@ -695,8 +733,8 @@ Expression BiLSTM::run_KIM(Data& set, Embeddings& embedding, unsigned num_senten
 
 	// Pooling 
 	vector<Expression> pool(2);
-	pool[0] = sum(a_c_vect);
-	pool[1] = sum(b_c_vect);
+	pool[0] = sum(a_c_vect) / static_cast<double>(premise_lstm_repr.size());
+	pool[1] = sum(b_c_vect) / static_cast<double>(hypothesis_lstm_repr.size());
 
 	// Concat pooling 
 	Expression concat = concatenate(pool);

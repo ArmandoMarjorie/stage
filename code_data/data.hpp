@@ -54,7 +54,7 @@
 		
 		public:
 			Couple(std::ifstream& test_explication);
-			void print_couples();
+			void print_couples(unsigned num_couple);
 			unsigned get_id(unsigned num_couple, unsigned num_mot, bool premise);
 			int get_position(unsigned num_couple, unsigned num_mot, bool premise);
 			unsigned get_nb_words(unsigned num_couple, bool premise);
@@ -84,7 +84,7 @@
 
 		public:
 			Data(char* data_filename);
-			Data(unsigned mode);
+			Data();
 			Data(unsigned mode, char* lexique_filename);
 			Data(char* test_explication_filename, unsigned mode);
 			
