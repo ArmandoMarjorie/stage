@@ -423,7 +423,7 @@ void Data::print_sentences(char const* name)
 }
 
 /**
-	* \name print_sentences
+	* \name print_sentences_of_a_sample
 	* \brief Print a sample in this form :
 	*       premise
 	*       hypothesis
@@ -446,6 +446,30 @@ void Data::print_sentences_of_a_sample(unsigned num_sample)
 	for(j=0; j<hypothesis[num_sample].size(); ++j)
 		cerr << hypothesis[num_sample][j] <<' ';
 	cerr << endl;
+	
+}
+
+/**
+	* \name print_sentences_of_a_sample
+	* \brief Print a sample in a file in this form :
+	*       premise
+	*       hypothesis
+	*
+	* \param num_sample : The numero of the sample you want to print
+	* \param output : file where to write 
+*/
+void Data::print_sentences_of_a_sample(unsigned num_sample, ofstream& output)
+{
+
+	unsigned j;
+
+	for(j=0; j<premise[num_sample].size(); ++j)
+		output << premise[num_sample][j] <<' ';
+	output << "-1\n";
+
+	for(j=0; j<hypothesis[num_sample].size(); ++j)
+		output << hypothesis[num_sample][j] <<' ';
+	output << "-1\n";
 	
 }
 
@@ -623,6 +647,8 @@ void Data::reset_sentences(vector<unsigned>& original_premise,vector<unsigned>& 
 	* 
 	* \param num_sample : The numero of the sample you want to check
 	* \param is_premise : True if you want to check the premise, false if you want to check the hypothesis
+	* 
+	* \return True if the sentence (premise or hypothesis) is empty
 */
 bool Data::is_empty(unsigned num_sample, bool is_premise)
 {

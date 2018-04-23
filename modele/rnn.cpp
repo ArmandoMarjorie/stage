@@ -54,15 +54,15 @@ unsigned RNN::get_hidden_dim(){ return hidden_dim; }
 
 	/* Predictions algorithms */
 
-unsigned LSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba)
+vector<float> LSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba, unsigned& argmax)
 {
 	//cerr << "LSTM prediction : system " << systeme << endl;
 	Expression x = run(set, embedding, num_sentence, cg);
-	unsigned argmax = predict_algo(x, cg, print_proba);
-	return argmax;
+	vector<float> probs = predict_algo(x, cg, print_proba, argmax);
+	return probs;
 }
 
-unsigned BiLSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba)
+vector<float> BiLSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba, unsigned& argmax)
 {
 	//cerr << "BiLSTM prediction \n";
 	Expression x;
@@ -71,14 +71,14 @@ unsigned BiLSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence
 	else if(systeme==4)
 		x = run_sys4(set, embedding, num_sentence, cg);
 		
-	unsigned argmax = predict_algo(x, cg, print_proba);
-	return argmax;
+	vector<float> probs = predict_algo(x, cg, print_proba, argmax);
+	return probs;
 }
 
-unsigned RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_proba)
+vector<float> RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_proba, unsigned& argmax)
 {
 	vector<float> probs = as_vector(cg.forward(x));
-	unsigned argmax=0;
+	argmax=0;
 
 	for (unsigned k = 0; k < probs.size(); ++k) 
 	{
@@ -87,7 +87,8 @@ unsigned RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_proba
 		if (probs[k] > probs[argmax])
 			argmax = k;
 	}
-	return argmax;
+	
+	return probs;
 }
 
 unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, unsigned nb_of_sentences_dev, unsigned& best)
@@ -105,7 +106,7 @@ unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, un
 	for (unsigned i=0; i<nb_of_sentences_dev; ++i)
 	{
 		ComputationGraph cg;
-		label_predicted = rnn.predict(dev_set, embedding, i, cg, false);
+		rnn.predict(dev_set, embedding, i, cg, false, label_predicted);
 		if (label_predicted == dev_set.get_label(i))
 		{
 			positive++;
@@ -192,7 +193,21 @@ void LSTM::run_predict_explication(dynet::ParameterCollection& model, Data& expl
 }*/
 /* .......................................... */
 
-void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
+/**
+	* \name run_predict_couple
+	* \brief For each sample in the dataset, it predicts the label for each couple in the file "expl_token"
+	* Example : P = "the dog is sleeping" ; H = "the cat is sleeping"
+	* Couple 1 = dog/cat
+	* Couple 2 = sleeping/sleeping
+	* It will make a prediction for P = "dog" ; H = "cat" and for P = "sleeping" ; H = "sleeping"
+	*
+	* \param rnn : The rnn (LSTM or BiLSTM)
+	* \param model : The model
+	* \param explication_set : The dataset 
+	* \param embedding : The word embedding table 
+	* \param parameters_filename : File containing the model's weights to populate
+*/
+void run_predict_couple(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
 {
 	cerr << "Loading parameters ...\n";
 	TextFileLoader loader(parameters_filename);
@@ -218,14 +233,14 @@ void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& expli
 	for(unsigned i=0; i<nb_of_sentences; ++i) //pour un sample ...
 	{
 		ComputationGraph cg;
-		label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
+		rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
 		output << explication_set.get_label(i) << endl << label_predicted << endl;
 		save_sentences(explication_set, premise, hypothesis, i);
 		write_sentences(output, premise, hypothesis);
 		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
 		{
 			explication_set.taking_couple(j,i);
-			label_predicted = rnn.predict(explication_set, embedding, i, cg, false);
+			rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
 			write_couple(output, explication_set, i, j);
 			output << "-1 " << label_predicted << " " << explication_set.get_couple_label(i, j) << endl;
 			explication_set.reset_sentences(premise, hypothesis, i, true);
@@ -276,6 +291,79 @@ void save_sentences(Data& explication_set,vector<unsigned>& premise,vector<unsig
 		}	
 	}
 }
+
+void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	rnn.disable_dropout();
+	char const* name = "Files/expl_removing_couple_token";
+	ofstream output(name, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << name << endl;
+		exit(EXIT_FAILURE);
+	}	
+	
+	/* Algo :
+	 * faire la prédiction normale
+	 * ecrire dans le fichier le label de base et la prediciton, la premisse, l'hypothese
+	 * pour chaque couple :
+	 * 	le grisouiller 
+	 * 	faire une prédiction
+	 * 	peut etre ecrire le label obtenu
+	 * 	calculer son DI
+	 * 	ecrire le couple et son DI
+	 * 
+	 */ 	
+	
+	float DI=0;
+	vector<unsigned> num_couple(1);
+	
+	for(unsigned i=0; i<nb_of_sentences; ++i) //pour un sample ...
+	{
+		ComputationGraph cg;
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+		output << explication_set.get_label(i) << endl << label_predicted << endl;
+		explication_set.print_sentences_of_a_sample(i, output);
+		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
+		{
+			num_couple[0] = j;
+			explication_set.remove_couple(num_couple ,i);
+			vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+			write_couple(output, explication_set, i, j);
+			DI = calculate_DI(probs, original_probs, label_predicted);
+			
+			output << "-1 " << DI << endl;
+			explication_set.reset_couple(num_couple, i);
+		}
+		output << " -3\n";
+	}
+	
+	output.close();	
+}
+
+/* Sans coeff pour l'instant */
+float calculate_DI(vector<float>& probs, vector<float>& original_probs, unsigned label_predicted)
+{
+	float distance;
+	float DI = 0;
+	for(unsigned label = 0; label < probs.size(); ++label)
+	{
+		distance = probs[label] - original_probs[label];
+		if(label == label_predicted)
+			distance = -distance;
+		DI += distance;
+	}
+	return DI;
+}
+
 
 
 /*

@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 		
 		
 		Data explication_set(argv[1], 3); 
-		run_predict_couple(rnn, model, explication_set, embedding, argv[6]);
+		run_predict_removing_couple(rnn, model, explication_set, embedding, argv[6]);
 	}
 	else
 	{

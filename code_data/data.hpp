@@ -61,7 +61,29 @@
 			unsigned get_size();
 			unsigned get_label(unsigned num_couple);
 	};
-
+	/*
+	class Triplet
+	{
+		private:
+			unsigned word;
+			unsigned contradictory_word;
+			unsigned position;
+		public:
+			Triplet();
+			unsigned get_word();
+			unsigned get_contradictory_word();
+			unsigned get_position();
+	};
+	
+	class Contradictory_words
+	{
+		private:
+			std::vector< Triplet > in_premise; // ex : { (le, la, 1) , (chat, grenouille, 2)} mots contradictoires : le chat / la grenouille
+			std::vector< Triplet > in_hypothesis;
+			
+		
+	};
+	*/
 	/** 
 	 * \class Data
 	 * \brief Class representing a dataset (instance 1 object of this class for each dataset type : 1 for training, 1 for dev).
@@ -98,6 +120,7 @@
 			unsigned get_nb_sentences();
 			void print_sentences(char const* name);
 			void print_sentences_of_a_sample(unsigned num_sample);
+			void print_sentences_of_a_sample(unsigned num_sample, std::ofstream& output);
 			void print_infos(unsigned type);
 			unsigned get_nb_contradiction();
 			unsigned get_nb_inf();

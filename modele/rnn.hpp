@@ -41,9 +41,9 @@
 			unsigned get_hidden_dim();
 			void enable_dropout();
 			void disable_dropout();
-			virtual unsigned predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba) = 0;
+			virtual std::vector<float> predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax) = 0;
 			virtual dynet::Expression get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg) = 0;
-			unsigned predict_algo(dynet::Expression& x, dynet::ComputationGraph& cg, bool print_proba);
+			std::vector<float> predict_algo(dynet::Expression& x, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax);
 			dynet::Expression get_neg_log_softmax_algo(dynet::Expression& score, unsigned num_sentence, Data& set);
 
 			
@@ -64,6 +64,9 @@
 	void save_sentences(Data& explication_set,std::vector<unsigned>& premise,std::vector<unsigned>& hypothesis, unsigned num_sample);
 	void write_couple(std::ofstream& output, Data& explication_set, unsigned num_sample, unsigned num_couple);
 	void write_sentences(std::ofstream& output, std::vector<unsigned>& premise, std::vector<unsigned>& hypothesis);
+	
+	void run_predict_removing_couple(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);
+	float calculate_DI(std::vector<float>& probs, std::vector<float>& original_probs, unsigned label_predicted);
 
 	class LSTM : public RNN
 	{
@@ -72,7 +75,7 @@
 			dynet::Expression run(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
 			dynet::Expression systeme_1(std::vector<dynet::Expression>& h, dynet::Expression bias, dynet::Expression W);
 			dynet::Expression systeme_2(std::vector<dynet::Expression>& h, dynet::Expression bias, dynet::Expression W);
-			virtual unsigned predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba);
+			virtual std::vector<float> predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax);
 			virtual dynet::Expression get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
 
 		public:
@@ -103,7 +106,7 @@
 					std::vector<dynet::Expression>& hypothesis_lstm_repr, unsigned premise_size, std::vector<dynet::Expression>& a_c_vect);
 			void compute_b_context_vector(dynet::ComputationGraph& cg, std::vector< std::vector<float> >& beta_matrix,
 					std::vector<dynet::Expression>& premise_lstm_repr, unsigned hypothesis_size, std::vector<dynet::Expression>& b_c_vect);
-			virtual unsigned predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba);
+			virtual std::vector<float> predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax);
 			virtual dynet::Expression get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
 
 
