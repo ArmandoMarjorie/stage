@@ -61,7 +61,7 @@
 			unsigned get_size();
 			unsigned get_label(unsigned num_couple);
 	};
-	/*
+	
 	class Triplet
 	{
 		private:
@@ -83,7 +83,7 @@
 			
 		
 	};
-	*/
+	
 	/** 
 	 * \class Data
 	 * \brief Class representing a dataset (instance 1 object of this class for each dataset type : 1 for training, 1 for dev).
