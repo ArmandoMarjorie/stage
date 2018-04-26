@@ -7,11 +7,11 @@ EXEC= Training Testing
 
 all: $(EXEC)
 
-Training: train.o rnn.o data.o
-	$(CC) -o Training train.o rnn.o data.o $(LDFLAGS)
+Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o
+	$(CC) -o Training train.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o $(LDFLAGS)
 
-Testing: predict.o rnn.o data.o
-	$(CC) -o Testing predict.o rnn.o data.o $(LDFLAGS)
+Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o
+	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o $(LDFLAGS)
 
 predict.o: run/predict.cpp modele/rnn.hpp code_data/data.hpp
 	$(CC) -o predict.o -c run/predict.cpp $(CFLAGS)
@@ -21,9 +21,21 @@ train.o: run/train.cpp modele/rnn.hpp code_data/data.hpp
 
 rnn.o: modele/rnn.cpp modele/rnn.hpp code_data/data.hpp
 	$(CC) -o rnn.o -c modele/rnn.cpp $(CFLAGS)
+	
+LSTM.o: modele/LSTM.cpp modele/LSTM.hpp code_data/data.hpp modele/rnn.hpp
+	$(CC) -o LSTM.o -c modele/LSTM.cpp $(CFLAGS)
+	
+BILSTM.o: modele/BILSTM.cpp modele/BILSTM.hpp code_data/data.hpp modele/rnn.hpp
+	$(CC) -o BILSTM.o -c modele/BILSTM.cpp $(CFLAGS)
 
-data.o: code_data/data.cpp code_data/data.hpp
+data.o: code_data/data.cpp code_data/data.hpp code_data/embedding.hpp code_data/couple.hpp
 	$(CC) -o data.o -c code_data/data.cpp $(CFLAGS)
+	
+embedding.o: code_data/embedding.cpp code_data/embedding.hpp
+	$(CC) -o embedding.o -c code_data/embedding.cpp $(CFLAGS)
+
+couple.o: code_data/couple.cpp code_data/couple.hpp
+	$(CC) -o couple.o -c code_data/couple.cpp $(CFLAGS)
 
 
 clean:

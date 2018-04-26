@@ -8,9 +8,93 @@ using namespace dynet;
  * \file data.cpp
 */
 
-/* ========================= DATA CLASS =========================*/
-
 	/* Constructors */
+	
+/**
+	* \brief Data constructor for the c++ server (to use LIME)
+	* 
+	* \param data_filename : File containing the samples in this form :
+	*       label
+	*       premise -1 premise's length
+	*       hypothesis -1 hypothesis' length
+*/
+/* TO DO */
+Data::Data(char* buffer_in, map<string,unsigned>& word_to_id, vector<unsigned>& length_tab, unsigned num_sample)
+{
+	/* TODO
+	 * prendre les mots dans buffer_in,
+	 * pour chaque mot le tokeniser
+	 * puis le mettre dans vector tmp
+	 * pusher le tmp dans le bon vector
+	 * mettre bon label
+	 * 
+	 */ 
+	bool is_premise = true;
+	unsigned cpt_words = 0;
+	string word;
+	stringstream ss;
+	unsigned len = strlen(buffer_in);
+	for(unsigned i=0; i<len; ++i)
+	{
+		vector<unsigned> tmp;
+		if(is_premise)
+		{
+			while(cpt_words <= length_tab[num_sample*2])
+			{
+				ss << buffer_in[i];
+				++i;
+				if(i>=len || buffer_in[i] == ' ')
+				{
+					++i; //passe a la lettre suivante
+					++cpt_words;
+					word = ss.str();
+					std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
+					tmp.push_back(word_to_id[word]);
+					std::stringstream().swap(ss); // flush ss
+				}
+			}
+			is_premise = false;
+			cpt_words = 0;
+			premise.push_back(tmp);
+		}
+		else if(!is_premise)
+		{
+			
+		}
+		--i; //last whitespace : will be re-read by the for
+	}
+	
+	
+	
+	
+	int val;
+	cerr << "Reading data from " << data_filename << " ...\n";
+
+	while(data_file >> val) //read a label
+	{
+		label.push_back(val);
+		init_rate(val);
+		
+		for(unsigned sentence=0; sentence<2; ++sentence)
+		{
+			vector<unsigned> tmp_data;
+			data_file >> val; //read a word id
+			while(val != -1)
+			{
+				tmp_data.push_back(static_cast<unsigned>(val));
+				data_file >> val;
+			}
+			data_file >> val; //read the sentence's length
+			if(sentence==0)
+				premise.push_back(tmp_data);
+			else
+				hypothesis.push_back(tmp_data);
+		}
+	}
+	
+	data_file.close();
+}	
+	
 	
 /**
 	* \brief Data constructor not used for interpretation
@@ -676,272 +760,7 @@ bool Data::is_empty(unsigned num_sample, bool is_premise)
 }
 
 
-/* ========================= COUPLE CLASS =========================*/
 
 
-	/* Constructor */
-	
-/**
-	* \brief Couple Constructor 
-	* Initialize the couples with a file. 
-	* This constructor is called by the Data constructor to read and to inizialise the couples for each sample.
-	* 
-	* \param test_explication : File containing the samples in this form :
-	*       label
-	*       premise -1 premise's length
-	*       hypothesis -1 hypothesis' length
-	* 		premise's words -2 hypothesis' words -1 // list of couples (-2 is a separator, -1 means end of couple)
-	* 		-5 // this means end of the couples' list
-	* 		ith couple's label // list of the couple's label
-	* 		-3 // this means end of sample
-*/
-/* Ex couple :
-	22 15 8 16 507 17 -2 507 1 -1 1
-	0 -4 -2 8634 3 -1 0
-	0 -4 -2 5524 6 -1 0
-	-5
-*/
-Couple::Couple(ifstream& test_explication)
-{
-	int val = 0;
-	bool ok;
-	int position = 0;
-	while(val != -5) //read all the couples (-5 = end of the couples list)
-	{
-		test_explication >> val;
-		if(val == -5)
-			continue;
-		test_explication >> position;
-		ok = true;
-		vector<pair<unsigned,int>> tmp;
-		while(ok && val != -1)
-		{
-			tmp.push_back(make_pair(static_cast<unsigned>(val) , position));
-			test_explication >> val;
-			if(val == -2)
-			{
-				imp_word_premise.push_back(tmp);
-				ok = false;
-			}
-			if(ok && val != -1)
-				test_explication >> position;
-		}
-		if(val == -1)
-			imp_word_hypothesis.push_back(tmp);
-			
-	}	
-	test_explication >> val; //read the first label
-	while(val != -3)
-	{
-		labels.push_back(static_cast<unsigned>(val));
-		test_explication >> val;
-	}
-}
-
-	/* Getters and setters */
-
-/**
-	* \name get_id
-	* \brief Give the id of the word "num_mot" of the couple "num_couple"
-	*
-	* \param num_couple : The numero of the couple
-	* \param num_mot : The position of the word
-	* \param premise : True if you want to get the id of the word from the premise, false if it's from the hypothesis
-	* 
-	* \return The id of the word
-*/
-unsigned Couple::get_id(unsigned num_couple, unsigned num_mot, bool premise)
-{
-	if(premise)
-		return imp_word_premise[num_couple][num_mot].first; 
-	return imp_word_hypothesis[num_couple][num_mot].first;
-}
-
-/**
-	* \name get_position
-	* \brief Give the position of the word "num_mot" of the couple "num_couple"
-	*
-	* \param num_couple : The numero of the couple
-	* \param num_mot : The position of the word in the couple 
-	* \param premise : True if you want to get the position of the word from the premise, false if it's from the hypothesis
-	* 
-	* \return The position of the word in the premise or in the hypothesis
-*/
-int Couple::get_position(unsigned num_couple, unsigned num_mot, bool premise)
-{
-	if(premise)
-		return imp_word_premise[num_couple][num_mot].second; 
-	return imp_word_hypothesis[num_couple][num_mot].second;
-}
-
-/**
-	* \name get_nb_words
-	* \brief Give the number of words in the couple "num_couple"
-	*
-	* \param num_couple : The numero of the couple
-	* \param premise : True if you want to get the number of words in the couple in the premise side, false if it's in the hypothesis side
-	* 
-	* \return The number of words in the premise side or in the hypothesis side
-*/
-unsigned Couple::get_nb_words(unsigned num_couple, bool premise)
-{
-	if(premise)
-		return imp_word_premise[num_couple].size(); 
-	return imp_word_hypothesis[num_couple].size();
-}
-
-/**
-	* \name get_size
-	* \brief Give the number of couples
-	*
-	* \param num_couple : The numero of the couple
-	* 
-	* \return The number of couples
-*/
-unsigned Couple::get_size()
-{
-	return imp_word_hypothesis.size();
-}
-
-/**
-	* \name get_label
-	* \brief Give the label of the couple
-	*
-	* \param num_couple : The numero of the couple
-	* 
-	* \return The label of the couple
-*/
-unsigned Couple::get_label(unsigned num_couple)
-{
-	return labels[num_couple];
-}
-
-	/* Printing functions */
-
-/**
-	* \name print_couples
-	* \brief Print the couple numero "num_couple" in this form :
-	* 	Premise :
-	* 	word POSITION[position of the word in the original premise] ...
-	*	Hypothesis :
-	* 	word POSITION[position of the word in the original hypothesis] ...
-	*
-	* \param num_couple : The numero of the couple
-*/
-void Couple::print_couples(unsigned num_couple)
-{
-	cerr << "Premise : \n";
-	unsigned i=num_couple;
-	for(unsigned j=0; j<imp_word_premise[i].size(); ++j)
-		cerr << imp_word_premise[i][j].first << " POSITION[" << imp_word_premise[i][j].second << "] ";
-	cerr << endl;
-	cerr << "Hypothesis : \n";
-	for(unsigned j=0; j<imp_word_hypothesis[i].size(); ++j)
-		cerr << imp_word_hypothesis[i][j].first << " POSITION[" << imp_word_hypothesis[i][j].second << "] ";
-	cerr << endl;
-	cerr<<endl;
-}
-
-
-/* ========================= EMBEDDING CLASS =========================*/
-
-	/* Constructors */
-
-/**
-	* \brief Embeddings Constructor (training phase -- random embedding)
-	*
-	* \param model : The model
-	* \param dim : The dimension of the embeddings
-*/
-Embeddings::Embeddings(ParameterCollection& model, unsigned dim) : p_c(), dim_embedding(dim)
-{
-	cerr<< "Initializing embeddings...\n";
-	p_c = model.add_lookup_parameters(VOCAB_SIZE, {dim_embedding});
-	vector<float> vector_zero(dim_embedding, 0); 
-	p_c.initialize(0, vector_zero);
-}
-
-/**
-	* \brief Embeddings Constructor (with a file containing pre-trained embedding)
-	* Initialize the word embedding with a file
-	* 
-	* \param embedding_filename : File containing the embedding
-	* \param model : The model
-	* \param dim : The dimension of the embeddings
-*/
-Embeddings::Embeddings(char* embedding_filename, ParameterCollection& model, unsigned dim, bool testing) : p_c(), dim_embedding(dim)
-{
-	ifstream emb_file(embedding_filename, ios::in);
-	if(!emb_file)
-	{ 
-		cerr << "Impossible to open the file " << embedding_filename << endl;
-		exit(EXIT_FAILURE);
-	}
-	p_c = model.add_lookup_parameters(VOCAB_SIZE, {dim_embedding});
-	unsigned tmp;
-	string word;
-	unsigned index;
-	vector<float> embedding(dim_embedding);
-	if(testing) index=0;
-	else index=1;
-	while( emb_file >> word )
-	{
-		for(unsigned i=0; i<dim_embedding; ++i)
-			emb_file >> embedding[i];
-		p_c.initialize(index, embedding);
-		++index;
-	}
-	emb_file.close();
-}
-
-	/* Getter */
-
-/**
-	* \name get_embedding_expr
-	* \brief Give the embedding of the word
-	*
-	* \param cg : The computation graph
-	* \param index : The id of the word
-	* 
-	* \return The embedding of the word as an Expression
-*/
-Expression Embeddings::get_embedding_expr(ComputationGraph& cg, unsigned index)
-{
-	int num = static_cast<int>(index);
-	if(num > VOCAB_SIZE)
-	{
-		cerr << "the vocab size need to be bigger (vocab size = " << VOCAB_SIZE <<", word id = "<< num << endl;
-		exit(EXIT_FAILURE);
-	}
-	/*
-	if(index > 28649)
-		return const_lookup(cg, p_c, num);*/
-	return lookup(cg, p_c, num);
-}
-
-	/* Printing function */
-
-/**
-	* \name print_embedding
-	* \brief Print the embedding of each words in a file. Just to debug.
-	*
-	* \param name : The name of the output file
-*/
-void Embeddings::print_embedding(char* output_filename)
-{
-	ComputationGraph cg;
-	ofstream output_file(output_filename, ios::out | ios::trunc);
-	if(!output_file)
-	{
-		cerr << "Problem with the output file " << output_filename << endl;
-		exit(EXIT_FAILURE);
-	}
-	cerr << "Printing embeddings on " << output_filename << "...\n";
-	for(unsigned i=0; i<VOCAB_SIZE; ++i)
-		output_file << "c " << const_lookup(cg, p_c, i).value() << endl; //adding 'c' because the constructor read an emb file with each lines begining with a word
-
-	output_file.close();
-
-}
 
 

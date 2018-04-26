@@ -2,7 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
-#include "../modele/rnn.hpp"
+#include "../modele/LSTM.hpp"
+#include "../modele/BILSTM.hpp"
 
 using namespace std;
 using namespace dynet;
@@ -50,7 +51,8 @@ int main(int argc, char** argv)
 	// Create model
 	if(systeme < 3)
 	{
-		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
+		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), 
+		static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
 		/*if(mode==0)
 		{
 			Data test_set(argv[1]);

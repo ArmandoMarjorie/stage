@@ -4,7 +4,8 @@
 #include <memory>
 #include <sys/types.h>
 #include <unistd.h>
-#include "../modele/rnn.hpp"
+#include "../modele/LSTM.hpp"
+#include "../modele/BILSTM.hpp"
 
 using namespace std;
 using namespace dynet;

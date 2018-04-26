@@ -15,53 +15,10 @@
 	#include "dynet/globals.h"
 	#include "dynet/io.h"
 	#include <string>
+	#include "couple.hpp"
+	#include "embedding.hpp"
 
-	#define VOCAB_SIZE 36989
-	#define NB_CLASSES 3
-	#define NEUTRAL 0
-	#define INFERENCE 1
-	#define CONTRADICTION 2
-
-	/**
-	 * \file data.hpp
-	*/
-
-	/** 
-	 * \class Embeddings
-	 * \brief Class representing the different embeddings 
-	*/
-	class Embeddings
-	{
-		private:
-			dynet::LookupParameter p_c; /*!< table containing each word embedding*/ 
-			unsigned dim_embedding = 100; /*!< dimension of the embedding*/ 
-
-		public:
-			Embeddings(dynet::ParameterCollection& model, unsigned dim);
-			Embeddings(char* embedding_filename, dynet::ParameterCollection& model, unsigned dim, bool testing);
-			void print_embedding(char* output_filename);
-			dynet::Expression get_embedding_expr(dynet::ComputationGraph& cg, unsigned index);
-	};
-	
-	class Couple
-	{
-		private:
-			// unsigned ==> word, int ==> position of the word
-			std::vector< std::vector< std::pair<unsigned,int> > > imp_word_premise;
-			std::vector< std::vector< std::pair<unsigned,int> > > imp_word_hypothesis;
-			
-			std::vector<unsigned> labels; /*!< label of each couple*/
-		
-		public:
-			Couple(std::ifstream& test_explication);
-			void print_couples(unsigned num_couple);
-			unsigned get_id(unsigned num_couple, unsigned num_mot, bool premise);
-			int get_position(unsigned num_couple, unsigned num_mot, bool premise);
-			unsigned get_nb_words(unsigned num_couple, bool premise);
-			unsigned get_size();
-			unsigned get_label(unsigned num_couple);
-	};
-	
+/*
 	class Triplet
 	{
 		private:
@@ -83,6 +40,8 @@
 			
 		
 	};
+	*/
+	
 	
 	/** 
 	 * \class Data
