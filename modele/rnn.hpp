@@ -67,6 +67,8 @@
 	
 	void run_predict_removing_couple(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);
 	float calculate_DI(std::vector<float>& probs, std::vector<float>& original_probs, unsigned label_predicted);
+	
+	std::vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& embedding);
 
 
 

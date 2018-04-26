@@ -7,11 +7,11 @@
 #include <unistd.h>
 #include <string>
 #include <arpa/inet.h>
-#include <string.h>
 #include <stdio.h>
 #include <errno.h>
 #include <string>
-#include "../modele/rnn.hpp"
+#include "../modele/LSTM.hpp"
+#include "../modele/BILSTM.hpp"
 
 #define SERVER_PORT htons(50007)
 
@@ -39,6 +39,43 @@ void error(string message)
 	exit(EXIT_FAILURE);
 }
 
+void init_map(char* lexique_filename, map<string, unsigned>& word_to_id)
+{
+	ifstream lexique_file(lexique_filename, ios::in);
+	if(!lexique_file)
+	{ 
+		cerr << "Impossible to open the file " << lexique_filename << endl;
+		exit(EXIT_FAILURE);
+	}	
+	cerr << "Reading " << lexique_filename << " ...\n";
+	unsigned id;
+	string word;
+	while(lexique_file >> word && lexique_file >> id)
+		word_to_id[word] = id;
+	cerr << lexique_filename << " has been read" << endl;
+	lexique_file.close();	
+}
+
+void init_lenght_tab(char* length_filename, vector<unsigned>& length_tab, vector<unsigned>& labels)
+{
+	ifstream file(length_filename, ios::in);
+	if(!file)
+	{ 
+		cerr << "Impossible to open the file " << length_filename << endl;
+		exit(EXIT_FAILURE);
+	}		
+	unsigned val;
+	while(file >> val)
+	{
+		labels.push_back(val);
+		for(unsigned i=0; i<2; ++i)
+		{
+			file >> val;
+			length_tab.push_back(val);
+		}
+	}
+}
+
 int main(int argc, char** argv) 
 {	
 	
@@ -64,9 +101,12 @@ int main(int argc, char** argv)
 	int systeme = atoi(argv[8]);
 	
 	
-	/*
-	 * FAIRE LENGTH_TABLE avec le fichier (faire le fichier) + tokenisation dans la map word_to_id
-	 */ 
+	map<string, unsigned> word_to_id;
+	init_map(argv[2], word_to_id);
+	vector<unsigned> labels;
+	vector<unsigned> length_tab;
+	init_lenght_tab(argv[1], length_tab, labels);
+
 	
 	// Socket
 	string err;
@@ -127,44 +167,68 @@ int main(int argc, char** argv)
 	int n = write(client_socket, buffer_out, strlen(buffer_out));*/
 	//close(server_socket);
 	
-	
+	string tmp;
 	if(systeme < 3)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 
 			static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
-			
-		char buffer_in[5000] = {0}; // what is received
+		
+		// Load preexisting weights
+		cerr << "Loading parameters ...\n";
+		TextFileLoader loader(argv[7]);
+		loader.populate(model);
+		cerr << "Parameters loaded !\n";
+	
+		char buffer_in[5000] = {0}; // what is received (sentence)
+		char buffer_in_marquage[5000] = {0}; // what is received (sentence marquage)
 		char buffer_out[5000] = {0}; // what is sent	
 		unsigned num_sample=0;
+		int n;
 		// The Code Here !! asking predict here !! 
-		while(!strcmp(buffer_in, "quit"))
+		while(strcmp(buffer_in, "quit"))
 		{
 			bzero(buffer_in, 5000);
+			bzero(buffer_in_marquage, 5000);
 			bzero(buffer_out, 5000);
 			
 			//receive a message from a client
-			if( recv(client_socket, buffer_in, 4999, 0) == -1 )
+			n = recv(client_socket, buffer_in, 4999, 0);
+			cerr << "recu " << n << " caracteres\n";
+			cerr << "sentence = " << buffer_in << endl;
+			if( n == -1 )
 			{
 				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
 				error(err);		
 			}
-			//cout << "Server received :\n" << buffer_in << endl;
+			
+			write(client_socket, "ok", 3);
+			/* Ne recoit pas le tableau de marquage */
+			n = recv(client_socket, buffer_in_marquage, 4999, 0);
+			cerr << "recu " << n << " caracteres\n";
+			cerr << "data = " << buffer_in_marquage << endl;
+			if( n == -1 )
+			{
+				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
+				error(err);		
+			}
 			if( !strcmp(buffer_in, "-1") )
 			{
 				++num_sample;
 				continue;
 			}
 			
-			//tokeniser buffer_in, en faire 2 phrases comme ceci:
-			// mots premisse tokénisés -1 longueur prem (idem pour l'hypothese)
-			// faire un objet data avec ça (osef du label)
-			// faire la prediction
-			// renvoyer les probas de chaque label
-			Data data(buffer_in, word_to_id, length_tab, num_sample); //nouveau data
-
-			strcpy(buffer_out, "test");
-			n = write(client_socket, buffer_out, strlen(buffer_out));
+			Data data(buffer_in, buffer_in_marquage, word_to_id, length_tab, num_sample, labels[num_sample]); //nouveau data
+			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding);
+			tmp = to_string(probas[0]);
+			strcpy(buffer_out,tmp.c_str());
+			for(unsigned i=1; i<probas.size(); ++i)
+			{
+				tmp = to_string(probas[i]);
+				strcat(buffer_out,tmp.c_str());
+			}
+			write(client_socket, buffer_out, strlen(buffer_out));
 		}
+		close(server_socket);
 		//Data explication_set(argv[1], 3); 
 		//run_predict_removing_couple(rnn, model, explication_set, embedding, argv[6]);
 	}

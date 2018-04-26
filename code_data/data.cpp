@@ -13,86 +13,68 @@ using namespace dynet;
 /**
 	* \brief Data constructor for the c++ server (to use LIME)
 	* 
-	* \param data_filename : File containing the samples in this form :
-	*       label
-	*       premise -1 premise's length
-	*       hypothesis -1 hypothesis' length
+	* \param sentence : The concatenation of the premise and the hypothesis send by the client
+	* \param line_marquage : Array containing 0 if the word has been removed, else 1 (send by the client)
+	* \param word_to_id : Map containing the ID of each words
+	* \param length_tab : Vector containing the length (number of words) of the premise and the hypothesis, for each sample :
+	* 		For the ith sample : length premise is at num_sample*2, length hypothesis is at num_sample*2+1
+	* \param num_sample : The sample
+	* \param sample_label : The sample's label
 */
-/* TO DO */
-Data::Data(char* buffer_in, map<string,unsigned>& word_to_id, vector<unsigned>& length_tab, unsigned num_sample)
+/* a essayer*/
+Data::Data(char* sentence, char* line_marquage, map<string,unsigned>& word_to_id, vector<unsigned>& length_tab, unsigned num_sample, unsigned sample_label)
 {
-	/* TODO
-	 * prendre les mots dans buffer_in,
-	 * pour chaque mot le tokeniser
-	 * puis le mettre dans vector tmp
-	 * pusher le tmp dans le bon vector
-	 * mettre bon label
-	 * 
-	 */ 
 	bool is_premise = true;
 	unsigned cpt_words = 0;
 	string word;
 	stringstream ss;
-	unsigned len = strlen(buffer_in);
-	for(unsigned i=0; i<len; ++i)
+	unsigned len = strlen(sentence);
+	unsigned len_sentence = length_tab[num_sample*2];
+	unsigned total_words = 0;
+	unsigned i=0;
+	vector<unsigned> tmp;
+
+	label.push_back(sample_label);
+	while(cpt_words <= len_sentence)
 	{
-		vector<unsigned> tmp;
-		if(is_premise)
+		while(total_words<strlen(line_marquage) && !line_marquage[total_words])
 		{
-			while(cpt_words <= length_tab[num_sample*2])
+			++cpt_words;
+			++total_words;
+			tmp.push_back(0);
+		}
+		while(total_words<strlen(line_marquage) && line_marquage[total_words])
+		{
+			ss << sentence[i];
+			++i;
+			if(i>=len || sentence[i] == ' ')
 			{
-				ss << buffer_in[i];
-				++i;
-				if(i>=len || buffer_in[i] == ' ')
+				++i; //passe a la lettre suivante
+				++cpt_words;
+				++total_words;
+				word = ss.str();
+				std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
+				tmp.push_back(word_to_id[word]);
+				std::stringstream().swap(ss); // flush ss
+			}
+			if(cpt_words == len_sentence)
+			{
+				if(is_premise)
 				{
-					++i; //passe a la lettre suivante
-					++cpt_words;
-					word = ss.str();
-					std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
-					tmp.push_back(word_to_id[word]);
-					std::stringstream().swap(ss); // flush ss
+					is_premise=false;
+					len_sentence = length_tab[num_sample*2+1];
+					premise.push_back(tmp);
+					tmp.clear();
+					cpt_words = 0;
+				}
+				else
+				{
+					hypothesis.push_back(tmp);
 				}
 			}
-			is_premise = false;
-			cpt_words = 0;
-			premise.push_back(tmp);
 		}
-		else if(!is_premise)
-		{
-			
-		}
-		--i; //last whitespace : will be re-read by the for
-	}
-	
-	
-	
-	
-	int val;
-	cerr << "Reading data from " << data_filename << " ...\n";
+	}		
 
-	while(data_file >> val) //read a label
-	{
-		label.push_back(val);
-		init_rate(val);
-		
-		for(unsigned sentence=0; sentence<2; ++sentence)
-		{
-			vector<unsigned> tmp_data;
-			data_file >> val; //read a word id
-			while(val != -1)
-			{
-				tmp_data.push_back(static_cast<unsigned>(val));
-				data_file >> val;
-			}
-			data_file >> val; //read the sentence's length
-			if(sentence==0)
-				premise.push_back(tmp_data);
-			else
-				hypothesis.push_back(tmp_data);
-		}
-	}
-	
-	data_file.close();
 }	
 	
 	

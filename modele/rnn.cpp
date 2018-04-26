@@ -104,6 +104,18 @@ void run_predict(RNN& rnn, ParameterCollection& model, Data& test_set, Embedding
 	predict_dev_and_test(rnn, test_set, embedding, nb_of_sentences, best);
 }
 
+
+vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& embedding)
+{
+	cerr << "Testing ...\n";
+	unsigned nb_of_sentences = test_set.get_nb_sentences();
+	unsigned label_predicted;
+	rnn.disable_dropout();
+	ComputationGraph cg;
+	vector<float> probas = rnn.predict(test_set, embedding, 0, cg, false, label_predicted);
+	return probas;
+}
+
 /* EN CONSTRUCTION ..................... */
 /*
 void LSTM::run_predict_explication(dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
