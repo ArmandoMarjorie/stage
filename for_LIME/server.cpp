@@ -193,40 +193,57 @@ int main(int argc, char** argv)
 			
 			//receive a message from a client
 			n = recv(client_socket, buffer_in, 4999, 0);
-			cerr << "recu " << n << " caracteres\n";
-			cerr << "sentence = " << buffer_in << endl;
+
 			if( n == -1 )
 			{
 				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
 				error(err);		
 			}
+			cerr << "recu " << n << " caracteres\n";
+			//cerr << "sentence = \"" << buffer_in <<"\"" <<endl;
+						
+			//write(client_socket, "ok", 3);
 			
-			write(client_socket, "ok", 3);
-			/* Ne recoit pas le tableau de marquage */
-			n = recv(client_socket, buffer_in_marquage, 4999, 0);
-			cerr << "recu " << n << " caracteres\n";
-			cerr << "data = " << buffer_in_marquage << endl;
-			if( n == -1 )
-			{
-				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
-				error(err);		
-			}
 			if( !strcmp(buffer_in, "-1") )
 			{
 				++num_sample;
 				continue;
 			}
 			
-			Data data(buffer_in, buffer_in_marquage, word_to_id, length_tab, num_sample, labels[num_sample]); //nouveau data
+			/* P-e plus besoin de recevoir marquage
+			n = recv(client_socket, buffer_in_marquage, 4999, 0);
+			if( n == -1 )
+			{
+				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
+				error(err);		
+			}
+			cerr << "recu " << n << " caracteres\n";*/
+			//cerr << "data = \"" << buffer_in_marquage << "\"" << endl;
+			
+			// Gérer le tab buffer_in_marquage
+			
+
+			
+			Data data(buffer_in, word_to_id, length_tab, num_sample, labels[num_sample]); //nouveau data
+			data.print_sentences_of_a_sample(num_sample);
 			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding);
 			tmp = to_string(probas[0]);
 			strcpy(buffer_out,tmp.c_str());
+			//cerr << "proba[0] = " << probas[0] << endl;
 			for(unsigned i=1; i<probas.size(); ++i)
 			{
+				//cerr << "proba[" << i << "] = " << probas[i] << endl;
 				tmp = to_string(probas[i]);
+				strcat(buffer_out," ");
 				strcat(buffer_out,tmp.c_str());
 			}
-			write(client_socket, buffer_out, strlen(buffer_out));
+			cerr << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
+			n = write(client_socket, buffer_out, strlen(buffer_out));
+			if( n == -1)
+			{
+				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+				error(err);					
+			}
 		}
 		close(server_socket);
 		//Data explication_set(argv[1], 3); 

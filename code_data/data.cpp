@@ -14,7 +14,6 @@ using namespace dynet;
 	* \brief Data constructor for the c++ server (to use LIME)
 	* 
 	* \param sentence : The concatenation of the premise and the hypothesis send by the client
-	* \param line_marquage : Array containing 0 if the word has been removed, else 1 (send by the client)
 	* \param word_to_id : Map containing the ID of each words
 	* \param length_tab : Vector containing the length (number of words) of the premise and the hypothesis, for each sample :
 	* 		For the ith sample : length premise is at num_sample*2, length hypothesis is at num_sample*2+1
@@ -22,59 +21,52 @@ using namespace dynet;
 	* \param sample_label : The sample's label
 */
 /* a essayer*/
-Data::Data(char* sentence, char* line_marquage, map<string,unsigned>& word_to_id, vector<unsigned>& length_tab, unsigned num_sample, unsigned sample_label)
+Data::Data(char* sentence, map<string,unsigned>& word_to_id, vector<unsigned>& length_tab, unsigned num_sample, unsigned sample_label)
 {
 	bool is_premise = true;
 	unsigned cpt_words = 0;
 	string word;
-	stringstream ss;
-	unsigned len = strlen(sentence);
+	unsigned len_total = strlen(sentence);
 	unsigned len_sentence = length_tab[num_sample*2];
-	unsigned total_words = 0;
 	unsigned i=0;
 	vector<unsigned> tmp;
-
 	label.push_back(sample_label);
-	while(cpt_words <= len_sentence)
+	
+	
+	while(i < len_total)
 	{
-		while(total_words<strlen(line_marquage) && !line_marquage[total_words])
-		{
-			++cpt_words;
-			++total_words;
-			tmp.push_back(0);
-		}
-		while(total_words<strlen(line_marquage) && line_marquage[total_words])
+		stringstream ss;
+		while(i<len_total && sentence[i] != ' ')
 		{
 			ss << sentence[i];
 			++i;
-			if(i>=len || sentence[i] == ' ')
-			{
-				++i; //passe a la lettre suivante
-				++cpt_words;
-				++total_words;
-				word = ss.str();
-				std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
-				tmp.push_back(word_to_id[word]);
-				std::stringstream().swap(ss); // flush ss
-			}
-			if(cpt_words == len_sentence)
-			{
-				if(is_premise)
-				{
-					is_premise=false;
-					len_sentence = length_tab[num_sample*2+1];
-					premise.push_back(tmp);
-					tmp.clear();
-					cpt_words = 0;
-				}
-				else
-				{
-					hypothesis.push_back(tmp);
-				}
-			}
 		}
-	}		
-
+		word = ss.str();
+		if(word == "UNKWORDZ")
+			tmp.push_back(0);
+		else
+		{
+			std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
+			tmp.push_back(word_to_id[word]);			
+		}
+		++i; //passe a la lettre suivante
+		++cpt_words;
+		if(cpt_words == len_sentence)
+		{
+			if(is_premise)
+			{
+				is_premise=false;
+				len_sentence = length_tab[num_sample*2+1];
+				premise.push_back(tmp);
+				tmp.clear();
+				cpt_words = 0;
+			}
+			else
+			{
+				hypothesis.push_back(tmp);
+			}			
+		}
+	}
 }	
 	
 	
