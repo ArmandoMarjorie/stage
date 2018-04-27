@@ -225,6 +225,13 @@ int main(int argc, char** argv)
 
 			
 			Data data(buffer_in, word_to_id, length_tab, num_sample, labels[num_sample]); //nouveau data
+			if(data.is_empty(num_sample, true) || data.is_empty(num_sample, false))
+			{
+				n = write(client_socket, "close", 6);
+				close(server_socket);
+				exit(EXIT_FAILURE);
+			}
+			
 			data.print_sentences_of_a_sample(num_sample);
 			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding);
 			tmp = to_string(probas[0]);
