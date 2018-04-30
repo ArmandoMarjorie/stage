@@ -180,15 +180,14 @@ int main(int argc, char** argv)
 		cerr << "Parameters loaded !\n";
 	
 		char buffer_in[5000] = {0}; // what is received (sentence)
-		char buffer_in_marquage[5000] = {0}; // what is received (sentence marquage)
 		char buffer_out[5000] = {0}; // what is sent	
 		unsigned num_sample=0;
 		int n;
 		// The Code Here !! asking predict here !! 
 		while(strcmp(buffer_in, "quit"))
 		{
+			cerr << "*** SAMPLE NUMERO " << num_sample << endl;
 			bzero(buffer_in, 5000);
-			bzero(buffer_in_marquage, 5000);
 			bzero(buffer_out, 5000);
 			
 			//receive a message from a client
@@ -200,14 +199,26 @@ int main(int argc, char** argv)
 				error(err);		
 			}
 			cerr << "recu " << n << " caracteres\n";
-			//cerr << "sentence = \"" << buffer_in <<"\"" <<endl;
+			if(strcmp(buffer_in,"-1"))
+				cerr << "sentence = \"" << buffer_in <<"\"" <<endl;
 						
 			//write(client_socket, "ok", 3);
 			
 			if( !strcmp(buffer_in, "-1") )
 			{
 				++num_sample;
+				n = write(client_socket, "-1", 3);
+				if( n == -1)
+				{
+					err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+					error(err);					
+				}
 				continue;
+			}
+			else if( !strcmp(buffer_in, "quit") )
+			{
+				close(server_socket);
+				exit(EXIT_SUCCESS);
 			}
 			
 			/* P-e plus besoin de recevoir marquage
@@ -225,14 +236,8 @@ int main(int argc, char** argv)
 
 			
 			Data data(buffer_in, word_to_id, length_tab, num_sample, labels[num_sample]); //nouveau data
-			if(data.is_empty(num_sample, true) || data.is_empty(num_sample, false))
-			{
-				n = write(client_socket, "close", 6);
-				close(server_socket);
-				exit(EXIT_FAILURE);
-			}
 			
-			data.print_sentences_of_a_sample(num_sample);
+			data.print_sentences_of_a_sample(0);
 			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding);
 			tmp = to_string(probas[0]);
 			strcpy(buffer_out,tmp.c_str());
@@ -252,7 +257,7 @@ int main(int argc, char** argv)
 				error(err);					
 			}
 		}
-		close(server_socket);
+		
 		//Data explication_set(argv[1], 3); 
 		//run_predict_removing_couple(rnn, model, explication_set, embedding, argv[6]);
 	}
