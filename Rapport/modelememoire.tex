@@ -1,0 +1,160 @@
+
+
+% Les packages utilise's ci-dessous le sont a` titre indicatif ;
+% vous pouvez les changer a` votre convenance.
+
+% Le type de document: article, rapport...
+\documentclass[a4paper]{article}
+
+% Mettre les diffe'rents packages et fonctions que l'on utilise
+%\usepackage[english]{babel}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphics,color}
+\usepackage[nottoc, notlof, notlot]{tocbibind}
+
+% Commenter l'une de ces deux lignes
+%\RequirePackage[applemac]{inputenc}
+\RequirePackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+
+
+%----------- A   C O M P L E T E R   P A R   L E S   A U T E U R S ------------
+
+
+% Titre du rapport
+\def\TitreRapport{
+    Inférence textuelle interprétable \\
+    en langage naturelle
+}
+
+% Pre'nom et nom dde l'auteur
+\def\NomsAuteurs{
+    Marjorie Armando
+}
+
+% Date du rapport (dans la me^me langue que le titre)
+\def\DateRapport{
+    jour mois année
+}
+
+% Nom des encadrants
+\def\Encadrants{
+    \textbf{Encadrant} \\
+    Benoit Favre
+}
+% Nom du laboratoire
+\def\Labo{
+    Laboratoire d'Informatique et des Systèmes - LIS
+}
+
+
+
+% Re'sume' en franc,ais avec mots-cle's
+\def\ResumeFrancais{
+    La reconnaissance de l'inférence textuelle (Recognizing Textual Entailment : RTE) est un domaine assez récent en traitement
+    automatique du langage (TAL). Le but de la RTE est de savoir automatiquement si une phrase, appelée l'hypothèse, est 
+    déduite d'une autre phrase appelée la prémisse. Pour résoudre cela, on utilise des systèmes issus de l'apprentissage 
+    automatique.\\
+    Le problème qui se pose avec l'utilisation de ces systèmes est que le modèle nous 
+    fournit uniquement les probabilités de chaque label. Ainsi, aucune information supplémentaire n'est
+    donnée : comment savoir, de manière humainement compréhensible, pourquoi le modèle a associé un label 
+    particulier à une paire de phrases donnée ?\\Pouvoir répondre à cette question permettrait de rendre un modèle utilisable 
+    dans des domaines où les décisions doivent être mûrement réfléchies telle que la médecine, car malgré l'expansion des
+    réseaux de neurones, ceux-ci restent des boîtes noires et il est donc difficile de leur faire confiance sans avoir
+    d'explications en retour.\\
+    Dans ce travail, nous proposons une nouvelle méthode respectant les règles d'une "bonne" explication 
+    pour rendre un modèle interprétable dans le cadre de la RTE avec l'utilisation du corpus SNLI\cite{ref}.
+    Nous allons la comparer avec la méthode Local Interpretable Model-agnostic Explanations (LIME)\cite{ref2} qui permet
+    d'expliquer les prédictions de n'importe quel classifieur en apprenant localement un modèle interprétable dans le voisinage
+    de l'entrée.  
+    \\[2mm]
+    {\bf Mots-clés : } inférence textuelle, apprentissage automatique,\\traitement automatique des langues naturelles, 
+    interprétabilité, LSTM
+}
+
+
+\thispagestyle{empty}
+\begin{center}
+\baselineskip=1.3\normalbaselineskip
+{\bf\Large \TitreRapport}\\[8mm]
+{\bf\large \NomsAuteurs}\\[1mm]
+{\Labo}\\[4mm]
+\Encadrants\\[10mm]
+
+{\bf Résumé}
+\end{center}
+
+\ResumeFrancais\\[4mm]
+
+\newpage
+
+%-------------------- T E X T E   D U   R A P P O R T -------------------------
+
+\section{Introduction}
+\subsection{Contexte de l'étude}
+Le traitement automatique du langage naturel ou de la langue naturelle (TALN) ou des langues (TAL) est un domaine 
+pluridisciplinaire, qui fait collaborer l'intelligence artificielle, l'informatique théorique, la logique, la linguistique ou 
+encore les statistiques en vue de modéliser et de reproduire à l'aide de machines, la capacité humaine à produire et à 
+comprendre les énoncés linguistiques dans des buts de communication. \\
+\\
+Dans le domaine du TALN, nous retrouvons plusieurs niveaux d'analyses linguistiques pour représenter au mieux les langues 
+naturelles par les machines. On peut par exemple citer l'analyse lexicale qui permet d'identifier quels sont et où sont les 
+mots, ou encore l'analyse sémantique qui permet de comprendre le sens des mots.\\
+\\
+La reconnaissance de l'inférence textuelle (Recognizing Textual Entailment : RTE) est un domaine assez récent en TAL. 
+Elle permet d'apporter des méthodes pour l'analyse lexicale et sémantique. Ceci peut permettre le développement de diverses 
+applications telles que la recherche d'information ou encore le système de question/réponse.\\
+\\
+Le but de la RTE est de savoir automatiquement si, à partir de deux phrases, on peut en déduire la deuxième de la première. 
+La première phrase est appelée la prémisse, et la seconde l'hypothèse. Trois étiquettes permettent d'illustrer la 
+relation entre la prémisse et l'hypothèse : 
+\begin{description}
+\item[- Contradiction] : l'hypothèse contredit la prémisse.\\
+	Exemple : P : « Le chat est entièrement blanc » ; H : « Le chat est entièrement noir »
+
+\item[- Neutre] : l'hypothèse est possible dans le contexte de la prémisse.\\
+	Exemple : P : « Le chat dort sur la banquette » ; H : « Le chat aime le chocolat »
+
+\item[- Inférence] : l'hypothèse est déduite de la prémisse.\\
+	Exemple : P : « Le chat aimerait manger la sourie » ; H : « Le chat a faim »
+\end{description} \\
+\\
+Pour résoudre cela, on utilise des systèmes issus de l'apprentissage automatique. Nous utilisons les réseaux de neurones 
+récurrents (Recurrent Neural Network : RNN) dans ce projet.\\
+
+\subsection{Problématique}
+Le problème qui se pose avec l'utilisation de système issue de l'apprentissage automatique est que le modèle nous fournit 
+uniquement les probabilités de chaque label. Comment savoir, de manière humainement compréhensible, pourquoi le modèle a 
+associé un label particulier à une paire de phrases donnée ?\\
+\\
+Pouvoir répondre à cette question permettrait de rendre un modèle utilisable dans des domaines où les décisions doivent être 
+mûrement réfléchies, telle que la médecine. Si un modèle propose de donner un certain traitement à un patient, 
+il faut que le modèle puisse donner de bonnes explications pour que le docteur l'approuve, car les conséquences pourraient 
+être catastrophique. \\
+\\
+Ainsi, un modèle doit être digne de confiance. Cette confiance donnée par les humains à un système dépend des explications 
+données. Nous verrons dans la partie "" quels sont les critères d'une "bonne" explication. De plus, si un système est 
+jugé digne de confiance, il sera davantage utilisé : en effet, il a été observé, par exemple, que le fait de fournir des 
+explications augmente l"acceptation des recommandations de films.\cite{ref2} \\
+\\
+Pouvoir donner une interprétation du système peut donc permettre aux utilisateurs d'adopter un modèle. 
+Mais cela peut également aider le développeur lors du choix d'un modèle parmi ceux qu'il a implémenté, 
+car le taux de réussite n'est pas le seul critère à prendre en compte. 
+%La figure 1 illustre un exemple de cela. 
+%Dans ce cas-là, l'algorithme ayant le plus grand taux de réussite est également le moins bon, 
+%car il s'appuit sur des mots qui n'ont pas de relations avec la religion, comme le mot « Posting ». 
+%Cela est facile à voir avec l'explication fournie et nos connaissances, mais sans cela, le développeur n'aurait pas pu 
+%s'en rendre compte. [référence à l'article "Why Should I Trust You?": Explaining the Predictions of Any Classifier]
+%\bigskip
+
+
+
+\bibliographystyle{unsrt} % Le style est mis entre accolades.
+\bibliography{biblio}
+
+\end{document}
+
