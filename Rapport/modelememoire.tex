@@ -13,6 +13,7 @@
 \usepackage{amssymb}
 \usepackage{graphics,color}
 \usepackage[nottoc, notlof, notlot]{tocbibind}
+\usepackage{appendix}
 
 % Commenter l'une de ces deux lignes
 %\RequirePackage[applemac]{inputenc}
@@ -101,11 +102,11 @@ pluridisciplinaire, qui fait collaborer l'intelligence artificielle, l'informati
 encore les statistiques en vue de modéliser et de reproduire à l'aide de machines, la capacité humaine à produire et à 
 comprendre les énoncés linguistiques dans des buts de communication. \\
 \\
-Dans le domaine du TALN, nous retrouvons plusieurs niveaux d'analyses linguistiques pour représenter au mieux les langues 
+Dans le domaine du TAL, nous retrouvons plusieurs niveaux d'analyses linguistiques pour représenter au mieux les langues 
 naturelles par les machines. On peut par exemple citer l'analyse lexicale qui permet d'identifier quels sont et où sont les 
 mots, ou encore l'analyse sémantique qui permet de comprendre le sens des mots.\\
 \\
-La reconnaissance de l'inférence textuelle (Recognizing Textual Entailment : RTE) est un domaine assez récent en TAL. 
+La RTE est un domaine assez récent en TAL. 
 Elle permet d'apporter des méthodes pour l'analyse lexicale et sémantique. Ceci peut permettre le développement de diverses 
 applications telles que la recherche d'information ou encore le système de question/réponse.\\
 \\
@@ -114,13 +115,13 @@ La première phrase est appelée la prémisse, et la seconde l'hypothèse. Trois éti
 relation entre la prémisse et l'hypothèse : 
 \begin{description}
 \item[- Contradiction] : l'hypothèse contredit la prémisse.\\
-	Exemple : P : « Le chat est entièrement blanc » ; H : « Le chat est entièrement noir »
+	\textit{Exemple : P : "Le chat est entièrement blanc" ; H : "Le chat est entièrement noir"}
 
 \item[- Neutre] : l'hypothèse est possible dans le contexte de la prémisse.\\
-	Exemple : P : « Le chat dort sur la banquette » ; H : « Le chat aime le chocolat »
+	\textit{Exemple : P : "Le chat dort sur la banquette" ; H : "Le chat aime le chocolat"}
 
 \item[- Inférence] : l'hypothèse est déduite de la prémisse.\\
-	Exemple : P : « Le chat aimerait manger la sourie » ; H : « Le chat a faim »
+	\textit{Exemple : P : "Le chat aimerait manger la sourie" ; H : "Le chat a faim"}
 \end{description} \\
 \\
 Pour résoudre cela, on utilise des systèmes issus de l'apprentissage automatique. Nous utilisons les réseaux de neurones 
@@ -139,22 +140,127 @@ il faut que le modèle puisse donner de bonnes explications pour que le docteur l
 Ainsi, un modèle doit être digne de confiance. Cette confiance donnée par les humains à un système dépend des explications 
 données. Nous verrons dans la partie "" quels sont les critères d'une "bonne" explication. De plus, si un système est 
 jugé digne de confiance, il sera davantage utilisé : en effet, il a été observé, par exemple, que le fait de fournir des 
-explications augmente l"acceptation des recommandations de films.\cite{ref2} \\
+explications augmente l'acceptation des recommandations de films.\cite{ref2} \\
 \\
 Pouvoir donner une interprétation du système peut donc permettre aux utilisateurs d'adopter un modèle. 
 Mais cela peut également aider le développeur lors du choix d'un modèle parmi ceux qu'il a implémenté, 
 car le taux de réussite n'est pas le seul critère à prendre en compte. 
+
+
 %La figure 1 illustre un exemple de cela. 
 %Dans ce cas-là, l'algorithme ayant le plus grand taux de réussite est également le moins bon, 
 %car il s'appuit sur des mots qui n'ont pas de relations avec la religion, comme le mot « Posting ». 
 %Cela est facile à voir avec l'explication fournie et nos connaissances, mais sans cela, le développeur n'aurait pas pu 
 %s'en rendre compte. [référence à l'article "Why Should I Trust You?": Explaining the Predictions of Any Classifier]
 %\bigskip
+/* FAIRE LE PLAN DU RAPPORT */
 
+\section{Etat de l'art}
+/* PARLER DE SNLI, AVANT IL N'Y AVAIT PAS DE LARGE DATASET */
+/* PARLER DE LIME */
 
+\section{Réseaux de neurones récurrents}
+\subsection{LSTM et Bi-LSTM}
+Dans ce travail, nous utilisons les réseaux de neurones récurrents, 
+et plus particulièrement les LSTMs (long short-term memory : LSTM) et les Bi-LSTMSs (bidirectionnal 
+long short-term memory : Bi-LSTM). 
+/*Expliquer RNN et LSTM*/ 
 
+\subsection{Systèmes utilisés}
+Nous avons implémenté 4 systèmes différents avec la librairie DyNet\cite{ref6} en C++:\\
+\\
+Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases. 
+Ensuite, il concatène les deux représentations obtenues pour l'envoyer à une couche de décision en effectuant la formule 
+suivante : 
+\begin{equation}
+W * [ LSTM(\textit{prémisse}) ; LSTM(\textit{hypothèse}) ] + b
+\end{equation}
+où W est la matrice de poids, LSTM(\textit{prémisse}) et LSTM(\textit{hypothèse}) sont respectivement la représentation de 
+la prémisse et de l'hypothèse, b est le biais, et [ ; ] dénote la concaténation. \\
+\\
+Le deuxième système effectue le même mécanisme que le premier système pour avoir une représentation de la prémisse et de 
+l'hypothèse. Ensuite, il compare les deux représentations puis il envoit cela à une couche de décision en effectuant 
+la formule suivante :
+\begin{equation}
+W * LSTM(\textit{prémisse}) * LSTM(\textit{hypothèse})^{T} + b
+\end{equation}
+où \textit{T} dénote la transposée.\\
+\\
+Le troisième système est inspiré de la méthode KIM\cite{ref3}. 
+/* Expliquer la 3e méthode */
+
+Leurs performances sont décrit dans la partie "résultats expérimentaux" en annexe.
+
+\section{Interprétabilité}
+Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
+Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision\cite{ref4}. 
+Un système a donc une meilleure interprétabilité qu'un autre si ses explications sont plus faciles à comprendre par un humain.
+\subsection{Qu'est-ce-qu'une explication ?}
+La définition donnée par Miller est assez simple : une explication est une réponse à une question commençant par "pourquoi". 
+Une question commençant par "comment" peut être retournée en une question commençant par "pourquoi".
+Le terme "explication" désigne le processus social et cognitif d'expliquer, mais c'est également le produit de ces processus.
+\subsection{Qu'est-ce-qu'une "bonne" explication ?}
+La définition d'une bonne explication ne doit pas se baser sur l'intuition de l'auteur, mais plutôt sur des faits. 
+Miller résume ce qu'est une bonne explication\cite{ref5}, basée sur ce que les humains attendent d'une explication. 
+Grâce à cela, nous allons énoncer les types d'explications adéquats à notre projet. Cependant, 
+il ne faut pas oublier que les humains ont tendance à rejeter toutes explications allant à l'encontre de leur croyance.
+\subsubsection{Explication contrastée}
+C'est une explication qui doit être comparée. Les utilisateurs se demandent généralement pourquoi cette prédiction a 
+été faite et pas une autre, via la question "quelle aurait été la prédiction si cette entrée avait été changé 
+par une autre ?".\\
+Un docteur se demandant "pourquoi ce traitement ne marche pas sur ce patient ?" voudrait comparer les données de ce patient 
+à un autre patient ayant des caractéristiques similaires mais pour qui le traitement marche.\\
+La meilleure explication pour ce type d'explication est celle qui met en évidence les différences entre l'entrée traitée et 
+l'entrée de comparaison.\\
+L'entrée de comparaison peut être artificielle.
+\subsubsection{Explication sélective}
+C'est une explication qui doit être courte. Généralement, on peut expliquer un phénomène par plusieurs facteurs 
+(c'est ce qu'on appelle l'effet de Rashomon). Il faut en donner peu, à savoir deux ou trois raisons, même si les explications
+peuvent être plus complexes que cela.
+\subsubsection{Explication sociale}
+Comme nous l'avons expliqué ci-dessus, une explication est un processus social, 
+c'est-à-dire qu'il faut prendre en compte les connaissances de la personne à qui l'on veut donner une explication. 
+Dans notre projet, nous partons du principe qu'une explication doit être comprise par tout le monde, 
+que ce soit par un expert du domaine de l'apprentissage automatique ou bien par quelqu'un qui n'en a jamais entendu parler.
+\subsubsection{Explication anormale}
+Les explications "anormales" sont beaucoup appréciées, c'est-à-dire que si une cause rare a influencé la prédiction, 
+il faut la spécifier. Dans notre projet, une cause rare peut être un mot -ou un groupe de mot- de l'hypothèse qui ne peut pas 
+être mis en relation avec un mot -ou un groupe de mot- de la prémisse, mais qui a influencé la prédiction.
+ 
+ 
+ 
 \bibliographystyle{unsrt} % Le style est mis entre accolades.
 \bibliography{biblio}
 
+\begin{appendix}
+\section{Résulats expérimentaux}
+\begin{tabular}{|c|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+\small{Système} & \small{Taux de réussite Contradiction} & \small{Taux de réussite Inférence} & \small{Taux de réussite Neutre} & \small{Taux de réussite Dev} & \small{Taux de réussite Test} \\
+\hline
+1 & test & test & test & test & test \\
+\hline
+2 & test & test & test & test & test \\
+\hline
+3 & test & test & test & test & test \\
+\hline
+4 & test & test & test & test & test \\
+\hline
+\end{tabular}
+\end{appendix}
+
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
