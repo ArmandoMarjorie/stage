@@ -168,6 +168,7 @@ int main(int argc, char** argv)
 	//close(server_socket);
 	
 	string tmp;
+	bool print_label=true;
 	if(systeme < 3)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 
@@ -186,7 +187,8 @@ int main(int argc, char** argv)
 		// The Code Here !! asking predict here !! 
 		while(strcmp(buffer_in, "quit"))
 		{
-			cerr << "*** SAMPLE NUMERO " << num_sample << endl;
+			if(print_label)
+				cerr << "*** SAMPLE NUMERO " << num_sample << endl;
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);
 			
@@ -198,14 +200,15 @@ int main(int argc, char** argv)
 				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
 				error(err);		
 			}
-			cerr << "recu " << n << " caracteres\n";
-			if(strcmp(buffer_in,"-1"))
-				cerr << "sentence = \"" << buffer_in <<"\"" <<endl;
+			//cerr << "recu " << n << " caracteres\n";
+			//if(strcmp(buffer_in,"-1"))
+			//	cerr << "sentence = \"" << buffer_in <<"\"" <<endl;
 						
 			//write(client_socket, "ok", 3);
 			
 			if( !strcmp(buffer_in, "-1") )
 			{
+				print_label=true;
 				++num_sample;
 				n = write(client_socket, "-1", 3);
 				if( n == -1)
@@ -237,8 +240,9 @@ int main(int argc, char** argv)
 			
 			Data data(buffer_in, word_to_id, length_tab, num_sample, labels[num_sample]); //nouveau data
 			
-			data.print_sentences_of_a_sample(0);
-			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding);
+			//data.print_sentences_of_a_sample(0);
+			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding, print_label);
+			print_label = false;
 			tmp = to_string(probas[0]);
 			strcpy(buffer_out,tmp.c_str());
 			//cerr << "proba[0] = " << probas[0] << endl;
@@ -249,7 +253,7 @@ int main(int argc, char** argv)
 				strcat(buffer_out," ");
 				strcat(buffer_out,tmp.c_str());
 			}
-			cerr << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
+			//cerr << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
 			n = write(client_socket, buffer_out, strlen(buffer_out));
 			if( n == -1)
 			{

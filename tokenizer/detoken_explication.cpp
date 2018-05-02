@@ -38,7 +38,7 @@ string detoken_label(int label)
 	
 }
 
-void reading_lexique(char* lexique_filename, map<unsigned, string>& id_to_word)
+void reading_lexique(char* lexique_filename, map<unsigned, string>& id_to_word, bool DI)
 {
 	ifstream lexique_file(lexique_filename, ios::in);
 	if(!lexique_file)
@@ -50,7 +50,10 @@ void reading_lexique(char* lexique_filename, map<unsigned, string>& id_to_word)
 	unsigned id;
 	while(lexique_file >> word && lexique_file >> id)
 		id_to_word[id] = word;
-	id_to_word[0] = "every word";
+	if(!DI)
+		id_to_word[0] = "<every words>";
+	else
+		id_to_word[0] = "<no words>";
 	cerr << lexique_filename << " has been read" << endl;
 	lexique_file.close();	
 }
@@ -74,7 +77,7 @@ void detokenizer(char* lexique_filename, char* explication_filename, char* outpu
 	
 	/*Reading lexique and saving in a map the word of an id*/
 	map<unsigned, string> id_to_word;
-	reading_lexique(lexique_filename, id_to_word);
+	reading_lexique(lexique_filename, id_to_word, DI);
 	
 	int val;
 	float val_di=0;

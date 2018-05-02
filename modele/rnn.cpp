@@ -105,14 +105,16 @@ void run_predict(RNN& rnn, ParameterCollection& model, Data& test_set, Embedding
 }
 
 
-vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& embedding)
+vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& embedding, bool print_label)
 {
-	cerr << "Testing ...\n";
+	//cerr << "Testing ...\n";
 	unsigned nb_of_sentences = test_set.get_nb_sentences();
 	unsigned label_predicted;
 	rnn.disable_dropout();
 	ComputationGraph cg;
 	vector<float> probas = rnn.predict(test_set, embedding, 0, cg, false, label_predicted);
+	if(print_label)
+		cerr << "True label = " << test_set.get_label(0) << ", label predicted = " << label_predicted << endl;
 	return probas;
 }
 
@@ -272,6 +274,7 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 
 	cerr << "Testing ...\n";
 	unsigned label_predicted;
+	unsigned label_predicted_true_sample;
 	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
 	rnn.disable_dropout();
 	char const* name = "Files/expl_removing_couple_token";
@@ -300,8 +303,8 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 	for(unsigned i=0; i<nb_of_sentences; ++i) //pour un sample ...
 	{
 		ComputationGraph cg;
-		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
-		output << explication_set.get_label(i) << endl << label_predicted << endl;
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
+		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
 		explication_set.print_sentences_of_a_sample(i, output);
 		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
 		{
@@ -309,7 +312,7 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 			explication_set.remove_couple(num_couple ,i);
 			vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
 			write_couple(output, explication_set, i, j);
-			DI = calculate_DI(probs, original_probs, label_predicted);
+			DI = calculate_DI(probs, original_probs, label_predicted_true_sample, i, j);
 			
 			output << "-1 " << DI << endl;
 			explication_set.reset_couple(num_couple, i);
@@ -321,7 +324,7 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 }
 
 /* Sans coeff pour l'instant */
-float calculate_DI(vector<float>& probs, vector<float>& original_probs, unsigned label_predicted)
+float calculate_DI(vector<float>& probs, vector<float>& original_probs, unsigned label_predicted, unsigned i, unsigned j)
 {
 	float distance;
 	float DI = 0;
@@ -329,43 +332,13 @@ float calculate_DI(vector<float>& probs, vector<float>& original_probs, unsigned
 	{
 		distance = probs[label] - original_probs[label];
 		if(label == label_predicted)
+		{
 			distance = -distance;
+		}
 		DI += distance;
 	}
 	return DI;
 }
-
-
-
-/*
-void LSTM::usage_predict_verbose()
-{
-	cerr << "Enter id label\n";
-	cerr << "Enter id word to form a sentence and -1 to end your sentence\n";
-	cerr << "The first sentence is the premise, the second is the hypothesis\n";
-	cerr << "Enter -2 to end the program\n";
-	
-}
-
-
-void LSTM::run_predict_verbose(ParameterCollection& model, Data& verbose_set, Embeddings& embedding, char* parameters_filename)
-{
-	cerr << "Loading parameters ...\n";
-	TextFileLoader loader(parameters_filename);
-	loader.populate(model);
-	cerr << "Parameters loaded !\n\n";
-
-	cerr << "\t** Testing : Verbose Mode **\n";
-//	usage_predict_verbose();
-	unsigned label_predicted;
-	
-	disable_dropout();
-	ComputationGraph cg;
-	label_predicted = predict(verbose_set, embedding, 0, cg, true);
-	
-	cerr << "True label = " << verbose_set.get_label(0) << ", label predicted = " << label_predicted << endl;
-
-}*/
 
 
 	/* Negative log softmax algorithms */

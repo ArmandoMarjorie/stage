@@ -20,7 +20,6 @@ using namespace dynet;
 	* \param num_sample : The sample
 	* \param sample_label : The sample's label
 */
-/* a essayer*/
 Data::Data(char* sentence, map<string,unsigned>& word_to_id, vector<unsigned>& length_tab, unsigned num_sample, unsigned sample_label)
 {
 	bool is_premise = true;
