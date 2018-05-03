@@ -297,7 +297,9 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 	 * 
 	 */ 	
 	
-	float DI=0;
+	//float DI=0;
+	
+	vector<float> DI(NB_CLASSES,0.0);
 	vector<unsigned> num_couple(1);
 	
 	for(unsigned i=0; i<nb_of_sentences; ++i) //pour un sample ...
@@ -312,9 +314,14 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 			explication_set.remove_couple(num_couple ,i);
 			vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
 			write_couple(output, explication_set, i, j);
-			DI = calculate_DI(probs, original_probs, label_predicted_true_sample, i, j);
-			
-			output << "-1 " << DI << endl;
+			//DI = calculate_DI(probs, original_probs, label_predicted_true_sample);
+			calculate_DI_label(probs, original_probs, DI);
+			//output << "-1 " << DI << endl;
+			output << "-1 ";
+			for(unsigned k=0; k<NB_CLASSES; ++k)
+				output << DI[k] << " ";
+			output << endl;
+			std::fill(DI.begin(), DI.end(), 0.0);
 			explication_set.reset_couple(num_couple, i);
 		}
 		output << " -3\n";
@@ -324,11 +331,11 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 }
 
 /* Sans coeff pour l'instant */
-float calculate_DI(vector<float>& probs, vector<float>& original_probs, unsigned label_predicted, unsigned i, unsigned j)
+float calculate_DI(vector<float>& probs, vector<float>& original_probs, unsigned label_predicted)
 {
 	float distance;
 	float DI = 0;
-	for(unsigned label = 0; label < probs.size(); ++label)
+	for(unsigned label = 0; label < NB_CLASSES; ++label)
 	{
 		distance = probs[label] - original_probs[label];
 		if(label == label_predicted)
@@ -338,6 +345,24 @@ float calculate_DI(vector<float>& probs, vector<float>& original_probs, unsigned
 		DI += distance;
 	}
 	return DI;
+}
+
+/* Calcul de DI pour chaque label (comme Lime)*/
+void calculate_DI_label(vector<float>& probs, vector<float>& original_probs, vector<float>& DI)
+{
+	float distance;
+	for(unsigned label_ref = 0; label_ref < NB_CLASSES; ++label_ref)
+	{
+		for(unsigned label = 0; label < NB_CLASSES; ++label)
+		{
+			distance = probs[label] - original_probs[label];
+			if(label == label_ref)
+			{
+				distance = -distance;
+			}
+			DI[label_ref] += distance;
+		}
+	}
 }
 
 

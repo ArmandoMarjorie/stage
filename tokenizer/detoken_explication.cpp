@@ -124,8 +124,12 @@ void detokenizer(char* lexique_filename, char* explication_filename, char* outpu
 			}
 			else
 			{
-				explication_file >> val_di; //reading DI
-				output << " = DI : " << val_di << endl;
+				for(unsigned l=0; l<3; ++l) //read the 3 DIs
+				{
+					explication_file >> val_di; //reading DI
+					output << " DI["<< detoken_label(l) <<"] : " << val_di << " ; ";
+				}
+				output << endl;
 			}
 			explication_file >> val;
 		}
