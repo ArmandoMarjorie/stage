@@ -310,6 +310,7 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 		explication_set.print_sentences_of_a_sample(i, output);
 		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
 		{
+			cg.clear();
 			num_couple[0] = j;
 			explication_set.remove_couple(num_couple ,i);
 			vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
@@ -364,6 +365,162 @@ void calculate_DI_label(vector<float>& probs, vector<float>& original_probs, vec
 		}
 	}
 }
+
+
+void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	unsigned label_predicted_true_sample;
+	const unsigned nb_of_sentences = 1;//explication_set.get_nb_sentences();
+	rnn.disable_dropout();
+	char const* name = "Files/expl_removing_couple_token";
+	ofstream output(name, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << name << endl;
+		exit(EXIT_FAILURE);
+	}	
+
+	vector<unsigned> premise;
+	vector<unsigned> hypothesis;
+	unsigned branch=0;
+	unsigned nb_words_removed=0;
+	unsigned emp;
+	bool end;
+	float min=9e+99;
+	float score;
+	vector<pair<unsigned,unsigned>> save_premise; //the word id (first) and its position (second)
+	vector<pair<unsigned,unsigned>> save_hypothesis;
+	for(unsigned i=0; i < nb_of_sentences; ++i)
+	{
+		unsigned stack_size = explication_set.get_nb_words(1,i) + explication_set.get_nb_words(2,i);
+		vector<pair<bool,bool>> stack(stack_size, make_pair(true,false)); //first -> false if we want to remove the word else true, second -> false if we didn't change the val else true
+		save_sentences(explication_set, premise, hypothesis, i);
+		end = false;
+		while(!end)
+		{
+			//cerr << "on a passé " << branch << " tour de boucle\n";
+			ComputationGraph cg;
+			if(branch!=0)
+				explication_set.remove_words_from_stack(stack,i);
+			cerr << "boucle "<<branch<<endl;
+			explication_set.print_sentences_of_a_sample(i);
+			//cerr << "pile = \n";
+			print_stack(stack, explication_set.get_nb_words(1,i));
+			sleep(5);
+			if(stack.empty())
+				cerr << "it is empty (:\n";
+			
+			vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+			if(branch!=0)
+			{
+				score = nb_words_removed + probs[label_predicted];
+				if(score < min)
+				{
+					min = score;
+					saving_branch(stack, save_premise, save_hypothesis, explication_set, i);
+				}
+			}
+			if(branch!=0)
+				explication_set.reset_words_from_stack(stack, premise, hypothesis, i);
+			++branch;
+			if(!(stack[stack.size()-1].second))
+			{
+				change_val(stack, nb_words_removed);
+				//cerr << "\t[CHANGEMENT VALEUR]\n";
+				//print_stack(stack, explication_set.get_nb_words(1,i));
+			}
+			else
+			{
+				do
+				{
+					//dépiler, changer de valeur et empiler
+					while(!stack.empty() && stack[stack.size()-1].second)
+					{
+						stack.pop_back();
+						//cerr << "\t[DEPILE]\n";
+						//print_stack(stack, explication_set.get_nb_words(1,i));
+						--nb_words_removed;
+					}
+					if(stack.empty() || premise_empty(stack, explication_set.get_nb_words(1,i))) //fini quand premise vide
+					{
+						end = true;
+						continue;
+					}
+					change_val(stack, nb_words_removed);
+					//cerr << "\t[CHANGEMENT VALEUR]\n";
+					//print_stack(stack, explication_set.get_nb_words(1,i));
+					for(emp = stack.size()-1; emp<stack_size-1; ++emp)
+						stack.push_back(make_pair(true,false));
+					//cerr << "\t[EMPILAGE 1]\n";
+					//print_stack(stack, explication_set.get_nb_words(1,i));
+				}while(!end && hypothesis_empty(stack, explication_set.get_nb_words(1,i))); //gère l'hypothèse vide
+			}
+		}
+		/* write save in file */
+		for(unsigned k=0; k<save_premise.size(); ++k)
+			cerr << save_premise[k].first << " ";
+		cerr << endl;
+		premise.clear();
+		hypothesis.clear();
+	}
+} 
+
+void print_stack(vector<pair<bool,bool>>& stack, unsigned premise_length)
+{
+	for(unsigned i=0; i<stack.size(); ++i)
+	{
+		if(i==premise_length)
+			cerr << endl;
+		cerr << stack[i].first << " ";
+	}
+	cerr << endl;
+}
+
+bool premise_empty(vector<pair<bool,bool>>& stack, unsigned premise_length)
+{
+	for(unsigned i=0; i<premise_length; ++i)
+		if(stack[i].first)
+			return false;
+	return true;
+}
+
+bool hypothesis_empty(vector<pair<bool,bool>>& stack, unsigned premise_length)
+{
+	for(unsigned i=premise_length; i<stack.size(); ++i)
+		if(stack[i].first)
+			return false;
+	return true;
+	
+}
+
+void change_val(vector<pair<bool,bool>>& stack, unsigned& nb_words_removed)
+{
+	stack[stack.size()-1].first = false;
+	stack[stack.size()-1].second = true;	
+	++nb_words_removed;
+}
+
+void saving_branch(vector<pair<bool,bool>>& stack, vector<pair<unsigned,unsigned>>& save_premise, 
+	vector<pair<unsigned,unsigned>>& save_hypothesis, Data& explication_set, unsigned num_sample)
+{
+	unsigned premise_length = explication_set.get_nb_words(1,num_sample);
+	for(unsigned i=0; i<stack.size(); ++i)
+		if(stack[i].first)
+		{
+			if(i<premise_length)
+				save_premise.push_back(make_pair(explication_set.get_word_id(1,num_sample,i),i));
+			else
+				save_hypothesis.push_back(make_pair(explication_set.get_word_id(2,num_sample,i),i));
+		}
+}
+
 
 
 	/* Negative log softmax algorithms */

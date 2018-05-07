@@ -94,6 +94,9 @@
 			void taking_couple(unsigned num_couple, unsigned num_sample);
 			void reset_sentences(std::vector<unsigned>& original_premise, std::vector<unsigned>& original_hypothesis, unsigned num_sample, bool is_premise);
 			bool is_empty(unsigned num_sample, bool is_premise);
+			
+			void remove_words_from_stack(std::vector<std::pair<bool,bool>>& stack, unsigned num_sample);
+			void reset_words_from_stack(std::vector<std::pair<bool,bool>>& stack, std::vector<unsigned>& original_premise, std::vector<unsigned>& original_hypothesis, unsigned num_sample);
 	};
 
 #endif

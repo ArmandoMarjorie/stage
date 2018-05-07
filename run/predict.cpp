@@ -83,9 +83,11 @@ int main(int argc, char** argv)
 			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
 		}*/
 		
-		
+		/**
 		Data explication_set(argv[1], 3); 
-		run_predict_removing_couple(rnn, model, explication_set, embedding, argv[6]); //method with DI
+		run_predict_removing_couple(rnn, model, explication_set, embedding, argv[6]); //method with DI*/
+		Data explication_set(argv[1]);
+		generate_all_masks(rnn, model, explication_set, embedding, argv[6]); 
 	}
 	else
 	{

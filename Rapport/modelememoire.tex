@@ -163,7 +163,26 @@ car le taux de réussite n'est pas le seul critère à prendre en compte.
 Dans ce travail, nous utilisons les réseaux de neurones récurrents, 
 et plus particulièrement les LSTMs (long short-term memory : LSTM) et les Bi-LSTMSs (bidirectionnal 
 long short-term memory : Bi-LSTM). 
-/*Expliquer RNN et LSTM*/ 
+/*Expliquer RNN et LSTM*/
+Les états cachés sont calculés à chaque instant t comme suit :
+\begin{equation}
+entree : i_t = \sigma(W_i x_t + U_i h_{t-1} + b_i)
+\end{equation}
+\begin{equation}
+oublie : f_t = \sigma(W_f x_t + U_f h_{t-1} + b_f)
+\end{equation}
+\begin{equation}
+etat : u_t = \tanh(W_u x_t + U_u h_{t-1} + b_u)
+\end{equation}
+\begin{equation}
+sortie : o_t = \sigma(W_o x_t + U_o h_{t-1} + b_o)
+\end{equation}
+\begin{equation}
+c_t = f_t \cdot c_{t-1} + i_t \cdot u_t
+\end{equation}
+\begin{equation}
+h_t = o_t \cdot \tanh(c_t)
+\end{equation}
 
 \subsection{Systèmes utilisés}
 Nous avons implémenté 3 systèmes différents avec la librairie DyNet\cite{ref6}:\\
