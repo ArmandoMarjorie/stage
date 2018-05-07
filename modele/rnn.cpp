@@ -410,10 +410,10 @@ void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_
 			if(branch!=0)
 				explication_set.remove_words_from_stack(stack,i);
 			cerr << "boucle "<<branch<<endl;
-			explication_set.print_sentences_of_a_sample(i);
-			//cerr << "pile = \n";
+			//explication_set.print_sentences_of_a_sample(i);
+			cerr << "pile = \n";
 			print_stack(stack, explication_set.get_nb_words(1,i));
-			sleep(5);
+			//sleep(5);
 			if(stack.empty())
 				cerr << "it is empty (:\n";
 			
