@@ -735,25 +735,25 @@ bool Data::is_empty(unsigned num_sample, bool is_premise)
 void Data::remove_words_from_stack(vector<pair<bool,bool>>& stack, unsigned num_sample)
 {
 	unsigned nb_words = premise[num_sample].size();
-	unsigned i;
+	unsigned i,j;
 	for(i=0; i<nb_words; ++i)
 		if(!stack[i].first)
 			premise[num_sample][i] = 0;
-	for( ; i<stack.size(); ++i)
+	for(j=0 ; i<stack.size(); ++i, ++j)
 		if(!stack[i].first)
-			hypothesis[num_sample][i] = 0;
+			hypothesis[num_sample][j] = 0;
 }
 
 void Data::reset_words_from_stack(vector<pair<bool,bool>>& stack, vector<unsigned>& original_premise, vector<unsigned>& original_hypothesis, unsigned num_sample)
 {
 	unsigned nb_words = premise[num_sample].size();
-	unsigned i;
+	unsigned i, j;
 	for(i=0; i<nb_words; ++i)
 		if(!stack[i].first)
 			premise[num_sample][i] = original_premise[i];
-	for( ; i<stack.size(); ++i)
+	for(j=0 ; i<stack.size(); ++i, ++j)
 		if(!stack[i].first)
-			hypothesis[num_sample][i] = original_hypothesis[i];
+			hypothesis[num_sample][j] = original_hypothesis[j];
 }
 
 
