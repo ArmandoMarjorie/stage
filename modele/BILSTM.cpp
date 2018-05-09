@@ -206,6 +206,19 @@ void BiLSTM::compute_b_context_vector(ComputationGraph& cg, vector< vector<float
 	}
 }
 
+void softmax_vect(vector<float>& tmp)
+{
+	float x,y;
+	for(unsigned j=0; j<tmp.size(); ++j)
+	{
+		x = exp(tmp[j]);
+		y = 0;
+		for(unsigned k=0; k<tmp.size(); ++k)
+			y += exp(tmp[k]);
+		tmp[j] = x / y; 
+	}
+}
+
 Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg)
 {
 	/* Representation of each word (of the premise and of the hypothesis)
@@ -236,15 +249,32 @@ Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sente
 			input[i][j] = tmp.value();
 		}
 	}	
-	mult = input(cg, {prem_size, hyp_size}, input);
-	Expression alpha = softmax(mult);
+	//mult = input(cg, {prem_size, hyp_size}, input);
+	//Expression alpha = softmax(mult);
 	//TODO softmax soi meme pour pas passer par des expressions
 	
-	
+	vector<float> tmp(hyp_size);
+	vector<vector<float>> alpha;
+	for(j=0; j<hyp_size; ++j)
+	{
+		for(i=0; i<prem_size; ++i)
+			tmp[j] = input[i][j];
+		softmax_vect(tmp);
+		alpha.push_back(tmp);
+	}
 	//vector<vector<Expression>> s(prem_size, vector<float>(hyp_size));
+	vector<Expression> vect;
+	for(i=0; i<prem_size; ++i)
+	{
+		for(j=0; j<hyp_size; ++j)
+		{
+			Expression e = alpha[i][j] * concatenate({premise_lstm_repr[i],hypothesis_lstm_repr[j]});
+			vect.push_back(e);
+		}
+	}
+	Expression s = sum(vect);
 	
-	
-	Expression score = affine_transform({bias, W, tmp};
+	Expression score = affine_transform({bias, W, s};
 	return score;
 }
 
