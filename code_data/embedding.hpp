@@ -40,6 +40,7 @@
 			Embeddings(dynet::ParameterCollection& model, unsigned dim);
 			Embeddings(char* embedding_filename, dynet::ParameterCollection& model, unsigned dim, bool testing);
 			void print_embedding(char* output_filename);
+			void print_one_embedding(unsigned word_id);
 			dynet::Expression get_embedding_expr(dynet::ComputationGraph& cg, unsigned index);
 	};
 	

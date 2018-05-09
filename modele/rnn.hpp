@@ -15,6 +15,7 @@
 	#include "dynet/globals.h"
 	#include "dynet/io.h"
 	#include "../code_data/data.hpp"
+	#include "../tokenizer/detoken_explication.hpp"
 
 	/**
 	 * \file rnn.hpp
@@ -78,6 +79,7 @@
 	bool hypothesis_empty(std::vector<std::pair<bool,bool>>& stack, unsigned premise_length);
 	void change_val(std::vector<std::pair<bool,bool>>& stack, unsigned& nb_words_removed);
 	void generate_all_masks(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);
+	void generate_couple_masks(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
 	
 	
 	void print_stack(std::vector<std::pair<bool,bool>>& stack, unsigned premise_length);

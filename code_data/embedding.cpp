@@ -45,13 +45,18 @@ Embeddings::Embeddings(char* embedding_filename, ParameterCollection& model, uns
 	unsigned tmp;
 	string word;
 	unsigned index;
+	unsigned i;
 	vector<float> embedding(dim_embedding);
 	if(testing) index=0;
 	else index=1;
 	while( emb_file >> word )
 	{
-		for(unsigned i=0; i<dim_embedding; ++i)
+		for(i=0; i<dim_embedding; ++i)
+		{
 			emb_file >> embedding[i];
+			if(testing && index==0)
+				embedding[i] = 0.0;
+		}
 		p_c.initialize(index, embedding);
 		++index;
 	}
@@ -87,7 +92,7 @@ Expression Embeddings::get_embedding_expr(ComputationGraph& cg, unsigned index)
 
 /**
 	* \name print_embedding
-	* \brief Print the embedding of each words in a file. Just to debug.
+	* \brief Print the embedding of each words in a file.
 	*
 	* \param name : The name of the output file
 */
@@ -106,4 +111,18 @@ void Embeddings::print_embedding(char* output_filename)
 
 	output_file.close();
 
+}
+
+
+/**
+	* \name print_embedding
+	* \brief Print the embedding of a specific word. Just to debug.
+	*
+	* \param word_id : The word's id
+*/
+void Embeddings::print_one_embedding(unsigned word_id)
+{
+	ComputationGraph cg;
+	cerr << "Embedding " << word_id << " :\n";
+	cerr << const_lookup(cg, p_c, word_id).value() << endl; 
 }

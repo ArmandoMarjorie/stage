@@ -12,7 +12,10 @@ BiLSTM::BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dr
 	if(systeme==3)
 		p_W = model.add_parameters({NB_CLASSES, 4*hidden_dim});
 	else if(systeme==4)
-		p_W = model.add_parameters({NB_CLASSES, (2*hidden_dim)*(2*hidden_dim)});
+	{
+		p_W = model.add_parameters({NB_CLASSES, 2*hidden_dim});
+		p_W_attention = model.add_parameters({2*hidden_dim, 2*hidden_dim});
+	}
 }
 	
 	/* Predictions algorithms */
@@ -213,22 +216,36 @@ Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sente
 	words_representation(embedding, set, 1, cg, num_sentence, premise_lstm_repr);
 	words_representation(embedding, set, 2, cg, num_sentence, hypothesis_lstm_repr);
 	
+	unsigned prem_size = premise_lstm_repr.size();
+	unsigned hyp_size = hypothesis_lstm_repr.size();
 	// Computing score 
 	Expression W = parameter(cg, p_W); 
+	Expression W_attention = parameter(cg, p_W_attention); // a rajouter constr
 	Expression bias = parameter(cg, p_bias); 
 	vector<Expression> scores;
-	Expression input;
-	
-	for(unsigned i=0; i<premise_lstm_repr.size(); ++i)
-		for(unsigned j=0; j<hypothesis_lstm_repr.size(); ++j)
+	Expression mult;
+	Expression tmp;
+	vector< vector<float> > input(prem_size, vector<float>(hyp_size));
+	unsigned i, j;
+	for(i=0; i<prem_size; ++i)
+	{
+		mult = transpose(premise_lstm_repr[i]) * W_attention;
+		for(j=0; j<hyp_size; ++j)
 		{
-			input = premise_lstm_repr[i] * transpose(hypothesis_lstm_repr[j]);
-			input = reshape(input, Dim({(2*hidden_dim)*(2*hidden_dim)}, 1));
-			//cerr << "dimension = "<<input.dim() <<endl;
-			scores.push_back(affine_transform({bias, W, input}));
+			tmp = mult * hypothesis_lstm_repr[j];
+			input[i][j] = tmp.value();
 		}
-		
-	return sum(scores);
+	}	
+	mult = input(cg, {prem_size, hyp_size}, input);
+	Expression alpha = softmax(mult);
+	//TODO softmax soi meme pour pas passer par des expressions
+	
+	
+	//vector<vector<Expression>> s(prem_size, vector<float>(hyp_size));
+	
+	
+	Expression score = affine_transform({bias, W, tmp};
+	return score;
 }
 
 Expression BiLSTM::run_KIM(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg) 

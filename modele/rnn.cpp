@@ -366,6 +366,83 @@ void calculate_DI_label(vector<float>& probs, vector<float>& original_probs, vec
 	}
 }
 
+void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	unsigned label_predicted_true_sample;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	rnn.disable_dropout();
+	char* name = "Files/expl_token";
+	ofstream output(name, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << name << endl;
+		exit(EXIT_FAILURE);
+	}		
+	vector<unsigned> premise;
+	vector<unsigned> hypothesis;	
+	unsigned save_prem = 0;
+	unsigned save_hyp = 0;
+	float score_max = 9e-99;
+	float DI;
+	
+	for(unsigned i=0; i < nb_of_sentences; ++i)
+	{
+		ComputationGraph cg;
+		vector<bool> marquage_prem(explication_set.get_nb_words(1,i),true);
+		vector<bool> marquage_hyp(explication_set.get_nb_words(2,i),true);
+		save_sentences(explication_set, premise, hypothesis, i);
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
+		//score_min = probs[label_predicted_true_sample];
+		//cout << "Sample " << i+1 << endl;
+		//cout << "label = " << explication_set.get_label(i) << " label predicted = " << label_predicted_true_sample << endl;
+		//cerr << "Score["<<label_predicted_true_sample<<"] = "<< score_min << endl;
+		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
+		explication_set.print_sentences_of_a_sample(i, output);
+		for(unsigned prem=0; prem<marquage_prem.size(); ++prem)
+		{
+			marquage_prem[prem] = false;
+			explication_set.remove_words_from_vectors(prem, i, true);
+			//cerr << "removed in premise = " << premise[prem] << endl;
+			for(unsigned hyp=0; hyp<marquage_hyp.size(); ++hyp)
+			{
+				cg.clear();
+				marquage_hyp[hyp] = false;
+				explication_set.remove_words_from_vectors(hyp, i, false);
+				//cerr << "removed in hyp = " << hypothesis[hyp] << endl;
+				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+				//cerr << "Score["<<label_predicted_true_sample<<"] = " << probs[label_predicted_true_sample] <<endl;
+				
+				DI = calculate_DI(probs, original_probs, label_predicted_true_sample);
+				if(DI > score_max)
+				{
+					score_max = DI;
+					save_prem = premise[prem]; 
+					save_hyp = hypothesis[hyp]; 
+				}
+				
+				marquage_hyp[hyp] = true;
+				explication_set.reset_words_from_vectors(hypothesis, hyp, i, false);
+			}
+			marquage_prem[prem] = true;
+			explication_set.reset_words_from_vectors(premise, prem, i, true);
+		}
+		score_max = 9e-99;
+		premise.clear();
+		hypothesis.clear();
+		output << save_prem << endl << save_hyp << "\n-3\n";
+		//cout << "couple important = \n premise = " << save_prem << "\nhypothesis = " << save_hyp << endl << endl;
+	}
+	output.close();
+	char* name_detok = "Files/expl_detoken";
+	detoken_expl(lexique_filename, name, name_detok);
+}
 
 void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)
 {
@@ -379,13 +456,13 @@ void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_
 	unsigned label_predicted_true_sample;
 	const unsigned nb_of_sentences = 1;//explication_set.get_nb_sentences();
 	rnn.disable_dropout();
-	char const* name = "Files/expl_removing_couple_token";
+	/*char const* name = "Files/expl_removing_couple_token";
 	ofstream output(name, ios::out | ios::trunc);
 	if(!output)
 	{
 		cerr << "Problem with the output file " << name << endl;
 		exit(EXIT_FAILURE);
-	}	
+	}	*/
 
 	vector<unsigned> premise;
 	vector<unsigned> hypothesis;
@@ -393,42 +470,35 @@ void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_
 	unsigned nb_words_removed=0;
 	unsigned emp;
 	bool end;
-	float min=9e+99;
-	float score;
+	float score_max=9e-99;
+	float DI;
 	vector<pair<unsigned,unsigned>> save_premise; //the word id (first) and its position (second)
 	vector<pair<unsigned,unsigned>> save_hypothesis;
 	for(unsigned i=0; i < nb_of_sentences; ++i)
 	{
+		ComputationGraph cg;
 		unsigned stack_size = explication_set.get_nb_words(1,i) + explication_set.get_nb_words(2,i);
 		vector<pair<bool,bool>> stack(stack_size, make_pair(true,false)); //first -> false if we want to remove the word else true, second -> false if we didn't change the val else true
 		save_sentences(explication_set, premise, hypothesis, i);
 		end = false;
+		
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
 		while(!end)
 		{
-			//cerr << "on a passé " << branch << " tour de boucle\n";
-			ComputationGraph cg;
-			if(branch!=0)
-				explication_set.remove_words_from_stack(stack,i);
-			cerr << "boucle "<<branch<<endl;
-			//explication_set.print_sentences_of_a_sample(i);
-			cerr << "pile = \n";
-			print_stack(stack, explication_set.get_nb_words(1,i));
-			//sleep(5);
-			if(stack.empty())
-				cerr << "it is empty (:\n";
-			
-			vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+			cg.clear();
 			if(branch!=0)
 			{
-				score = nb_words_removed + probs[label_predicted];
-				if(score < min)
+				explication_set.remove_words_from_stack(stack,i);
+
+				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+				DI = calculate_DI(probs, original_probs, label_predicted_true_sample);
+				if(DI + (stack_size-nb_words_removed)  > score_max)
 				{
-					min = score;
+					score_max = DI;
 					saving_branch(stack, save_premise, save_hypothesis, explication_set, i);
 				}
-			}
-			if(branch!=0)
 				explication_set.reset_words_from_stack(stack, premise, hypothesis, i);
+			}
 			++branch;
 			if(!(stack[stack.size()-1].second))
 			{
@@ -438,34 +508,36 @@ void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_
 			}
 			else
 			{
-				do
+				
+				//dépiler, changer de valeur et empiler
+				while(!stack.empty() && stack[stack.size()-1].second)
 				{
-					//dépiler, changer de valeur et empiler
-					while(!stack.empty() && stack[stack.size()-1].second)
-					{
-						stack.pop_back();
-						//cerr << "\t[DEPILE]\n";
-						//print_stack(stack, explication_set.get_nb_words(1,i));
-						--nb_words_removed;
-					}
-					if(stack.empty() || premise_empty(stack, explication_set.get_nb_words(1,i))) //fini quand premise vide
-					{
-						end = true;
-						continue;
-					}
-					change_val(stack, nb_words_removed);
-					//cerr << "\t[CHANGEMENT VALEUR]\n";
+					stack.pop_back();
+					//cerr << "\t[DEPILE]\n";
 					//print_stack(stack, explication_set.get_nb_words(1,i));
-					for(emp = stack.size()-1; emp<stack_size-1; ++emp)
-						stack.push_back(make_pair(true,false));
-					//cerr << "\t[EMPILAGE 1]\n";
-					//print_stack(stack, explication_set.get_nb_words(1,i));
-				}while(!end && hypothesis_empty(stack, explication_set.get_nb_words(1,i))); //gère l'hypothèse vide
+					--nb_words_removed;
+				}
+				if(stack.empty()) //fini quand premise vide
+				{
+					end = true;
+					continue;
+				}
+				change_val(stack, nb_words_removed);
+				//cerr << "\t[CHANGEMENT VALEUR]\n";
+				//print_stack(stack, explication_set.get_nb_words(1,i));
+				for(emp = stack.size()-1; emp<stack_size-1; ++emp)
+					stack.push_back(make_pair(true,false));
+				//cerr << "\t[EMPILAGE 1]\n";
+				//print_stack(stack, explication_set.get_nb_words(1,i));
+				
 			}
 		}
 		/* write save in file */
 		for(unsigned k=0; k<save_premise.size(); ++k)
 			cerr << save_premise[k].first << " ";
+		cerr << endl;
+		for(unsigned k=0; k<save_hypothesis.size(); ++k)
+			cerr << save_hypothesis[k].first << " ";
 		cerr << endl;
 		premise.clear();
 		hypothesis.clear();
@@ -511,14 +583,15 @@ void saving_branch(vector<pair<bool,bool>>& stack, vector<pair<unsigned,unsigned
 	vector<pair<unsigned,unsigned>>& save_hypothesis, Data& explication_set, unsigned num_sample)
 {
 	unsigned premise_length = explication_set.get_nb_words(1,num_sample);
-	for(unsigned i=0; i<stack.size(); ++i)
+	unsigned i,j;
+	save_premise.clear();
+	save_hypothesis.clear();
+	for(i=0; i<premise_length; ++i)
 		if(stack[i].first)
-		{
-			if(i<premise_length)
-				save_premise.push_back(make_pair(explication_set.get_word_id(1,num_sample,i),i));
-			else
-				save_hypothesis.push_back(make_pair(explication_set.get_word_id(2,num_sample,i),i));
-		}
+			save_premise.push_back(make_pair(explication_set.get_word_id(1,num_sample,i),i));
+	for(j=0 ; i<stack.size(); ++i, ++j)
+		if(stack[i].first)
+			save_hypothesis.push_back(make_pair(explication_set.get_word_id(2,num_sample,j),j));
 }
 
 

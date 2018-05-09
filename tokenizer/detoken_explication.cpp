@@ -1,12 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string>
-#include <cstdlib>
-#include <map>
-#include <algorithm>
-#include <locale>
+#include "detoken_explication.hpp"
 
 
 /** LEXIQUE = VOCABULAIRE + LEUR ID */
@@ -59,7 +51,7 @@ void reading_lexique(char* lexique_filename, map<unsigned, string>& id_to_word, 
 }
 /* faire detoken pr removing couple (avec DI) */
 
-void detokenizer(char* lexique_filename, char* explication_filename, char* output_filename, bool DI)
+void detokenizer_with_couple(char* lexique_filename, char* explication_filename, char* output_filename, bool DI)
 {
 	ifstream explication_file(explication_filename, ios::in);
 	if(!explication_file)
@@ -140,6 +132,59 @@ void detokenizer(char* lexique_filename, char* explication_filename, char* outpu
 }
 
 
+
+void detoken_expl(char* lexique_filename, char* explication_filename, char* output_filename)
+{
+	ifstream explication_file(explication_filename, ios::in);
+	if(!explication_file)
+	{ 
+		cerr << "Impossible to open the file " << explication_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	ofstream output(output_filename, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << output_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	/*Reading lexique and saving in a map the word of an id*/
+	map<unsigned, string> id_to_word;
+	reading_lexique(lexique_filename, id_to_word, false);	
+	int val;
+	unsigned cpt;
+	unsigned num_sample=1;
+	while(explication_file >> val)
+	{
+		output << "\tsample numero " << num_sample << "\nlabel : " << detoken_label(val) << ", ";
+		explication_file >> val;
+		output<< "label predicted : " << detoken_label(val) << endl;
+		
+		explication_file >> val;
+		for(cpt=0; cpt <2; ++cpt) // reading the premise and the hypothesis
+		{
+			if(cpt==0)
+				output << "premise : ";
+			else
+				output << "hypothesis : ";
+			while(val != -1)
+			{
+				output << id_to_word[val] << " ";
+				explication_file >> val;
+			}
+			explication_file >> val;
+			output << endl;
+		}
+		output << "in premise : " << id_to_word[val] << endl;
+		explication_file >> val;
+		output << "in hypothesis : " << id_to_word[val] << endl;
+		explication_file >> val; //read -3 (end of sample)
+	}	
+	output.close();
+	explication_file.close();
+	
+}
+
+/*
 int main(int argc, char** argv)
 {
 	if(argc != 5)
@@ -157,4 +202,4 @@ int main(int argc, char** argv)
 	
 	return 0;
 }
-
+*/

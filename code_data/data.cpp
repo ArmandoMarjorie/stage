@@ -756,5 +756,26 @@ void Data::reset_words_from_stack(vector<pair<bool,bool>>& stack, vector<unsigne
 			hypothesis[num_sample][j] = original_hypothesis[j];
 }
 
+void Data::remove_words_from_vectors(unsigned word_position, unsigned num_sample, bool is_premise)
+{
+	if(is_premise)
+		premise[num_sample][word_position] = 0;
+	else
+		hypothesis[num_sample][word_position] = 0;
+}
+
+void Data::reset_words_from_vectors(vector<unsigned>& sentence, unsigned word_position, unsigned num_sample, bool is_premise)
+{
+	if(is_premise)
+		premise[num_sample][word_position] = sentence[word_position];
+	else
+		hypothesis[num_sample][word_position] = sentence[word_position];	
+}
+
+
+
+
+
+
 
 

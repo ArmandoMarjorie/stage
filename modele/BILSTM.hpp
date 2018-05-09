@@ -16,6 +16,7 @@
 	{
 		private:
 			dynet::VanillaLSTMBuilder* backward_lstm; /*!< backward LSTM*/ 
+			dynet::Parameter p_W_attention; /*!< attention matrix weight*/
 
 			void words_representation(Embeddings& embedding, Data& set, unsigned sentence,
 					dynet::ComputationGraph& cg, unsigned num_sentence, std::vector<dynet::Expression>& sentence_repr);

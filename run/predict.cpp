@@ -18,7 +18,8 @@ void usage(char* exe_name)
 		 << "hidden_dim <int> : dimension  of the hidden states ht and ct\n"
 		 << "parameters_file <string> : file containing the parameters (weight and bias) updated in the training step\n"
 		 << "system <int> : which system you want to use (1, 2 or 3=KIM)\n"
-		 << "mode <int> : 0 = with file, 1 = verbose with word id as input, 2 = verbose with word as input\n";
+		 << "lexique_file <string> : lexique containing the IDs of each word\n";
+		 //<< "mode <int> : 0 = with file, 1 = verbose with word id as input, 2 = verbose with word as input\n";
 	exit(EXIT_SUCCESS);
 }
 
@@ -26,7 +27,7 @@ int main(int argc, char** argv)
 { 
 	if(argc > 0 && !strcmp(argv[1], "-h"))
 		usage(argv[0]);
-	if( argc != 8 )
+	if( argc != 9 )
 	{
 		cerr << "Usage pour tester :\n " 
 		<< argv[0] << " test_file " << " embedding_file " 
@@ -43,6 +44,7 @@ int main(int argc, char** argv)
 							 
 	// Load Dataset 
 	Embeddings embedding(argv[2], model, static_cast<unsigned>(atoi(argv[4])), true);
+	
 	
 	//unsigned mode=static_cast<unsigned>(atoi(argv[8]));
 
@@ -87,7 +89,7 @@ int main(int argc, char** argv)
 		Data explication_set(argv[1], 3); 
 		run_predict_removing_couple(rnn, model, explication_set, embedding, argv[6]); //method with DI*/
 		Data explication_set(argv[1]);
-		generate_all_masks(rnn, model, explication_set, embedding, argv[6]); 
+		generate_couple_masks(rnn, model, explication_set, embedding, argv[6], argv[8]); 
 	}
 	else
 	{
