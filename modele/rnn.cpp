@@ -32,6 +32,24 @@ unsigned RNN::get_nb_layers(){ return nb_layers; }
 unsigned RNN::get_input_dim(){ return input_dim; }
 unsigned RNN::get_hidden_dim(){ return hidden_dim; }
 
+void softmax_vect(vector<float>& tmp, vector<vector<float>>& alpha, unsigned& colonne)
+{
+	float x,y;
+	unsigned j,k;
+	vector<float> copy(tmp.size());
+	for(j=0; j<tmp.size(); ++j)
+	{
+		x = exp(tmp[j]);
+		y = 0;
+		for(k=0; k<tmp.size(); ++k)
+			y += exp(tmp[k]);
+		copy[j] = x / y; 
+	}
+	for(j=0; j<copy.size() ; ++j)
+		alpha[j][colonne] = copy[j];
+	++colonne;
+}
+
 	/* Predictions algorithms */
 
 vector<float> RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_proba, unsigned& argmax)

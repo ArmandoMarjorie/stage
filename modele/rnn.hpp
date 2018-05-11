@@ -50,6 +50,8 @@
 			
 	};
 	
+	void softmax_vect(std::vector<float>& tmp, std::vector<std::vector<float>>& alpha, unsigned& colonne);
+	
 	void run_train(RNN& rnn, dynet::ParameterCollection& model, Data& train_set, Data& dev_set, Embeddings& embedding, char* output_emb_filename, unsigned nb_epoch, unsigned batch_size);
 	void run_predict(RNN& rnn, dynet::ParameterCollection& model, Data& test_set, Embeddings& embedding, char* parameters_filename);
 	dynet::Expression get_neg_log_softmax(RNN& rnn, Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);

@@ -13,7 +13,7 @@ BiLSTM::BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dr
 		p_W = model.add_parameters({NB_CLASSES, 4*hidden_dim});
 	else if(systeme==4)
 	{
-		p_W = model.add_parameters({NB_CLASSES, 2*hidden_dim});
+		p_W = model.add_parameters({NB_CLASSES, 4*hidden_dim});
 		p_W_attention = model.add_parameters({2*hidden_dim, 2*hidden_dim});
 	}
 }
@@ -90,8 +90,8 @@ void BiLSTM::words_representation(Embeddings& embedding, Data& set, unsigned sen
 	/* Run forward LSTM */
 	for(i=0; i<nb_words; ++i)
 	{
-		if(set.get_word_id(sentence, num_sentence, i) == 0)
-			continue;
+		//if(set.get_word_id(sentence, num_sentence, i) == 0)
+		//	continue;
 		sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) ) );
 	}
 	/* Run backward LSTM */
@@ -206,18 +206,6 @@ void BiLSTM::compute_b_context_vector(ComputationGraph& cg, vector< vector<float
 	}
 }
 
-void softmax_vect(vector<float>& tmp)
-{
-	float x,y;
-	for(unsigned j=0; j<tmp.size(); ++j)
-	{
-		x = exp(tmp[j]);
-		y = 0;
-		for(unsigned k=0; k<tmp.size(); ++k)
-			y += exp(tmp[k]);
-		tmp[j] = x / y; 
-	}
-}
 
 Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg)
 {
@@ -233,9 +221,8 @@ Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sente
 	unsigned hyp_size = hypothesis_lstm_repr.size();
 	// Computing score 
 	Expression W = parameter(cg, p_W); 
-	Expression W_attention = parameter(cg, p_W_attention); // a rajouter constr
-	Expression bias = parameter(cg, p_bias); 
-	vector<Expression> scores;
+	Expression W_attention = parameter(cg, p_W_attention);
+	Expression bias = parameter(cg, p_bias);
 	Expression mult;
 	Expression tmp;
 	vector< vector<float> > input(prem_size, vector<float>(hyp_size));
@@ -246,35 +233,44 @@ Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sente
 		for(j=0; j<hyp_size; ++j)
 		{
 			tmp = mult * hypothesis_lstm_repr[j];
-			input[i][j] = tmp.value();
+			input[i][j] = as_scalar(tmp.value());
 		}
-	}	
-	//mult = input(cg, {prem_size, hyp_size}, input);
-	//Expression alpha = softmax(mult);
-	//TODO softmax soi meme pour pas passer par des expressions
+	}
 	
-	vector<float> tmp(hyp_size);
-	vector<vector<float>> alpha;
+	vector<float> tmp_vect(prem_size);
+	vector<vector<float>> alpha(prem_size, vector<float>(hyp_size));
+	unsigned colonne=0;
 	for(j=0; j<hyp_size; ++j)
 	{
 		for(i=0; i<prem_size; ++i)
-			tmp[j] = input[i][j];
-		softmax_vect(tmp);
-		alpha.push_back(tmp);
+			tmp_vect[i] = input[i][j];
+		softmax_vect(tmp_vect, alpha, colonne);
 	}
-	//vector<vector<Expression>> s(prem_size, vector<float>(hyp_size));
+	//debug
+	/*
+	for(i=0; i<prem_size; ++i)
+	{
+		for(j=0; j<hyp_size; ++j)
+		{
+			cerr << alpha[i][j] << " ";
+		}
+		cerr << endl;
+	} 
+	cerr << "ok" << endl;*/
 	vector<Expression> vect;
 	for(i=0; i<prem_size; ++i)
 	{
 		for(j=0; j<hyp_size; ++j)
 		{
 			Expression e = alpha[i][j] * concatenate({premise_lstm_repr[i],hypothesis_lstm_repr[j]});
+			//cerr << "dim de e = " << e.dim() << endl;
 			vect.push_back(e);
 		}
 	}
 	Expression s = sum(vect);
+	//cerr << "dim de s = " << s.dim() << endl;
 	
-	Expression score = affine_transform({bias, W, s};
+	Expression score = affine_transform({bias, W, s});
 	return score;
 }
 

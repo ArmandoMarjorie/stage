@@ -54,7 +54,6 @@ int main(int argc, char** argv)
 	Data train_set(argv[1]);
 	Data dev_set(argv[2]);
 	Embeddings embedding(argv[10], model, static_cast<unsigned>(atoi(argv[4])), false);
-	
 	train_set.print_infos(0);
 	dev_set.print_infos(1);
 
