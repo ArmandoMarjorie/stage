@@ -428,9 +428,100 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 	}		
 	vector<unsigned> premise;
 	vector<unsigned> hypothesis;	
-	vector<unsigned> save_prem(2,0);
-	vector<unsigned> save_hyp(2,0);
-	vector<float> max_DI(2,9e-99);
+	vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(2));
+	vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(2));
+	vector<vector<float>> max_DI(NB_CLASSES, vector<float>(2)); // 2 DI for each label
+	
+	std::vector<float>::iterator index_min_it;
+	unsigned index_min;
+	float DI;
+	vector<float> vect_DI(NB_CLASSES);
+	for(unsigned i=0; i < nb_of_sentences; ++i)
+	{
+		ComputationGraph cg;
+		vector<bool> marquage_prem(explication_set.get_nb_words(1,i),true);
+		vector<bool> marquage_hyp(explication_set.get_nb_words(2,i),true);
+		save_sentences(explication_set, premise, hypothesis, i);
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
+		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
+		//explication_set.print_sentences_of_a_sample(i, output);
+		for(unsigned prem=0; prem<marquage_prem.size(); ++prem)
+		{
+			marquage_prem[prem] = false;
+			explication_set.remove_words_from_vectors(prem, i, true);
+			for(unsigned hyp=0; hyp<marquage_hyp.size(); ++hyp)
+			{
+				cg.clear();
+				marquage_hyp[hyp] = false;
+				explication_set.remove_words_from_vectors(hyp, i, false);
+				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+				
+				calculate_DI_label(probs, original_probs, vect_DI);
+				for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+				{
+					index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
+					index_min = std::distance(std::begin(max_DI[lab]), index_min_it);
+					if(vect_DI[lab] > max_DI[lab][index_min])
+					{
+						max_DI[lab][index_min] = vect_DI[lab];
+						save_prem[lab][index_min] = prem; //faire en sorte qu'on ne puisse pas mettre les mm mots (ex : pas "happy happy")
+						save_hyp[lab][index_min] = hyp; 
+					}										
+				}
+				marquage_hyp[hyp] = true;
+				explication_set.reset_words_from_vectors(hypothesis, hyp, i, false);
+			}
+			marquage_prem[prem] = true;
+			explication_set.reset_words_from_vectors(premise, prem, i, true);
+		}
+		premise.clear();
+		hypothesis.clear();
+		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+			std::fill(max_DI[lab].begin(), max_DI[lab].end(), 9e-99);
+		for(unsigned k=0; k<2; ++k)
+		{
+			for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+			{
+				for(unsigned j=0; j<max_DI[lab].size(); ++j)
+					if(k==0)
+						output << save_prem[lab][j] << " ";
+					else
+						output << save_hyp[lab][j] << " ";
+				output << "-1\n";
+			}
+		}
+		explication_set.print_sentences_of_a_sample(i, output);
+		output << "-3\n";
+		//cout << "couple important = \n premise = " << save_prem << "\nhypothesis = " << save_hyp << endl << endl;
+	}
+	output.close();
+	char* name_detok = "Files/expl_detoken";
+	detoken_expl(lexique_filename, name, name_detok);
+	
+	/* Si on veut eviter d'avoir 2 fois le mm mots
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	unsigned label_predicted_true_sample;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	rnn.disable_dropout();
+	char* name = "Files/expl_token";
+	ofstream output(name, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << name << endl;
+		exit(EXIT_FAILURE);
+	}		
+	vector<unsigned> premise;
+	vector<unsigned> hypothesis;	
+	vector<unsigned> save_prem(2,100);
+	vector<unsigned> save_hyp(2,100);
+	vector<float> max_DI_p(2,9e-99);
+	vector<float> max_DI_h(2,9e-99);
 	std::vector<float>::iterator index_min_it;
 	unsigned index_min;
 	float min_prem;
@@ -444,7 +535,7 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 		save_sentences(explication_set, premise, hypothesis, i);
 		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
 		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
-		explication_set.print_sentences_of_a_sample(i, output);
+		//explication_set.print_sentences_of_a_sample(i, output);
 		for(unsigned prem=0; prem<marquage_prem.size(); ++prem)
 		{
 			marquage_prem[prem] = false;
@@ -457,14 +548,26 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
 				
 				DI = calculate_DI(probs, original_probs, label_predicted_true_sample);
-				index_min_it = std::min_element(max_DI.begin(), max_DI.end());
-				index_min = std::distance(std::begin(max_DI), index_min_it);
-				
-				if(DI > max_DI[index_min])
+
+				if(std::find(save_prem.begin(), save_prem.end(), prem) == save_prem.end())
 				{
-					max_DI[index_min] = DI;
-					save_prem[index_min] = premise[prem]; //faire en sorte qu'on ne puisse pas mettre les mm mots (ex : pas "happy happy")
-					save_hyp[index_min] = hypothesis[hyp]; 
+					index_min_it = std::min_element(max_DI_p.begin(), max_DI_p.end());
+					index_min = std::distance(std::begin(max_DI_p), index_min_it);
+					if( DI > max_DI_p[index_min] )
+					{
+						save_prem[index_min] = prem; //faire en sorte qu'on ne puisse pas mettre les mm mots (ex : pas "happy happy")
+						max_DI_p[index_min] = DI;
+					}
+				}
+				if(std::find(save_hyp.begin(), save_hyp.end(), hyp) == save_hyp.end())
+				{
+					index_min_it = std::min_element(max_DI_h.begin(), max_DI_h.end());
+					index_min = std::distance(std::begin(max_DI_h), index_min_it);
+					if( DI > max_DI_h[index_min] )
+					{
+						save_hyp[index_min] = hyp;
+						max_DI_h[index_min] = DI;
+					}
 				}
 				
 				marquage_hyp[hyp] = true;
@@ -475,24 +578,25 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 		}
 		premise.clear();
 		hypothesis.clear();
-		std::fill(max_DI.begin(), max_DI.end(), 9e-99);
+		std::fill(max_DI_h.begin(), max_DI_h.end(), 9e-99);
+		std::fill(max_DI_p.begin(), max_DI_p.end(), 9e-99);
 		for(unsigned k=0; k<2; ++k)
 		{
-			for(unsigned j=0; j<max_DI.size(); ++j)
+			for(unsigned j=0; j<max_DI_p.size(); ++j)
 				if(k==0)
 					output << save_prem[j] << " ";
 				else
 					output << save_hyp[j] << " ";
-			if(k==0)
-				output << "-1\n";
-			else
-				output << "-3\n";
+			output << "-1\n";
 		}
+		explication_set.print_sentences_of_a_sample(i, output);
+		output << "-3\n";
 		//cout << "couple important = \n premise = " << save_prem << "\nhypothesis = " << save_hyp << endl << endl;
 	}
 	output.close();
 	char* name_detok = "Files/expl_detoken";
 	detoken_expl(lexique_filename, name, name_detok);
+	*/
 }
 
 void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename)

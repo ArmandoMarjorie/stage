@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <gtkmm/main.h>
 #include "../modele/LSTM.hpp"
 #include "../modele/BILSTM.hpp"
 
@@ -35,6 +36,7 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
+	Gtk::Main app(argc, argv);
 	// Fetch dynet params 
 	auto dyparams = dynet::extract_dynet_params(argc, argv);
 	dynet::initialize(dyparams);

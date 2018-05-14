@@ -1,5 +1,9 @@
 #include "detoken_explication.hpp"
-
+#include <gtkmm/main.h>
+#include <gtkmm/window.h>
+#include <gtkmm/label.h>
+#include <gtkmm/scrolledwindow.h>
+#include <algorithm>
 
 /** LEXIQUE = VOCABULAIRE + LEUR ID */
 // g++ -std=c++11 detoken_explication.cpp -o Detok_expl
@@ -131,10 +135,46 @@ void detokenizer_with_couple(char* lexique_filename, char* explication_filename,
 	
 }
 
-
+string color(unsigned lab)
+{
+	switch(lab)
+	{
+		case 0:
+		{
+			return "cyan";
+		}
+		case 1:
+		{
+			return "green";
+		}
+		case 2:
+		{
+			return "red";
+		}
+		default:
+		{
+			return "yellow";
+		}
+	}	
+}
 
 void detoken_expl(char* lexique_filename, char* explication_filename, char* output_filename)
 {
+	
+	Gtk::Window window;
+	window.set_title("Interpretation of the model");
+	window.resize(1000, 1000);
+	window.set_position(Gtk::WIN_POS_CENTER);
+	Gtk::ScrolledWindow barresDeDefilement;
+	barresDeDefilement.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    window.add(barresDeDefilement);
+   // Gtk::TextView zoneDeTexte; //Création d'une zone de texte.
+    //barresDeDefilement.add(etiquette); //Ajout de la zone de texte au conteneur.
+    
+	
+	Gtk::Label etiquette;
+	etiquette.set_line_wrap();
+	
 	ifstream explication_file(explication_filename, ios::in);
 	if(!explication_file)
 	{ 
@@ -153,49 +193,87 @@ void detoken_expl(char* lexique_filename, char* explication_filename, char* outp
 	int val;
 	unsigned cpt;
 	unsigned num_sample=1;
+	string text;
+
+	stringstream ss;
+	unsigned nb_words, i;
 	while(explication_file >> val)
 	{
-		output << "\tsample numero " << num_sample << "\nlabel : " << detoken_label(val) << ", ";
+		
+		ss << "\t\tsample numero " << num_sample << "\nlabel : " << detoken_label(val) << ", ";
 		++num_sample;
 		explication_file >> val;
-		output<< "label predicted : " << detoken_label(val) << endl;
+		ss << "label predicted : " << detoken_label(val) << "\n";
 		
 		explication_file >> val;
-		for(cpt=0; cpt <2; ++cpt) // reading the premise and the hypothesis
+		/* important words in prem and in hyp */
+		//output << "in premise : ";
+		vector<vector<unsigned>> imp_word;
+		vector<vector<unsigned>> imp_word_h;
+		vector<string> premise;
+		vector<string> hypothesis;
+		for(i=0; i<6; ++i)
 		{
-			if(cpt==0)
-				output << "premise : ";
-			else
-				output << "hypothesis : ";
+			vector<unsigned> tmp;
 			while(val != -1)
 			{
-				output << id_to_word[val] << " ";
+				tmp.push_back(val);
 				explication_file >> val;
 			}
 			explication_file >> val;
-			output << endl;
+			if(i<3)
+				imp_word.push_back(tmp); //premise
+			else
+				imp_word_h.push_back(tmp); //hypothesis
 		}
 		
-		/* important words in prem and in hyp */
-		output << "in premise : ";
-		while(val != -1)
-		{
-			output << id_to_word[val] << " ";
+
+		for(cpt=0; cpt <2; ++cpt) // reading the premise and the hypothesis
+		{	
+			while(val != -1)
+			{
+				if(!cpt)
+					premise.push_back(id_to_word[val]);
+				else
+					hypothesis.push_back(id_to_word[val]);
+				explication_file >> val;
+			}
 			explication_file >> val;
-		}
-		output << endl;
-		explication_file >> val;
-		output << "in hypothesis : ";
-		while(val != -3)
+		}	
+		for(unsigned lab=0; lab<3; ++lab)
 		{
-			output << id_to_word[val] << " ";
-			explication_file >> val;
+			ss << "\tfor label " << detoken_label(lab) << ":\n";
+			ss << "premise : ";
+			for(i=0; i<premise.size(); ++i)	
+			{
+				
+				if( std::find(imp_word[lab].begin(), imp_word[lab].end(), i) != imp_word[lab].end())
+					ss << "<span background='" << color(lab) << "'>" << premise[i] << "</span> ";	
+				else
+					ss << premise[i] << " ";
+			}
+			ss << "\n";
+			ss << "hypothesis : ";
+			for(i=0; i<hypothesis.size(); ++i)
+			{
+				
+				if( std::find(imp_word_h[lab].begin(), imp_word_h[lab].end(), i) != imp_word_h[lab].end())
+					ss << "<span background='" << color(lab) << "'>" << hypothesis[i] << "</span> ";	
+				else
+					ss << hypothesis[i] << " ";	
+			}		
+			ss << "\n";
 		}
-		output << endl;
+		ss << "\n";
+		
 	}	
 	output.close();
 	explication_file.close();
-	
+	text = ss.str();
+	etiquette.set_markup(text);
+	barresDeDefilement.add(etiquette);
+	window.show_all();
+	Gtk::Main::run(window);
 }
 
 /*
