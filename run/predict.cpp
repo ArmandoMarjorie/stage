@@ -88,8 +88,10 @@ int main(int argc, char** argv)
 		/**
 		Data explication_set(argv[1], 3); 
 		run_predict_removing_couple(rnn, model, explication_set, embedding, argv[6]); //method with DI*/
-		Data explication_set(argv[1]);
-		generate_couple_masks(rnn, model, explication_set, embedding, argv[6], argv[8]); 
+		//Data explication_set(argv[1]);
+		//generate_couple_masks(rnn, model, explication_set, embedding, argv[6], argv[8]); 
+		Data set(argv[1]);
+		run_predict(rnn, model, set, embedding, argv[6]);
 	}
 	else
 	{

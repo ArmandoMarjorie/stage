@@ -45,16 +45,39 @@ void softmax_vect(vector<float>& tmp, vector<vector<float>>& alpha, unsigned& co
 			y += exp(tmp[k]);
 		copy[j] = x / y; 
 	}
+	
 	for(j=0; j<copy.size() ; ++j)
 		alpha[j][colonne] = copy[j];
 	++colonne;
+
+}
+
+void softmax_vect(vector<float>& tmp)
+{
+	float x,y;
+	unsigned j,k;
+	vector<float> copy(tmp.size());
+	for(j=0; j<tmp.size(); ++j)
+	{
+		x = exp(tmp[j]);
+		y = 0;
+		for(k=0; k<tmp.size(); ++k)
+			y += exp(tmp[k]);
+		copy[j] = x / y; 
+	}
+	
+	for(j=0; j<copy.size(); ++j)
+		tmp[j] = copy[j];
+	
 }
 
 	/* Predictions algorithms */
 
 vector<float> RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_proba, unsigned& argmax)
 {
+	//vector<float> probs = as_vector(cg.forward(x));
 	vector<float> probs = as_vector(cg.forward(x));
+	softmax_vect(probs);
 	argmax=0;
 
 	for (unsigned k = 0; k < probs.size(); ++k) 
@@ -83,7 +106,7 @@ unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, un
 	for (unsigned i=0; i<nb_of_sentences_dev; ++i)
 	{
 		ComputationGraph cg;
-		rnn.predict(dev_set, embedding, i, cg, false, label_predicted);
+		rnn.predict(dev_set, embedding, i, cg, true, label_predicted);
 		if (label_predicted == dev_set.get_label(i))
 		{
 			positive++;
