@@ -106,7 +106,7 @@ unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, un
 	for (unsigned i=0; i<nb_of_sentences_dev; ++i)
 	{
 		ComputationGraph cg;
-		rnn.predict(dev_set, embedding, i, cg, true, label_predicted);
+		rnn.predict(dev_set, embedding, i, cg, false, label_predicted);
 		if (label_predicted == dev_set.get_label(i))
 		{
 			positive++;
@@ -428,9 +428,12 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 	}		
 	vector<unsigned> premise;
 	vector<unsigned> hypothesis;	
-	unsigned save_prem = 0;
-	unsigned save_hyp = 0;
-	float score_max = 9e-99;
+	vector<unsigned> save_prem(2,0);
+	vector<unsigned> save_hyp(2,0);
+	vector<float> max_DI(2,9e-99);
+	std::vector<float>::iterator index_min_it;
+	unsigned index_min;
+	float min_prem;
 	float DI;
 	
 	for(unsigned i=0; i < nb_of_sentences; ++i)
@@ -440,32 +443,28 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 		vector<bool> marquage_hyp(explication_set.get_nb_words(2,i),true);
 		save_sentences(explication_set, premise, hypothesis, i);
 		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
-		//score_min = probs[label_predicted_true_sample];
-		//cout << "Sample " << i+1 << endl;
-		//cout << "label = " << explication_set.get_label(i) << " label predicted = " << label_predicted_true_sample << endl;
-		//cerr << "Score["<<label_predicted_true_sample<<"] = "<< score_min << endl;
 		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
 		explication_set.print_sentences_of_a_sample(i, output);
 		for(unsigned prem=0; prem<marquage_prem.size(); ++prem)
 		{
 			marquage_prem[prem] = false;
 			explication_set.remove_words_from_vectors(prem, i, true);
-			//cerr << "removed in premise = " << premise[prem] << endl;
 			for(unsigned hyp=0; hyp<marquage_hyp.size(); ++hyp)
 			{
 				cg.clear();
 				marquage_hyp[hyp] = false;
 				explication_set.remove_words_from_vectors(hyp, i, false);
-				//cerr << "removed in hyp = " << hypothesis[hyp] << endl;
 				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
-				//cerr << "Score["<<label_predicted_true_sample<<"] = " << probs[label_predicted_true_sample] <<endl;
 				
 				DI = calculate_DI(probs, original_probs, label_predicted_true_sample);
-				if(DI > score_max)
+				index_min_it = std::min_element(max_DI.begin(), max_DI.end());
+				index_min = std::distance(std::begin(max_DI), index_min_it);
+				
+				if(DI > max_DI[index_min])
 				{
-					score_max = DI;
-					save_prem = premise[prem]; 
-					save_hyp = hypothesis[hyp]; 
+					max_DI[index_min] = DI;
+					save_prem[index_min] = premise[prem]; //faire en sorte qu'on ne puisse pas mettre les mm mots (ex : pas "happy happy")
+					save_hyp[index_min] = hypothesis[hyp]; 
 				}
 				
 				marquage_hyp[hyp] = true;
@@ -474,10 +473,21 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 			marquage_prem[prem] = true;
 			explication_set.reset_words_from_vectors(premise, prem, i, true);
 		}
-		score_max = 9e-99;
 		premise.clear();
 		hypothesis.clear();
-		output << save_prem << endl << save_hyp << "\n-3\n";
+		std::fill(max_DI.begin(), max_DI.end(), 9e-99);
+		for(unsigned k=0; k<2; ++k)
+		{
+			for(unsigned j=0; j<max_DI.size(); ++j)
+				if(k==0)
+					output << save_prem[j] << " ";
+				else
+					output << save_hyp[j] << " ";
+			if(k==0)
+				output << "-1\n";
+			else
+				output << "-3\n";
+		}
 		//cout << "couple important = \n premise = " << save_prem << "\nhypothesis = " << save_hyp << endl << endl;
 	}
 	output.close();

@@ -156,6 +156,7 @@ void detoken_expl(char* lexique_filename, char* explication_filename, char* outp
 	while(explication_file >> val)
 	{
 		output << "\tsample numero " << num_sample << "\nlabel : " << detoken_label(val) << ", ";
+		++num_sample;
 		explication_file >> val;
 		output<< "label predicted : " << detoken_label(val) << endl;
 		
@@ -174,10 +175,23 @@ void detoken_expl(char* lexique_filename, char* explication_filename, char* outp
 			explication_file >> val;
 			output << endl;
 		}
-		output << "in premise : " << id_to_word[val] << endl;
+		
+		/* important words in prem and in hyp */
+		output << "in premise : ";
+		while(val != -1)
+		{
+			output << id_to_word[val] << " ";
+			explication_file >> val;
+		}
+		output << endl;
 		explication_file >> val;
-		output << "in hypothesis : " << id_to_word[val] << endl;
-		explication_file >> val; //read -3 (end of sample)
+		output << "in hypothesis : ";
+		while(val != -3)
+		{
+			output << id_to_word[val] << " ";
+			explication_file >> val;
+		}
+		output << endl;
 	}	
 	output.close();
 	explication_file.close();
