@@ -445,6 +445,8 @@ void run_prediction_expl_for_sys_4(RNN& rnn, ParameterCollection& model, Data& e
 	detoken_expl_sys4(lexique_filename, name, name_detok);
 }
 
+
+//enlève couple par couple O(n*m)
 void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
 {
 	cerr << "Loading parameters ...\n";
@@ -466,9 +468,9 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 	}		
 	vector<unsigned> premise;
 	vector<unsigned> hypothesis;	
-	vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(2));
-	vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(2));
-	vector<vector<float>> max_DI(NB_CLASSES, vector<float>(2)); // 2 DI for each label
+	vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(3));
+	vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(3));
+	vector<vector<float>> max_DI(NB_CLASSES, vector<float>(3)); // 2 DI for each label
 	
 	std::vector<float>::iterator index_min_it;
 	unsigned index_min;
@@ -484,10 +486,7 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
 		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
 		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-		{
 			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -999);
-			cerr << "max_di " <<lab<< " = " << max_DI[lab] << endl;
-		}
 		unsigned cpt=0;
 		//explication_set.print_sentences_of_a_sample(i, output);
 		for(unsigned prem=0; prem<marquage_prem.size(); ++prem)
@@ -508,15 +507,11 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 				{
 					index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
 					index_min = std::distance(std::begin(max_DI[lab]), index_min_it);
-					if(i==3 && lab==2)
-						cerr << "[cpt = "<< cpt<<"] "<< "DI = " << vect_DI[lab] << ", max di = " << max_DI[lab][index_min] << endl;
-					if(vect_DI[lab] > max_DI[lab][index_min]) //des fois ne rentre pas et donc garde les anciens mots importants !
+					if(vect_DI[lab] > max_DI[lab][index_min]) 
 					{
 						max_DI[lab][index_min] = vect_DI[lab];
 						save_prem[lab][index_min] = prem; 
 						save_hyp[lab][index_min] = hyp; 
-						if(i==3 && lab==2)
-							cerr << "nb words = " << explication_set.get_nb_words(2,i) << "  imp words in hypothese = " << hyp << endl;
 					}										
 				}
 				marquage_hyp[hyp] = true;
@@ -526,8 +521,6 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 			explication_set.reset_words_from_vectors(premise, prem, i, true);
 		}
 		
-		if(i==3)
-			cerr << "IMP WORD HYP = " << save_hyp[2][0] << " " << save_hyp[2][1] << endl;
 		premise.clear();
 		hypothesis.clear();
 

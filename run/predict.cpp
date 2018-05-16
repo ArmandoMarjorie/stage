@@ -53,7 +53,7 @@ int main(int argc, char** argv)
 	int systeme = atoi(argv[7]);
 	
 	// Create model
-	if(systeme < 3)
+	if(systeme < 3 || systeme == 5)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), 
 		static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);

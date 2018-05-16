@@ -60,7 +60,7 @@ int main(int argc, char** argv)
 	int systeme = atoi(argv[9]);
 	
 	// Build LSTM -------------------------------------------------------------------------------------
-	if(systeme < 3)
+	if(systeme < 3 || systeme == 5)
 	{
 		cerr << "** SYSTEM " << systeme << " **\n";
 		/*unsigned batch_size = static_cast<unsigned>(atoi(argv[8]));
