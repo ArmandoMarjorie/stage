@@ -17,7 +17,7 @@ LSTM::LSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropou
 
 	/* Predictions algorithms */
 
-vector<float> LSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba, unsigned& argmax)
+vector<float> LSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba, unsigned& argmax, unsigned* important_couple)
 {
 	//cerr << "LSTM prediction : system " << systeme << endl;
 	Expression x = run(set, embedding, num_sentence, cg);

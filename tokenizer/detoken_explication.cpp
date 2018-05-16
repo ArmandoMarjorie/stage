@@ -145,7 +145,7 @@ string color(unsigned lab)
 		}
 		case 1:
 		{
-			return "green";
+			return "yellow";
 		}
 		case 2:
 		{
@@ -153,9 +153,123 @@ string color(unsigned lab)
 		}
 		default:
 		{
-			return "yellow";
+			return "green";
 		}
 	}	
+}
+
+void detoken_expl_sys4(char* lexique_filename, char* explication_filename, char* output_filename)
+{
+	
+	Gtk::Window window;
+	window.set_title("Interpretation of the model");
+	window.resize(1000, 1000);
+	window.set_position(Gtk::WIN_POS_CENTER);
+	Gtk::ScrolledWindow barresDeDefilement;
+	barresDeDefilement.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    window.add(barresDeDefilement);
+   // Gtk::TextView zoneDeTexte; //Création d'une zone de texte.
+    //barresDeDefilement.add(etiquette); //Ajout de la zone de texte au conteneur.
+    
+	
+	Gtk::Label etiquette;
+	etiquette.set_line_wrap();
+	
+	ifstream explication_file(explication_filename, ios::in);
+	if(!explication_file)
+	{ 
+		cerr << "Impossible to open the file " << explication_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	ofstream output(output_filename, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << output_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	/*Reading lexique and saving in a map the word of an id*/
+	map<unsigned, string> id_to_word;
+	reading_lexique(lexique_filename, id_to_word, false);		
+	int val;
+	unsigned cpt;
+	unsigned num_sample=1;
+	string text;
+	float proba_label[3] = {0};
+	float prob;
+	stringstream ss;
+	unsigned i, lab;
+	unsigned important_couple[4] = {0};
+	while(explication_file >> val)
+	{
+		
+		ss << "\t\tsample numero " << num_sample << "\nlabel : " << detoken_label(val) << ", ";
+		++num_sample;
+		explication_file >> val;
+		ss << "label predicted : " << detoken_label(val) << "\n";
+		
+		for(lab=0; lab < 3; ++lab)
+		{
+			explication_file >> prob;
+			ss << "p("<< detoken_label(lab) <<") = "<<  prob*100 << " , ";	
+		}
+		ss << "\n";
+		explication_file >> val;
+		vector<string> premise;
+		vector<string> hypothesis;
+		for(i=0; i<4; ++i)
+		{
+			important_couple[i] = val;
+			explication_file >> val;
+		}
+		
+
+		for(cpt=0; cpt <2; ++cpt) // reading the premise and the hypothesis
+		{	
+			while(val != -1)
+			{
+				if(!cpt)
+					premise.push_back(id_to_word[val]);
+				else
+					hypothesis.push_back(id_to_word[val]);
+				explication_file >> val;
+			}
+			explication_file >> val;
+		}		
+		
+
+		ss << "premise : ";
+		for(i=0; i<premise.size(); ++i)	
+		{
+			
+			if( important_couple[0] == i )
+				ss << "<span background='cyan'>" << premise[i] << "</span> ";	
+			else if( important_couple[2] == i )
+				ss << "<span background='red'>" << premise[i] << "</span> ";	
+			else
+				ss << premise[i] << " ";
+		}
+		ss << "\n";
+		ss << "hypothesis : ";
+		for(i=0; i<hypothesis.size(); ++i)
+		{
+			
+			if( important_couple[1] == i )
+				ss << "<span background='cyan'>" << hypothesis[i] << "</span> ";	
+			else if( important_couple[3] == i )
+				ss << "<span background='red'>" << hypothesis[i] << "</span> ";	
+			else
+				ss << hypothesis[i] << " ";	
+		}		
+		ss << "\n";
+		
+	}	
+	output.close();
+	explication_file.close();
+	text = ss.str();
+	etiquette.set_markup(text);
+	barresDeDefilement.add(etiquette);
+	window.show_all();
+	Gtk::Main::run(window);
 }
 
 void detoken_expl(char* lexique_filename, char* explication_filename, char* output_filename)
@@ -194,9 +308,10 @@ void detoken_expl(char* lexique_filename, char* explication_filename, char* outp
 	unsigned cpt;
 	unsigned num_sample=1;
 	string text;
-
+	float proba_label[3] = {0};
+	float prob;
 	stringstream ss;
-	unsigned nb_words, i;
+	unsigned nb_words, i, lab;
 	while(explication_file >> val)
 	{
 		
@@ -204,6 +319,12 @@ void detoken_expl(char* lexique_filename, char* explication_filename, char* outp
 		++num_sample;
 		explication_file >> val;
 		ss << "label predicted : " << detoken_label(val) << "\n";
+		
+		for(lab=0; lab < 3; ++lab)
+		{
+			explication_file >> prob;
+			proba_label[lab] = prob*100;	
+		}
 		
 		explication_file >> val;
 		/* important words in prem and in hyp */
@@ -240,9 +361,9 @@ void detoken_expl(char* lexique_filename, char* explication_filename, char* outp
 			}
 			explication_file >> val;
 		}	
-		for(unsigned lab=0; lab<3; ++lab)
+		for(lab=0; lab<3; ++lab)
 		{
-			ss << "\tfor label " << detoken_label(lab) << ":\n";
+			ss << "\tfor label " << detoken_label(lab) << " ( " << proba_label[lab] << " % ) :\n";
 			ss << "premise : ";
 			for(i=0; i<premise.size(); ++i)	
 			{

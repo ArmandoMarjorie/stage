@@ -101,9 +101,9 @@ int main(int argc, char** argv)
 	else
 	{
 		Data test_set(argv[1]);
-		test_set.print_infos(3);
+		//test_set.print_infos(3);
 		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
-		run_predict(rnn, model, test_set, embedding, argv[6]);
+		run_prediction_expl_for_sys_4(rnn, model, test_set, embedding, argv[6], argv[8]);
 	}
 
 	return 0;

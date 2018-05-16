@@ -106,7 +106,7 @@ unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, un
 	for (unsigned i=0; i<nb_of_sentences_dev; ++i)
 	{
 		ComputationGraph cg;
-		rnn.predict(dev_set, embedding, i, cg, false, label_predicted);
+		rnn.predict(dev_set, embedding, i, cg, false, label_predicted, NULL);
 		if (label_predicted == dev_set.get_label(i))
 		{
 			positive++;
@@ -153,7 +153,7 @@ vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& 
 	unsigned label_predicted;
 	rnn.disable_dropout();
 	ComputationGraph cg;
-	vector<float> probas = rnn.predict(test_set, embedding, 0, cg, false, label_predicted);
+	vector<float> probas = rnn.predict(test_set, embedding, 0, cg, false, label_predicted, NULL);
 	if(print_label)
 		cerr << "True label = " << test_set.get_label(0) << ", label predicted = " << label_predicted << endl;
 	return probas;
@@ -247,14 +247,14 @@ void run_predict_couple(RNN& rnn, ParameterCollection& model, Data& explication_
 	for(unsigned i=0; i<nb_of_sentences; ++i) //pour un sample ...
 	{
 		ComputationGraph cg;
-		rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+		rnn.predict(explication_set, embedding, i, cg, false, label_predicted, NULL);
 		output << explication_set.get_label(i) << endl << label_predicted << endl;
 		save_sentences(explication_set, premise, hypothesis, i);
 		write_sentences(output, premise, hypothesis);
 		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
 		{
 			explication_set.taking_couple(j,i);
-			rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+			rnn.predict(explication_set, embedding, i, cg, false, label_predicted, NULL);
 			write_couple(output, explication_set, i, j);
 			output << "-1 " << label_predicted << " " << explication_set.get_couple_label(i, j) << endl;
 			explication_set.reset_sentences(premise, hypothesis, i, true);
@@ -346,7 +346,7 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 	for(unsigned i=0; i<nb_of_sentences; ++i) //pour un sample ...
 	{
 		ComputationGraph cg;
-		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
 		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
 		explication_set.print_sentences_of_a_sample(i, output);
 		for(unsigned j=0; j < explication_set.get_nb_couple(i); ++j) // parcours de tous les couples
@@ -354,7 +354,7 @@ void run_predict_removing_couple(RNN& rnn, ParameterCollection& model, Data& exp
 			cg.clear();
 			num_couple[0] = j;
 			explication_set.remove_couple(num_couple ,i);
-			vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+			vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted, NULL);
 			write_couple(output, explication_set, i, j);
 			//DI = calculate_DI(probs, original_probs, label_predicted_true_sample);
 			calculate_DI_label(probs, original_probs, DI);
@@ -407,6 +407,44 @@ void calculate_DI_label(vector<float>& probs, vector<float>& original_probs, vec
 	}
 }
 
+// surligne les couples importants dans la matrice de co attention
+void run_prediction_expl_for_sys_4(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	unsigned label_predicted_true_sample;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	rnn.disable_dropout();
+	char* name = "Files/expl_sys4_token";
+	ofstream output(name, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << name << endl;
+		exit(EXIT_FAILURE);
+	}	
+	unsigned important_couple[4] = {0};
+	unsigned i,k;
+	for(i=0; i < nb_of_sentences; ++i)
+	{
+		ComputationGraph cg;
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, important_couple);
+		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
+		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
+		for(k=0; k<4; k+=2)
+			output << important_couple[k] << " " << important_couple[k+1] << "\n";
+		explication_set.print_sentences_of_a_sample(i, output);
+		output << "-3\n";
+	}
+	output.close();
+	char* name_detok = "Files/expl_sys4_detoken";
+	detoken_expl_sys4(lexique_filename, name, name_detok);
+}
+
 void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
 {
 	cerr << "Loading parameters ...\n";
@@ -435,15 +473,22 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 	std::vector<float>::iterator index_min_it;
 	unsigned index_min;
 	float DI;
-	vector<float> vect_DI(NB_CLASSES);
+	vector<float> vect_DI(NB_CLASSES, 0.0);
 	for(unsigned i=0; i < nb_of_sentences; ++i)
 	{
 		ComputationGraph cg;
 		vector<bool> marquage_prem(explication_set.get_nb_words(1,i),true);
 		vector<bool> marquage_hyp(explication_set.get_nb_words(2,i),true);
 		save_sentences(explication_set, premise, hypothesis, i);
-		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
 		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
+		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
+		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+		{
+			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -999);
+			cerr << "max_di " <<lab<< " = " << max_DI[lab] << endl;
+		}
+		unsigned cpt=0;
 		//explication_set.print_sentences_of_a_sample(i, output);
 		for(unsigned prem=0; prem<marquage_prem.size(); ++prem)
 		{
@@ -451,21 +496,27 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 			explication_set.remove_words_from_vectors(prem, i, true);
 			for(unsigned hyp=0; hyp<marquage_hyp.size(); ++hyp)
 			{
+				++cpt;
 				cg.clear();
 				marquage_hyp[hyp] = false;
 				explication_set.remove_words_from_vectors(hyp, i, false);
-				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted, NULL);
 				
+				std::fill(vect_DI.begin(), vect_DI.end(), 0.0);
 				calculate_DI_label(probs, original_probs, vect_DI);
 				for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 				{
 					index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
 					index_min = std::distance(std::begin(max_DI[lab]), index_min_it);
-					if(vect_DI[lab] > max_DI[lab][index_min])
+					if(i==3 && lab==2)
+						cerr << "[cpt = "<< cpt<<"] "<< "DI = " << vect_DI[lab] << ", max di = " << max_DI[lab][index_min] << endl;
+					if(vect_DI[lab] > max_DI[lab][index_min]) //des fois ne rentre pas et donc garde les anciens mots importants !
 					{
 						max_DI[lab][index_min] = vect_DI[lab];
-						save_prem[lab][index_min] = prem; //faire en sorte qu'on ne puisse pas mettre les mm mots (ex : pas "happy happy")
+						save_prem[lab][index_min] = prem; 
 						save_hyp[lab][index_min] = hyp; 
+						if(i==3 && lab==2)
+							cerr << "nb words = " << explication_set.get_nb_words(2,i) << "  imp words in hypothese = " << hyp << endl;
 					}										
 				}
 				marquage_hyp[hyp] = true;
@@ -474,10 +525,12 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 			marquage_prem[prem] = true;
 			explication_set.reset_words_from_vectors(premise, prem, i, true);
 		}
+		
+		if(i==3)
+			cerr << "IMP WORD HYP = " << save_hyp[2][0] << " " << save_hyp[2][1] << endl;
 		premise.clear();
 		hypothesis.clear();
-		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-			std::fill(max_DI[lab].begin(), max_DI[lab].end(), 9e-99);
+
 		for(unsigned k=0; k<2; ++k)
 		{
 			for(unsigned lab=0; lab<NB_CLASSES; ++lab)
@@ -533,9 +586,11 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 		vector<bool> marquage_prem(explication_set.get_nb_words(1,i),true);
 		vector<bool> marquage_hyp(explication_set.get_nb_words(2,i),true);
 		save_sentences(explication_set, premise, hypothesis, i);
-		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
 		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
 		//explication_set.print_sentences_of_a_sample(i, output);
+		std::fill(max_DI_h.begin(), max_DI_h.end(), 9e-99);
+		std::fill(max_DI_p.begin(), max_DI_p.end(), 9e-99);
 		for(unsigned prem=0; prem<marquage_prem.size(); ++prem)
 		{
 			marquage_prem[prem] = false;
@@ -578,8 +633,7 @@ void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explicati
 		}
 		premise.clear();
 		hypothesis.clear();
-		std::fill(max_DI_h.begin(), max_DI_h.end(), 9e-99);
-		std::fill(max_DI_p.begin(), max_DI_p.end(), 9e-99);
+
 		for(unsigned k=0; k<2; ++k)
 		{
 			for(unsigned j=0; j<max_DI_p.size(); ++j)
@@ -637,7 +691,7 @@ void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_
 		save_sentences(explication_set, premise, hypothesis, i);
 		end = false;
 		
-		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
 		while(!end)
 		{
 			cg.clear();
@@ -645,7 +699,7 @@ void generate_all_masks(RNN& rnn, ParameterCollection& model, Data& explication_
 			{
 				explication_set.remove_words_from_stack(stack,i);
 
-				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted);
+				vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted, NULL);
 				DI = calculate_DI(probs, original_probs, label_predicted_true_sample);
 				if(DI + (stack_size-nb_words_removed)  > score_max)
 				{

@@ -20,14 +20,14 @@ BiLSTM::BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dr
 	
 	/* Predictions algorithms */
 	
-vector<float> BiLSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba, unsigned& argmax)
+vector<float> BiLSTM::predict(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, bool print_proba, unsigned& argmax, unsigned* important_couple)
 {
 	//cerr << "BiLSTM prediction \n";
 	Expression x;
 	if(systeme==3)
 		x = run_KIM(set, embedding, num_sentence, cg);
 	else if(systeme==4)
-		x = run_sys4(set, embedding, num_sentence, cg);
+		x = run_sys4(set, embedding, num_sentence, cg, important_couple);
 		
 	vector<float> probs = predict_algo(x, cg, print_proba, argmax);
 	return probs;
@@ -41,7 +41,7 @@ Expression BiLSTM::get_neg_log_softmax(Data& set, Embeddings& embedding, unsigne
 	if(systeme==3)
 		score = run_KIM(set, embedding, num_sentence, cg);
 	else if(systeme==4)
-		score = run_sys4(set, embedding, num_sentence, cg);
+		score = run_sys4(set, embedding, num_sentence, cg, NULL);
 	Expression loss_expr = get_neg_log_softmax_algo(score, num_sentence, set);
 	return loss_expr;
 }
@@ -207,7 +207,7 @@ void BiLSTM::compute_b_context_vector(ComputationGraph& cg, vector< vector<float
 }
 
 
-Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg)
+Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg, unsigned* important_couple)
 {
 	/* Representation of each word (of the premise and of the hypothesis)
 	 * by the BiLSTM
@@ -258,12 +258,24 @@ Expression BiLSTM::run_sys4(Data& set, Embeddings& embedding, unsigned num_sente
 	} 
 	cerr << "ok" << endl;*/
 	vector<Expression> vect;
+	
+	float val_attention[2] = {-9e-99};
 	for(i=0; i<prem_size; ++i)
 	{
 		for(j=0; j<hyp_size; ++j)
 		{
 			Expression e = alpha[i][j] * concatenate({premise_lstm_repr[i],hypothesis_lstm_repr[j]});
 			//cerr << "dim de e = " << e.dim() << endl;
+			if(alpha[i][j] > val_attention[0])
+			{
+				important_couple[0] = i;
+				important_couple[1] = j;
+			}
+			else if(alpha[i][j] > val_attention[1])
+			{
+				important_couple[2] = i;
+				important_couple[3] = j;				
+			}
 			vect.push_back(e);
 		}
 	}

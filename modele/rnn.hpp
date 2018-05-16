@@ -42,7 +42,7 @@
 			unsigned get_hidden_dim();
 			void enable_dropout();
 			void disable_dropout();
-			virtual std::vector<float> predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax) = 0;
+			virtual std::vector<float> predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax, unsigned* important_couple) = 0;
 			virtual dynet::Expression get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg) = 0;
 			std::vector<float> predict_algo(dynet::Expression& x, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax);
 			dynet::Expression get_neg_log_softmax_algo(dynet::Expression& score, unsigned num_sentence, Data& set);
@@ -86,5 +86,7 @@
 	
 	
 	void print_stack(std::vector<std::pair<bool,bool>>& stack, unsigned premise_length);
+	
+	void run_prediction_expl_for_sys_4(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
 
 #endif

@@ -18,5 +18,7 @@
 	void detokenizer_with_couple(char* lexique_filename, char* explication_filename, char* output_filename, bool DI);
 	
 	void detoken_expl(char* lexique_filename, char* explication_filename, char* output_filename);
+	
+	void detoken_expl_sys4(char* lexique_filename, char* explication_filename, char* output_filename);
 
 #endif

@@ -22,7 +22,7 @@
 					dynet::ComputationGraph& cg, unsigned num_sentence, std::vector<dynet::Expression>& sentence_repr);
 			dynet::Expression run_KIM(Data& set, Embeddings& embedding, unsigned num_sentence, 
 					dynet::ComputationGraph& cg);
-			dynet::Expression run_sys4(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
+			dynet::Expression run_sys4(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, unsigned* important_couple);
 			void create_attention_matrix(dynet::ComputationGraph& cg, std::vector< std::vector<float> >& matrix, 
 					std::vector<dynet::Expression>& premise_lstm_repr, std::vector<dynet::Expression>& hypothesis_lstm_repr);
 			void compute_beta(dynet::ComputationGraph& cg, std::vector< std::vector<float> >& beta_matrix, 
@@ -33,7 +33,7 @@
 					std::vector<dynet::Expression>& hypothesis_lstm_repr, unsigned premise_size, std::vector<dynet::Expression>& a_c_vect);
 			void compute_b_context_vector(dynet::ComputationGraph& cg, std::vector< std::vector<float> >& beta_matrix,
 					std::vector<dynet::Expression>& premise_lstm_repr, unsigned hypothesis_size, std::vector<dynet::Expression>& b_c_vect);
-			virtual std::vector<float> predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax);
+			virtual std::vector<float> predict(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg, bool print_proba, unsigned& argmax, unsigned* important_couple);
 			virtual dynet::Expression get_neg_log_softmax(Data& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
 
 
