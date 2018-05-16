@@ -1,0 +1,129 @@
+neutral
+This church choir sings to the masses as they sing joyous songs from the book at a church . -1 19
+The church has cracks in the ceiling . -1 8
+entailment
+This church choir sings to the masses as they sing joyous songs from the book at a church . -1 19
+The church is filled with song . -1 7
+contradiction
+This church choir sings to the masses as they sing joyous songs from the book at a church . -1 19
+A choir singing at a baseball game . -1 8
+neutral
+A woman with a green headscarf , blue shirt and a very big grin . -1 15
+The woman is young . -1 5
+entailment
+A woman with a green headscarf , blue shirt and a very big grin . -1 15
+The woman is very happy . -1 6
+contradiction
+A woman with a green headscarf , blue shirt and a very big grin . -1 15
+The woman has been shot . -1 6
+entailment
+An old man with a package poses in front of an advertisement . -1 13
+A man poses in front of an ad . -1 9
+neutral
+An old man with a package poses in front of an advertisement . -1 13
+A man poses in front of an ad for beer . -1 11
+contradiction
+An old man with a package poses in front of an advertisement . -1 13
+A man walks by an ad . -1 7
+entailment
+A land rover is being driven across a river . -1 10
+A Land Rover is splashing water as it crosses a river . -1 12
+entailment
+A land rover is being driven across a river . -1 10
+A vehicle is crossing a river . -1 7
+contradiction
+A land rover is being driven across a river . -1 10
+A sedan is stuck in the middle of a river . -1 11
+contradiction
+A man playing an electric guitar on stage . -1 9
+A man playing banjo on the floor . -1 8
+entailment
+A man playing an electric guitar on stage . -1 9
+A man playing guitar on stage . -1 7
+neutral
+A man playing an electric guitar on stage . -1 9
+A man is performing for cash . -1 7
+entailment
+A blond-haired doctor and her African american assistant looking threw new medical manuals . -1 14
+A doctor is looking at a book -1 7
+contradiction
+A blond-haired doctor and her African american assistant looking threw new medical manuals . -1 14
+A man is eating pb and j -1 7
+neutral
+A blond-haired doctor and her African american assistant looking threw new medical manuals . -1 14
+A doctor is studying -1 4
+contradiction
+One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground . -1 28
+A boy runs into a wall -1 6
+entailment
+One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground . -1 28
+A tan girl runs leans over an object -1 8
+neutral
+One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground . -1 28
+A man watches his daughter leap -1 6
+neutral
+A young family enjoys feeling ocean waves lap at their feet . -1 12
+A young man and woman take their child to the beach for the first time . -1 16
+contradiction
+A young family enjoys feeling ocean waves lap at their feet . -1 12
+A family is out at a restaurant . -1 8
+entailment
+A young family enjoys feeling ocean waves lap at their feet . -1 12
+A family is at the beach . -1 7
+entailment
+A couple walk hand in hand down a street . -1 10
+A couple is walking together . -1 6
+neutral
+A couple walk hand in hand down a street . -1 10
+The couple is married . -1 5
+contradiction
+A couple walk hand in hand down a street . -1 10
+A couple is sitting on a bench . -1 8
+contradiction
+3 young man in hoods standing in the middle of a quiet street facing the camera . -1 17
+Three people sit by a busy street bareheaded . -1 9
+entailment
+3 young man in hoods standing in the middle of a quiet street facing the camera . -1 17
+Three hood wearing people pose for a picture . -1 9
+entailment
+3 young man in hoods standing in the middle of a quiet street facing the camera . -1 17
+Three hood wearing people stand in a street . -1 9
+entailment
+A man reads the paper in a bar with green lighting . -1 12
+The man is inside . -1 5
+neutral
+A man reads the paper in a bar with green lighting . -1 12
+The man is reading the sportspage . -1 7
+contradiction
+A man reads the paper in a bar with green lighting . -1 12
+The man is climbing a mountain . -1 7
+neutral
+Three firefighter come out of subway station . -1 8
+Three firefighters putting out a fire inside of a subway station . -1 12
+entailment
+Three firefighter come out of subway station . -1 8
+Three firefighters coming up from a subway station . -1 9
+contradiction
+Three firefighter come out of subway station . -1 8
+Three firefighters playing cards inside a fire station . -1 9
+entailment
+A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground . -1 22
+A person is near a pile of coconuts . -1 9
+neutral
+A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground . -1 22
+A person is selling coconuts . -1 6
+contradiction
+A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground . -1 22
+A person is burning a straw hat . -1 8
+contradiction
+Male in a blue jacket decides to lay in the grass . -1 12
+The guy in yellow is rolling on the grass -1 9
+entailment
+Male in a blue jacket decides to lay in the grass . -1 12
+The guy wearing a blue jacket is laying on the green grass -1 12
+neutral
+Male in a blue jacket decides to lay in the grass . -1 12
+The guy wearing a blue jacket is laying on the green grass taking a nap . -1 16
+contradiction
+A golden retriever nurses puppies . -1 6
+A cat nurses puppies -1 4

@@ -1,17 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string>
-#include <cstdlib>
-#include <map>
-#include <algorithm>
-#include <locale>
-
-using namespace std;
 
 
-/* snli_json_filename = file dans Files/without_id */
+
 void write_vocab_file(char* snli_json_filename, map< string, unsigned >& vocab, ofstream& output)
 {
 	ifstream snli_file(snli_json_filename, ios::in);
@@ -48,34 +37,4 @@ void write_vocab_file(char* snli_json_filename, map< string, unsigned >& vocab, 
 	}
 	
 	snli_file.close();
-}
-
-int main(int argc, char** argv)
-{
-	//if(argc != 3)
-	{
-		cerr << "Usage :\n " << argv[0] << "\n\n"
-			 << "dev_file (in without_id folder)\n"
-			 << "test_file (in without_id folder)\n"
-			 << "train_file (in without_id folder)\n";
-		//exit(EXIT_FAILURE);
-	}
-	
-	/* Pour avoir snli.vocab */
-	map< string, unsigned > vocab;
-	unsigned j=0;
-	ofstream output("snli.vocab", ios::out | ios::trunc);
-	if(!output)
-	{
-		cerr << "Problem with the output file snli.vocab" << endl;
-		exit(EXIT_FAILURE);
-	}
-	write_vocab_file(argv[1], vocab, output);
-	//write_vocab_file(argv[2], vocab, output);
-	//write_vocab_file(argv[3], vocab, output);
-	
-	output.close();
-	
-	
-	return 0;
 }
