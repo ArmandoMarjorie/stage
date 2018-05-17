@@ -19,6 +19,7 @@
 	#include <vector>
 	#include "couple.hpp"
 	#include "embedding.hpp"
+	#include "switch_words.hpp"
 
 /*
 	class Triplet
@@ -62,6 +63,8 @@
 			unsigned nb_contradiction=0;
 			unsigned nb_inference=0;
 			unsigned nb_neutral=0;
+			
+			Switch_Words switch_w; //faire le constructeur special de data
 			
 			void inline init_rate(unsigned label);
 
