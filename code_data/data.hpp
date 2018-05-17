@@ -100,6 +100,9 @@
 			
 			void reset_words_from_vectors(std::vector<unsigned>& sentence, unsigned word_position, unsigned num_sample, bool is_premise);
 			void remove_words_from_vectors(unsigned word_position, unsigned num_sample, bool is_premise);
+			
+			void change_word(bool is_premise, unsigned word_position);
+			void set_word(bool is_premise, unsigned word_position, unsigned word, unsigned num_sample);
 	};
 
 #endif

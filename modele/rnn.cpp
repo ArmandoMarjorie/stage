@@ -445,6 +445,101 @@ void run_prediction_expl_for_sys_4(RNN& rnn, ParameterCollection& model, Data& e
 	detoken_expl_sys4(lexique_filename, name, name_detok);
 }
 
+//word_position = the position of the word we want to change
+// word = the word we have replaced
+void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
+	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample)
+{
+	cg.clear();
+	vector<float> vect_DI(NB_CLASSES, 0.0);
+	std::vector<float>::iterator index_min_it;
+	unsigned index_min, label_predicted;
+	
+	explication_set.change_word(is_premise, word_position); // TODO
+	vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted, NULL);
+	calculate_DI_label(probs, original_probs, vect_DI);
+	
+	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+	{
+		index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
+		index_min = std::distance(std::begin(max_DI[lab]), index_min_it);
+		if(vect_DI[lab] > max_DI[lab][index_min]) 
+		{
+			max_DI[lab][index_min] = vect_DI[lab];
+			save[lab][index_min] = word_position; 
+		}										
+	}	
+	explication_set.set_word(is_premise, word_position, word, num_sample); 	
+}
+
+void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	unsigned label_predicted_true_sample;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	rnn.disable_dropout();
+	char* name = "Files/expl_token";
+	ofstream output(name, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << name << endl;
+		exit(EXIT_FAILURE);
+	}		
+	vector<unsigned> premise;
+	vector<unsigned> hypothesis;
+	vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(3));
+	vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(3));
+	vector<vector<float>> max_DI(NB_CLASSES, vector<float>(3)); // 2 DI for each label
+	
+	
+	unsigned prem_size, hyp_size, position;
+	float DI;
+	
+	
+	for(unsigned i=0; i<nb_of_sentences; ++i)
+	{
+		ComputationGraph cg;
+		save_sentences(explication_set, premise, hypothesis, i);
+		// original prediction
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
+		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
+		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
+		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -999);
+			
+		prem_size = explication_set.get_nb_words(1,i);
+		hyp_size = explication_set.get_nb_words(2,i);
+		
+		for( position=0; position<prem_size; ++position)
+			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI, save_prem, i);
+		for(position=0; position<hyp_size; ++position)
+			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI, save_hyp, i);
+		
+		premise.clear();
+		hypothesis.clear();
+		for(unsigned k=0; k<2; ++k)
+		{
+			for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+			{
+				for(unsigned j=0; j<max_DI[lab].size(); ++j)
+					if(k==0)
+						output << save_prem[lab][j] << " ";
+					else
+						output << save_hyp[lab][j] << " ";
+				output << "-1\n";
+			}
+		}
+		explication_set.print_sentences_of_a_sample(i, output);
+		output << "-3\n";
+	}	
+}
+
 
 //enlève couple par couple O(n*m)
 void generate_couple_masks(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
