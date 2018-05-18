@@ -774,11 +774,6 @@ void Data::reset_words_from_vectors(vector<unsigned>& sentence, unsigned word_po
 		hypothesis[num_sample][word_position] = sentence[word_position];	
 }
 
-void Data::change_word(bool is_premise, unsigned word_position)
-{
-	
-}
-
 void Data::set_word(bool is_premise, unsigned word_position, unsigned word, unsigned num_sample)
 {
 	if(is_premise)

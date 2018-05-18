@@ -471,7 +471,7 @@ void converting_log(vector<float>& probs)
 		probs[i] = log10(probs[i]);
 }
 
-void adding_result(vector<double>& result, double proba_log, vector<float>& probs)
+void adding_result(vector<float>& result, double proba_log, vector<float>& probs)
 {
 	for(unsigned i=0; i<probs.size(); ++i)
 		result[i] += (proba_log + probs[i]);
@@ -489,12 +489,12 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 	unsigned nb_changing_words = sw.get_nb_switch_words(word);
 	unsigned changing_word;
 	double proba_log;
-	vector<double> result(NB_CLASSES, 0.0);
+	vector<float> result(NB_CLASSES, 0.0);
 	
 	for(unsigned nb=1; nb<nb_changing_words; ++nb) //pas 0 car a la position 0 c'est le mot original
 	{
 		changing_word = sw.get_switch_word(word, nb);
-		explication_set.change_word(is_premise, word_position, changing_word); // TODO
+		explication_set.set_word(is_premise, word_position, changing_word, num_sample);
 		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
 		converting_log(probs);
 		proba_log = pb.get_proba_log(word_before, changing_word);
@@ -564,9 +564,9 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 		hyp_size = explication_set.get_nb_words(2,i);
 		
 		for( position=0; position<prem_size; ++position)
-			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI, save_prem, i, sw, pb);
+			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], premise[position-1], original_probs, max_DI, save_prem, i, sw, pb);
 		for(position=0; position<hyp_size; ++position)
-			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI, save_hyp, i, sw, pb);
+			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], hypothesis[position-1], original_probs, max_DI, save_hyp, i, sw, pb);
 		
 		premise.clear();
 		hypothesis.clear();
