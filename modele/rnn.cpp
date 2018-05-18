@@ -445,20 +445,65 @@ void run_prediction_expl_for_sys_4(RNN& rnn, ParameterCollection& model, Data& e
 	detoken_expl_sys4(lexique_filename, name, name_detok);
 }
 
+/* Calcul de DI pour chaque label (comme Lime)*/
+/*
+void calculate_DI_label_special(vector<float>& probs, vector<float>& original_probs, vector<float>& DI, Proba_Bigram& pb)
+{
+	float distance;
+	for(unsigned label_ref = 0; label_ref < NB_CLASSES; ++label_ref)
+	{
+		for(unsigned label = 0; label < NB_CLASSES; ++label)
+		{
+			distance = probs[label] - original_probs[label];
+			if(label == label_ref)
+			{
+				distance = -distance;
+			}
+			DI[label_ref] += distance;
+		}
+	}
+}
+*/
+
+void converting_log(vector<float>& probs)
+{
+	for(unsigned i=0; i<probs.size(); ++i)
+		probs[i] = log10(probs[i]);
+}
+
+void adding_result(vector<double>& result, double proba_log, vector<float>& probs)
+{
+	for(unsigned i=0; i<probs.size(); ++i)
+		result[i] += (proba_log + probs[i]);
+}
+
 //word_position = the position of the word we want to change
 // word = the word we have replaced
 void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
-	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample, Switch_Words sw, Proba_Bigram pb)
+	bool is_premise, unsigned word, unsigned word_before, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample, Switch_Words& sw, Proba_Bigram& pb)
 {
 	cg.clear();
 	vector<float> vect_DI(NB_CLASSES, 0.0);
 	std::vector<float>::iterator index_min_it;
 	unsigned index_min, label_predicted;
+	unsigned nb_changing_words = sw.get_nb_switch_words(word);
+	unsigned changing_word;
+	double proba_log;
+	vector<double> result(NB_CLASSES, 0.0);
 	
-	explication_set.change_word(is_premise, word_position); // TODO
-	vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
-	calculate_DI_label(probs, original_probs, vect_DI);
-	
+	for(unsigned nb=1; nb<nb_changing_words; ++nb) //pas 0 car a la position 0 c'est le mot original
+	{
+		changing_word = sw.get_switch_word(word, nb);
+		explication_set.change_word(is_premise, word_position, changing_word); // TODO
+		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
+		converting_log(probs);
+		proba_log = pb.get_proba_log(word_before, changing_word);
+		adding_result(result, proba_log, probs);
+		std::fill(result.begin(), result.end(), 0.0);
+	}
+	converting_log(original_probs);
+	calculate_DI_label(result, original_probs, vect_DI);
+		
 	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 	{
 		index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
@@ -469,11 +514,12 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 			save[lab][index_min] = word_position; 
 		}										
 	}	
-	explication_set.set_word(is_premise, word_position, word, num_sample); 	
+	
+	explication_set.set_word(is_premise, word_position, word, num_sample);
 }
 
 void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
-	Switch_Words sw, Proba_Bigram pb)
+	Switch_Words& sw, Proba_Bigram& pb)
 {
 	cerr << "Loading parameters ...\n";
 	TextFileLoader loader(parameters_filename);
@@ -518,9 +564,9 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 		hyp_size = explication_set.get_nb_words(2,i);
 		
 		for( position=0; position<prem_size; ++position)
-			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI, save_prem, i);
+			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI, save_prem, i, sw, pb);
 		for(position=0; position<hyp_size; ++position)
-			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI, save_hyp, i);
+			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI, save_hyp, i, sw, pb);
 		
 		premise.clear();
 		hypothesis.clear();
