@@ -126,7 +126,7 @@ Data::Data(char* data_filename)
 	* 		-3 // this means end of sample
 	* \param mode : Not really usefull (just to differientiate this constructor from another one)
 */
-Data::Data(char* test_explication_filename, unsigned mode)
+Data::Data(char* test_explication_filename, unsigned mode) 
 {
 	ifstream test_explication(test_explication_filename, ios::in);
 	if(!test_explication)
@@ -166,6 +166,7 @@ Data::Data(char* test_explication_filename, unsigned mode)
 	}
 	
 	test_explication.close();
+
 }
 
 /**
@@ -213,6 +214,7 @@ Data::Data()
 	* \param mode : Not really usefull (just to differientiate this constructor from another one)
 	* \param lexique_filename : File containing the id of each vocabulary's word
 */
+
 Data::Data(unsigned mode, char* lexique_filename)
 {
 	//read the label

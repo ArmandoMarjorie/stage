@@ -89,9 +89,9 @@
 	
 	void run_prediction_expl_for_sys_4(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
 	
-	void change_words(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
+	void change_words(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename, Switch_Words sw, Proba_Bigram pb);
 	
 	void imp_words(RNN& rnn, dynet::ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
-		bool is_premise, unsigned word, std::vector<float>& original_probs, std::vector<std::vector<float>>& max_DI, std::vector<std::vector<unsigned>>& save, unsigned num_sample);
+		bool is_premise, unsigned word, std::vector<float>& original_probs, std::vector<std::vector<float>>& max_DI, std::vector<std::vector<unsigned>>& save, unsigned num_sample, Switch_Words sw, Proba_Bigram pb);
 
 #endif

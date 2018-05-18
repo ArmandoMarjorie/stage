@@ -11,17 +11,17 @@ Switch_Words::Switch_Words(char* filename)
 		cerr << "Impossible to open the file " << filename << endl;
 		exit(EXIT_FAILURE);
 	}
-	unsigned word;
+	int word;
 	unsigned cpt=0;
 	while(database >> word) //read a 'real' word in the test file
 	{
 		vector<unsigned> tmp;
-		tmp.push_back(word);
+		tmp.push_back(static_cast<unsigned>(word));
 		
 		database >> word;
 		while( word != -1 )
 		{
-			tmp.push_back(word);
+			tmp.push_back(static_cast<unsigned>(word));
 			database >> word;
 		}
 		

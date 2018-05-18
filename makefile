@@ -7,11 +7,11 @@ EXEC= Training Testing
 
 all: $(EXEC)
 
-Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o
-	$(CC) -o Training train.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o $(LDFLAGS)
+Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o pb.o
+	$(CC) -o Training train.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o pb.o $(LDFLAGS)
 
-Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o
-	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o $(LDFLAGS)
+Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o pb.o
+	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o pb.o $(LDFLAGS)
 
 predict.o: run/predict.cpp modele/rnn.hpp code_data/data.hpp
 	$(CC) -o predict.o -c run/predict.cpp $(CFLAGS)
@@ -28,7 +28,7 @@ LSTM.o: modele/LSTM.cpp modele/LSTM.hpp code_data/data.hpp modele/rnn.hpp
 BILSTM.o: modele/BILSTM.cpp modele/BILSTM.hpp code_data/data.hpp modele/rnn.hpp
 	$(CC) -o BILSTM.o -c modele/BILSTM.cpp $(CFLAGS)
 
-data.o: code_data/data.cpp code_data/data.hpp code_data/embedding.hpp code_data/couple.hpp code_data/switch_words.hpp
+data.o: code_data/data.cpp code_data/data.hpp code_data/embedding.hpp code_data/couple.hpp code_data/switch_words.hpp code_data/proba_bigram.hpp
 	$(CC) -o data.o -c code_data/data.cpp $(CFLAGS)
 	
 embedding.o: code_data/embedding.cpp code_data/embedding.hpp
@@ -39,6 +39,9 @@ couple.o: code_data/couple.cpp code_data/couple.hpp
 	
 sw.o: code_data/switch_words.cpp code_data/switch_words.hpp
 	$(CC) -o sw.o -c code_data/switch_words.cpp $(CFLAGS)
+	
+pb.o: code_data/proba_bigram.cpp code_data/proba_bigram.hpp
+	$(CC) -o pb.o -c code_data/proba_bigram.cpp $(CFLAGS)
 
 detoken.o: tokenizer/detoken_explication.cpp tokenizer/detoken_explication.hpp
 	$(CC) -o detoken.o -c tokenizer/detoken_explication.cpp $(CFLAGS)

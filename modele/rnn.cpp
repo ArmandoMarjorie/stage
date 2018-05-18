@@ -448,7 +448,7 @@ void run_prediction_expl_for_sys_4(RNN& rnn, ParameterCollection& model, Data& e
 //word_position = the position of the word we want to change
 // word = the word we have replaced
 void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
-	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample)
+	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample, Switch_Words sw, Proba_Bigram pb)
 {
 	cg.clear();
 	vector<float> vect_DI(NB_CLASSES, 0.0);
@@ -456,7 +456,7 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 	unsigned index_min, label_predicted;
 	
 	explication_set.change_word(is_premise, word_position); // TODO
-	vector<float> probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted, NULL);
+	vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
 	calculate_DI_label(probs, original_probs, vect_DI);
 	
 	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
@@ -472,7 +472,8 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 	explication_set.set_word(is_premise, word_position, word, num_sample); 	
 }
 
-void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
+void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
+	Switch_Words sw, Proba_Bigram pb)
 {
 	cerr << "Loading parameters ...\n";
 	TextFileLoader loader(parameters_filename);

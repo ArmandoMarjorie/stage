@@ -21,10 +21,13 @@
 			unsigned v;
 			double alpha;
 			std::map< std::pair<unsigned, unsigned>, double > proba;
-			std::vector< unsigned > unigram;
+			std::map<  unsigned, unsigned > unigram;
 		
 		public:
-			Proba_Bigram(char* filename);
+			Proba_Bigram(char* filename, char* uni_filename);
+			double get_proba_log(unsigned word1, unsigned word2);
+			bool is_equal(char* true_filename, char* generating_filename);
+			void print_prob(char* fi, char* fi2);
 	};
 
 #endif

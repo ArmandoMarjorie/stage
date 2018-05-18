@@ -20,30 +20,7 @@
 	#include "couple.hpp"
 	#include "embedding.hpp"
 	#include "switch_words.hpp"
-
-/*
-	class Triplet
-	{
-		private:
-			unsigned word;
-			unsigned contradictory_word;
-			unsigned position;
-		public:
-			Triplet();
-			unsigned get_word();
-			unsigned get_contradictory_word();
-			unsigned get_position();
-	};
-	
-	class Contradictory_words
-	{
-		private:
-			std::vector< Triplet > in_premise; // ex : { (le, la, 1) , (chat, grenouille, 2)} mots contradictoires : le chat / la grenouille
-			std::vector< Triplet > in_hypothesis;
-			
-		
-	};
-	*/
+	#include "proba_bigram.hpp"
 	
 	
 	/** 
@@ -63,8 +40,6 @@
 			unsigned nb_contradiction=0;
 			unsigned nb_inference=0;
 			unsigned nb_neutral=0;
-			
-			Switch_Words switch_w; //faire le constructeur special de data
 			
 			void inline init_rate(unsigned label);
 
