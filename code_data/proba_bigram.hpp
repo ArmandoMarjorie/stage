@@ -19,13 +19,17 @@
 	{
 		private:
 			unsigned v;
+			unsigned n;
+			unsigned v1;
 			double alpha;
 			std::map< std::pair<unsigned, unsigned>, double > proba;
+			std::map<unsigned, double > proba_unigram;
 			std::map<  unsigned, unsigned > unigram;
 		
 		public:
 			Proba_Bigram(char* filename, char* uni_filename);
 			double get_proba_log(unsigned word1, unsigned word2);
+			double get_proba_log(unsigned word);
 			bool is_equal(char* true_filename, char* generating_filename);
 			void print_prob(char* fi, char* fi2);
 	};

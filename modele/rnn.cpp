@@ -498,6 +498,8 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
 		converting_log(probs);
 		proba_log = pb.get_proba_log(word_before, changing_word);
+		if(proba_log == -1)
+			cerr << "ATTENTION incorrect proba log\n";
 		adding_result(result, proba_log, probs);
 		std::fill(result.begin(), result.end(), 0.0);
 	}
