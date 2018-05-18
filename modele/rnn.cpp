@@ -531,7 +531,7 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 	unsigned label_predicted_true_sample;
 	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
 	rnn.disable_dropout();
-	char* name = "Files/expl_token";
+	char* name = "Files/expl_token_changing_word";
 	ofstream output(name, ios::out | ios::trunc);
 	if(!output)
 	{
@@ -547,6 +547,7 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 	
 	unsigned prem_size, hyp_size, position;
 	float DI;
+	unsigned send;
 	
 	
 	for(unsigned i=0; i<nb_of_sentences; ++i)
@@ -564,9 +565,21 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 		hyp_size = explication_set.get_nb_words(2,i);
 		
 		for( position=0; position<prem_size; ++position)
-			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], premise[position-1], original_probs, max_DI, save_prem, i, sw, pb);
+		{
+			if(position==0)
+				send = 0;
+			else
+				send = premise[position-1];
+			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], send, original_probs, max_DI, save_prem, i, sw, pb);
+		}
 		for(position=0; position<hyp_size; ++position)
-			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], hypothesis[position-1], original_probs, max_DI, save_hyp, i, sw, pb);
+		{
+			if(position==0)
+				send = 0;
+			else
+				send = hypothesis[position-1];		
+			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], send, original_probs, max_DI, save_hyp, i, sw, pb);
+		}
 		
 		premise.clear();
 		hypothesis.clear();
@@ -585,6 +598,9 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 		explication_set.print_sentences_of_a_sample(i, output);
 		output << "-3\n";
 	}	
+	output.close();
+	char* name_detok = "Files/expl_detoken_changing_word";
+	detoken_expl(lexique_filename, name, name_detok);
 }
 
 

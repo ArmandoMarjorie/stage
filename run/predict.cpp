@@ -49,8 +49,8 @@ int main(int argc, char** argv)
 							 
 	// Load Dataset 
 	Embeddings embedding(argv[2], model, static_cast<unsigned>(atoi(argv[4])), true);
-	Switch_Words switch_w(argv[11]);
-	Proba_Bigram proba_b(argv[9], argv[10]);
+	Switch_Words sw(argv[11]);
+	Proba_Bigram pb(argv[9], argv[10]);
 	
 	
 	//unsigned mode=static_cast<unsigned>(atoi(argv[8]));
@@ -79,6 +79,7 @@ int main(int argc, char** argv)
 			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
 		}*/
 		Data set(argv[1], 1);
+		change_words(rnn, model, set, embedding, argv[6], argv[8], sw, pb);
 		
 		/**
 		Data explication_set(argv[1], 3); 
