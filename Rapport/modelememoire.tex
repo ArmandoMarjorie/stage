@@ -116,13 +116,19 @@
 		relation entre la prémisse et l'hypothèse : 
 		\begin{description}
 			\item[- Contradiction] : l'hypothèse contredit la prémisse.\\
-				\textit{Exemple : P : "Le chat est entièrement blanc" ; H : "Le chat est entièrement noir"}
+				\textit{Exemple :\\
+				Prémisse : "Le chat est entièrement blanc."\\ 
+				Hypothèse : "Le chat est entièrement noir."}
 
 			\item[- Neutre] : l'hypothèse est possible dans le contexte de la prémisse.\\
-				\textit{Exemple : P : "Le chat dort sur la banquette" ; H : "Le chat aime le chocolat"}
+				\textit{Exemple :\\
+				Prémisse : "Le chat dort sur la banquette."\\
+				Hypothèse : "Le chat aime le chocolat."}
 
 			\item[- Inférence] : l'hypothèse est déduite de la prémisse.\\
-				\textit{Exemple : P : "Le chat aimerait manger la sourie" ; H : "Le chat a faim"}
+				\textit{Exemple :\\
+				Prémisse : "Le chat aimerait manger la sourie."\\
+				Hypothèse : "Le chat a faim."}
 		\end{description} \\
 		\\
 		Pour résoudre cela, on utilise des systèmes issus de l'apprentissage automatique. Nous utilisons les réseaux de neurones 
@@ -166,7 +172,8 @@
 		Dans la pratique, il y a souvent un compromis entre le taux de réussite et l'interprétabilité du modèle.
 		Certains modèles tels que les arbres de décisions ou encore les modèle linéaires sont facilement interprétables, 
 		et sont donc parfois utilisés à la place de modèles complexes tels que les réseaux de neurones profonds,  
-		même si ceux-ci peuvent donner de meilleurs résultats. Cependant, au cours de ces derniers mois, de grandes avancées 
+		même si ceux-ci peuvent donner de meilleurs résultats. Cependant, au cours de 
+		ces dernières années, de grandes avancées 
 		ont été effectuées pour tenter d'interpréter les modèles utilisés jusqu'alors comme des boîtes noires.\\
 		\\
 		Nous étudions dans ce rapport la méthode LIME \cite{ref2}, /* EXPLIQUER LIME */
@@ -244,7 +251,7 @@
 		\begin{equation}
 		y = softmax( W \times [ LSTM(\textit{prémisse}) ; LSTM(\textit{hypothèse}) ] + b )
 		\end{equation}
-		où $y$ est le label de sortie, $W$ est la matrice de poids, $LSTM(\textit{prémisse})$ et $LSTM(\textit{hypothèse})$ sont respectivement la représentation de 
+		où $y$ est un vecteur contenant les probabilités de chaque label, $W$ est la matrice de poids, $LSTM(\textit{prémisse})$ et $LSTM(\textit{hypothèse})$ sont respectivement la représentation de 
 		la prémisse et de l'hypothèse, $b$ est le biais, et [;] dénote la concaténation. \\
 		\\
 		\\
