@@ -468,15 +468,39 @@ void calculate_DI_label_special(vector<float>& probs, vector<float>& original_pr
 void converting_log(vector<float>& probs)
 {
 	for(unsigned i=0; i<probs.size(); ++i)
+	{
 		probs[i] = log10(probs[i]);
+		//cout << "probs[" << i << "] = " << probs[i] << endl;
+	}
 }
 
 void adding_result(vector<float>& result, double proba_log, vector<float>& probs)
 {
+	double mult;
 	for(unsigned i=0; i<probs.size(); ++i)
-		result[i] += (proba_log + probs[i]);
+	{
+		mult = proba_log + probs[i];
+		result[i] += mult;
+	}
 }
 
+void affichage_vect_DI(vector<float>& vect_DI)
+{
+	for(unsigned i=0; i<vect_DI.size(); ++i)
+		cout << "vect_di[" <<i <<"] =" << vect_DI[i] << endl;
+}
+
+void affichage_max_DI(vector<vector<float>>& max_DI)
+{
+	for(unsigned i=0; i<max_DI.size(); ++i)
+	{
+		for(unsigned j=0; j<max_DI[i].size(); ++j)
+			cout << "max_DI[" <<i << "][" << j << "] = "<< max_DI[i][j] << " ";
+		cout << endl;
+	}
+}
+		
+		
 //word_position = the position of the word we want to change
 // word = the word we have replaced
 void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
@@ -501,21 +525,32 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 		if(proba_log == -1)
 			cerr << "ATTENTION incorrect proba log\n";
 		adding_result(result, proba_log, probs);
-		std::fill(result.begin(), result.end(), 0.0);
+		
 	}
-	converting_log(original_probs);
+	//cerr << "RESULT =  ";
+	//for(unsigned i=0; i<result.size(); ++i)
+	//	cout << "result[" <<i <<"] =" << result[i] << endl;
+	//cout << "line 533 converting log :\n";
+	//converting_log(original_probs);
 	calculate_DI_label(result, original_probs, vect_DI);
 		
 	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 	{
 		index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
 		index_min = std::distance(std::begin(max_DI[lab]), index_min_it);
+		
+		
 		if(vect_DI[lab] > max_DI[lab][index_min]) 
 		{
 			max_DI[lab][index_min] = vect_DI[lab];
+			//cout << "line 541 RENTRER MAX DI [" << lab <<"]["<< index_min <<"] = " << max_DI[lab][index_min] << endl;
 			save[lab][index_min] = word_position; 
 		}										
 	}	
+	//cout << "line 545\n";
+	//affichage_vect_DI(vect_DI);
+	//cout << "line 547\n";
+	//affichage_max_DI(max_DI);
 	
 	explication_set.set_word(is_premise, word_position, word, num_sample);
 }
@@ -561,8 +596,9 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
 		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
 		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -999);
+			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -99999);
 			
+		converting_log(original_probs);
 		prem_size = explication_set.get_nb_words(1,i);
 		hyp_size = explication_set.get_nb_words(2,i);
 		

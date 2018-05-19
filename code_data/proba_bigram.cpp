@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Proba_Bigram::Proba_Bigram(char* filename, char* uni_filename)
+Proba_Bigram::Proba_Bigram(char* filename, char* uni_filename, char* uni_pro)
 {
 	ifstream proba_file(filename, ios::in);
 	if(!proba_file)
@@ -15,6 +15,12 @@ Proba_Bigram::Proba_Bigram(char* filename, char* uni_filename)
 	if(!unigram_file)
 	{ 
 		cerr << "Impossible to open the file " << uni_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	ifstream unigram_proba(uni_pro, ios::in);
+	if(!unigram_proba)
+	{ 
+		cerr << "Impossible to open the file " << uni_pro << endl;
 		exit(EXIT_FAILURE);
 	}
 	unsigned word1, word2;
@@ -33,6 +39,15 @@ Proba_Bigram::Proba_Bigram(char* filename, char* uni_filename)
 		unigram_file >> word2; 
 		unigram[word1] = word2;
 	}
+	
+	unigram_proba >> n;
+	unigram_proba >> v1;
+	while(unigram_proba >> word1)
+	{
+		unigram_proba >> prob; 
+		proba_unigram[word1] = prob;
+	}	
+	
 	
 	unigram_file.close();
 	proba_file.close();
@@ -59,20 +74,14 @@ double Proba_Bigram::get_proba_log(unsigned word1, unsigned word2)
 
 double Proba_Bigram::get_proba_log(unsigned word)
 {
-	/*map<unsigned, unsigned>::iterator trouve = unigram.find(word1);
-	pair<unsigned,unsigned > pair_of_words(word1, word2);
-	map< pair<unsigned, unsigned>, double >::iterator trouver = proba.find(pair_of_words);
+	map<unsigned, double>::iterator trouve = proba_unigram.find(word);
 	
-	if(trouver != proba.end()) //si le couple de mot existe
-		return proba[pair_of_words];
+	if(trouve != proba_unigram.end()) //si le couple de mot existe
+		return alpha/(double)(n+v1*alpha);
+	else //si le couple de mot n'existe pas mais que l'occurence de wi-1 existe
+		return proba_unigram[word];
 		
-	if(trouver == proba.end() && trouve != unigram.end() ) //si le couple de mot n'existe pas mais que l'occurence de wi-1 existe
-		return alpha/(double)(unigram[word1] + v * alpha);
-		
-	if(trouver == proba.end() && trouve == unigram.end() ) //si rien n'existe (wi-1 : mot inconnu)
-		return alpha/(double)(v*alpha);
-		
-	return -1;*/
+	return -1;
 }
 
 

@@ -27,7 +27,7 @@
 			std::map<  unsigned, unsigned > unigram;
 		
 		public:
-			Proba_Bigram(char* filename, char* uni_filename);
+			Proba_Bigram(char* filename, char* uni_filename, char* uni_pro);
 			double get_proba_log(unsigned word1, unsigned word2);
 			double get_proba_log(unsigned word);
 			bool is_equal(char* true_filename, char* generating_filename);

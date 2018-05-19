@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <locale>
 #include <cmath>
-#define ALPHA 0.1
+#define ALPHA 0.9
 
 
 /** LEXIQUE = VOCABULAIRE + LEUR ID */
@@ -69,10 +69,10 @@ void make_file(map< int,int >& occurrences_uni, map< pair<int, int>, int >& occu
 	}
 	output_uni << v1 << endl;
 	output_bi << v2 << endl;
-	
+	output_proba_log_uni << n << endl << v1 << endl;
 	for(map<int,int>::iterator it1=occurrences_uni.begin(); it1!=occurrences_uni.end(); ++it1) //parcours de la 1ere map
 		output_proba_log_uni << it1->first << " " << log10((it1->second+ALPHA)/(double)(n+v1*ALPHA)) << endl;
-	output_proba_log_uni << n << endl << v1 << endl;
+	
 	
 	
 	output_bi.close();
