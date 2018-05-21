@@ -521,17 +521,18 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 		explication_set.set_word(is_premise, word_position, changing_word, num_sample);
 		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
 		converting_log(probs);
-		proba_log = pb.get_proba_log(word_before, changing_word);
+		proba_log = pb.get_proba_log(changing_word);
 		if(proba_log == -1)
 			cerr << "ATTENTION incorrect proba log\n";
 		adding_result(result, proba_log, probs);
 		
 	}
-	//cerr << "RESULT =  ";
-	//for(unsigned i=0; i<result.size(); ++i)
-	//	cout << "result[" <<i <<"] =" << result[i] << endl;
-	//cout << "line 533 converting log :\n";
-	//converting_log(original_probs);
+	/*if(!is_premise)
+	{
+		cerr << "RESULT =  ";
+		for(unsigned i=0; i<result.size(); ++i)
+			cout << "result[" <<i <<"] =" << result[i] << endl;
+	}*/
 	calculate_DI_label(result, original_probs, vect_DI);
 		
 	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
@@ -543,7 +544,8 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 		if(vect_DI[lab] > max_DI[lab][index_min]) 
 		{
 			max_DI[lab][index_min] = vect_DI[lab];
-			//cout << "line 541 RENTRER MAX DI [" << lab <<"]["<< index_min <<"] = " << max_DI[lab][index_min] << endl;
+			/*if(!is_premise)
+				cout << "line 541 RENTRER MAX DI [" << lab <<"]["<< index_min <<"] = " << max_DI[lab][index_min] << endl;*/
 			save[lab][index_min] = word_position; 
 		}										
 	}	
@@ -610,6 +612,8 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 				send = premise[position-1];
 			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], send, original_probs, max_DI, save_prem, i, sw, pb);
 		}
+		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -99999);
 		for(position=0; position<hyp_size; ++position)
 		{
 			if(position==0)
