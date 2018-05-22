@@ -479,7 +479,7 @@ void adding_result(vector<float>& result, double proba_log, vector<float>& probs
 	double mult;
 	for(unsigned i=0; i<probs.size(); ++i)
 	{
-		mult = proba_log + probs[i];
+		mult = /*proba_log +*/ probs[i];
 		result[i] += mult;
 	}
 }

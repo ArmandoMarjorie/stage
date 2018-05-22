@@ -21,7 +21,7 @@ void usage(char* exe_name)
 /*7*/		 << "system <int> : which system you want to use (1, 2 or 3=KIM)\n"
 /*8*/		 << "lexique_file <string> : lexique containing the IDs of each word\n"
 /*9*/		 << "bigram_prob_file <string> : Files/bigram_proba_log\n"
-/*10*/		 << "unigram file <string> : Files/unigram"
+/*10*/		 << "unigram file <string> : Files/unigram\n"
 /*11*/		 << "switch words file <string> : Files/files_test/mots_remplacants_interpretation_test\n"
 			 << "uni_prob_file <string> : Files/uni_proba_log\n";
 		 //<< "mode <int> : 0 = with file, 1 = verbose with word id as input, 2 = verbose with word as input\n";

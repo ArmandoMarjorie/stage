@@ -30,8 +30,8 @@
 
 % Titre du rapport
 \def\TitreRapport{
-    Interprétation de prédictions de modèle en inférence textuelle 
-    en perturbant significativement les entrées.
+    Interprétation de prédictions de modèles pour l'inférence textuelle 
+    en perturbant significativement les entrées
 }
 
 % Pre'nom et nom dde l'auteur
@@ -207,7 +207,7 @@
 \section{Réseaux de neurones récurrents}
 	\subsection{LSTM et Bi-LSTM}
 		Dans ce travail, nous utilisons les réseaux de neurones récurrents, 
-		et plus particulièrement les LSTMs (Long Short-Term Memory : LSTM) et les Bi-LSTMSs (Bidirectionnal 
+		et plus particulièrement les LSTMs (Long Short-Term Memory : LSTM) et les Bi-LSTMs (Bidirectionnal 
 		Long Short-Term Memory : Bi-LSTM).\\ 
 		Ils permettent de relier des informations vues antérieurement à la tâche 
 		courante. On leur donne des informations à chaque instant $t$, créant ainsi une 
@@ -220,9 +220,9 @@
 		Ce sont des RNNs particuliers capable d'apprendre une dépendance 
 		très éloignée à notre tâche courante : ils ont la capacité de supprimer ou 
 		d'ajouter des informations à l'état de la cellule, régulé par des portes 
-		permettant de laisser passer ou non de l'information.\\
+		qui décident s'il faut laisser passer de l'information.\\
 		Ces réseaux de neurones sont utilisés ici en tant qu'encodeur : on fournit en entrée, à chaque instant $t$, 
-		le t\up{ième} mot de la phrase traitée, à savoir la prémisse ou l'hypothèse. 
+		l'embedding du t\up{ième} mot de la phrase traitée, à savoir la prémisse ou l'hypothèse. 
 		Le réseau calcule alors à chaque instant $t$ un état caché $h_t$ comme suit :\\
 		\begin{equation}
 		i_t = \sigma(W_i x_t + U_i h_{t-1} + b_i)
@@ -242,9 +242,14 @@
 		\begin{equation}
 		h_t = o_t \odot \tanh(c_t)
 		\end{equation}
+		où $\sigma$ est la fonction sigmoid, $\odot$ est le produit de Hadamard entre deux vecteurs, 
+		$W_i$, $W_f$, $W_u$, $W_o \in \mathbb{R}^{D \times D_e}$, 
+		$U_i$, $U_f$, $U_u$, $U_o \in \mathbb{R}^{D \times D}$ et 
+		$b_i$, $b_f$, $b_u$, $b_o \in \mathbb{R}^{D}$ sont des paramètres mis-à-jour par le réseau. $D$ est la dimension 
+		des états cachés et $D_e$ est la dimension des embeddings.
 
 	\subsection{Systèmes utilisés}
-		Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6}:\\
+		Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6} en C++ :\\
 		\\
 		Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases.  
 		On les concatène pour les envoyer ensuite à une couche de décision : 
@@ -300,12 +305,15 @@
 		
 		\\
 		\\
-		Les performances de ces systèmes sont décrits dans la partie "résultats expérimentaux" en annexe.
+		Les performances de ces systèmes et autres détails techniques 
+		sont décrits dans la partie "résultats expérimentaux" en annexe.\\
+		Les schémas de ces systèmes figurent dans la partie "" en annexe.
 
-\section{Interprétabilité}
+\section{Définition d'interprétabilité}
 	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
 	Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision\cite{ref4}. 
 	Un système a donc une meilleure interprétabilité qu'un autre si ses explications sont plus faciles à comprendre par un humain.
+	Par ailleurs, on peut interpréter de manière globale en expliquant le comportement général du class
 	\subsection{Qu'est-ce-qu'une explication ?}
 		La définition donnée par Miller est assez simple : une explication est une réponse à une question commençant par "pourquoi". 
 		Une question commençant par "comment" peut être retournée en une question commençant par "pourquoi".
@@ -339,12 +347,55 @@
 		il faut la spécifier. Dans notre projet, une cause rare peut être un mot -ou un groupe de mot- de l'hypothèse qui ne peut pas 
 		être mis en relation avec un mot -ou un groupe de mot- de la prémisse, mais qui a influencé la prédiction.
 	\end{comment}
- 
+
+\section{Techniques pour l'interprétabilité}	
+	Dans cette section nous allons décrire notre technique pour interpreter une prédiction d'une entrée. Nous voulons donner des explications pour chaque label 
+	en donnant les trois mots les plus importants dans la prémisse et les trois mots les plus importants dans l'hypothèse. On veut donc calculer l'importance de chaque mot. 
+	L'importance d'un mot correspond à l'importance de sa contribution pour le label $y$.\\
+	Notre intuition est la suivante : 
+	On veut donner une explication pour le label $y$ et l'entrée $x$ composée de la prémisse et de l'hypothèse. 
+	On retire alors un mot et on demande à notre modèle de nous donner les probabilités de chaque label avec cette nouvelle entrée. Si la probabilité 
+	du label $y$ a baissé, alors le mot était important : cela veut dire que le mot avait contribué au label $y$. A l'inverse, si elle a augmenté, le mot n'avait donc pas contribué au label $y$. 
+	De plus, si la probabilité des autres labels a augmenté, alors le mot a d'autant plus d'importance : en le retirant, l'entrée $x$ a basculé vers un autre label.\\
+	\\
+	L'importance d'un mot, que nous notons IF pour Impact Factor, est calculé comme suit :
+	\begin{equation}
+	IF^{y_j}(m_i) = \sum_{j=1}^{Y_n} \log( p(y_j | x \backslash m_i) ) - \log( p(y_j | x) ) 
+	\end{equation}
+	\begin{equation}
+	IF^{y_{ref}}(m_i) = -\log( p(y_{ref} | x \backslash m_i) ) + \log( p(y_{ref} | x) )
+	\end{equation}
+	\begin{equation}
+	IF^{total}(m_i) = IF^{y_{ref}}(m_i) + IF^{y_j}(m_i) 
+	\end{equation}\\
+	où $y_{ref}$ est le label de référence (le label que l'on veut "expliquer"), $x$ est l'entrée, $m_i$ est le mot que l'on retire de l'entrée $x$, 
+	$y_j$ est un label différent de $y_{ref}$, et $Y_n$ est le nombre de label. Les probabilités sont exprimées en log-probabilités pour des soucis de précision et d'optimisation du code. On parle donc plutôt de score.\\
+	Cette formule suit notre intuition de base et également celle de Robnik-Sikonja et Kononenko \cite{ref8}. Nous avons rajouté la prise en compte de l'impact sur les scores 
+	des autres labels quand on retire le mot $m_i$.\\
+	\\
+	Un problème persiste tout de même : que se passe-t-il vraiment lorsque l'on retire un mot ? Nous ne pouvons pas simplement le supprimer de l'entrée, car la phrase n'aurait plus de sens 
+	et le modèle n'est peut-être pas entraîné à faire face aux bruits. On ne peut pas vraiment le remplacer par un mot générique (le mot "UNK" pour "mot inconnu", par exemple) 
+	car un modèle remplacant ce mot par un embedding à 0 et un modèle remplacant ce mot par un embedding particulier auront des réponses très différentes. Or on voudrait que notre méthode soit 
+	réalisable par n'importe quel modèle. La solution est donc de remplacer le mot que l'on veut retirer par un autre :
+	\begin{equation}
+	p(y | x \backslash m_i) =  \sum_{s=1}^{r} p(y | x \leftarrow m_i = m_s) 
+	\end{equation}\\
+	où $r$ est le nombre de mot que l'on peut mettre à la place du mot $m_i$ et $m_s$ est le mot que l'on met à la place de $m_i$.\\
+	Les mots pouvant remplacer $m_i$ sont situés dans un fichier externe créé par nous-même. On a fixé à 5 le nombre de mots maximum pouvant remplacer $m_i$.
+	Plus il y a de mots de remplacements, plus on a une meilleure estimation du IF du mot $m_i$, mais dans ce cas la complexité en temps augmente. Il faut donc trouver un compromis entre 
+	l'estimation du IF et le temps que met le programme pour donner une explication.\\
+	\\
+	Cette méthode permet donc d'avoir une explication contrastée, puisque l'on compare notre entrée de base avec des entrées créées artificiellement en remplacant un mot par un autre. 
+	De plus, elle est également sélective puisque l'on sélectionne les trois mots, respectivement dans la prémisse puis dans l'hypothèse, ayant le plus contribué au label $y_{ref}$. 
+	Enfin, le programme surligne les mots les plus importants pour chaque label, ce qui permet d'avoir une visualisation et donc d'être compris par n'importe qui.
+	
+	/* METTRE UN SCREEN D'UNE EXPLICATION */
  
 \bibliographystyle{unsrt} % Le style est mis entre accolades.
 \bibliography{biblio}
 
-\begin{appendix}
+\renewcommand{\appendixname}{Annexes}
+\appendix
 \section{Résulats expérimentaux}
 Pour la représentation des mots, nous utilisons des words embeddings pré-entrainés de dimension 100 via GloVe.6B.100d.
 Pour les mots inconnus, c'est-à-dire les mots qui n'ont pas d'embedding dans GloVe, nous utilisons des embeddings
@@ -363,7 +414,6 @@ Concernant les RNNs utilisés, il n'y a qu'une seule couche et la dimension des é
 3 & 68,73\% & 74,92\% & 69,55\% & 71,09\% & test \\
 \hline
 \end{tabular}
-\end{appendix}
 
 %pour taux réussite test sys2
 %0.800712

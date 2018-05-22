@@ -10,6 +10,8 @@
 
 using namespace std;
 
+//sert pour tokenizer les mots de remplacements
+
 void reading_lexique(char* lexique_filename, map<string, unsigned>& word_to_id)
 {
 	ifstream lexique_file(lexique_filename, ios::in);

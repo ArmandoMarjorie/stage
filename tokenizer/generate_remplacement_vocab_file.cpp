@@ -14,7 +14,7 @@ using namespace std;
 
 
 /* snli_json_filename = file dans Files/without_id */
-void write_vocab_file(char* snli_json_filename, map< string, unsigned >& vocab, ofstream& output)
+void write_vocab_file(char* snli_json_filename, ofstream& output)
 {
 	ifstream snli_file(snli_json_filename, ios::in);
 	if(!snli_file)
@@ -24,11 +24,13 @@ void write_vocab_file(char* snli_json_filename, map< string, unsigned >& vocab, 
 	}		
 	cerr << "Reading " << snli_json_filename << " ...\n";
 	//vector<string>::iterator it;
+	
 	map< string, unsigned >::iterator it;
 	string word;
 	unsigned i;
 	while(snli_file >> word) //read a label
 	{
+		map< string, unsigned > vocab;
 		/* read premises and hypothesis */
 		for(i=0; i<2; ++i)
 		{
@@ -47,6 +49,7 @@ void write_vocab_file(char* snli_json_filename, map< string, unsigned >& vocab, 
 			}
 			snli_file >> word; //read the sentence size
 		}
+		output << "-3\n";
 	}
 	
 	snli_file.close();
@@ -54,25 +57,23 @@ void write_vocab_file(char* snli_json_filename, map< string, unsigned >& vocab, 
 
 int main(int argc, char** argv)
 {
-	//if(argc != 3)
+	if(argc != 2)
 	{
 		cerr << "Usage :\n " << argv[0] << "\n\n"
-			 << "dev_file (in without_id folder)\n"
-			 << "test_file (in without_id folder)\n"
-			 << "train_file (in without_id folder)\n";
-		//exit(EXIT_FAILURE);
+			 << "../Files/files_test/test_contrastive \n";
+		exit(EXIT_FAILURE);
 	}
 	
 	/* Pour avoir snli.vocab */
-	map< string, unsigned > vocab;
+	
 	unsigned j=0;
-	ofstream output("snli.vocab", ios::out | ios::trunc);
+	ofstream output("remplacement.vocab", ios::out | ios::trunc);
 	if(!output)
 	{
 		cerr << "Problem with the output file snli.vocab" << endl;
 		exit(EXIT_FAILURE);
 	}
-	write_vocab_file(argv[1], vocab, output);
+	write_vocab_file(argv[1], output);
 	//write_vocab_file(argv[2], vocab, output);
 	//write_vocab_file(argv[3], vocab, output);
 	
