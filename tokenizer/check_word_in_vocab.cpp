@@ -12,7 +12,7 @@ using namespace std;
 
 //sert pour tokenizer les mots de remplacements
 
-void reading_lexique(char* lexique_filename, map<string, unsigned>& word_to_id)
+void reading_lexique(char* lexique_filename, map<string, int>& word_to_id)
 {
 	ifstream lexique_file(lexique_filename, ios::in);
 	if(!lexique_file)
@@ -21,15 +21,16 @@ void reading_lexique(char* lexique_filename, map<string, unsigned>& word_to_id)
 		exit(EXIT_FAILURE);
 	}
 	string word;
-	unsigned id;
+	int id;
 	while(lexique_file >> word && lexique_file >> id)
 		word_to_id[word] = id;
+	word_to_id["-1"] = -1;
 	cerr << lexique_filename << " has been read" << endl;
 	lexique_file.close();	
 }
 
-/* snli_json_filename = file dans Files/without_id */
-void check(char* lexique, char* file, char* output_f)
+/* */
+void check(char* lexique, char* file, char* output_f, bool specific)
 {
 	ifstream f(file, ios::in);
 	if(!f)
@@ -43,23 +44,22 @@ void check(char* lexique, char* file, char* output_f)
 		cerr << "Problem with the output file "<< output_f << endl;
 		exit(EXIT_FAILURE);
 	}
-	map<string, unsigned> word_to_id;
+	map<string, int> word_to_id;
 	reading_lexique(lexique, word_to_id);
-	map< string, unsigned >::iterator it;
+	if(specific)
+	{
+		word_to_id["NEU"] = -2;
+		word_to_id["SYN"] = -3;
+	}
+	map< string, int >::iterator it;
 	string word;
 	while(f >> word)
 	{
-		if(word == "-1")
-			output << " -1\n";
+		it = word_to_id.find(word);
+		if( it == word_to_id.end() )
+			output << "INCONNU ";
 		else
-		{
-			it = word_to_id.find(word);
-			if( it == word_to_id.end() )
-				output << "INCONNU ";
-			else
-				output << word_to_id[word] << " ";
-			
-		}
+			output << word_to_id[word] << " ";
 	}
 	
 	f.close();
