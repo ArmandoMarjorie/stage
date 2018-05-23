@@ -11,7 +11,8 @@
 \usepackage[french]{babel}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{graphics,color}
+\usepackage{color}
+\usepackage{graphicx}
 \usepackage[nottoc, notlof, notlot]{tocbibind}
 \usepackage{appendix}
 \usepackage{comment}
@@ -155,7 +156,7 @@
 		en se basant sur de mauvaises features.\\
 		\\
 		Dans ce rapport, nous allons tout d'abord énumérer quelques méthodes existantes pour l'interprétation de prédictions d'un modèle.
-		Nous allons ensuite spécifier les modèles que nous avons implémenté pour la RTE, puis nous allons définir ce que nous devons 
+		Nous allons ensuite spécifier les modèles que nous avons implémenté pour la RTE ainsi que les corpus utilisé, puis nous allons définir ce que nous devons 
 		attendre d'une "bonne" explication. Puis, nous allons expliciter notre technique pour l'interprétation d'une prédiction d'un modèle, et 
 		nous allons la comparer avec LIME. Enfin, nous allons conclure avec les différentes perspectives. 
 		
@@ -176,7 +177,64 @@
 		ces dernières années, de grandes avancées 
 		ont été effectuées pour tenter d'interpréter les modèles utilisés jusqu'alors comme des boîtes noires.\\
 		\\
-		Nous étudions dans ce rapport la méthode LIME, /* EXPLIQUER LIME */
+		Nous étudions dans ce rapport la méthode LIME qui permet d'expliquer les prédictions de n'importe quel classifieur 
+		ou regresseur. L'objectif global de LIME est d'identifier un modèle interprétable parmi le voisinage de l'entrée $x$.\\
+		\\ 
+		Tout d'abord, on distingue les features utilisées aux représentations interprétables des features. Par exemple, 
+		les features sont les embeddings des mots et la représentation interprétable de ces features est un vecteur binaire 
+		qui indique la présence ou l'absence des mots.\\
+		\\
+		LIME définit une explication par un modèle $g \in G$, où $G$ est la classe des modèles interprétables tels que 
+		les modèles linéaires ou les arbres de décisions. Vu que les modèles interprétables n'ont pas tous la même difficulté 
+		à être interprété, LIME définit $\Omega(g)$ qui est une mesure de la complexité d'interpréter $g$. En 
+		prennant l'example des arbres de décisions, $\Omega(g)$ est la profondeur.\\
+		On dénote par $f : \mathbb{R}^{d} \rightarrow \mathbb{R}$ le modèle utilisé comme une boîte noire. $f(x)$ est la 
+		probabilité que l'entrée $x$ appartienne à une certaine classe.\\
+		LIME va alors se baser sur la représentation interprétable des données en retirant un mot au hasard. On dénote cette 
+		nouvelle entrée par $z$. On définit la localité de $x$ avec $\pi_x(z)$ qui est une mesure de proximité entre $z$ et 
+		$x$. C'est un noyau se basant sur la similarité cosinus.\\
+		Enfin, on définit $L(f, g, \pi_x)$ qui est une mesure pour savoir à combien $g$ est infidèle à $f$ dans la localité 
+		défini par $\pi_x$. Pour préserver à la fois l'interprétabilité et la fidèlité locale, LIME minimise $L(f, g, \pi_x)$ 
+		avec $\Omega(g)$ assez petit pour être interprétable par les humains. L'explication de LIME est donc la suivante :
+		\begin{equation}
+		\varepsilon(x) = \underset{g \in G}{argmin} L(f, g, \pi_x) + \Omega(g)
+		\end{equation}		
+		Cette formule peut être utilisée par différents modèles $g \in G$, fonctions de 
+		fidèlité $L(f, g, \pi_x)$, et mesure de complexité $\Omega(g)$.\\
+		\\
+		LIME peut alors donner les $K$ mots les plus importants de l'entrée $x$ pour tout label.\\
+		La figure ci-dessus est un exemple illustant le principe de LIME :
+		
+		\begin{figure}[h]
+			\center
+			\includegraphics[width=8cm, height=6cm, keepaspectratio]{lime_exemple.png}
+			\caption{Exemple présentant l'intuition de LIME.}
+		\end{figure}
+		\\
+		La décision de la boîte noire $f$, inconnu par LIME, est représentée par le fond bleu et rose. 
+		La croix rouge en gras est l'entrée $x$ que l'on veut expliquer. LIME crée des entrées modifiées, 
+		utilise $f$ pour avoir la probabilité de ces entrées pour le label $y$, et les pondère par leur proximité 
+		par rapport à $x$ (les poids sont représentés par la taille). La droite pointillée est l'explication apprise qui est 
+		localement fidèle.\\
+		
+	\subsection{Dans l'interprétabilité de la RTE}
+		Ce n'est que très recemment que /*PARLER ARTICLE LREC*/
+		
+		\begin{comment}
+		D'autres méthodes d'interprétation existent, telle que DeepLIFT (Deep Learning Important FeaTures :
+		DeepLIFT) \cite{ref9} pour l'apprentissage profond, 
+		qui décompose la prédiction d'un 
+		réseau de neurones sur une entrée spécifique en rétropropageant les contributions de tous les neurones du réseau à 
+		chaque feature de l'entrée. DeepLIFT compare l'activation de chaque neurone à son "activation de référence" et 
+		attribue des scores de contribution en fonction de la différence. L'activation de référence est choisi par 
+		l'utilisateur.\\
+		On peut également citer la méthode de propagation de pertinence par couche \cite{ref10} pour l'interprétation des 
+		réseaux de neurones profonds, une méthode équivalente à DeepLIFT avec l'activation de référence de tous les neurones 
+		fixée à 0. 
+		\end{comment}
+		
+	
+		
 		\begin{comment}
 		mais nous pouvons également citer la méthode SHapley Additive exPlanations (SHAP) \cite{ref8} : 
 		elle explique la prédiction de n'importe quel modèle en utilisant les valeurs de Shapley, introduites dans la théorie des jeux en 1953. 
@@ -204,7 +262,7 @@
 		Un algorithme efficace a été mis au point, cependant il fonctionne uniquement sur les modèles basés sur les arbres.
 		\end{comment}
 
-\section{Réseaux de neurones récurrents}
+\section{Implémentation de systèmes}
 	\subsection{LSTM et Bi-LSTM}
 		Dans ce travail, nous utilisons les réseaux de neurones récurrents, 
 		et plus particulièrement les LSTMs (Long Short-Term Memory : LSTM) et les Bi-LSTMs (Bidirectionnal 
@@ -248,7 +306,7 @@
 		$b_i$, $b_f$, $b_u$, $b_o \in \mathbb{R}^{D}$ sont des paramètres mis-à-jour par le réseau. $D$ est la dimension 
 		des états cachés et $D_e$ est la dimension des embeddings.
 
-	\subsection{Systèmes utilisés}
+	\subsection{Systèmes implémentés}
 		Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6} en C++ :\\
 		\\
 		Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases.  
@@ -308,6 +366,23 @@
 		Les performances de ces systèmes et autres détails techniques 
 		sont décrits dans la partie "résultats expérimentaux" en annexe.\\
 		Les schémas de ces systèmes figurent dans la partie "" en annexe.
+		
+	\subsection{Données externes utilisées}
+		Pour la RTE, nous utilisons les corpus SNLI composés d'un fichier d'entraînement, de validation et de test. 
+		Chaque fichier est en format json et en texte brut. Nous avons donc pu facilement les tokeniser.\\
+		Ces corpus ont été réalisé par 5 annotateurs à l'aide d'une image accompagnée d'un texte bref -la prémisse- présentant 
+		la dite image. Les annotateurs devaient alors écrire une phrase étant neutre par rapport à la prémisse, une autre 
+		étant en contradiction et une autre phrase qui pouvait être déduite de la prémisse : ils devaient donner une hypothèse 
+		et un label. Pour que le corpus ne soit pas trop subjectif, les annotateurs ont eu accès à quelques paires 
+		prémisse/hypothèse sans label. Chacun d'entre eux a donné un label, celui ayant eu le plus de voix a été décidé comme 
+		le label de la paire observée. Ainsi, certaines paires n'ont pas de label car les annotateurs n'ont pas trouvé de 
+		consensus : nous ne prennons pas en compte ce genre d'entrée.\\
+		\\
+		La table ci-dessus est un échantillon du corpus SNLI :\\
+		/*faire belle table avec exemple ayant plusieurs labels*/
+		\\
+		Concernant les embeddings des mots, nous utilisons les embeddings pré-entraînés de GloVe. Les mots ne se trouvant 
+		pas dans le vocabulaire de GloVe ont des embeddings initialisés au hasard. 
 
 \section{Définition d'interprétabilité}
 	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
@@ -362,7 +437,7 @@
 	\\
 	L'importance d'un mot, que nous notons IF pour Impact Factor, est calculé comme suit :
 	\begin{equation}
-	IF^{y_j}(m_i) = \sum_{j=1}^{Y_n} \log( p(y_j | x \backslash m_i) ) - \log( p(y_j | x) ) 
+	IF^{y_j}(m_i) = \sum_{j=1}^{|Y|} \log( p(y_j | x \backslash m_i) ) - \log( p(y_j | x) ) 
 	\end{equation}
 	\begin{equation}
 	IF^{y_{ref}}(m_i) = -\log( p(y_{ref} | x \backslash m_i) ) + \log( p(y_{ref} | x) )
@@ -371,7 +446,7 @@
 	IF^{total}(m_i) = IF^{y_{ref}}(m_i) + IF^{y_j}(m_i) 
 	\end{equation}\\
 	où $y_{ref}$ est le label de référence (le label que l'on veut "expliquer"), $x$ est l'entrée, $m_i$ est le mot que l'on retire de l'entrée $x$, 
-	$y_j$ est un label différent de $y_{ref}$, et $Y_n$ est le nombre de label. Les probabilités sont exprimées en log-probabilités pour des soucis de précision et d'optimisation du code. On parle donc plutôt de score.\\
+	$y_j$ est un label différent de $y_{ref}$, et $|Y|$ est le nombre de label. Les probabilités sont exprimées en log-probabilités pour des soucis de précision et d'optimisation du code. On parle donc plutôt de score.\\
 	Cette formule suit notre intuition de base et également celle de Robnik-Sikonja et Kononenko \cite{ref8}. Nous avons rajouté la prise en compte de l'impact sur les scores 
 	des autres labels quand on retire le mot $m_i$.\\
 	\\
@@ -380,15 +455,15 @@
 	car un modèle remplacant ce mot par un embedding à 0 et un modèle remplacant ce mot par un embedding particulier auront des réponses très différentes. Or on voudrait que notre méthode soit 
 	réalisable par n'importe quel modèle. La solution est donc de remplacer le mot que l'on veut retirer par un autre :
 	\begin{equation}
-	p(y | x \backslash m_i) =  \sum_{s=1}^{r} p(y | x \leftarrow m_i = m_s) 
+	p(y | x \backslash m_i) =  \sum_{s=1}^{r_i} p(y | x \leftarrow m_i = m_s) 
 	\end{equation}\\
-	où $r$ est le nombre de mot que l'on peut mettre à la place du mot $m_i$ et $m_s$ est le mot que l'on met à la place de $m_i$.\\
+	où $r_i$ est le nombre de mot que l'on peut mettre à la place du mot $m_i$ et $m_s$ est le mot que l'on met à la place de $m_i$.\\
 	Les mots pouvant remplacer $m_i$ sont situés dans un fichier externe créé par nous-même. On a fixé à 5 le nombre de mots maximum pouvant remplacer $m_i$.
 	Plus il y a de mots de remplacements, plus on a une meilleure estimation du IF du mot $m_i$, mais dans ce cas la complexité en temps augmente. Il faut donc trouver un compromis entre 
 	l'estimation du IF et le temps que met le programme pour donner une explication.\\
 	\\
 	Cette méthode permet donc d'avoir une explication contrastée, puisque l'on compare notre entrée de base avec des entrées créées artificiellement en remplacant un mot par un autre. 
-	De plus, elle est également sélective puisque l'on sélectionne les trois mots, respectivement dans la prémisse puis dans l'hypothèse, ayant le plus contribué au label $y_{ref}$. 
+	De plus, elle est également sélective puisque l'on sélectionne les K mots, respectivement dans la prémisse puis dans l'hypothèse, ayant le plus contribué au label $y_{ref}$. 
 	Enfin, le programme surligne les mots les plus importants pour chaque label, ce qui permet d'avoir une visualisation et donc d'être compris par n'importe qui.
 	
 	/* METTRE UN SCREEN D'UNE EXPLICATION */
