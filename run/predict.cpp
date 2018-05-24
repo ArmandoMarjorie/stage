@@ -20,10 +20,16 @@ void usage(char* exe_name)
 /*6*/		 << "parameters_file <string> : file containing the parameters (weight and bias) updated in the training step\n"
 /*7*/		 << "system <int> : which system you want to use (1, 2 or 3=KIM)\n"
 /*8*/		 << "lexique_file <string> : lexique containing the IDs of each word\n"
-/*9*/		 << "bigram_prob_file <string> : Files/bigram_proba_log\n"
-/*10*/		 << "unigram file <string> : Files/unigram\n"
-/*11*/		 << "switch words file <string> : Files/files_test/mots_remplacants_interpretation_test\n"
-			 << "uni_prob_file <string> : Files/uni_proba_log\n";
+/*9*/		 << "sw neutral <string> : Files/files_test/remplac_token.neutral\n"
+/*10*/		 << "sw inf <string> : Files/files_test/remplac_token.neutral\n"
+/*11*/		 << "sw contradiction <string> : Files/files_test/remplac_token.neutral\n"
+
+
+
+/*9*/		 //<< "bigram_prob_file <string> : Files/bigram_proba_log\n"
+/*10*/		 //<< "unigram file <string> : Files/unigram\n"
+/*11*/		 //<< "switch words file <string> : Files/files_test/mots_remplacants_interpretation_test\n"
+			// << "uni_prob_file <string> : Files/uni_proba_log\n";
 		 //<< "mode <int> : 0 = with file, 1 = verbose with word id as input, 2 = verbose with word as input\n";
 	exit(EXIT_SUCCESS);
 }
@@ -32,7 +38,7 @@ int main(int argc, char** argv)
 { 
 	if(argc > 0 && !strcmp(argv[1], "-h"))
 		usage(argv[0]);
-	if( argc != 13 )
+	if( argc != 12 )
 	{
 		cerr << "Usage pour tester :\n " 
 		<< argv[0] << " test_file " << " embedding_file " 
@@ -50,8 +56,10 @@ int main(int argc, char** argv)
 							 
 	// Load Dataset 
 	Embeddings embedding(argv[2], model, static_cast<unsigned>(atoi(argv[4])), true);
-	Switch_Words sw(argv[11]);
-	Proba_Bigram pb(argv[9], argv[10], argv[12]);
+	Switch_Words sw_neutral(argv[9]);
+	Switch_Words sw_entailment(argv[10]);
+	Switch_Words sw_contradiction(argv[11]);
+	//Proba_Bigram pb(argv[9], argv[10], argv[12]);
 	
 	
 	//unsigned mode=static_cast<unsigned>(atoi(argv[8]));
@@ -80,7 +88,7 @@ int main(int argc, char** argv)
 			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
 		}*/
 		Data set(argv[1], 1);
-		change_words(rnn, model, set, embedding, argv[6], argv[8], sw, pb);
+		change_words(rnn, model, set, embedding, argv[6], argv[8], sw_neutral, sw_entailment, sw_contradiction);
 		
 		/**
 		Data explication_set(argv[1], 3); 
