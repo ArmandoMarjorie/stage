@@ -447,15 +447,30 @@ void run_prediction_expl_for_sys_4(RNN& rnn, ParameterCollection& model, Data& e
 
 
 
-void explain_label(vector<float>& probs, vector<float>& original_probs, vector<float>& DI, unsigned label_explained)
+void explain_label(vector<float>& probs, vector<float>& original_probs, vector<float>& DI, unsigned label_explained, 
+	unsigned true_label)
 {
 	float distance;
-	for(unsigned label=0; label < NB_CLASSES; ++label)
+	if(label_explained == true_label)
 	{
-		distance = probs[label] - original_probs[label];
-		if(label == label_explained)
-			distance = -distance;
-		DI[label_explained] += distance;
+		for(unsigned label=0; label < NB_CLASSES; ++label)
+		{
+			distance = probs[label] - original_probs[label];
+			if(label == label_explained)
+				distance = -distance;
+			DI[label_explained] += distance;
+		}
+	}
+	else
+	{
+		for(unsigned label=0; label < NB_CLASSES; ++label)
+		{
+			distance = probs[label] - original_probs[label];
+			if(label != label_explained)
+				distance = -distance;
+			DI[label_explained] += distance;
+		}		
+		
 	}
 }
 
@@ -500,27 +515,34 @@ void affichage_max_DI(vector<vector<float>>& max_DI)
 // word = the word we have replaced
 void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
 	bool is_premise, unsigned word, unsigned word_before, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample,
-	Switch_Words& sw_neutral, Switch_Words& sw_entailment, Switch_Words& sw_contradiction)
+	vector<Switch_Words*>& sw_vect)
 {
 	cg.clear();
 	vector<float> vect_DI(NB_CLASSES, 0.0);
 	std::vector<float>::iterator index_min_it;
 	unsigned index_min, label_predicted;
-	unsigned nb_changing_words = sw_entailment.get_nb_switch_words(word_position, is_premise, num_sample);
+	unsigned nb_changing_words;
 	unsigned changing_word;
-	double proba_log;
+	double proba_log=0;
 	vector<float> result(NB_CLASSES, 0.0);
 	
-	for(unsigned nb=0; nb<nb_changing_words; ++nb) //pas 0 car a la position 0 c'est le mot original
+	for(unsigned label_explained=0; label_explained < NB_CLASSES; ++label_explained)
 	{
-		changing_word = sw.get_switch_word(word, nb);
-		explication_set.set_word(is_premise, word_position, changing_word, num_sample);
-		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
-		converting_log(probs);
-		proba_log = pb.get_proba_log(changing_word);
-		if(proba_log == -1)
-			cerr << "ATTENTION incorrect proba log\n";
-		adding_result(result, proba_log, probs);
+		nb_changing_words = sw_vect[label_explained]->get_nb_switch_words(word_position, is_premise, num_sample);
+		
+		for(unsigned nb=0; nb<nb_changing_words; ++nb) //pas 0 car a la position 0 c'est le mot original
+		{
+			changing_word = sw_vect[label_explained]->get_switch_word(word_position, is_premise, nb, num_sample);
+			explication_set.set_word(is_premise, word_position, changing_word, num_sample);
+			vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
+			converting_log(probs);
+			/*proba_log = pb.get_proba_log(changing_word);
+			if(proba_log == -1)
+				cerr << "ATTENTION incorrect proba log\n";*/
+			adding_result(result, proba_log, probs);
+		}
+		explain_label(result, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample));
+		
 		
 	}
 	/*if(!is_premise)
@@ -554,7 +576,7 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 }
 
 void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
-	Switch_Words& sw_neutral, Switch_Words& sw_entailment, Switch_Words& sw_contradiction)
+	vector<Switch_Words*>& sw_vect)
 {
 	cerr << "Loading parameters ...\n";
 	TextFileLoader loader(parameters_filename);
@@ -585,8 +607,9 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 	unsigned send;
 	
 	
-	for(unsigned i=0; i<nb_of_sentences; ++i)
+	for(unsigned i=0; i<5; ++i)
 	{
+		cout << "ok\n";
 		ComputationGraph cg;
 		save_sentences(explication_set, premise, hypothesis, i);
 		// original prediction
@@ -607,11 +630,12 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 				send = 0;
 			else
 				send = premise[position-1];
-			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], send, original_probs, max_DI, save_prem, i, sw_neutral, sw_entailment, sw_contradiction);
+			imp_words(rnn, cg, explication_set, embedding, position, true, premise[position], send, original_probs, max_DI, save_prem, i, sw_vect);
+			cout << premise[position] << endl;
 		}
 		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -99999);
-			
+		cout << "hyp :\n";
 		// In the hypothesis
 		for(position=0; position<hyp_size; ++position)
 		{
@@ -619,7 +643,8 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 				send = 0;
 			else
 				send = hypothesis[position-1];		
-			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], send, original_probs, max_DI, save_hyp, i, sw_neutral, sw_entailment, sw_contradiction);
+			imp_words(rnn, cg, explication_set, embedding, position, false, hypothesis[position], send, original_probs, max_DI, save_hyp, i, sw_vect);
+			cout << hypothesis[position] << endl;
 		}
 		
 		premise.clear();

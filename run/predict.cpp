@@ -22,7 +22,7 @@ void usage(char* exe_name)
 /*8*/		 << "lexique_file <string> : lexique containing the IDs of each word\n"
 /*9*/		 << "sw neutral <string> : Files/files_test/remplac_token.neutral\n"
 /*10*/		 << "sw inf <string> : Files/files_test/remplac_token.neutral\n"
-/*11*/		 << "sw contradiction <string> : Files/files_test/remplac_token.neutral\n"
+/*11*/		 << "sw contradiction <string> : Files/files_test/remplac_token.neutral\n";
 
 
 
@@ -56,9 +56,15 @@ int main(int argc, char** argv)
 							 
 	// Load Dataset 
 	Embeddings embedding(argv[2], model, static_cast<unsigned>(atoi(argv[4])), true);
-	Switch_Words sw_neutral(argv[9]);
-	Switch_Words sw_entailment(argv[10]);
-	Switch_Words sw_contradiction(argv[11]);
+	Switch_Words* sw_neutral = new Switch_Words(argv[9]);
+	Switch_Words* sw_inf = new Switch_Words(argv[10]);
+	Switch_Words* sw_con = new Switch_Words(argv[11]);
+	vector<Switch_Words*> sw_vect;
+	sw_vect.push_back(sw_neutral);
+	sw_vect.push_back(sw_inf);
+	sw_vect.push_back(sw_con);
+
+
 	//Proba_Bigram pb(argv[9], argv[10], argv[12]);
 	
 	
@@ -88,7 +94,13 @@ int main(int argc, char** argv)
 			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
 		}*/
 		Data set(argv[1], 1);
-		change_words(rnn, model, set, embedding, argv[6], argv[8], sw_neutral, sw_entailment, sw_contradiction);
+		change_words(rnn, model, set, embedding, argv[6], argv[8], sw_vect);
+		
+		for (unsigned i =0; i< sw_vect.size();i++)
+		{
+			delete (sw_vect[i]);
+		} 
+		sw_vect.clear();
 		
 		/**
 		Data explication_set(argv[1], 3); 

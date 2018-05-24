@@ -42,7 +42,7 @@ unsigned Switch_Words::get_corresponding(unsigned word_id)
 }
 
 
-/**
+
 	* \name get_nb_switch_words
 	* \brief Give the number of words that can replace word_id
 	*
@@ -71,7 +71,7 @@ Switch_Words::Switch_Words(char* filename)
 		cerr << "Impossible to open the file " << filename << endl;
 		exit(EXIT_FAILURE);
 	}
-	
+	int word;
 	while(database >> word)
 	{
 		SW sample(database);
@@ -109,7 +109,6 @@ SW::SW(ifstream& database)
 		{
 			is_premise = true;
 			ok = false;
-			continue;
 		}
 		else
 		{
@@ -122,11 +121,12 @@ SW::SW(ifstream& database)
 				tmp.push_back(static_cast<unsigned>(word));
 				database >> word;
 			}
+			if(is_premise)
+				prem.push_back(tmp);
+			else
+				hyp.push_back(tmp);
 		}
-		if(is_premise)
-			prem[cpt].push_back(tmp);
-		else
-			hyp[cpt].push_back(tmp);
+
 		
 	}
 }
