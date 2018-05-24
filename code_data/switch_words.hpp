@@ -15,11 +15,36 @@
 	 * ex : dog cat animal man person human
 	 * dog is the real word in the dataset, the rest can replace it
 	*/
+	class SW
+	{
+		private:
+			std::vector<std::vector<unsigned>> prem; 
+			std::vector<std::vector<unsigned>> hyp; 
+		
+		public:
+			SW(std::ifstream& database);
+			unsigned get_nb_switch_words(unsigned word_position, bool is_premise);
+			unsigned get_switch_word(unsigned word_position, bool is_premise, unsigned num_switch_word);
+	};
+	
+	class Switch_Words
+	{
+		private:
+			std::vector<SW> sw; //1 case = 1 sample
+		public:
+			Switch_Words(char* filename);
+			unsigned get_nb_switch_words(unsigned word_position, bool is_premise, unsigned num_sample);
+			unsigned get_switch_word(unsigned word_position, bool is_premise, unsigned num_switch_word, unsigned num_sample);
+			
+	};
+	
+	
+	/*
 	class Switch_Words
 	{
 		private:
 			std::map<unsigned, unsigned> correspondance;
-			std::vector<std::vector<unsigned>> sw; /*!< */
+			std::vector<std::vector<unsigned>> sw; 
 		
 		public:
 			Switch_Words(char* filename);
@@ -27,5 +52,5 @@
 			unsigned get_nb_switch_words(unsigned word_id);
 			unsigned get_switch_word(unsigned word_id, unsigned num_switch_word);
 	};
-
+	*/
 #endif
