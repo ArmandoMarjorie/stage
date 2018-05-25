@@ -451,8 +451,8 @@ void explain_label(vector<float>& probs, vector<float>& original_probs, vector<f
 	unsigned true_label)
 {
 	float distance;
-	if(label_explained == true_label)
-	{
+	/*if(label_explained == true_label)
+	{*/
 		for(unsigned label=0; label < NB_CLASSES; ++label)
 		{
 			distance = probs[label] - original_probs[label];
@@ -460,7 +460,7 @@ void explain_label(vector<float>& probs, vector<float>& original_probs, vector<f
 				distance = -distance;
 			DI[label_explained] += distance;
 		}
-	}
+	/*}
 	else
 	{
 		for(unsigned label=0; label < NB_CLASSES; ++label)
@@ -471,7 +471,7 @@ void explain_label(vector<float>& probs, vector<float>& original_probs, vector<f
 			DI[label_explained] += distance;
 		}		
 		
-	}
+	}*/
 }
 
 
@@ -607,9 +607,9 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 	unsigned send;
 	
 	
-	for(unsigned i=0; i<5; ++i)
+	for(unsigned i=0; i<8; ++i)
 	{
-		cout << "ok\n";
+		cout << "SAMPLE " << i+1 << "\n";
 		ComputationGraph cg;
 		save_sentences(explication_set, premise, hypothesis, i);
 		// original prediction
@@ -635,7 +635,7 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 		}
 		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -99999);
-		cout << "hyp :\n";
+		cout << "HYP :\n";
 		// In the hypothesis
 		for(position=0; position<hyp_size; ++position)
 		{
