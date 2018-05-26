@@ -13,6 +13,7 @@
 \usepackage{amssymb}
 \usepackage{color}
 \usepackage{graphicx}
+\usepackage{tabularx}
 \usepackage[nottoc, notlof, notlot]{tocbibind}
 \usepackage{appendix}
 \usepackage{comment}
@@ -35,7 +36,7 @@
     en perturbant significativement les entrées
 }
 
-% Pre'nom et nom dde l'auteur
+% Pre'nom et nom de l'autrice
 \def\NomsAuteurs{
     Marjorie Armando
 }
@@ -59,8 +60,9 @@
 
 % Re'sume' en franc,ais avec mots-cle's
 \def\ResumeFrancais{
-    La reconnaissance de l'inférence textuelle (Recognizing Textual Entailment : RTE) est un domaine assez récent en traitement
-    automatique du langage (TAL). Le but de la RTE est de savoir automatiquement si une phrase, appelée l'hypothèse, est 
+    La reconnaissance de l'inférence textuelle (Recognizing Textual Entailment : RTE) est au coeur de tous les aspects de 
+    la compréhension de texte en traitement automatique du langage (TAL). 
+    Le but de la RTE est de savoir automatiquement si une phrase, appelée l'hypothèse, est 
     déduite d'une autre phrase, appelée la prémisse. Pour résoudre cela, on utilise des systèmes issus de l'apprentissage 
     automatique.\\
     Le problème qui se pose avec l'utilisation de ces systèmes est que le modèle nous 
@@ -100,21 +102,15 @@
 
 \section{Introduction}
 	\subsection{Contexte de l'étude}
-		Le traitement automatique du langage naturel ou de la langue naturelle (TALN) ou des langues (TAL) est un domaine 
-		pluridisciplinaire, qui fait collaborer l'intelligence artificielle, l'informatique théorique, la logique, la linguistique ou 
-		encore les statistiques en vue de modéliser et de reproduire à l'aide de machines, la capacité humaine à produire et à 
-		comprendre les énoncés linguistiques dans des buts de communication. \\
+		Les concepts sémantiques d'inférence et de contradiction sont au coeur de tous les aspects de la compréhension de texte en TAL. 
+		Ainsi, l'inférence textuelle en langage naturel (Natural Language Inference : NLI), caractérisant et utilisant ces relations dans 
+		les systèmes computationnels, est essentielle dans des tâches telles que la recherche d'information, le raisonnement de bon sens, ou encore le système 
+		de question/réponse.\\
 		\\
-		Dans le domaine du TAL, nous retrouvons plusieurs niveaux d'analyses linguistiques pour représenter au mieux les langues 
-		naturelles par les machines. On peut par exemple citer l'analyse lexicale qui permet d'identifier quels sont et où sont les 
-		mots, ou encore l'analyse sémantique qui permet de comprendre le sens des mots.\\
-		\\
-		La RTE permet d'apporter des méthodes pour l'analyse lexicale et sémantique. Ceci peut permettre le développement de diverses 
-		applications telles que la recherche d'information ou encore le système de question/réponse.\\
-		\\
-		Le but de la RTE est de savoir automatiquement si, à partir de deux phrases, on peut en déduire la deuxième de la première. 
-		La première phrase est appelée la prémisse, et la seconde l'hypothèse. Trois étiquettes permettent d'illustrer la 
-		relation entre la prémisse et l'hypothèse : 
+		Plus spécifiquement, en ayant une paire de phrase prémisse/hypothèse, la RTE se voit comme 
+		objectif de détecter si la seconde phrase est en contradiction, se déduit ou bien est neutre par rapport à la 
+		première phrase. Nous avons donc trois étiquettes permettant d'illustrer la 
+		relation entre la prémisse et l'hypothèse : \\
 		\begin{description}
 			\item[- Contradiction] : l'hypothèse contredit la prémisse.\\
 				\textit{Exemple :\\
@@ -131,8 +127,8 @@
 				Prémisse : "Le chat aimerait manger la sourie."\\
 				Hypothèse : "Le chat a faim."}
 		\end{description} \\
-		\\
-		Pour résoudre cela, on utilise des systèmes issus de l'apprentissage automatique. Nous utilisons les réseaux de neurones 
+		\\ \\
+		Pour résoudre le problème de la RTE, on utilise des systèmes issus de l'apprentissage automatique. Nous utilisons les réseaux de neurones 
 		récurrents (Recurrent Neural Network : RNN) dans ce projet.\\
 
 	\subsection{Problématique}
@@ -153,7 +149,7 @@
 		Pouvoir donner une interprétation du système peut donc permettre aux utilisateurs d'adopter un modèle. 
 		Mais cela peut également aider le développeur lors du choix d'un modèle parmi ceux qu'il a implémenté, 
 		car le taux de réussite n'est pas le seul critère à prendre en compte : un modèle peut fournir le label attendu 
-		en se basant sur de mauvaises features.\\
+		en se basant sur de mauvaises informations.\\
 		\\
 		Dans ce rapport, nous allons tout d'abord énumérer quelques méthodes existantes pour l'interprétation de prédictions d'un modèle.
 		Nous allons ensuite spécifier les modèles que nous avons implémenté pour la RTE ainsi que les corpus utilisé, puis nous allons définir ce que nous devons 
@@ -165,11 +161,43 @@
 \section{Etat de l'art}
 	% PARLER DE SNLI, AVANT IL N'Y AVAIT PAS DE LARGE DATASET
 	% PARLER DE LIME 
-	\subsection{Dans le domaine de la RTE} 
-		Avant la publication du corpus SNLI \cite{ref}, la recherche sur l'apprentissage automatique dans ce domaine été limitée 
-		par le manque de corpus assez grand. 
-		Depuis, les plus grands taux de réussite ont atteint 89,3\% \cite{ref7}.
-	\subsection{Dans l'interprétabilité}
+	\subsection{Dans le domaine de la RTE}
+		Les premiers travaux sur la RTE ont été 
+		formé sur de très petits ensembles de données avec des méthodes conventionnelles, 
+		telles que les méthodes peu profondes \cite{ref9} ou encore
+		les méthodes de logique naturelle \cite{ref10}.
+		\\
+		Ces dernières années, on dénote une nette amélioration pour la tâche de la RTE, en particulier 
+		grâce à la publication du corpus SNLI (the Stanford Natural Language Inference) qui contient 
+		570K paires de phrases annotées. Cela a amélioré la faisabilité d'entrainer des réseaux de neurones 
+		complexes, puisqu'ils nécessitent souvent une quantité relativement importante de données. En 
+		effet, la recherche sur l'apprentissage automatique dans ce domaine été limitée 
+		par le manque de corpus assez grand.\\
+		\\
+		On peut distinguer deux types d'approches parmis ces modèles : les modèles basés sur l'encodage 
+		des phrases 
+		et les modèles axés sur l'attention inter-phrases.\\
+		Les premiers types de modèles encodent les phrases puis un classifieur (un  
+		perceptron multi-couches) décide de la relation entre ces deux phrases encodées. Différents encodeurs ont été 
+		proposés, tels que les Long-Short Term Memory (LSTM) \cite{ref}, les Gated Recurrent Unit 
+		(GRU) \cite{ref11}, les réseaux de neurones à convolution (Convolutionnal Neural 
+		Network : CNN) \cite{ref12}, les Bidirectionnal Long-Short Term Memory (BiLSTM) et ses 
+		variantes \cite{ref13} \cite{ref14} \cite{ref15}, et des réseaux neuronaux plus 
+		complexes \cite{ref16} \cite{ref17}.\\
+		L'avantage de ces modèles est que les encodeurs transforment les phrases 
+		en vecteur de taille fixe, ce qui peut aider à un large éventail de tâches 
+		de transfert \cite{ref18}. Cependant, cette architecture ignore l'interaction 
+		locale entre deux phrases, pourtant nécessaire \cite{ref10}.\\
+		Les seconds modèles ont alors été proposé pour éviter ce problème.  
+		Dans ce cadre, l'information d'inférence locale est collectée par le mécanisme d'attention 
+		puis introduite dans des réseaux de neurones pour composer des vecteurs de taille fixe avant la 
+		classification finale. Beaucoup suivent cette route. Parmis eux, Rocktäschel et al. \cite{ref19} 
+		ont été les premiers à proposer des réseaux basés sur l'attention pour la RTE. 
+		Chen et al. \cite{ref20} ont proposé un modèle d'inférence séquentielle amélioré qui est 
+		l'un des meilleurs modèles à ce jour (88.6\% de taux de réussite).
+		
+		
+	\subsection{Dans l'interprétabilité pour le TAL}
 		Dans la pratique, il y a souvent un compromis entre le taux de réussite et l'interprétabilité du modèle.
 		Certains modèles tels que les arbres de décisions ou encore les modèle linéaires sont facilement interprétables, 
 		et sont donc parfois utilisés à la place de modèles complexes tels que les réseaux de neurones profonds,  
@@ -203,7 +231,7 @@
 		fidèlité $L(f, g, \pi_x)$, et mesure de complexité $\Omega(g)$.\\
 		\\
 		LIME peut alors donner les $K$ mots les plus importants de l'entrée $x$ pour tout label.\\
-		La figure ci-dessus est un exemple illustant le principe de LIME :
+		La figure ci-dessous est un exemple illustant le principe de LIME :
 		
 		\begin{figure}[h]
 			\center
@@ -262,7 +290,69 @@
 		Un algorithme efficace a été mis au point, cependant il fonctionne uniquement sur les modèles basés sur les arbres.
 		\end{comment}
 
-\section{Implémentation de systèmes}
+\section{Définition d'interprétabilité}
+	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
+	Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision\cite{ref4}. 
+	Un système a donc une meilleure interprétabilité qu'un autre si ses explications sont plus faciles à comprendre par un humain.
+	Par ailleurs, on peut interpréter de manière globale en expliquant le comportement général du modèle, ou de manière locale en expliquant 
+	pourquoi le modèle a choisi tel label. Dans ce travail, nous nous placons dans le cas de l'interprétation locale : le but est d'expliquer 
+	pourquoi le modèle a choisi un label $y$ pour une entrée $x$.
+	\subsection{Qu'est-ce-qu'une explication ?}
+		La définition donnée par Miller est assez simple : une explication est une réponse à une question commençant par "pourquoi". 
+		Une question commençant par "comment" peut être retournée en une question commençant par "pourquoi".
+		Le terme "explication" désigne le processus social et cognitif d'expliquer, mais c'est également le produit de ces processus.
+	\subsection{Qu'est-ce-qu'une "bonne" explication ?}
+		La définition d'une bonne explication ne doit pas se baser sur l'intuition de l'auteur, mais plutôt sur des faits. 
+		Miller résume ce qu'est une bonne explication\cite{ref5}, basée sur ce que les humains attendent d'une explication. 
+		Grâce à cela, nous allons énoncer les types d'explications adéquats à notre projet. Cependant, 
+		il ne faut pas oublier que les humains ont tendance à rejeter toutes explications allant à l'encontre de leur croyance.
+	\subsubsection{Explication contrastée}
+		C'est une explication qui doit être comparée. Les utilisateurs se demandent généralement pourquoi cette prédiction a 
+		été faite et pas une autre, via la question "quelle aurait été la prédiction si cette entrée avait été changé 
+		par une autre ?".\\
+		Un docteur se demandant "pourquoi ce traitement ne marche pas sur ce patient ?" voudrait comparer les données de ce patient 
+		à un autre patient ayant des caractéristiques similaires mais pour qui le traitement marche.\\
+		La meilleure explication pour ce type d'explication est celle qui met en évidence les différences entre l'entrée traitée et 
+		l'entrée de comparaison.\\
+		L'entrée de comparaison peut être artificielle.
+	\subsubsection{Explication sélective}
+		C'est une explication qui doit être courte. Généralement, on peut expliquer un phénomène par plusieurs facteurs. 
+		Il faut en donner peu, à savoir deux ou trois raisons, même si les explications
+		peuvent être plus complexes que cela.
+	\subsubsection{Explication sociale}
+		Comme nous l'avons expliqué ci-dessus, une explication est un processus social, 
+		c'est-à-dire qu'il faut prendre en compte les connaissances de la personne à qui l'on veut donner une explication. 
+		Dans notre projet, nous partons du principe qu'une explication doit être comprise par tout le monde, 
+		que ce soit par un expert du domaine de l'apprentissage automatique ou bien par quelqu'un qui n'en a jamais entendu parler.
+	\begin{comment}
+	\subsubsection{Explication anormale}
+		Les explications "anormales" sont beaucoup appréciées, c'est-à-dire que si une cause rare a influencé la prédiction, 
+		il faut la spécifier. Dans notre projet, une cause rare peut être un mot -ou un groupe de mot- de l'hypothèse qui ne peut pas 
+		être mis en relation avec un mot -ou un groupe de mot- de la prémisse, mais qui a influencé la prédiction.
+	\end{comment}
+	
+\section{Réseaux de neurones récurrents}
+	\subsection{Données externes utilisées}
+		Nous utilisons les corpus SNLI composés d'un fichier d'entraînement, de validation et de test. 
+		Chaque fichier est en format json et en texte brut. Nous avons donc pu facilement les tokeniser.\\
+		Ces corpus ont été réalisé par 5 annotateurs à l'aide d'une image accompagnée d'un texte bref -la prémisse- présentant 
+		la dite image. Les annotateurs ont alors écrit une phrase étant neutre par rapport à la prémisse, une autre 
+		étant en contradiction et une autre phrase qui pouvait être déduite de la prémisse : ils ont donné une hypothèse 
+		et un label. Pour que le corpus ne soit pas trop subjectif, les annotateurs ont eu accès à quelques paires 
+		prémisse/hypothèse sans label. Chacun d'entre eux a donné un label, celui ayant eu le plus de voix a été décidé comme 
+		le label gold de la paire observée. Ainsi, certaines paires n'ont pas de label car les annotateurs n'ont pas trouvé de 
+		consensus : nous ne prennons pas en compte ce genre d'entrée.\\
+		La table ci-dessous est un échantillon du corpus SNLI présentant à gauche la prémisse, 
+		à droite l'hypothèse, et au centre les labels des 5 annotateurs avec le label gold :\\
+		\begin{figure}[h]
+			\center
+			\includegraphics[width=13cm, height=10cm, keepaspectratio]{table_SNLI.png}
+			\caption{Echantillon du corpus de développement de SNLI.}
+		\end{figure}\\
+		\\
+		Concernant les embeddings des mots, nous utilisons les embeddings pré-entraînés de GloVe. Les mots ne se trouvant 
+		pas dans le vocabulaire de GloVe ont des embeddings initialisés au hasard.
+	\begin{comment}
 	\subsection{LSTM et Bi-LSTM}
 		Dans ce travail, nous utilisons les réseaux de neurones récurrents, 
 		et plus particulièrement les LSTMs (Long Short-Term Memory : LSTM) et les Bi-LSTMs (Bidirectionnal 
@@ -307,7 +397,10 @@
 		des états cachés et $D_e$ est la dimension des embeddings.
 
 	\subsection{Systèmes implémentés}
-		Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6} en C++ :\\
+	\end{comment}
+	\subsection{Systèmes implémentés}
+		Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6} en C++. 
+		Nous utilisons les LSTMs et les BiLSTMs :\\
 		\\
 		Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases.  
 		On les concatène pour les envoyer ensuite à une couche de décision : 
@@ -360,71 +453,11 @@
 		\begin{equation}
 		y = softmax( W \times [ pool_p ; pool_h ] + b )
 		\end{equation}		
-		
-		\\
 		\\
 		Les performances de ces systèmes et autres détails techniques 
 		sont décrits dans la partie "résultats expérimentaux" en annexe.\\
 		Les schémas de ces systèmes figurent dans la partie "" en annexe.
 		
-	\subsection{Données externes utilisées}
-		Pour la RTE, nous utilisons les corpus SNLI composés d'un fichier d'entraînement, de validation et de test. 
-		Chaque fichier est en format json et en texte brut. Nous avons donc pu facilement les tokeniser.\\
-		Ces corpus ont été réalisé par 5 annotateurs à l'aide d'une image accompagnée d'un texte bref -la prémisse- présentant 
-		la dite image. Les annotateurs devaient alors écrire une phrase étant neutre par rapport à la prémisse, une autre 
-		étant en contradiction et une autre phrase qui pouvait être déduite de la prémisse : ils devaient donner une hypothèse 
-		et un label. Pour que le corpus ne soit pas trop subjectif, les annotateurs ont eu accès à quelques paires 
-		prémisse/hypothèse sans label. Chacun d'entre eux a donné un label, celui ayant eu le plus de voix a été décidé comme 
-		le label de la paire observée. Ainsi, certaines paires n'ont pas de label car les annotateurs n'ont pas trouvé de 
-		consensus : nous ne prennons pas en compte ce genre d'entrée.\\
-		\\
-		La table ci-dessus est un échantillon du corpus SNLI :\\
-		/*faire belle table avec exemple ayant plusieurs labels*/
-		\\
-		Concernant les embeddings des mots, nous utilisons les embeddings pré-entraînés de GloVe. Les mots ne se trouvant 
-		pas dans le vocabulaire de GloVe ont des embeddings initialisés au hasard. 
-
-\section{Définition d'interprétabilité}
-	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
-	Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision\cite{ref4}. 
-	Un système a donc une meilleure interprétabilité qu'un autre si ses explications sont plus faciles à comprendre par un humain.
-	Par ailleurs, on peut interpréter de manière globale en expliquant le comportement général du modèle, ou de manière locale en expliquant 
-	pourquoi le modèle a choisi tel label. Dans ce travail, nous nous placons dans le cas de l'interprétation locale : le but est d'expliquer 
-	pourquoi le modèle a choisi un label $y$ pour une entrée $x$.
-	\subsection{Qu'est-ce-qu'une explication ?}
-		La définition donnée par Miller est assez simple : une explication est une réponse à une question commençant par "pourquoi". 
-		Une question commençant par "comment" peut être retournée en une question commençant par "pourquoi".
-		Le terme "explication" désigne le processus social et cognitif d'expliquer, mais c'est également le produit de ces processus.
-	\subsection{Qu'est-ce-qu'une "bonne" explication ?}
-		La définition d'une bonne explication ne doit pas se baser sur l'intuition de l'auteur, mais plutôt sur des faits. 
-		Miller résume ce qu'est une bonne explication\cite{ref5}, basée sur ce que les humains attendent d'une explication. 
-		Grâce à cela, nous allons énoncer les types d'explications adéquats à notre projet. Cependant, 
-		il ne faut pas oublier que les humains ont tendance à rejeter toutes explications allant à l'encontre de leur croyance.
-	\subsubsection{Explication contrastée}
-		C'est une explication qui doit être comparée. Les utilisateurs se demandent généralement pourquoi cette prédiction a 
-		été faite et pas une autre, via la question "quelle aurait été la prédiction si cette entrée avait été changé 
-		par une autre ?".\\
-		Un docteur se demandant "pourquoi ce traitement ne marche pas sur ce patient ?" voudrait comparer les données de ce patient 
-		à un autre patient ayant des caractéristiques similaires mais pour qui le traitement marche.\\
-		La meilleure explication pour ce type d'explication est celle qui met en évidence les différences entre l'entrée traitée et 
-		l'entrée de comparaison.\\
-		L'entrée de comparaison peut être artificielle.
-	\subsubsection{Explication sélective}
-		C'est une explication qui doit être courte. Généralement, on peut expliquer un phénomène par plusieurs facteurs. 
-		Il faut en donner peu, à savoir deux ou trois raisons, même si les explications
-		peuvent être plus complexes que cela.
-	\subsubsection{Explication sociale}
-		Comme nous l'avons expliqué ci-dessus, une explication est un processus social, 
-		c'est-à-dire qu'il faut prendre en compte les connaissances de la personne à qui l'on veut donner une explication. 
-		Dans notre projet, nous partons du principe qu'une explication doit être comprise par tout le monde, 
-		que ce soit par un expert du domaine de l'apprentissage automatique ou bien par quelqu'un qui n'en a jamais entendu parler.
-	\begin{comment}
-	\subsubsection{Explication anormale}
-		Les explications "anormales" sont beaucoup appréciées, c'est-à-dire que si une cause rare a influencé la prédiction, 
-		il faut la spécifier. Dans notre projet, une cause rare peut être un mot -ou un groupe de mot- de l'hypothèse qui ne peut pas 
-		être mis en relation avec un mot -ou un groupe de mot- de la prémisse, mais qui a influencé la prédiction.
-	\end{comment}
-
 \section{Techniques pour l'interprétabilité}	
 	Dans cette section nous allons décrire notre technique pour interpreter une prédiction d'une entrée. Nous voulons donner des explications pour chaque label 
 	en donnant les trois mots les plus importants dans la prémisse et les trois mots les plus importants dans l'hypothèse. On veut donc calculer l'importance de chaque mot. 
@@ -467,6 +500,14 @@
 	Enfin, le programme surligne les mots les plus importants pour chaque label, ce qui permet d'avoir une visualisation et donc d'être compris par n'importe qui.
 	
 	/* METTRE UN SCREEN D'UNE EXPLICATION */
+		
+\section{Cadre expérimental}
+ 
+	
+	\subsection{Blablabla}
+		bla bla bla
+
+\section{Remerciements}
  
 \bibliographystyle{unsrt} % Le style est mis entre accolades.
 \bibliography{biblio}
