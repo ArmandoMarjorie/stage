@@ -111,23 +111,24 @@
 		objectif de détecter si la seconde phrase est en contradiction, se déduit ou bien est neutre par rapport à la 
 		première phrase. Nous avons donc trois étiquettes permettant d'illustrer la 
 		relation entre la prémisse et l'hypothèse : \\
-		\begin{description}
-			\item[- Contradiction] : l'hypothèse contredit la prémisse.\\
-				\textit{Exemple :\\
+		\begin{itemize}\renewcommand{\labelitemi}{$\bullet$}
+			\item Contradiction : l'hypothèse contredit la prémisse. Par exemple :\\
+				\textit{
 				Prémisse : "Le chat est entièrement blanc."\\ 
-				Hypothèse : "Le chat est entièrement noir."}
+				Hypothèse : "Le chat est entièrement noir."}\\
 
-			\item[- Neutre] : l'hypothèse est possible dans le contexte de la prémisse.\\
-				\textit{Exemple :\\
+			\item Neutre : l'hypothèse est possible dans le contexte de la prémisse. Par exemple :\\
+				\textit{
 				Prémisse : "Le chat dort sur la banquette."\\
-				Hypothèse : "Le chat aime le chocolat."}
+				Hypothèse : "Le chat aime le chocolat."}\\
 
-			\item[- Inférence] : l'hypothèse est déduite de la prémisse.\\
-				\textit{Exemple :\\
+			\item Inférence : l'hypothèse est déduite de la prémisse. Par exemple :\\
+				\textit{
 				Prémisse : "Le chat aimerait manger la sourie."\\
-				Hypothèse : "Le chat a faim."}
-		\end{description} \\
-		\\ \\
+				Hypothèse : "Le chat a faim."}\\
+		\end{itemize} \\
+		\\
+		\\
 		Pour résoudre le problème de la RTE, on utilise des systèmes issus de l'apprentissage automatique. Nous utilisons les réseaux de neurones 
 		récurrents (Recurrent Neural Network : RNN) dans ce projet.\\
 
@@ -159,8 +160,6 @@
 		%\bigskip
 
 \section{Etat de l'art}
-	% PARLER DE SNLI, AVANT IL N'Y AVAIT PAS DE LARGE DATASET
-	% PARLER DE LIME 
 	\subsection{Dans le domaine de la RTE}
 		Les premiers travaux sur la RTE ont été 
 		formé sur de très petits ensembles de données avec des méthodes conventionnelles, 
@@ -194,8 +193,7 @@
 		classification finale. Beaucoup suivent cette route. Parmis eux, Rocktäschel et al. \cite{ref19} 
 		ont été les premiers à proposer des réseaux basés sur l'attention pour la RTE. 
 		Chen et al. \cite{ref20} ont proposé un modèle d'inférence séquentielle amélioré qui est 
-		l'un des meilleurs modèles à ce jour (88.6\% de taux de réussite).
-		
+		l'un des meilleurs modèles à ce jour (88,6\% de taux de réussite).
 		
 	\subsection{Dans l'interprétabilité pour le TAL}
 		Dans la pratique, il y a souvent un compromis entre le taux de réussite et l'interprétabilité du modèle.
@@ -246,7 +244,9 @@
 		localement fidèle.\\
 		
 	\subsection{Dans l'interprétabilité de la RTE}
-		Ce n'est que très recemment que /*PARLER ARTICLE LREC*/
+		Ce n'est que très recemment que Silva et al. \cite{ref21} 
+		
+		/*PARLER ARTICLE LREC*/
 		
 		\begin{comment}
 		D'autres méthodes d'interprétation existent, telle que DeepLIFT (Deep Learning Important FeaTures :
@@ -292,18 +292,25 @@
 
 \section{Définition d'interprétabilité}
 	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
-	Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision\cite{ref4}. 
+	Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision \cite{ref4}. 
 	Un système a donc une meilleure interprétabilité qu'un autre si ses explications sont plus faciles à comprendre par un humain.
 	Par ailleurs, on peut interpréter de manière globale en expliquant le comportement général du modèle, ou de manière locale en expliquant 
 	pourquoi le modèle a choisi tel label. Dans ce travail, nous nous placons dans le cas de l'interprétation locale : le but est d'expliquer 
 	pourquoi le modèle a choisi un label $y$ pour une entrée $x$.
+	
+	\begin{figure}[h]
+		\center
+		\includegraphics[width=10cm, height=6cm, keepaspectratio]{xai-figure.png}
+		\caption{Concept des IAs explicables (eXplainable AI : XAI) \cite{ref22}.}
+	\end{figure}	
+	
 	\subsection{Qu'est-ce-qu'une explication ?}
 		La définition donnée par Miller est assez simple : une explication est une réponse à une question commençant par "pourquoi". 
 		Une question commençant par "comment" peut être retournée en une question commençant par "pourquoi".
 		Le terme "explication" désigne le processus social et cognitif d'expliquer, mais c'est également le produit de ces processus.
 	\subsection{Qu'est-ce-qu'une "bonne" explication ?}
 		La définition d'une bonne explication ne doit pas se baser sur l'intuition de l'auteur, mais plutôt sur des faits. 
-		Miller résume ce qu'est une bonne explication\cite{ref5}, basée sur ce que les humains attendent d'une explication. 
+		Miller résume ce qu'est une bonne explication \cite{ref5}, basée sur ce que les humains attendent d'une explication. 
 		Grâce à cela, nous allons énoncer les types d'explications adéquats à notre projet. Cependant, 
 		il ne faut pas oublier que les humains ont tendance à rejeter toutes explications allant à l'encontre de leur croyance.
 	\subsubsection{Explication contrastée}
