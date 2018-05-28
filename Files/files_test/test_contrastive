@@ -19,8 +19,6 @@ The woman has been shot . -1 6
 entailment
 An old man with a package poses in front of an advertisement . -1 13
 A man poses in front of an ad . -1 9
-
-
 neutral
 An old man with a package poses in front of an advertisement . -1 13
 A man poses in front of an ad for beer . -1 11
@@ -39,6 +37,8 @@ A sedan is stuck in the middle of a river . -1 11
 contradiction
 A man playing an electric guitar on stage . -1 9
 A man playing banjo on the floor . -1 8
+
+
 entailment
 A man playing an electric guitar on stage . -1 9
 A man playing guitar on stage . -1 7

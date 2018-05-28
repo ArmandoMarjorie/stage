@@ -607,7 +607,7 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 	unsigned send;
 	
 	
-	for(unsigned i=0; i<8; ++i)
+	for(unsigned i=0; i<13; ++i)
 	{
 		cout << "SAMPLE " << i+1 << "\n";
 		ComputationGraph cg;
