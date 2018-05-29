@@ -17,10 +17,10 @@
 	#include <string>
 	#include <map>
 	#include <vector>
-	#include "couple.hpp"
+	//#include "couple.hpp"
 	#include "embedding.hpp"
 	#include "switch_words.hpp"
-	#include "proba_bigram.hpp"
+	//#include "proba_bigram.hpp"
 	
 	
 	/** 
@@ -51,9 +51,10 @@
 			Data(char* test_explication_filename, unsigned mode);
 			Data(char* sentence, std::map<std::string,unsigned>& word_to_id, std::vector<unsigned>& length_tab, unsigned num_sample, unsigned sample_label);
 			
+			/*
 			unsigned get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise);
 			unsigned get_couple_nb_words(unsigned num_sample, unsigned num_couple, bool premise);
-			unsigned get_nb_couple(unsigned num_sample);
+			unsigned get_nb_couple(unsigned num_sample);*/
 			
 			unsigned get_word_id(unsigned sentence, unsigned num_sentence, unsigned word_position);
 			unsigned get_label(unsigned num_sentence);
@@ -65,12 +66,12 @@
 			void print_infos(unsigned type);
 			unsigned get_nb_contradiction();
 			unsigned get_nb_inf();
-			unsigned get_nb_neutral();
+			unsigned get_nb_neutral();/*
 			unsigned get_couple_label(unsigned num_sample, unsigned num_couple);
 			
 			void remove_couple(std::vector<unsigned>& num_couple, unsigned num_sample);
 			void reset_couple(std::vector<unsigned>& num_couple, unsigned num_sample);
-			void taking_couple(unsigned num_couple, unsigned num_sample);
+			void taking_couple(unsigned num_couple, unsigned num_sample);*/
 			void reset_sentences(std::vector<unsigned>& original_premise, std::vector<unsigned>& original_hypothesis, unsigned num_sample, bool is_premise);
 			bool is_empty(unsigned num_sample, bool is_premise);
 			
@@ -81,6 +82,14 @@
 			void remove_words_from_vectors(unsigned word_position, unsigned num_sample, bool is_premise);
 			
 			void set_word(bool is_premise, unsigned word_position, unsigned word, unsigned num_sample);
+			
+			unsigned get_nb_words_total(); //for each sample : nb_word in prem + nb_word in hyp
+			
+			/* important words' methods */
+			unsigned get_important_words(bool is_premise, unsigned num_sample, unsigned num_imp_word);
+			unsigned get_important_words_position(bool is_premise, unsigned num_sample, unsigned num_imp_word);
+			unsigned get_nb_important_words(bool is_premise, unsigned num_sample);
+			unsigned get_nb_words_imp_total();
 	};
 
 #endif

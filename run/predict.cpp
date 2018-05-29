@@ -77,30 +77,11 @@ int main(int argc, char** argv)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), 
 		static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
-		/*if(mode==0)
-		{
-			Data test_set(argv[1]);
-			test_set.print_infos(3); //3 = test set
-			run_predict(rnn, model, test_set, embedding, argv[6]);
-		}
-		else if(mode==1)
-		{
-			Data verbose_set(1);
-			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
-		}
-		else if(mode==2)
-		{
-			Data verbose_set(2, argv[1]);
-			run_predict_verbose(rnn, model, verbose_set, embedding, argv[6]);
-		}*/
 		Data set(argv[1], 1);
-		change_words(rnn, model, set, embedding, argv[6], argv[8], sw_vect);
+		cout << "DATA SET OK \n";
+		change_words_for_mesure(rnn, model, set, embedding, argv[6], argv[8], sw_vect);
 		
-		for (unsigned i =0; i< sw_vect.size();i++)
-		{
-			delete (sw_vect[i]);
-		} 
-		sw_vect.clear();
+
 		
 		/**
 		Data explication_set(argv[1], 3); 
@@ -119,8 +100,15 @@ int main(int argc, char** argv)
 		Data test_set(argv[1]);
 		//test_set.print_infos(3);
 		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
-		run_prediction_expl_for_sys_4(rnn, model, test_set, embedding, argv[6], argv[8]);
+		//run_prediction_expl_for_sys_4(rnn, model, test_set, embedding, argv[6], argv[8]);
+		//change_words_for_mesure(rnn, model, set, embedding, argv[6], argv[8], sw_vect);
 	}
+	
+	for (unsigned i =0; i< sw_vect.size();i++)
+	{
+		delete (sw_vect[i]);
+	} 
+	sw_vect.clear();
 
 	return 0;
 }

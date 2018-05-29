@@ -139,7 +139,8 @@ Data::Data(char* test_explication_filename, unsigned mode)
 	{
 		label.push_back(val);
 		//init_rate(val);
-		
+		//cout << "\tSAMPLE "<< cpt << endl; 
+		//++cpt;
 		// reading the premise and the hypothesis
 		for(sentence=0; sentence<2; ++sentence)
 		{
@@ -148,6 +149,7 @@ Data::Data(char* test_explication_filename, unsigned mode)
 			while(val != -1)
 			{
 				tmp_data.push_back(static_cast<unsigned>(val));
+				//cout << val << " ";
 				test_explication >> val;
 			}
 			test_explication >> val; //read the sentence's length
@@ -155,6 +157,7 @@ Data::Data(char* test_explication_filename, unsigned mode)
 				premise.push_back(tmp_data);
 			else
 				hypothesis.push_back(tmp_data);
+			//cout << endl;
 		}
 		
 		// reading the important words in the premise and the hypothesis
@@ -176,42 +179,6 @@ Data::Data(char* test_explication_filename, unsigned mode)
 	
 	test_explication.close();
 
-}
-
-unsigned Data::get_important_words(bool is_premise, unsigned num_sample, unsigned num_imp_word)
-{
-	num_imp_word *= 2; 
-	if(is_premise) 
-		return imp_words_premise[num_sample][num_imp_word];
-	else
-		return imp_words_hypothesis[num_sample][num_imp_word];
-}
-
-/* TODO */
-unsigned Data::get_important_words_position(bool is_premise, unsigned num_sample, unsigned num_imp_word)
-{/*
-	num_imp_word *= 2; 
-	if(is_premise) 
-		return imp_words_premise[num_sample][num_imp_word];
-	else
-		return imp_words_hypothesis[num_sample][num_imp_word];*/
-}
-
-unsigned Data::get_nb_important_words(bool is_premise, unsigned num_sample)
-{
-	if(is_premise)
-	{
-		if(imp_words_premise[num_sample][0] == -2)
-			return 0;
-		return imp_words_premise[num_sample].size() / 2;
-	}
-	else
-	{
-		if(imp_words_hypothesis[num_sample][0] == -2)
-			return 0;
-		return imp_words_hypothesis[num_sample].size() / 2;
-	}
-	
 }
 
 /**
@@ -346,11 +313,11 @@ void inline Data::init_rate(unsigned label)
 	* \param num_couple : The numero of the couple you're looking at
 	* 
 	* \return The label of the couple
-*/
+*//*
 unsigned Data::get_couple_label(unsigned num_sample, unsigned num_couple)
 {
 	return important_couples[num_sample].get_label(num_couple);
-}
+}*/
 
 /**
 	* \name get_nb_couple
@@ -359,11 +326,11 @@ unsigned Data::get_couple_label(unsigned num_sample, unsigned num_couple)
 	* \param num_sample : The numero of the sample you're looking at
 	* 
 	* \return The number of couple
-*/
+*//*
 unsigned Data::get_nb_couple(unsigned num_sample)
 {
 	return important_couples[num_sample].get_size();
-}
+}*/
 
 /**
 	* \name get_couple_nb_words
@@ -374,11 +341,11 @@ unsigned Data::get_nb_couple(unsigned num_sample)
 	* \param premise : True if you want to look at the important words in the premise, false if it's for the hypothesis
 	* 
 	* \return The number of words in the premise side or in the hypothesis side
-*/
+*//*
 unsigned Data::get_couple_nb_words(unsigned num_sample, unsigned num_couple, bool premise)
 {
 	return important_couples[num_sample].get_nb_words(num_couple, premise);
-}
+}*/
 
 /**
 	* \name get_couple_id
@@ -390,11 +357,11 @@ unsigned Data::get_couple_nb_words(unsigned num_sample, unsigned num_couple, boo
 	* \param premise : True if you want to look at the important words in the premise, false if it's for the hypothesis
 	* 
 	* \return The id of the word
-*/
+*//*
 unsigned Data::get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise)
 {
 	return important_couples[num_sample].get_id(num_couple, num_mot, premise);
-}
+}*/
 
 /**
 	* \name get_nb_contradiction
@@ -463,6 +430,17 @@ unsigned Data::get_nb_words(unsigned sentence, unsigned num_sentence)
 	* \return The number of samples
 */
 unsigned Data::get_nb_sentences() { return premise.size(); }
+
+unsigned Data::get_nb_words_total()
+{
+	unsigned nb_words = 0;
+	for(unsigned i=0; i<premise.size(); ++i)
+	{
+		nb_words += get_nb_words(1, i);
+		nb_words += get_nb_words(2, i);
+	}
+	return nb_words;
+}
 
 
 	/* Printing functions */
@@ -589,17 +567,14 @@ void Data::print_sentences_of_a_sample(unsigned num_sample, ofstream& output)
 	* 
 	* \param num_couple : Vector containing the couple's numero that you want to remove
 	* \param num_sample : The numero of the sample from where you want to remove the couple-s
-*/
+*//*
 void Data::remove_couple(vector<unsigned>& num_couple, unsigned num_sample)
 {
 	unsigned word;
 	int position;
 	for(unsigned nb_couples=0; nb_couples < num_couple.size(); ++nb_couples) //parcourt des couples à supprimer (ex 0, 1, 2) dans le vecteur passé en arguments
 	{
-		/* Parcours les couples à supprimer, spécifier dans num_couple
-		 * ex je veux enlever les couples 0, 1, 2 :
-		 * on parcourt imp_word_premise[nb_couple][word] !
-		 */
+		
 		//cerr << "couple numero " << num_couple[nb_couples] << endl;
 		if( num_couple[nb_couples] >= important_couples[num_sample].get_size() ) //ne pas supprimer un couple qui n'existe pas
 			continue;
@@ -619,7 +594,7 @@ void Data::remove_couple(vector<unsigned>& num_couple, unsigned num_sample)
 				
 	}
 	
-}
+}*/
 
 /**
 	* \name reset_couple
@@ -627,7 +602,7 @@ void Data::remove_couple(vector<unsigned>& num_couple, unsigned num_sample)
 	* 
 	* \param num_couple : Vector containing the couple's numero that you want to reset
 	* \param num_sample : The numero of the sample from where you want to reset the couple-s
-*/
+*//*
 void Data::reset_couple(vector<unsigned>& num_couple, unsigned num_sample)
 {
 	unsigned word;
@@ -652,7 +627,7 @@ void Data::reset_couple(vector<unsigned>& num_couple, unsigned num_sample)
 		}
 				
 	}	
-}
+}*/
 
 /**
 	* \name taking_couple
@@ -662,7 +637,7 @@ void Data::reset_couple(vector<unsigned>& num_couple, unsigned num_sample)
 	* 
 	* \param num_couple : The couple's numero that you want to take
 	* \param num_sample : The numero of the sample you're looking at
-*/
+*//*
 void Data::taking_couple(unsigned num_couple, unsigned num_sample)
 {
 	if( num_couple >= important_couples[num_sample].get_size() )
@@ -722,7 +697,7 @@ void Data::taking_couple(unsigned num_couple, unsigned num_sample)
 		if(remove)	
 			hypothesis[num_sample][word_in_sentences] = 0;
 	}
-}
+}*/
 
 /**
 	* \name reset_sentences
@@ -828,5 +803,53 @@ void Data::set_word(bool is_premise, unsigned word_position, unsigned word, unsi
 }
 
 
+/* Important words */
+
+unsigned Data::get_important_words(bool is_premise, unsigned num_sample, unsigned num_imp_word)
+{
+	num_imp_word *= 2; 
+	if(is_premise) 
+		return imp_words_premise[num_sample][num_imp_word];
+	else
+		return imp_words_hypothesis[num_sample][num_imp_word];
+}
+
+unsigned Data::get_important_words_position(bool is_premise, unsigned num_sample, unsigned num_imp_word)
+{
+	num_imp_word = num_imp_word * 2 + 1; 
+	if(is_premise) 
+		return imp_words_premise[num_sample][num_imp_word];
+	else
+		return imp_words_hypothesis[num_sample][num_imp_word];
+}
+
+unsigned Data::get_nb_important_words(bool is_premise, unsigned num_sample)
+{
+	if(is_premise)
+	{
+		if(imp_words_premise[num_sample][0] == -2)
+			return 0;
+		return imp_words_premise[num_sample].size() / 2;
+	}
+	else
+	{
+		if(imp_words_hypothesis[num_sample][0] == -2)
+			return 0;
+		return imp_words_hypothesis[num_sample].size() / 2;
+	}
+	
+}
+
+unsigned Data::get_nb_words_imp_total()
+{
+	unsigned nb_words=0;
+	for(unsigned num_sample=0; num_sample<premise.size(); ++num_sample)
+	{
+		nb_words += get_nb_important_words(true,num_sample);
+		nb_words += get_nb_important_words(false,num_sample);
+	}
+	return nb_words;
+	
+}
 
 

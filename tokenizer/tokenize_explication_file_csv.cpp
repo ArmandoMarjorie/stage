@@ -56,6 +56,7 @@ void write_output_important_words(string sentence, map<string, unsigned>& word_t
 			word_ss << sentence[i];
 		++i;
 		string word = word_ss.str();
+		//cout << "[WORD]" << word << " ";
 		if(word == "-1")
 		{
 			output << "-2 -2 ";
@@ -68,11 +69,14 @@ void write_output_important_words(string sentence, map<string, unsigned>& word_t
 
 		
 		string position = position_ss.str();
+		//cout << "[POS]" << position << " ";
 		
 		std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
 		output << word_to_id[word] << " " << position << " ";
+		cout << word_to_id[word] << " " << position << " ";
 
 	}
+	cout << "-1\n";
 	output << "-1\n";
 }
 
@@ -127,11 +131,12 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 	getline(explication_file, word); //read the label of each column in the csv file
 	unsigned cpt_guillemet;
 	string extract;
-	//unsigned cpt=0;
+	unsigned cpt=1;
 	while(getline(explication_file, word))
 	{
+		cout << "\n\tSAMPLE " << cpt << endl;
+		++cpt;
 		cpt_guillemet=0;
-	//	++cpt;
 		// Extracting label, premise, hypothesis and couple
 		for(unsigned i=0; i<word.size(); ++i)
 		{
@@ -156,7 +161,10 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 			else if(cpt_guillemet == 9 || cpt_guillemet == 11)
 			{
 				extract = extract_sequences_between_guillemet(i, word);
-				//cerr << "sample " << cpt << "\n\n";
+				if(cpt_guillemet == 9)
+					cout << "PREMISE\n";
+				else
+					cout << "HYPOTHESIS\n";
 				write_output_important_words(extract, word_to_id, output);
 			}
 		}

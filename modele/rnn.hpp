@@ -90,6 +90,8 @@
 	void run_prediction_expl_for_sys_4(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
 	
 	void change_words(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename, std::vector<Switch_Words*>& sw_vect);
+	void change_words_for_mesure(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
+		std::vector<Switch_Words*>& sw_vect);
 	
 
 #endif

@@ -7,11 +7,11 @@ EXEC= Training Testing
 
 all: $(EXEC)
 
-Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o pb.o
-	$(CC) -o Training train.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o pb.o $(LDFLAGS)
+Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o detoken.o sw.o
+	$(CC) -o Training train.o rnn.o LSTM.o BILSTM.o data.o embedding.o detoken.o sw.o $(LDFLAGS)
 
-Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o pb.o
-	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o sw.o pb.o $(LDFLAGS)
+Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o detoken.o sw.o
+	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o detoken.o sw.o $(LDFLAGS)
 
 predict.o: run/predict.cpp modele/rnn.hpp code_data/data.hpp
 	$(CC) -o predict.o -c run/predict.cpp $(CFLAGS)
@@ -34,14 +34,14 @@ data.o: code_data/data.cpp code_data/data.hpp code_data/embedding.hpp code_data/
 embedding.o: code_data/embedding.cpp code_data/embedding.hpp
 	$(CC) -o embedding.o -c code_data/embedding.cpp $(CFLAGS)
 
-couple.o: code_data/couple.cpp code_data/couple.hpp
-	$(CC) -o couple.o -c code_data/couple.cpp $(CFLAGS)
+#couple.o: code_data/couple.cpp code_data/couple.hpp
+#	$(CC) -o couple.o -c code_data/couple.cpp $(CFLAGS)
 	
 sw.o: code_data/switch_words.cpp code_data/switch_words.hpp
 	$(CC) -o sw.o -c code_data/switch_words.cpp $(CFLAGS)
 	
-pb.o: code_data/proba_bigram.cpp code_data/proba_bigram.hpp
-	$(CC) -o pb.o -c code_data/proba_bigram.cpp $(CFLAGS)
+#pb.o: code_data/proba_bigram.cpp code_data/proba_bigram.hpp
+#	$(CC) -o pb.o -c code_data/proba_bigram.cpp $(CFLAGS)
 
 detoken.o: tokenizer/detoken_explication.cpp tokenizer/detoken_explication.hpp
 	$(CC) -o detoken.o -c tokenizer/detoken_explication.cpp $(CFLAGS)
