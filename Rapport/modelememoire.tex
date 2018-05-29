@@ -63,16 +63,20 @@
     La reconnaissance de l'inférence textuelle (Recognizing Textual Entailment : RTE) est au coeur de tous les aspects de 
     la compréhension de texte en traitement automatique du langage (TAL). 
     Le but de la RTE est de savoir automatiquement si une phrase, appelée l'hypothèse, est 
-    déduite d'une autre phrase, appelée la prémisse.\\
+    déduite d'une autre phrase, appelée la prémisse.
     En utilisant des réseaux de neurones complexes, nous pouvons obtenir de bons taux de réussite pour la RTE. Cependant, 
     ces réseaux ne sont pas interprétables, ainsi nous n'avons pas la possibilité de savoir si le modèle s'est basé sur 
-    de bonnes informations pour sa décision.\\
-    Dans ce travail, nous proposons la méthode Best Adversario eXemple for Interpretability, qui respecte les règles d'une "bonne" explication 
-    pour rendre un modèle interprétable dans le cadre de la RTE, avec l'utilisation du corpus SNLI \cite{ref}. Nous allons la comparer 
-    à la méthode  Local Interpretable Model-agnostic Explanations (LIME) \cite{ref2} qui permet
+    de bonnes informations pour sa décision.
+    Dans ce travail, nous proposons la méthode Best Adversarial eXemple for Interpretability (BAXI), qui respecte les règles d'une "bonne" 
+    explication pour rendre un modèle interprétable dans le cadre de la RTE, 
+    avec l'utilisation du corpus SNLI \cite{ref}. Nous allons la comparer 
+    à la méthode Local Interpretable Model-agnostic Explanations (LIME) \cite{ref2} qui permet
     d'expliquer les prédictions de n'importe quel classifieur en apprenant localement un modèle interprétable dans le voisinage
-    de l'entrée. Pour cela, nous proposons de calculer la F-mesure de ces deux méthodes grâce à un corpus d'annotation de mots pertinents parmi un échantillon 
-    du corpus de Test de SNLI.
+    de l'entrée. Pour cela, nous avons extrait un échantillon du corpus de test de 
+    SNLI, et demandé à six annotateurs de donner les mots expliquant l'étiquette associée à la paire prémisse/hypothèse. 
+    Grâce à ce nouveau corpus, nous mesurons la précission, le rappel et la f-mesure de la qualité de l'explication fournit 
+    par la méthode BAXI et la méthode LIME, sur plusieurs systèmes 
+    que nous avons implémenté.
     \\[2mm]
     {\bf Mots-clés : } inférence textuelle, apprentissage automatique,\\traitement automatique des langues naturelles, 
     interprétabilité, LSTM
