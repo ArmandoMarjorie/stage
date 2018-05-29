@@ -34,8 +34,9 @@
 			std::vector< std::vector<unsigned> > hypothesis; /*!< list of hypothesis (premise[i] is the premise of hypothesis[i]*/ 
 			std::vector<unsigned> label; /*!< list of labels (label[i] = label of the i_th sample)*/ 
 			
-			std::vector< Couple > important_couples;
-			//std::vector< std::vector<unsigned> > couple_supp;
+			//std::vector< Couple > important_couples;
+			std::vector< std::vector<int> > imp_words_premise; /*!< list of the words in the premise explaining the label, for each sample*/ 
+			std::vector< std::vector<int> > imp_words_hypothesis; /*!< list of the words in the hypothesis explaining the label, for each sample*/ 
 			
 			unsigned nb_contradiction=0;
 			unsigned nb_inference=0;

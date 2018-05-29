@@ -120,10 +120,8 @@ Data::Data(char* data_filename)
 	*       label
 	*       premise -1 premise's length
 	*       hypothesis -1 hypothesis' length
-	* 		premise's words -2 hypothesis' words -1 // list of couples (-2 is a separator, -1 means end of couple)
-	* 		-5 // this means end of couples' list
-	* 		ith couple's label // list of the couple's label
-	* 		-3 // this means end of sample
+	* 		important words in the premise -1
+	* 		important words in the hypothesis -1
 	* \param mode : Not really usefull (just to differientiate this constructor from another one)
 */
 Data::Data(char* test_explication_filename, unsigned mode) 
@@ -136,13 +134,14 @@ Data::Data(char* test_explication_filename, unsigned mode)
 	}
 	int val;
 	cerr << "Reading data from " << test_explication_filename << " ...\n";
-	//unsigned cpt=0;
+	unsigned sentence=0;
 	while(test_explication >> val) //read a label
 	{
 		label.push_back(val);
 		//init_rate(val);
 		
-		for(unsigned sentence=0; sentence<2; ++sentence)
+		// reading the premise and the hypothesis
+		for(sentence=0; sentence<2; ++sentence)
 		{
 			vector<unsigned> tmp_data;
 			test_explication >> val; //read a word id
@@ -157,16 +156,62 @@ Data::Data(char* test_explication_filename, unsigned mode)
 			else
 				hypothesis.push_back(tmp_data);
 		}
-		Couple cpl(test_explication);
-				
-		/*cerr << "couples du sample " << cpt+1 << endl;
-		++cpt;
-		cpl.print_couples();*/
-		important_couples.push_back(cpl);
+		
+		// reading the important words in the premise and the hypothesis
+		for(sentence=0; sentence<2; ++sentence)
+		{
+			vector<int> tmp_data;
+			test_explication >> val; //read a word id
+			while(val != -1)
+			{
+				tmp_data.push_back(val);
+				test_explication >> val;
+			}				
+			if(sentence==0)
+				imp_words_premise.push_back(tmp_data);
+			else
+				imp_words_hypothesis.push_back(tmp_data);		
+		}
 	}
 	
 	test_explication.close();
 
+}
+
+unsigned Data::get_important_words(bool is_premise, unsigned num_sample, unsigned num_imp_word)
+{
+	num_imp_word *= 2; 
+	if(is_premise) 
+		return imp_words_premise[num_sample][num_imp_word];
+	else
+		return imp_words_hypothesis[num_sample][num_imp_word];
+}
+
+/* TODO */
+unsigned Data::get_important_words_position(bool is_premise, unsigned num_sample, unsigned num_imp_word)
+{/*
+	num_imp_word *= 2; 
+	if(is_premise) 
+		return imp_words_premise[num_sample][num_imp_word];
+	else
+		return imp_words_hypothesis[num_sample][num_imp_word];*/
+}
+
+unsigned Data::get_nb_important_words(bool is_premise, unsigned num_sample)
+{
+	if(is_premise)
+	{
+		if(imp_words_premise[num_sample][0] == -2)
+			return 0;
+		return imp_words_premise[num_sample].size() / 2;
+	}
+	else
+	{
+		if(imp_words_hypothesis[num_sample][0] == -2)
+			return 0;
+		return imp_words_hypothesis[num_sample].size() / 2;
+	}
+	
 }
 
 /**

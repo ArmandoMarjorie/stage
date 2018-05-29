@@ -44,89 +44,36 @@ void write_output(string sentence, map<string, unsigned>& word_to_id, ofstream& 
 }
 
 
-void write_output_couple(string sentence, map<string, unsigned>& word_to_id, ofstream& output)
+void write_output_important_words(string sentence, map<string, unsigned>& word_to_id, ofstream& output)
 {
-	bool premise = true;
-	unsigned j;
-	string w;
-	
 	for(unsigned i=0; i<sentence.size(); ++i)
 	{
-		if(sentence[i] == '(' || sentence[i] == ',')
-			continue;
 		stringstream word_ss;
 		stringstream position_ss;
 		
 		// extracting words
-		for(;sentence[i] != '['; ++i)
+		for(;i<sentence.size() && sentence[i] != ' '; ++i)
 			word_ss << sentence[i];
 		++i;
+		string word = word_ss.str();
+		if(word == "-1")
+		{
+			output << "-2 -2 ";
+			continue;
+		}
 		
 		// extracting words' positions
-		for(;sentence[i] != ']'; ++i)
+		for(;i<sentence.size() && sentence[i] != ' '; ++i)
 			position_ss << sentence[i];
-		++i;
 
-		string word = word_ss.str();
-		vector<string> words;
-		std::stringstream().swap(word_ss); // flush word_ss
+		
 		string position = position_ss.str();
-		vector<string> positions;
-		std::stringstream().swap(position_ss); // flush position_ss
 		
-		// words
-		for(j=0; j<word.size(); ++j)
-		{
-			if(word[j] == ' ')
-			{
-				w = word_ss.str();
-				std::transform(w.begin(), w.end(), w.begin(), ::tolower); 
-				words.push_back(w);
-				std::stringstream().swap(word_ss); // flush word_ss
-				++j;
-			}
-			word_ss << word[j];
-		}
-		w = word_ss.str();
-		std::transform(w.begin(), w.end(), w.begin(), ::tolower); 
-		words.push_back(w);
-		
-		// words' positions
-		for(j=0; j<position.size(); ++j)
-		{
-			if(position[j] == ' ')
-			{
-				w = position_ss.str();
-				positions.push_back(w);
-				std::stringstream().swap(position_ss); // flush position_ss
-				++j;
-			}
-			position_ss << position[j];			
-		}
-		w = position_ss.str();
-		if(w.size() == 0)
-			w = "-4";
-		positions.push_back(w);
+		std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
+		output << word_to_id[word] << " " << position << " ";
 
-		for(j=0; j<words.size(); ++j)
-		{
-			if(words[j] == "-1")
-				output << "0 " << positions[j] << " ";
-			else
-				output << word_to_id[words[j]] << " " << positions[j] << " ";
-		}
-		if(premise)
-		{
-			premise = false;
-			output << "-2 ";
-		}
-		else
-		{
-			premise = true;
-			output << "-1\n";
-		}
 	}
-	output << "-5\n"; //end of the couples list
+	output << "-1\n";
 }
 
 string extract_sequences_between_guillemet(unsigned& i, string line)
@@ -153,27 +100,6 @@ void reading_lexique(char* lexique_filename, map<string, unsigned>& word_to_id)
 		word_to_id[word] = id;
 	cerr << lexique_filename << " has been read" << endl;
 	lexique_file.close();
-}
-
-/* have this kind of form : (entailment),(neutral),(contradiction) */
-void write_output_couple_label(string line, ofstream& output)
-{
-	string label;
-	for(unsigned i=0; i<line.size(); ++i)
-	{
-		if(line[i] == '(' || line[i] == ',')
-			continue;
-		stringstream ss;
-		while(line[i] != ')')
-		{
-			ss << line[i];
-			++i;
-		}
-		++i; //read the ')'
-		label = ss.str();
-		write_output(label, output);
-	}
-	output << "-3\n"; //end of the tokenized file
 }
 
 
@@ -226,19 +152,12 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 				write_output(extract, word_to_id, output);			
 			}
 			
-			// couple ex : "(Male,guy),(blue jacket,blue jacket),(lay,laying)"
-			else if(cpt_guillemet == 13)
+			// important words in the premise and the hypothesis
+			else if(cpt_guillemet == 9 || cpt_guillemet == 11)
 			{
 				extract = extract_sequences_between_guillemet(i, word);
 				//cerr << "sample " << cpt << "\n\n";
-				write_output_couple(extract, word_to_id, output);
-			}
-			
-			// couple's label
-			else if(cpt_guillemet == 15)
-			{
-				extract =  extract_sequences_between_guillemet(i, word);
-				write_output_couple_label(extract, output); 
+				write_output_important_words(extract, word_to_id, output);
 			}
 		}
 	}
