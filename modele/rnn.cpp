@@ -540,7 +540,7 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 			changing_word = sw_vect[label_explained]->get_switch_word(word_position, is_premise, nb, num_sample);
 			explication_set.set_word(is_premise, word_position, changing_word, num_sample);
 			vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
-			converting_log(probs);
+			//converting_log(probs);
 			/*proba_log = pb.get_proba_log(changing_word);
 			if(proba_log == -1)
 				cerr << "ATTENTION incorrect proba log\n";*/
@@ -697,8 +697,8 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 	unsigned nb_imp_words_hyp;
 	unsigned correct_total = 0;
 	unsigned true_label;
-	
-	for(unsigned i=0; i<13; ++i) // POUR L'INSTANT ON EN A FAIT 13
+	unsigned positive = 0;
+	for(unsigned i=0; i<15; ++i) // POUR L'INSTANT ON EN A FAIT 13
 	{
 		nb_imp_words_prem = explication_set.get_nb_important_words(true, i);
 		nb_imp_words_hyp = explication_set.get_nb_important_words(false, i);
@@ -713,8 +713,11 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 		save_sentences(explication_set, premise, hypothesis, i);
 		
 			// original prediction
+		true_label = explication_set.get_label(i);
 		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
-		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
+		if(label_predicted_true_sample == true_label)
+			++positive;
+		output << true_label << endl << label_predicted_true_sample << endl;
 		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
 		
 			// init DI of words
@@ -768,6 +771,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 		
 	}	
 	//output.close();
+	cout << "Success Rate = " << 100 * (positive / (double)15) << endl;
 	mesure(explication_set, correct_total);
 	output.close();
 	char* name_detok = "Files/expl_detoken_changing_word";
@@ -823,7 +827,7 @@ void change_words(RNN& rnn, ParameterCollection& model, Data& explication_set, E
 		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -99999);
 			
-		converting_log(original_probs);
+	//	converting_log(original_probs);
 		prem_size = explication_set.get_nb_words(1,i);
 		hyp_size = explication_set.get_nb_words(2,i);
 		

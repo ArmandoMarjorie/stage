@@ -37,14 +37,14 @@ A sedan is stuck in the middle of a river . -1 11
 contradiction
 A man playing an electric guitar on stage . -1 9
 A man playing banjo on the floor . -1 8
-
-
 entailment
 A man playing an electric guitar on stage . -1 9
 A man playing guitar on stage . -1 7
 neutral
 A man playing an electric guitar on stage . -1 9
 A man is performing for cash . -1 7
+
+
 entailment
 A blond-haired doctor and her African american assistant looking threw new medical manuals . -1 14
 A doctor is looking at a book -1 7
