@@ -17,6 +17,7 @@
 \usepackage[nottoc, notlof, notlot]{tocbibind}
 \usepackage{appendix}
 \usepackage{comment}
+\usepackage{multirow}
 
 
 % Commenter l'une de ces deux lignes
@@ -66,15 +67,15 @@
     déduite d'une autre phrase, appelée la prémisse.
     En utilisant des réseaux de neurones complexes, nous pouvons obtenir de bons taux de réussite pour la RTE. Cependant, 
     ces réseaux ne sont pas interprétables, ainsi nous n'avons pas la possibilité de savoir si le modèle s'est basé sur 
-    de bonnes informations pour sa décision.
+    de bonnes informations pour sa décision. 
     Dans ce travail, nous proposons la méthode Best Adversarial eXemple for Interpretability (BAXI), qui respecte les règles d'une "bonne" 
     explication pour rendre un modèle interprétable dans le cadre de la RTE, 
     avec l'utilisation du corpus SNLI \cite{ref}. Nous allons la comparer 
-    à la méthode Local Interpretable Model-agnostic Explanations (LIME) \cite{ref2} qui permet
+    à la méthode Local Interpretable Model-agnostic Explanations (LIME) \cite{ref2} qui permet 
     d'expliquer les prédictions de n'importe quel classifieur en apprenant localement un modèle interprétable dans le voisinage
     de l'entrée. Pour cela, nous avons extrait un échantillon du corpus de test de 
     SNLI, et demandé à six annotateurs de donner les mots expliquant l'étiquette associée à la paire prémisse/hypothèse. 
-    Grâce à ce nouveau corpus, nous mesurons la précission, le rappel et la f-mesure de la qualité de l'explication fournit 
+    Grâce à ce nouveau corpus, nous mesurons le taux de la qualité de l'explication fournit 
     par la méthode BAXI et la méthode LIME, sur plusieurs systèmes 
     que nous avons implémenté.
     \\[2mm]
@@ -514,6 +515,32 @@
 	\subsection{Paramètres}
 		
 \section{Résultats}
+
+	Acc dans l'échantillon de test = 57.8947 \% pour les sys 1 et 2
+	Les tables ci-dessous illustrent les différents résultats obtenus : \\
+	
+	\begin{table}[h]
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	\small{Système} & \small{Méthode} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Total}\\
+	\hline
+	\multirow{2}{*}{1} & BAXI & 57,45\% & 50,00\% & 58,06\% & 56,52\% \\
+		\cline{2-6}
+		& LIME & test & test & test & test \\
+	\hline
+	\multirow{2}{*}{2} & BAXI & 74,47\% & 71,43\% & 51,61\% & 66,30\% \\
+		\cline{2-6}
+		& LIME & test & test & test & test \\
+	\hline
+	\multirow{2}{*}{3} & BAXI & test\% & test\% & test\% & test\% \\
+		\cline{2-6}
+		& LIME & test & test & test & test \\
+	\hline
+	\end{tabular}
+	\caption[Résultats des mesures de BAXI et LIME]{Résultats des mesures de BAXI et LIME avec nos 3 systèmes./*expliquer 
+	quand on aura tous les résultats}
+\end{table}
+	
 
 \section{Discussion}
 
