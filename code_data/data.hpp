@@ -89,7 +89,8 @@
 			unsigned get_important_words(bool is_premise, unsigned num_sample, unsigned num_imp_word);
 			unsigned get_important_words_position(bool is_premise, unsigned num_sample, unsigned num_imp_word);
 			unsigned get_nb_important_words(bool is_premise, unsigned num_sample);
-			unsigned get_nb_words_imp_total();
+			unsigned get_nb_words_imp_total(unsigned limit);
+			unsigned get_nb_important_words_in_label(unsigned label, unsigned limit);
 	};
 
 #endif

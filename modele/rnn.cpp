@@ -600,21 +600,32 @@ unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_
 	
 }
 
-void mesure(Data& explication_set, unsigned correct_total)
+void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_samples)
 {
-	float precision;
+	//float precision;
 	float recall;
-	float f_mesure;
+	//float f_mesure;
+	vector<unsigned> nb_label(NB_CLASSES,0);
+	unsigned correct_total = 0;
+	for(unsigned i=0; i<NB_CLASSES; ++i)
+	{
+		nb_label[i] = explication_set.get_nb_important_words_in_label(i, nb_samples);
+		correct_total += correct[i];	
+	}
 	
-	unsigned total_size = explication_set.get_nb_words_total();
+	/*unsigned total_size = explication_set.get_nb_words_total();
 	precision = correct_total / (double)total_size;
-	
-	unsigned total_imp_size = explication_set.get_nb_words_imp_total();
+	*/
+	unsigned total_imp_size = explication_set.get_nb_words_imp_total(nb_samples);
 	recall = correct_total / (double)total_imp_size;
+	//cout << "correct_total = " << correct_total << " total_imp_size = " << total_imp_size << endl;
+	//f_mesure = (2 * precision * recall) / (double)(precision + recall);
 	
-	f_mesure = (2 * precision * recall) / (double)(precision + recall);
-	
-	cout << "P = "<< precision << "\nR = " << recall << "\nF = " << f_mesure << endl;
+	//cout << "P = "<< precision << "\nR = " << recall << "\nF = " << f_mesure << endl;
+	cout << "Accuracy total imp. words = " << recall << endl;
+	cout << "\tAccurracy for neutral = " <<correct[0] / (double)nb_label[0] << endl;
+	cout << "\tAccurracy for entailment = " << correct[1] / (double)nb_label[1] << endl;
+	cout << "\tAccurracy for contradiction = " << correct[2] / (double)nb_label[2] << endl;
 	
 }
 
@@ -622,7 +633,6 @@ void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set,
 	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample,
 	vector<Switch_Words*>& sw_vect)
 {
-	cg.clear();
 	vector<float> vect_DI(NB_CLASSES, 0.0);
 	std::vector<float>::iterator index_min_it;
 	unsigned index_min, label_predicted;
@@ -637,6 +647,7 @@ void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set,
 		
 		for(unsigned nb=0; nb<nb_changing_words; ++nb)
 		{
+			cg.clear();
 			changing_word = sw_vect[label_explained]->get_switch_word(word_position, is_premise, nb, num_sample);
 			explication_set.set_word(is_premise, word_position, changing_word, num_sample);
 			vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
@@ -695,10 +706,12 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 	float DI;
 	unsigned nb_imp_words_prem;
 	unsigned nb_imp_words_hyp;
-	unsigned correct_total = 0;
 	unsigned true_label;
 	unsigned positive = 0;
-	for(unsigned i=0; i<15; ++i) // POUR L'INSTANT ON EN A FAIT 13
+	vector<unsigned> correct(NB_CLASSES,0);  
+	vector<unsigned> nb_label(NB_CLASSES,0);  
+	
+	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 13
 	{
 		nb_imp_words_prem = explication_set.get_nb_important_words(true, i);
 		nb_imp_words_hyp = explication_set.get_nb_important_words(false, i);
@@ -764,15 +777,17 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 		
 		explication_set.print_sentences_of_a_sample(i, output);
 		output << "-3\n";
-
-		true_label = explication_set.get_label(i);
-		correct_total += nb_correct(explication_set, save_prem[true_label], i, true); //nb de correct dans la prémisse
-		correct_total += nb_correct(explication_set, save_hyp[true_label], i, false); //nb de correct dans l'hypothèse
+		
+		/* Calcul pour les taux */
+		correct[true_label] +=  nb_correct(explication_set, save_prem[true_label], i, true);  //nb de correct dans la prémisse du sample i
+		correct[true_label] +=  nb_correct(explication_set, save_hyp[true_label], i, false);  //nb de correct dans l'hypothèse du sample i
+		//correct_total += correct[true_label]; 
+		
 		
 	}	
 	//output.close();
-	cout << "Success Rate = " << 100 * (positive / (double)15) << endl;
-	mesure(explication_set, correct_total);
+	cout << "Success Rate = " << 100 * (positive / (double)19) << endl;
+	mesure(explication_set,correct,19);
 	output.close();
 	char* name_detok = "Files/expl_detoken_changing_word";
 	detoken_expl(lexique_filename, name, name_detok);

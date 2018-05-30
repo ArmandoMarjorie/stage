@@ -43,8 +43,6 @@ A man playing guitar on stage . -1 7
 neutral
 A man playing an electric guitar on stage . -1 9
 A man is performing for cash . -1 7
-
-
 entailment
 A blond-haired doctor and her African american assistant looking threw new medical manuals . -1 14
 A doctor is looking at a book -1 7
@@ -57,6 +55,8 @@ A doctor is studying -1 4
 contradiction
 One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground . -1 28
 A boy runs into a wall -1 6
+
+
 entailment
 One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground . -1 28
 A tan girl runs leans over an object -1 8

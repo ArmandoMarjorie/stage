@@ -840,10 +840,10 @@ unsigned Data::get_nb_important_words(bool is_premise, unsigned num_sample)
 	
 }
 
-unsigned Data::get_nb_words_imp_total()
+unsigned Data::get_nb_words_imp_total(unsigned limit)
 {
 	unsigned nb_words=0;
-	for(unsigned num_sample=0; num_sample<premise.size(); ++num_sample)
+	for(unsigned num_sample=0; num_sample<limit; ++num_sample)
 	{
 		nb_words += get_nb_important_words(true,num_sample);
 		nb_words += get_nb_important_words(false,num_sample);
@@ -852,4 +852,17 @@ unsigned Data::get_nb_words_imp_total()
 	
 }
 
+unsigned Data::get_nb_important_words_in_label(unsigned label, unsigned limit)
+{
+	unsigned nb = 0;
+	for(unsigned i=0; i<limit; ++i)
+	{
+		if(get_label(i) == label)
+		{
+			nb += get_nb_important_words(true,i);
+			nb += get_nb_important_words(false,i);
+		}
+	}
+	return nb;
+}
 
