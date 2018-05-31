@@ -7,8 +7,8 @@ EXEC= Exe_Serveur
 
 all: $(EXEC)
 
-Exe_Serveur: server.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o
-	$(CC) -o Exe_Serveur server.o rnn.o LSTM.o BILSTM.o data.o embedding.o couple.o detoken.o $(LDFLAGS)
+Exe_Serveur: server.o rnn.o LSTM.o BILSTM.o data.o embedding.o detoken.o sw.o
+	$(CC) -o Exe_Serveur server.o rnn.o LSTM.o BILSTM.o data.o embedding.o detoken.o sw.o $(LDFLAGS)
 
 server.o: server.cpp ../modele/LSTM.hpp ../modele/BILSTM.hpp
 	$(CC) -c server.cpp $(CFLAGS)
@@ -27,9 +27,9 @@ data.o: ../code_data/data.cpp ../code_data/data.hpp
 	
 embedding.o: ../code_data/embedding.cpp ../code_data/embedding.hpp
 	$(CC) -c ../code_data/embedding.cpp $(CFLAGS)
-
-couple.o: ../code_data/couple.cpp ../code_data/couple.hpp
-	$(CC) -c ../code_data/couple.cpp $(CFLAGS)
+	
+sw.o: ../code_data/switch_words.cpp ../code_data/switch_words.hpp
+	$(CC) -o sw.o -c ../code_data/switch_words.cpp $(CFLAGS)
 	
 detoken.o: ../tokenizer/detoken_explication.cpp ../tokenizer/detoken_explication.hpp
 	$(CC) -o detoken.o -c ../tokenizer/detoken_explication.cpp $(CFLAGS)

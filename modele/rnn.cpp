@@ -149,13 +149,13 @@ void run_predict(RNN& rnn, ParameterCollection& model, Data& test_set, Embedding
 vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& embedding, bool print_label)
 {
 	//cerr << "Testing ...\n";
-	unsigned nb_of_sentences = test_set.get_nb_sentences();
 	unsigned label_predicted;
 	rnn.disable_dropout();
 	ComputationGraph cg;
 	vector<float> probas = rnn.predict(test_set, embedding, 0, cg, false, label_predicted, NULL);
-	if(print_label)
-		cerr << "True label = " << test_set.get_label(0) << ", label predicted = " << label_predicted << endl;
+	cout << "predict ok\n";
+	//if(print_label)
+		//cerr << "True label = " << test_set.get_label(0) << ", label predicted = " << label_predicted << endl;
 	return probas;
 }
 

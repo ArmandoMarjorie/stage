@@ -19,25 +19,25 @@ using namespace dynet;
 	* 		For the ith sample : length premise is at num_sample*2, length hypothesis is at num_sample*2+1
 	* \param num_sample : The sample
 	* \param sample_label : The sample's label
-*/
-Data::Data(char* sentence, map<string,unsigned>& word_to_id, vector<unsigned>& length_tab, unsigned num_sample, unsigned sample_label)
+*/ 
+Data::Data(char* buffer_in, map<string,unsigned>& word_to_id, char* buffer_in_bis, unsigned num_sample, bool is_premise)
 {
-	bool is_premise = true;
+	//bool is_premise = true;
 	unsigned cpt_words = 0;
 	string word;
-	unsigned len_total = strlen(sentence);
-	unsigned len_sentence = length_tab[num_sample*2];
+	//unsigned len_total = strlen(sentence);
+	//unsigned len_sentence = length_tab[num_sample*2];
 	unsigned i=0;
 	vector<unsigned> tmp;
-	label.push_back(sample_label);
+	//label.push_back(sample_label);
+	label.push_back(0); //osef
 	
-	
-	while(i < len_total)
+	while(i < strlen(buffer_in)) //la prémisse si is_premise = true
 	{
 		stringstream ss;
-		while(i<len_total && sentence[i] != ' ')
+		while(i<strlen(buffer_in) && buffer_in[i] != ' ')
 		{
-			ss << sentence[i];
+			ss << buffer_in[i];
 			++i;
 		}
 		word = ss.str();
@@ -49,20 +49,45 @@ Data::Data(char* sentence, map<string,unsigned>& word_to_id, vector<unsigned>& l
 			tmp.push_back(word_to_id[word]);			
 		}
 		++i; //passe a la lettre suivante
-		++cpt_words;
-		if(cpt_words == len_sentence)
+		if(i >= strlen(buffer_in))
 		{
 			if(is_premise)
 			{
-				is_premise=false;
-				len_sentence = length_tab[num_sample*2+1];
 				premise.push_back(tmp);
-				tmp.clear();
-				cpt_words = 0;
 			}
 			else
 			{
 				hypothesis.push_back(tmp);
+			}			
+		}
+	}
+	i=0;
+	while(i < strlen(buffer_in_bis)) //la prémisse si is_premise = true
+	{
+		stringstream ss;
+		while(i<strlen(buffer_in_bis) && buffer_in_bis[i] != ' ')
+		{
+			ss << buffer_in_bis[i];
+			++i;
+		}
+		word = ss.str();
+		if(word == "UNKWORDZ")
+			tmp.push_back(0);
+		else
+		{
+			std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
+			tmp.push_back(word_to_id[word]);			
+		}
+		++i; //passe a la lettre suivante
+		if(i >= strlen(buffer_in_bis))
+		{
+			if(is_premise)
+			{
+				hypothesis.push_back(tmp);
+			}
+			else
+			{
+				premise.push_back(tmp);
 			}			
 		}
 	}

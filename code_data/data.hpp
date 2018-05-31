@@ -49,7 +49,7 @@
 			Data();
 			Data(unsigned mode, char* lexique_filename);
 			Data(char* test_explication_filename, unsigned mode);
-			Data(char* sentence, std::map<std::string,unsigned>& word_to_id, std::vector<unsigned>& length_tab, unsigned num_sample, unsigned sample_label);
+			Data(char* buffer_in, std::map<std::string,unsigned>& word_to_id, char* buffer_in_bis, unsigned num_sample, bool is_premise);
 			
 			/*
 			unsigned get_couple_id(unsigned num_sample, unsigned num_couple, unsigned num_mot, bool premise);
