@@ -98,11 +98,11 @@
 \ResumeFrancais\\[4mm]
 
 \newpage
-\tableofcontents
-\newpage
-\listoftables
-\listoffigures
-\newpage
+%\tableofcontents
+%\newpage
+%\listoftables
+%\listoffigures
+%\newpage
 
 %-------------------- T E X T E   D U   R A P P O R T -------------------------
 
@@ -122,15 +122,17 @@
 		uniquement les probabilités de chaque étiquette. Comment savoir, de manière humainement compréhensible, pourquoi le modèle a 
 		associé une étiquette particulière à une certaine entrée ?\\
 		\\
-		Avoir un modèle digne de confiance permettrait au modèle d'être d'avantage utilisé : en effet, il a été observé, par exemple, que le fait de fournir des 
+		Pourtant, avoir un modèle digne de confiance permettrait au modèle d'être d'avantage utilisé : en effet, il a été observé, par exemple, que le fait de fournir des 
 		explications augmente l'acceptation des recommandations de films \cite{ref2}. De plus, cela permettrait également au développeur de choisir 
 		un modèle parmi ceux qu'il a implémenté, 
 		car le taux de réussite n'est pas le seul critère à prendre en compte : un modèle peut fournir l'étiquette attendue 
-		en se basant sur de mauvaises informations.
+		en se basant sur de mauvaises informations.\\
+		Pour qu'un modèle soit digne de confiance, il faut que les explications fournies soient jugées correctes par les 
+		utilisateurs.
 
 	\subsection{Tâches}
 		Les concepts sémantiques d'inférence et de contradiction sont au coeur de tous les aspects de la compréhension de texte en TAL. 
-		Ainsi, l'inférence textuelle en langage naturel (Natural Language Inference : NLI), caractérisant ces relations, est essentielle dans des tâches telles 
+		Ainsi, la RTE est essentielle dans des tâches telles 
 		que la recherche d'information, le raisonnement de bon sens, ou encore le système 
 		de question/réponse.\\
 		\\
@@ -143,7 +145,7 @@
 				\textit{
 				Prémisse : "Le chat est entièrement blanc."\\ 
 				Hypothèse : "Le chat est entièrement noir."}\\
-
+			\newpage
 			\item Neutre : l'hypothèse est possible dans le contexte de la prémisse. Par exemple :\\
 				\textit{
 				Prémisse : "Le chat dort sur la banquette."\\
@@ -177,8 +179,20 @@
 		%\bigskip
 		
 \section{Hypothèse scientifique} % SECTION 2
+	Notre principale hypothèse étudiée lors de ce travail est que BAXI repère de meilleurs mots explicatifs que LIME 
+	pour la tâche de la RTE : \\
+	BAXI $\underset{RTE}{>}$ LIME.\\
+	La comparaison est effectuée à l'aide d'une métrique expliquée en section , qui utilise un corpus explicatif contenant 
+	les mots les plus intéressants dans la prémisse et dans l'hypothèse. Nous pensons donc que \\
+	mesure(BAXI, corpus explicatif) $\underset{RTE}{>}$ mesure(LIME, corpus explicatif).
 
 \section{Etat de l'art} % SECTION 3
+	\subsection{Dans la RTE}
+		/*DECRIRE UNE APPROCHE COOL*/
+	\subsection{Dans l'interprétabilité de prédictions de modèles}
+		/*PARLER INTERPRETABILITE EN GENERAL ET PK CA S'APPLIQUE PAS AU TEXTE*/
+		/*PARLER ARTICLE LREC*/
+\begin{comment}
 	\subsection{Dans le domaine de la RTE}
 		Les premiers travaux sur la RTE ont été 
 		formé sur de très petits ensembles de données avec des méthodes conventionnelles, 
@@ -213,19 +227,12 @@
 		ont été les premiers à proposer des réseaux basés sur l'attention pour la RTE. 
 		Chen et al. \cite{ref20} ont proposé un modèle d'inférence séquentielle amélioré qui est 
 		l'un des meilleurs modèles à ce jour (88,6\% de taux de réussite).
-		
-	\subsection{Dans l'interprétabilité pour le TAL}
-		Dans la pratique, il y a souvent un compromis entre le taux de réussite et l'interprétabilité du modèle.
-		Certains modèles tels que les arbres de décisions ou encore les modèle linéaires sont facilement interprétables, 
-		et sont donc parfois utilisés à la place de modèles complexes tels que les réseaux de neurones profonds,  
-		même si ceux-ci peuvent donner de meilleurs résultats. Cependant, au cours de 
-		ces dernières années, de grandes avancées 
-		ont été effectuées pour tenter d'interpréter les modèles utilisés jusqu'alors comme des boîtes noires.\\
-		\\
+\end{comment}		
+	\subsection{Description de LIME}
 		Nous étudions dans ce travail la méthode LIME qui permet d'expliquer les prédictions de n'importe quel classifieur 
 		ou regresseur. L'objectif global de LIME est d'identifier un modèle interprétable parmi le voisinage de l'entrée $x$.\\
 		\\ 
-		Tout d'abord, on distingue les features utilisées aux représentations interprétables des features. Par exemple, 
+		Tout d'abord, les features utilisées et les représentations interprétables des features sont à distinguer. Par exemple, 
 		les features sont les embeddings des mots et la représentation interprétable de ces features est un vecteur binaire 
 		qui indique la présence ou l'absence des mots.\\
 		\\
@@ -234,11 +241,11 @@
 		à être interprété, LIME définit $\Omega(g)$ qui est une mesure de la complexité d'interpréter $g$. En 
 		prenant l'example des arbres de décisions, $\Omega(g)$ est la profondeur.\\
 		On dénote par $f : \mathbb{R}^{d} \rightarrow \mathbb{R}$ le modèle utilisé comme une boîte noire. $f(x)$ est la 
-		probabilité que l'entrée $x$ appartienne à une certaine classe.\\
-		LIME va alors se baser sur la représentation interprétable des données en retirant un ou plusieurs mots au hasard. On dénote cette 
-		nouvelle entrée par $z$. LIME définit la localité de $x$ avec $\pi_x(z)$ qui est une mesure de proximité entre $z$ et 
+		probabilité que l'entrée $x$ appartienne à une certaine étiquette.\\
+		LIME va alors se baser sur la représentation interprétable des données en retirant un ou plusieurs mots au hasard. Cette 
+		nouvelle entrée est notée $z$. LIME définit la localité de $x$ avec $\pi_x(z)$ qui est une mesure de proximité entre $z$ et 
 		$x$. C'est un noyau se basant sur la similarité cosinus.\\
-		Enfin, on définit $\mathcal{L}(f, g, \pi_x)$ qui est une mesure pour savoir à combien $g$ est infidèle à $f$ dans la localité 
+		Enfin, LIME définit $\mathcal{L}(f, g, \pi_x)$ qui est une mesure pour savoir à combien $g$ est infidèle à $f$ dans la localité 
 		défini par $\pi_x$. Pour préserver à la fois l'interprétabilité et la fidèlité locale, LIME minimise $\mathcal{L}(f, g, \pi_x)$ 
 		avec $\Omega(g)$ assez petit pour être interprétable par les humains. L'explication de LIME est donc la suivante :
 		\begin{equation}
@@ -247,24 +254,27 @@
 		Cette formule peut être utilisée par différents modèles $g \in G$, fonctions de 
 		fidèlité $\mathcal{L}(f, g, \pi_x)$, et mesure de complexité $\Omega(g)$.\\
 		\\
-		LIME peut alors donner les $K$ mots les plus importants de l'entrée $x$ pour tout label.\\
+		LIME peut alors donner les $K$ mots les plus importants de l'entrée $x$ pour toutes étiquettes.\\
 		La figure ci-dessous est un exemple illustant le principe de LIME :
 		
 		\begin{figure}[h]
 			\center
 			\includegraphics[width=8cm, height=6cm, keepaspectratio]{lime_exemple.png}
-			\caption{Exemple présentant l'intuition de LIME.}
+			\caption[Exemple présentant l'intuition de LIME.]{\bf{Exemple présentant l'intuition de LIME. La décision de la boîte 
+			noire $f$, inconnu par LIME, est représentée par le fond bleu et rose. 
+			La croix rouge en gras est l'entrée $x$ que l'on veut expliquer. LIME crée des entrées modifiées, 
+			utilise $f$ pour avoir la probabilité de ces entrées pour le label $y$, et les pondère par leur proximité 
+			par rapport à $x$ (les poids sont représentés par la taille). La droite pointillée est l'explication apprise qui est 
+			localement fidèle.}}
 		\end{figure}
-		La décision de la boîte noire $f$, inconnu par LIME, est représentée par le fond bleu et rose. 
-		La croix rouge en gras est l'entrée $x$ que l'on veut expliquer. LIME crée des entrées modifiées, 
-		utilise $f$ pour avoir la probabilité de ces entrées pour le label $y$, et les pondère par leur proximité 
-		par rapport à $x$ (les poids sont représentés par la taille). La droite pointillée est l'explication apprise qui est 
-		localement fidèle.\\
+		\\
+		Concernant l'évaluation des explications de LIME pour savoir si la méthode fournit des explications correctes, les auteurs 
+		ont utiliser LIME /*A FINIR */.
 		
-	\subsection{Dans l'interprétabilité de la RTE}
-		Ce n'est que très recemment que Silva et al. \cite{ref21} 
+	%\subsection{Dans l'interprétabilité de la RTE}
+	%	Ce n'est que très recemment que Silva et al. \cite{ref21} 
 		
-		/*PARLER ARTICLE LREC*/
+	%	/*PARLER ARTICLE LREC*/
 		
 		\begin{comment}
 		D'autres méthodes d'interprétation existent, telle que DeepLIFT (Deep Learning Important FeaTures :
@@ -308,25 +318,25 @@
 		Un algorithme efficace a été mis au point, cependant il fonctionne uniquement sur les modèles basés sur les arbres.
 		\end{comment}
 
-\section{Définition d'interprétabilité} % SECTION 4
+\section{Définition d'interprétabilité} % SECTION 4 FINI
 	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
 	Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision \cite{ref4}. 
 	Un système a donc une meilleure interprétabilité qu'un autre si ses explications sont plus faciles à comprendre par un humain.
+	\begin{comment}
 	\begin{figure}[h]
 		\center
 		\includegraphics[width=10cm, height=6cm, keepaspectratio]{xai-figure.png}
 		\caption[Concept des intelligences artificielles explicables]{Concept des intelligences artificielles explicables (eXplainable Artificial Intelligences : XAI) \cite{ref22}.}
 	\end{figure}	
-	
+	\end{comment}
 	\subsection{Qu'est-ce-qu'une explication ?}
 		La définition donnée par Miller est assez simple : une explication est une réponse à une question commençant par "pourquoi". 
 		Une question commençant par "comment" peut être retournée en une question commençant par "pourquoi".
 		Le terme "explication" désigne le processus social et cognitif d'expliquer, mais c'est également le produit de ces processus.
 	\subsection{Qu'est-ce-qu'une "bonne" explication ?}
 		La définition d'une bonne explication ne doit pas se baser sur l'intuition de l'auteur, mais plutôt sur des faits. 
-		Miller résume ce qu'est une bonne explication \cite{ref5}, basée sur ce que les humains attendent d'une explication. 
-		Grâce à cela, nous allons énoncer les types d'explications adéquats à notre projet. Cependant, 
-		il ne faut pas oublier que les humains ont tendance à rejeter toutes explications allant à l'encontre de leur croyance.
+		Miller résume ce qu'est une bonne explication \cite{ref5}, c'est-à-dire ce que les humains attendent d'une explication. 
+		Grâce à cela, nous allons énoncer les types d'explications que BAXI doit suivre.
 		\paragraph*{Explication contrastée}
 			C'est une explication qui doit être comparée. Les utilisateurs se demandent généralement pourquoi cette prédiction a 
 			été faite et pas une autre, via la question "quelle aurait été la prédiction si cette entrée avait été changé 
@@ -353,11 +363,11 @@
 	\end{comment}
 	
 
-\section{Systèmes implémentés} % SECTION 5
-	Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6} en C++. 
+\section{Systèmes implémentés} % SECTION 5 FINI
+	Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6}. 
 	Nous utilisons les LSTMs et les BiLSTMs.
 		
-	\subsubsection{Systèmes basés sur l'encodage des phrases}
+	\subsection{Systèmes basés sur l'encodage des phrases}
 		\paragraph*{Premier système}
 			Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases.  
 			On les concatène pour les envoyer ensuite à une couche de décision : 
@@ -373,7 +383,7 @@
 			y = softmax( W \times ( LSTM(\textit{prémisse}) \times LSTM(\textit{hypothèse})^{T} ) + b )
 			\end{equation}
 			où $T$ dénote la transposée.
-	\subsubsection{Système avec mécanisme d'attention}
+	\subsection{Système avec mécanisme d'attention}
 		\paragraph*{Troisième système}
 			Le troisième système est inspiré de la méthode KIM \cite{ref3}.\\ 
 			On représente les mots de la prémisse et de l'hypothèse en les passant dans un BiLSTM : il utilise un LSTM forward pour 
@@ -408,11 +418,49 @@
 			puis on effectue une concaténation du mean-pooling de la prémisse et de l'hypothèse pour l'envoyer à une couche de décision :
 			\begin{equation}
 			y = softmax( W \times [ pool_p ; pool_h ] + b )
-			\end{equation}		
+			\end{equation}	
+	\subsection{Résultats des systèmes}	
+		Les tables ci-dessous montrent les différents résultats des taux de réussite des étiquettes prédites avec ces 
+		systèmes : \\
 
-\section{Description de l'approche BAXI}
+		\begin{table}[h]
+			\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\small{Système} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Dev} \\
+			\hline
+			1 & 73,90\% & 68,38\% & 67,33\% & 69,89\% \\
+			\hline
+			2 & \bf{87,98\%} & \bf{74,99\%} & \bf{78,55\%} & \bf{80,57\%} \\
+			\hline
+			3 & 74,92\% & 69,55\% & 68,73\% & 71,09\% \\
+			\hline
+			\end{tabular}
+			\caption{\bf{Résultats des tests de la RTE pour le fichier de validation.}}
+			\end{center}
+		\end{table}
+
+		\begin{table}[h]
+			\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\small{Système} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Test} \\
+			\hline
+			1 & test\% & test\% & test\% & test\% \\
+			\hline
+			2 & 86,10\% & 76,14\% & 77,70\% & 80,07\% \\
+			\hline
+			3 & test\% & test\% & test\% & test\% \\
+			\hline
+			\end{tabular}
+			\caption{\bf{Résultats des tests de la RTE pour le fichier de test.}}
+			\end{center}
+		\end{table}
+
+\section{Description de l'approche BAXI} % PRESQUE FINI
 	Cette section décrit notre technique pour interpreter une prédiction d'une entrée. L'objectif est de donner des explications pour chaque étiquette 
-	en donnant les $\alpha$ mots les plus importants dans la prémisse et les $\beta$ mots les plus importants dans l'hypothèse. On veut donc calculer l'importance de chaque mot. 
+	en donnant les $\alpha$ mots les plus importants dans la prémisse et les $\beta$ mots les plus importants dans l'hypothèse. On parle alors "d'expliquer une étiquette". 
+	On veut donc calculer l'importance de chaque mot. 
 	L'importance d'un mot correspond à l'importance de sa contribution pour l'étiquette $y$.\\
 	\\
 	Notre intuition est la suivante : 
@@ -421,9 +469,10 @@
 	de l'étiquette $y$ a baissé, alors le mot était important : cela veut dire que le mot avait contribué à l'étiquette $y$. A l'inverse, si elle a augmenté, le mot n'avait donc pas contribué à $y$. 
 	De plus, si la probabilité des autres étiquettes a augmenté, alors le mot a d'autant plus d'importance : en le remplacant, l'entrée $x$ a basculé vers une autre étiquette.\\
 	\\
-	Pour résumé, lorsque l'on remplace $m_i$, nous pénalisons l'augmentation de la probabilité de l'étiquette que l'on veut expliquer, et nous encourageons l'augmentation des probabilités des autres étiquettes.
+	Pour résumé, lorsque l'on remplace $m_i$, nous pénalisons l'augmentation de la probabilité de l'étiquette que l'on veut 
+	expliquer, et nous encourageons l'augmentation des probabilités des autres étiquettes.
 	\\
-	L'importance d'un mot, notée $IMP^{total}$ pour "importance", est une fonction comme suit : \\
+	L'importance d'un mot est une fonction $IMP : \mathbb{R}^{d_e} \rightarrow \mathbb{R}$ comme suit : \\
 	
 	\begin{equation}
 	impact^{y_{ref}}(m_i) = -p(y_{ref} \: | \: x \leftarrow m_i = m_a) \: + \: p(y_{ref} \: | \: x)
@@ -436,27 +485,24 @@
 	\end{equation}\\
 	
 	
-	où $y_{ref}$ est le label de référence (le label que l'on veut "expliquer"), $x$ est l'entrée, $m_i$ est le mot que l'on retire de l'entrée $x$, 
-	$y_j$ est un label différent de $y_{ref}$, et $|Y|$ est le nombre de label. Les probabilités sont exprimées en log-probabilités pour des soucis de précision et d'optimisation du code. On parle donc plutôt de score.\\
-	Cette formule suit notre intuition de base et également celle de Robnik-Sikonja et Kononenko \cite{ref8}. Nous avons rajouté la prise en compte de l'impact sur les scores 
-	des autres labels quand on retire le mot $m_i$.\\
+	où $y_{ref}$ est l'étiquette de référence (l'étiquette que l'on veut "expliquer"), $x$ est l'entrée, 
+	$m_i$ est le mot que l'on retire de l'entrée $x$, $m_a$ est le mot par lequel on remplace $m_i$, 
+	$y_j$ est une étiquette différente de $y_{ref}$, et $|Y|$ est le nombre d'étiquette. \\
 	\\
-	Un problème persiste tout de même : que se passe-t-il vraiment lorsque l'on retire un mot ? Nous ne pouvons pas simplement le supprimer de l'entrée, car la phrase n'aurait plus de sens 
-	et le modèle n'est peut-être pas entraîné à faire face aux bruits. On ne peut pas vraiment le remplacer par un mot générique (le mot "UNK" pour "mot inconnu", par exemple) 
-	car un modèle remplacant ce mot par un embedding à 0 et un modèle remplacant ce mot par un embedding particulier auront des réponses très différentes. Or on voudrait que notre méthode soit 
-	réalisable par n'importe quel modèle. La solution est donc de remplacer le mot que l'on veut retirer par un autre :
-	\begin{equation}
-	p(y | x \setminus m_i) =  \sum_{s=1}^{|S|} p(y | x \leftarrow m_i = m_s) 
-	\end{equation}\\
-	où $|S|$ est le nombre de mot que l'on peut mettre à la place du mot $m_i$ et $m_s$ est le mot que l'on met à la place de $m_i$.\\
-	%Les mots pouvant remplacer $m_i$ sont situés dans un fichier externe créé par nous-même. On a fixé à 5 le nombre de mots maximum pouvant remplacer $m_i$.
-	Plus il y a de mots de remplacements, plus on a une meilleure estimation de l'importance du mot $m_i$, mais dans ce cas la complexité en temps augmente. Il faut donc trouver un compromis entre 
-	l'estimation de l'importance d'un mot et le temps que met le programme pour donner une explication. Nous expliquons comment et par quoi nous avons remplacé les mots dans la section 6.1.\\
+	L'équation 9 pénalise l'aumentation de la probabilité de l'étiquette que l'on veut 
+	expliquer lorsque l'on remplace $m_i$ par $m_a$. \\
+	L'équation 10 encourage l'augmentation des probabilités des autres étiquettes lorsque l'on remplace $m_i$ par $m_a$.\\
+	Pour calculer l'importance d'un mot, on additionne ces deux impacts.
+	Cette formule suit notre intuition de base et également celle de Robnik-Sikonja et Kononenko \cite{ref8}. Nous avons rajouté la prise en compte de l'impact sur  
+	les probabilités des autres étiquettes.\\
+	Nous cherchons ici le mot de remplacement $m_a$ qui maximise cette mesure d'importance, pour trouver le meilleur exemple 
+	adversarial pour l'entrée $x$. Ce que l'on cherche à faire est donc de comparer l'entrée $x$ avec le meilleur exemple 
+	adversarial, caractérisé par le remplacement de $m_i$ par $m_a$.\\
 	\\
 	Cette méthode permet donc d'avoir une explication contrastée, puisque l'on compare notre entrée de base avec des entrées créées artificiellement en remplacant un mot par un autre. 
-	De plus, elle est également sélective puisque l'on sélectionne les K mots, respectivement dans la prémisse puis dans l'hypothèse, ayant le plus contribué au label $y_{ref}$. 
+	De plus, elle est également sélective puisque l'on sélectionne les $\alpha$ mots dans la prémisse et les $\beta$ mots dans l'hypothèse ayant le plus contribué à l'étiquette $y_{ref}$. 
 	Enfin, le programme surligne les mots les plus importants pour chaque label, ce qui permet d'avoir une visualisation pour faciliter la compréhension. Nous respectons donc les trois 
-	règles d'une bonne explication citées dans la section 3.
+	règles d'une bonne explication citées dans la section 4.2.
 	
 	/* METTRE UN SCREEN D'UNE EXPLICATION */
 		
@@ -475,12 +521,15 @@
 			\center
 			\includegraphics[width=13cm, height=12cm, keepaspectratio]{table_SNLI.png}
 			\caption[Echantillon du corpus de développement de SNLI]{\bf{Echantillon de 5 paires du corpus de développement de SNLI présentant à gauche la prémisse, 
-				à droite l'hypothèse, et au centre les étiquettes des 5 annotateurs (C pour Contradiction, N pour Neutral, et E pour Entailment). L'étiquette en gras 
+				à droite l'hypothèse, et au centre les étiquettes des 5 annotateurs (C pour Contradiction, N pour Neutral, et E pour Entailment) 
+				avec en premier l'étiquette de l'auteur de la paire. L'étiquette en gras 
 				est celle qui a eu le plus de voix, et est donc l'étiquette gold de la paire prémisse/hypothèse.}}
 		\end{table}\\
 		\\
 		Pour mesurer les taux de réussite des explications, nous utilisons un échantillon du corpus de test de SNLI 
-		composé de 19 paires prémisse/hypothèse avec leur étiquette associée. La table ci-dessous montre les taux des 
+		composé de 19 paires prémisse/hypothèse avec leur étiquette associée, appelé Corpus Pour l'Interprétabilité (CPI). 
+		Ce corpus contient des paires se trouvant dans le corpus explicatifs (voir section 7.3) 
+		et ayant des mots de remplacement (voir section 3.2). La table ci-dessous montre les taux des 
 		étiquettes présentes dans ce petit corpus : \\
 		
 		\begin{table}[h]
@@ -492,31 +541,30 @@
 			36,84\% & 26,31\% & 36,84\% \\
 			\hline
 			\end{tabular}
-			\caption{\bf{Taux des étiquettes présentes dans le corpus de l'échantillon de test.}}
+			\caption{\bf{Taux des étiquettes présentes dans le CPI.}}
 			\end{center}
-		\end{table}
-		
-		
+		\end{table}\\
+		\\
+		\newpage
 		Pour la représentation des mots, nous utilisons des \textit{words embeddings} pré-entrainés de dimension 100 via GloVe.6B.100d.
 		Pour les mots inconnus, c'est-à-dire les mots qui n'ont pas d'\textit{embedding} dans GloVe, nous utilisons des \textit{embeddings}
 		initialisés au hasard. 
 		
-	\subsection{Mots de remplacement}
-	
-		Nous pensons que nous pouvons choisir automatiquement, pour chaque mot $m_i$ d'une phrase, les mots pouvant les 
-		remplacer (avec des outils tel que WordNet, par exemple). Cependant, nous avons voulu les choisir 
-		nous-même pour assurer la qualité des mots et essayer d'avoir les meilleurs exemples de comparaisons 
-		possible. Nous avons donc annoté trois fichiers suivant le label que l'on veut "expliquer". Lorsque 
-		l'on parle "d'expliquer un label", cela signifie que l'on donne les $K$ mots -dans la prémisse et dans 
-		l'hypothèse- qui ont le plus contribué au label que l'on veut expliquer. \\
+	\subsection{Mots de remplacement} %PRESQUE FINI
+		Pour que BAXI marche bien, il faut remplacer les mots par d'autres mots pertinents. Pour cela, on a annoté 
+		trois fichiers -un pour chaque étiquette- contenant 19 paires se trouvant dans le corpus explicatif. Dans ces 
+		fichiers, on spécifie pour chaque mot de chaque paires, les mots pouvant le remplacer.\\
 		\\
-		L'idée pour l'annotation des mots de remplacement est la suivante : si le label que l'on veut expliquer 
-		se trouve être le label gold de la paire prémisse/hypothèse, on cherche alors à remplacer les mots des 
-		phrases par des mots pouvant baisser fortement le score du label. \\
-		A l'inverse, si le label que l'on veut expliquer n'est pas le label gold, on cherche alors à remplacer 
-		les mots de la phrase par des mots pouvant augmenter le score du label expliqué (et par la même occasion, 
-		faire baisser le score des autres labels). \\
-		
+		L'idée pour l'annotation des mots de remplacement est la suivante : si l'étiquette que l'on veut expliquer 
+		se trouve être l'étiquette gold de la paire prémisse/hypothèse, on cherche alors à remplacer les mots des 
+		phrases par des mots pouvant baisser fortement la probabilité de l'étiquette. Par exemple, 
+		si l'étiquette gold est inférence, on va chercher à basculer vers la neutralité ou la contradiction pour faire 
+		baisser l'inférence. \\
+		A l'inverse, si l'étiquette que l'on veut expliquer n'est pas l'étiquette gold, on cherche alors à remplacer 
+		les mots de la phrase par des mots pouvant augmenter la probabilité de l'étiquette expliquée (et par la même occasion, 
+		faire baisser la probabilité des autres étiquettes). Par exemple, si l'étiquette gold est neutre et que l'on veut 
+		expliquer la contradiction, on cherche à créer une contradiction avec les mots de remplacement.\\
+		\\
 		/* FAIRE TABLE EXEMPLE DES MOTS DE REMPLACEMENT */
 		
 		
@@ -541,7 +589,6 @@
 		
 			 
 	\subsection{Métrique}
-
 		/* A FINIR */
 		
 	\subsection{Paramètres} %FINI
@@ -549,44 +596,7 @@
 		Concernant les RNNs utilisés, il n'y a qu'une seule couche, la dimension des états cachés est de 100, et le \textit{dropout} est à 0,3.\\
 		
 \section{Résultats}
-	Tout d'abord, les tables ci-dessous montrent les différents résultats des taux de réussite des étiquettes prédites avec les trois 
-	systèmes décrits dans la section 5 : \\
-
-	\begin{table}[h]
-		\begin{center}
-		\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		\small{Système} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Dev} \\
-		\hline
-		1 & 73,90\% & 68,38\% & 67,33\% & 69,89\% \\
-		\hline
-		2 & \bf{87,98\%} & \bf{74,99\%} & \bf{78,55\%} & \bf{80,57\%} \\
-		\hline
-		3 & 74,92\% & 69,55\% & 68,73\% & 71,09\% \\
-		\hline
-		\end{tabular}
-		\caption{\bf{Résultats des tests de la RTE pour le fichier de validation.}}
-		\end{center}
-	\end{table}
-
-	\begin{table}[h]
-		\begin{center}
-		\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		\small{Système} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Dev} \\
-		\hline
-		1 & test\% & test\% & test\% & test\% \\
-		\hline
-		2 & 86,10\% & 76,14\% & 77,70\% & 80,07\% \\
-		\hline
-		3 & test\% & test\% & test\% & test\% \\
-		\hline
-		\end{tabular}
-		\caption{\bf{Résultats des tests de la RTE pour le fichier de test.}}
-		\end{center}
-	\end{table}
-
-	La table ci-dessous montre les taux de réussite des étiquettes prédites pour les trois systèmes décrits en section <> 
+	La table ci-dessous montre les taux de réussite des étiquettes prédites pour les trois systèmes décrits en section 5 
 	sur l'échantillon du corpus de test de SNLI :\\
 	
 	\begin{table}[h]
@@ -602,8 +612,7 @@
 		3 & \bf{71,43}\% & 40,00\% & 42,86\% & 52,63\% \\
 		\hline
 		\end{tabular}
-		\caption[Résultats des tests de la RTE pour le corpus de l'échantillon de test.]{\bf{Résultats des taux de réussite des étiquettes prédites pour le corpus de 
-			l'échantillon de test.}}
+		\caption[Résultats des tests de la RTE pour le corpus de l'échantillon de test.]{\bf{Résultats des taux de réussite des étiquettes prédites pour le CPI.}}
 		\end{center}
 	\end{table}	
 	
