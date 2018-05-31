@@ -106,7 +106,7 @@
 
 %-------------------- T E X T E   D U   R A P P O R T -------------------------
 
-\section{Introduction}
+\section{Introduction} % SECTION 1
 	\subsection{Contexte et motivations}
 		Dans la pratique, il y a souvent un compromis entre le taux de réussite et l'interprétabilité du modèle. 
 		Certains modèles tels que les arbres de décisions ou encore les modèle linéaires sont facilement interprétables, 
@@ -176,9 +176,9 @@
 		\end{comment}
 		%\bigskip
 		
-\section{Hypothèse scientifique}
+\section{Hypothèse scientifique} % SECTION 2
 
-\section{Etat de l'art}
+\section{Etat de l'art} % SECTION 3
 	\subsection{Dans le domaine de la RTE}
 		Les premiers travaux sur la RTE ont été 
 		formé sur de très petits ensembles de données avec des méthodes conventionnelles, 
@@ -308,7 +308,7 @@
 		Un algorithme efficace a été mis au point, cependant il fonctionne uniquement sur les modèles basés sur les arbres.
 		\end{comment}
 
-\section{Définition d'interprétabilité}
+\section{Définition d'interprétabilité} % SECTION 4
 	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
 	Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision \cite{ref4}. 
 	Un système a donc une meilleure interprétabilité qu'un autre si ses explications sont plus faciles à comprendre par un humain.
@@ -352,113 +352,113 @@
 		être mis en relation avec un mot -ou un groupe de mot- de la prémisse, mais qui a influencé la prédiction.
 	\end{comment}
 	
-\section{Description de l'approche}
-	\subsection{Systèmes implémentés}
-		Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6} en C++. 
-		Nous utilisons les LSTMs et les BiLSTMs.
+
+\section{Systèmes implémentés} % SECTION 5
+	Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6} en C++. 
+	Nous utilisons les LSTMs et les BiLSTMs.
 		
 	\subsubsection{Systèmes basés sur l'encodage des phrases}
 		\paragraph*{Premier système}
-		Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases.  
-		On les concatène pour les envoyer ensuite à une couche de décision : 
-		\begin{equation}
-		y = softmax( W \times [ LSTM(\textit{prémisse}) ; LSTM(\textit{hypothèse}) ] + b )
-		\end{equation}
-		où $y$ est un vecteur contenant les probabilités de chaque label, $W$ est la matrice de poids, $LSTM(\textit{prémisse})$ et $LSTM(\textit{hypothèse})$ sont respectivement la représentation de 
-		la prémisse et de l'hypothèse, $b$ est le biais, et [;] dénote la concaténation.
+			Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases.  
+			On les concatène pour les envoyer ensuite à une couche de décision : 
+			\begin{equation}
+			y = softmax( W \times [ LSTM(\textit{prémisse}) ; LSTM(\textit{hypothèse}) ] + b )
+			\end{equation}
+			où $y$ est un vecteur contenant les probabilités de chaque label, $W$ est la matrice de poids, $LSTM(\textit{prémisse})$ et $LSTM(\textit{hypothèse})$ sont respectivement la représentation de 
+			la prémisse et de l'hypothèse, $b$ est le biais, et [;] dénote la concaténation.
 		\paragraph*{Deuxième système}
-		Le deuxième système effectue le même mécanisme que le premier système pour avoir une représentation de la prémisse et de 
-		l'hypothèse. On compare les deux représentations pour envoyer la comparaison à une couche de décision :
-		\begin{equation}
-		y = softmax( W \times ( LSTM(\textit{prémisse}) \times LSTM(\textit{hypothèse})^{T} ) + b )
-		\end{equation}
-		où $T$ dénote la transposée.
+			Le deuxième système effectue le même mécanisme que le premier système pour avoir une représentation de la prémisse et de 
+			l'hypothèse. On compare les deux représentations pour envoyer la comparaison à une couche de décision :
+			\begin{equation}
+			y = softmax( W \times ( LSTM(\textit{prémisse}) \times LSTM(\textit{hypothèse})^{T} ) + b )
+			\end{equation}
+			où $T$ dénote la transposée.
 	\subsubsection{Système avec mécanisme d'attention}
 		\paragraph*{Troisième système}
-		Le troisième système est inspiré de la méthode KIM \cite{ref3}.\\ 
-		On représente les mots de la prémisse et de l'hypothèse en les passant dans un BiLSTM : il utilise un LSTM forward pour 
-		lire la phrase de gauche à droite, puis un LSTM backward pour lire la phrase dans l'autre sens. A chaque mot lu, un 
-		état caché est généré par les deux LSTMs. Ces deux états cachés sont alors concaténés pour obtenir une 
-		représentation du mot :\\
-		$h_t = [h_t^{\rightarrow} ; h_t^{\leftarrow}]$, 
-		où $h_t^{\rightarrow}$ est l'état caché généré par le LSTM forward à 
-		l'instant t, $h_t^{\leftarrow}$ est celui généré par le LSTM backward à l'instant $t$, et $h_t$ est la 
-		représentation du mot $t$.\\
-		On dénote par $p^s$ (respectivement $h^s$) le vecteur de représentation des mots de la prémisse 
-		(respectivement de l'hypothèse).\\
-		Nous construisons ensuite une matrice d'alignement comme suit :
-		\begin{equation}
-		e_{ij} = (p_i^s)^T h_j^s
-		\end{equation}
-		où $p_i^s$ est la représentation du i\up{ème} mot de la prémisse, $h_j^s$ est celle du j\up{ième} mot de l'hypothèse.\\
-		Avec cette matrice, nous pouvons alors construire les vecteurs de contexte $p^c$ et $h^c$ suivants pour la prémisse et l'hypothèse :
-		\begin{equation}
-		\alpha_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{N} exp(e_{ik})} , p_i^c = \sum_{j=1}^{N} \alpha_{ij} h_j^s   
-		\end{equation}
-		\begin{equation}
-		\beta_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{M} exp(e_{kj})} , h_j^c = \sum_{i=1}^{M} \beta_{ij} p_i^s   
-		\end{equation}
-		où $M$ est la longueur de la prémisse, $N$ est la longueur de l'hypothèse, $\alpha \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ 
-		sur la prémisse, et $\beta \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ sur l'hypothèse. Ceci permet à la prémisse de voir le contexte de l'hypothèse 
-		et vice-versa.\\
-		Avec ces nouvelles représentations pour les mots, on effectue du mean-pooling :
-		\begin{equation}
-		pool_p = \frac{\sum_{i=1}^{N} p_i^c}{N} , pool_h = \frac{\sum_{i=1}^{M} h_i^c}{M}
-		\end{equation}
-		puis on effectue une concaténation du mean-pooling de la prémisse et de l'hypothèse pour l'envoyer à une couche de décision :
-		\begin{equation}
-		y = softmax( W \times [ pool_p ; pool_h ] + b )
-		\end{equation}		
-		\\
-		Les performances de ces systèmes et autres détails techniques 
-		sont décrits en annexe. 
-		Les schémas de ces systèmes figurent également en annexe.
-	\subsection{Méthode BAXI}	
-		Dans cette section nous allons décrire notre technique pour interpreter une prédiction d'une entrée. Nous voulons donner des explications pour chaque label 
-		en donnant les trois mots les plus importants dans la prémisse et les trois mots les plus importants dans l'hypothèse. On veut donc calculer l'importance de chaque mot. 
-		L'importance d'un mot correspond à l'importance de sa contribution pour le label $y$.\\
-		\\
-		Notre intuition est la suivante : 
-		On veut donner une explication pour le label $y$ et l'entrée $x$ composée de la prémisse et de l'hypothèse. 
-		On retire alors un mot et on demande à notre modèle de nous donner les probabilités de chaque label avec cette nouvelle entrée. Si la probabilité 
-		du label $y$ a baissé, alors le mot était important : cela veut dire que le mot avait contribué au label $y$. A l'inverse, si elle a augmenté, le mot n'avait donc pas contribué au label $y$. 
-		De plus, si la probabilité des autres labels a augmenté, alors le mot a d'autant plus d'importance : en le retirant, l'entrée $x$ a basculé vers un autre label.\\
-		\\
-		Pour résumé, lorsque l'on retire $m_i$, nous pénalisons l'augmentation de la probabilité du label que l'on veut expliquer, et nous encourageons l'augmentation des probabilités des autres labels.
-		\\
-		L'importance d'un mot, que nous notons $IMP^{total}$ pour "importance", est une fonction comme suit :
-		\begin{equation}
-		IMP^{y_j}(m_i) = \sum_{j=1, j \neq ref}^{|Y|} \log( p(y_j | x \setminus m_i) ) - \log( p(y_j | x) ) 
-		\end{equation}
-		\begin{equation}
-		IMP^{y_{ref}}(m_i) = -\log( p(y_{ref} | x \setminus m_i) ) + \log( p(y_{ref} | x) )
-		\end{equation}
-		\begin{equation}
-		IMP^{total}(m_i) = IMP^{y_{ref}}(m_i) + IMP^{y_j}(m_i) 
-		\end{equation}\\
-		où $y_{ref}$ est le label de référence (le label que l'on veut "expliquer"), $x$ est l'entrée, $m_i$ est le mot que l'on retire de l'entrée $x$, 
-		$y_j$ est un label différent de $y_{ref}$, et $|Y|$ est le nombre de label. Les probabilités sont exprimées en log-probabilités pour des soucis de précision et d'optimisation du code. On parle donc plutôt de score.\\
-		Cette formule suit notre intuition de base et également celle de Robnik-Sikonja et Kononenko \cite{ref8}. Nous avons rajouté la prise en compte de l'impact sur les scores 
-		des autres labels quand on retire le mot $m_i$.\\
-		\\
-		Un problème persiste tout de même : que se passe-t-il vraiment lorsque l'on retire un mot ? Nous ne pouvons pas simplement le supprimer de l'entrée, car la phrase n'aurait plus de sens 
-		et le modèle n'est peut-être pas entraîné à faire face aux bruits. On ne peut pas vraiment le remplacer par un mot générique (le mot "UNK" pour "mot inconnu", par exemple) 
-		car un modèle remplacant ce mot par un embedding à 0 et un modèle remplacant ce mot par un embedding particulier auront des réponses très différentes. Or on voudrait que notre méthode soit 
-		réalisable par n'importe quel modèle. La solution est donc de remplacer le mot que l'on veut retirer par un autre :
-		\begin{equation}
-		p(y | x \setminus m_i) =  \sum_{s=1}^{|S|} p(y | x \leftarrow m_i = m_s) 
-		\end{equation}\\
-		où $|S|$ est le nombre de mot que l'on peut mettre à la place du mot $m_i$ et $m_s$ est le mot que l'on met à la place de $m_i$.\\
-		%Les mots pouvant remplacer $m_i$ sont situés dans un fichier externe créé par nous-même. On a fixé à 5 le nombre de mots maximum pouvant remplacer $m_i$.
-		Plus il y a de mots de remplacements, plus on a une meilleure estimation de l'importance du mot $m_i$, mais dans ce cas la complexité en temps augmente. Il faut donc trouver un compromis entre 
-		l'estimation de l'importance d'un mot et le temps que met le programme pour donner une explication. Nous expliquons comment et par quoi nous avons remplacé les mots dans la section 6.1.\\
-		\\
-		Cette méthode permet donc d'avoir une explication contrastée, puisque l'on compare notre entrée de base avec des entrées créées artificiellement en remplacant un mot par un autre. 
-		De plus, elle est également sélective puisque l'on sélectionne les K mots, respectivement dans la prémisse puis dans l'hypothèse, ayant le plus contribué au label $y_{ref}$. 
-		Enfin, le programme surligne les mots les plus importants pour chaque label, ce qui permet d'avoir une visualisation pour faciliter la compréhension. Nous respectons donc les trois 
-		règles d'une bonne explication citées dans la section 3.
-		
-		/* METTRE UN SCREEN D'UNE EXPLICATION */
+			Le troisième système est inspiré de la méthode KIM \cite{ref3}.\\ 
+			On représente les mots de la prémisse et de l'hypothèse en les passant dans un BiLSTM : il utilise un LSTM forward pour 
+			lire la phrase de gauche à droite, puis un LSTM backward pour lire la phrase dans l'autre sens. A chaque mot lu, un 
+			état caché est généré par les deux LSTMs. Ces deux états cachés sont alors concaténés pour obtenir une 
+			représentation du mot :\\
+			$h_t = [h_t^{\rightarrow} ; h_t^{\leftarrow}]$, 
+			où $h_t^{\rightarrow}$ est l'état caché généré par le LSTM forward à 
+			l'instant t, $h_t^{\leftarrow}$ est celui généré par le LSTM backward à l'instant $t$, et $h_t$ est la 
+			représentation du mot $t$.\\
+			On dénote par $p^s$ (respectivement $h^s$) le vecteur de représentation des mots de la prémisse 
+			(respectivement de l'hypothèse).\\
+			Nous construisons ensuite une matrice d'alignement comme suit :
+			\begin{equation}
+			e_{ij} = (p_i^s)^T h_j^s
+			\end{equation}
+			où $p_i^s$ est la représentation du i\up{ème} mot de la prémisse, $h_j^s$ est celle du j\up{ième} mot de l'hypothèse.\\
+			Avec cette matrice, nous pouvons alors construire les vecteurs de contexte $p^c$ et $h^c$ suivants pour la prémisse et l'hypothèse :
+			\begin{equation}
+			\alpha_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{N} exp(e_{ik})} , p_i^c = \sum_{j=1}^{N} \alpha_{ij} h_j^s   
+			\end{equation}
+			\begin{equation}
+			\beta_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{M} exp(e_{kj})} , h_j^c = \sum_{i=1}^{M} \beta_{ij} p_i^s   
+			\end{equation}
+			où $M$ est la longueur de la prémisse, $N$ est la longueur de l'hypothèse, $\alpha \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ 
+			sur la prémisse, et $\beta \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ sur l'hypothèse. Ceci permet à la prémisse de voir le contexte de l'hypothèse 
+			et vice-versa.\\
+			Avec ces nouvelles représentations pour les mots, on effectue du mean-pooling :
+			\begin{equation}
+			pool_p = \frac{\sum_{i=1}^{N} p_i^c}{N} , pool_h = \frac{\sum_{i=1}^{M} h_i^c}{M}
+			\end{equation}
+			puis on effectue une concaténation du mean-pooling de la prémisse et de l'hypothèse pour l'envoyer à une couche de décision :
+			\begin{equation}
+			y = softmax( W \times [ pool_p ; pool_h ] + b )
+			\end{equation}		
+
+\section{Description de l'approche BAXI}
+	Cette section décrit notre technique pour interpreter une prédiction d'une entrée. L'objectif est de donner des explications pour chaque étiquette 
+	en donnant les $\alpha$ mots les plus importants dans la prémisse et les $\beta$ mots les plus importants dans l'hypothèse. On veut donc calculer l'importance de chaque mot. 
+	L'importance d'un mot correspond à l'importance de sa contribution pour l'étiquette $y$.\\
+	\\
+	Notre intuition est la suivante : 
+	On veut donner une explication pour l'étiquette $y$ et l'entrée $x$ composée de la prémisse et de l'hypothèse. 
+	On remplace alors un mot et on demande à notre modèle de nous donner les probabilités de chaque étiquette avec cette nouvelle entrée. Si la probabilité 
+	de l'étiquette $y$ a baissé, alors le mot était important : cela veut dire que le mot avait contribué à l'étiquette $y$. A l'inverse, si elle a augmenté, le mot n'avait donc pas contribué à $y$. 
+	De plus, si la probabilité des autres étiquettes a augmenté, alors le mot a d'autant plus d'importance : en le remplacant, l'entrée $x$ a basculé vers une autre étiquette.\\
+	\\
+	Pour résumé, lorsque l'on remplace $m_i$, nous pénalisons l'augmentation de la probabilité de l'étiquette que l'on veut expliquer, et nous encourageons l'augmentation des probabilités des autres étiquettes.
+	\\
+	L'importance d'un mot, notée $IMP^{total}$ pour "importance", est une fonction comme suit : \\
+	
+	\begin{equation}
+	impact^{y_{ref}}(m_i) = -p(y_{ref} \: | \: x \leftarrow m_i = m_a) \: + \: p(y_{ref} \: | \: x)
+	\end{equation}\\
+	\begin{equation}
+	impact^{y_j}(m_i) = \sum_{j=1, j \neq ref}^{|Y|} \: p(y_j \: | \: x \leftarrow m_i = m_a) \: - \: p(y_j \: | \: x)
+	\end{equation}\\
+	\begin{equation}
+	IMP(m_i) = \; \underset{m_a}{max} \; (impact^{y_{ref}}(m_i) \: + \: impact^{y_j}(m_i))
+	\end{equation}\\
+	
+	
+	où $y_{ref}$ est le label de référence (le label que l'on veut "expliquer"), $x$ est l'entrée, $m_i$ est le mot que l'on retire de l'entrée $x$, 
+	$y_j$ est un label différent de $y_{ref}$, et $|Y|$ est le nombre de label. Les probabilités sont exprimées en log-probabilités pour des soucis de précision et d'optimisation du code. On parle donc plutôt de score.\\
+	Cette formule suit notre intuition de base et également celle de Robnik-Sikonja et Kononenko \cite{ref8}. Nous avons rajouté la prise en compte de l'impact sur les scores 
+	des autres labels quand on retire le mot $m_i$.\\
+	\\
+	Un problème persiste tout de même : que se passe-t-il vraiment lorsque l'on retire un mot ? Nous ne pouvons pas simplement le supprimer de l'entrée, car la phrase n'aurait plus de sens 
+	et le modèle n'est peut-être pas entraîné à faire face aux bruits. On ne peut pas vraiment le remplacer par un mot générique (le mot "UNK" pour "mot inconnu", par exemple) 
+	car un modèle remplacant ce mot par un embedding à 0 et un modèle remplacant ce mot par un embedding particulier auront des réponses très différentes. Or on voudrait que notre méthode soit 
+	réalisable par n'importe quel modèle. La solution est donc de remplacer le mot que l'on veut retirer par un autre :
+	\begin{equation}
+	p(y | x \setminus m_i) =  \sum_{s=1}^{|S|} p(y | x \leftarrow m_i = m_s) 
+	\end{equation}\\
+	où $|S|$ est le nombre de mot que l'on peut mettre à la place du mot $m_i$ et $m_s$ est le mot que l'on met à la place de $m_i$.\\
+	%Les mots pouvant remplacer $m_i$ sont situés dans un fichier externe créé par nous-même. On a fixé à 5 le nombre de mots maximum pouvant remplacer $m_i$.
+	Plus il y a de mots de remplacements, plus on a une meilleure estimation de l'importance du mot $m_i$, mais dans ce cas la complexité en temps augmente. Il faut donc trouver un compromis entre 
+	l'estimation de l'importance d'un mot et le temps que met le programme pour donner une explication. Nous expliquons comment et par quoi nous avons remplacé les mots dans la section 6.1.\\
+	\\
+	Cette méthode permet donc d'avoir une explication contrastée, puisque l'on compare notre entrée de base avec des entrées créées artificiellement en remplacant un mot par un autre. 
+	De plus, elle est également sélective puisque l'on sélectionne les K mots, respectivement dans la prémisse puis dans l'hypothèse, ayant le plus contribué au label $y_{ref}$. 
+	Enfin, le programme surligne les mots les plus importants pour chaque label, ce qui permet d'avoir une visualisation pour faciliter la compréhension. Nous respectons donc les trois 
+	règles d'une bonne explication citées dans la section 3.
+	
+	/* METTRE UN SCREEN D'UNE EXPLICATION */
 		
 \section{Cadre expérimental}
 	\subsection{Corpus SNLI et représentation de mots} %FINI
@@ -479,11 +479,30 @@
 				est celle qui a eu le plus de voix, et est donc l'étiquette gold de la paire prémisse/hypothèse.}}
 		\end{table}\\
 		\\
+		Pour mesurer les taux de réussite des explications, nous utilisons un échantillon du corpus de test de SNLI 
+		composé de 19 paires prémisse/hypothèse avec leur étiquette associée. La table ci-dessous montre les taux des 
+		étiquettes présentes dans ce petit corpus : \\
+		
+		\begin{table}[h]
+			\begin{center}
+			\begin{tabular}{|c|c|c|}
+			\hline
+			\small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} \\
+			\hline
+			36,84\% & 26,31\% & 36,84\% \\
+			\hline
+			\end{tabular}
+			\caption{\bf{Taux des étiquettes présentes dans le corpus de l'échantillon de test.}}
+			\end{center}
+		\end{table}
+		
+		
 		Pour la représentation des mots, nous utilisons des \textit{words embeddings} pré-entrainés de dimension 100 via GloVe.6B.100d.
 		Pour les mots inconnus, c'est-à-dire les mots qui n'ont pas d'\textit{embedding} dans GloVe, nous utilisons des \textit{embeddings}
-		initialisés au hasard. Tous les \textit{embeddings} sont mis-à-jour par le réseau.
+		initialisés au hasard. 
 		
 	\subsection{Mots de remplacement}
+	
 		Nous pensons que nous pouvons choisir automatiquement, pour chaque mot $m_i$ d'une phrase, les mots pouvant les 
 		remplacer (avec des outils tel que WordNet, par exemple). Cependant, nous avons voulu les choisir 
 		nous-même pour assurer la qualité des mots et essayer d'avoir les meilleurs exemples de comparaisons 
@@ -499,47 +518,122 @@
 		faire baisser le score des autres labels). \\
 		
 		/* FAIRE TABLE EXEMPLE DES MOTS DE REMPLACEMENT */
-	\subsection{Corpus d'explications}
-		 
-	\subsection{Métrique}
+		
+		
+	\subsection{Corpus d'explications} %PRESQUE FINI
 		La méthode habituelle pour ce genre d'expériences est de montrer à plusieurs personnes les paires 
 		de phrases prémisse/hypothèse avec leurs explications associées pour connaître leur avis sur la 
-		qualité de l'explication. \\
+		qualité de l'explication.\\
 		Nous proposons une autre méthode qui permet d'évaluer automatiquement la qualité d'une explication : nous 
-		avons montré un échantillon de 43 exemples issus du fichier de test de SNLI à 5 personnes pour 
+		avons montré un échantillon de 43 exemples issus du fichier de test de SNLI à six personnes pour 
 		qu'elles puissent annoter ce qu'elles pensent être une explication correcte, c'est-à-dire les mots 
 		de la prémisse et les mots de l'hypothèse qui conduisent au label associé.
-		Nous avons récolté leurs réponses pour en faire un fichier d'explications de références. \\
+		Nous avons récolté leurs réponses pour en faire un corpus d'explications de références, au format CSV.\\
+		La figure ci-dessous est un échantillon de ce corpus d'explications : \\
+		
+		\begin{figure}[h] % LE FAIRE PLUS GRAND
+			\center
+			\includegraphics[width=16cm, height=16cm, keepaspectratio]{expl_corpus.png}
+			\caption[Echantillon du corpus d'explications]{\bf{Echantillon du corpus d'explications. La première colonne est l'identifiant de la paire prémisse/hypothèse, 
+			la deuxième est l'étiquette, la troisième est la prémisse, la quatrième est l'hypothèse, la cinquième contient les mots de la prémisse expliquant l'étiquette, et la dernière colonne contient les mots 
+			de l'hypothèse expliquant l'étiquette. -1 signifie qu'il n'y a aucun mot important. Chaque numéro à droite d'un mot important correspond à sa position dans la phrase, en commençant par 0.}}
+		\end{figure}	
+		
+			 
+	\subsection{Métrique}
+
 		/* A FINIR */
 		
-	\subsection{Paramètres}
+	\subsection{Paramètres} %FINI
+		Tous les \textit{embeddings} sont mis-à-jour par le réseau. La taille des \textit{batches} est de 16. \\
+		Concernant les RNNs utilisés, il n'y a qu'une seule couche, la dimension des états cachés est de 100, et le \textit{dropout} est à 0,3.\\
 		
 \section{Résultats}
+	Tout d'abord, les tables ci-dessous montrent les différents résultats des taux de réussite des étiquettes prédites avec les trois 
+	systèmes décrits dans la section 5 : \\
 
-	Acc dans l'échantillon de test = 57.8947 \% pour les sys 1 et 2
-	Les tables ci-dessous illustrent les différents résultats obtenus : \\
+	\begin{table}[h]
+		\begin{center}
+		\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\small{Système} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Dev} \\
+		\hline
+		1 & 73,90\% & 68,38\% & 67,33\% & 69,89\% \\
+		\hline
+		2 & \bf{87,98\%} & \bf{74,99\%} & \bf{78,55\%} & \bf{80,57\%} \\
+		\hline
+		3 & 74,92\% & 69,55\% & 68,73\% & 71,09\% \\
+		\hline
+		\end{tabular}
+		\caption{\bf{Résultats des tests de la RTE pour le fichier de validation.}}
+		\end{center}
+	\end{table}
+
+	\begin{table}[h]
+		\begin{center}
+		\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\small{Système} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Dev} \\
+		\hline
+		1 & test\% & test\% & test\% & test\% \\
+		\hline
+		2 & 86,10\% & 76,14\% & 77,70\% & 80,07\% \\
+		\hline
+		3 & test\% & test\% & test\% & test\% \\
+		\hline
+		\end{tabular}
+		\caption{\bf{Résultats des tests de la RTE pour le fichier de test.}}
+		\end{center}
+	\end{table}
+
+	La table ci-dessous montre les taux de réussite des étiquettes prédites pour les trois systèmes décrits en section <> 
+	sur l'échantillon du corpus de test de SNLI :\\
 	
 	\begin{table}[h]
-	\begin{tabular}{|c|c|c|c|c|c|}
-	\hline
-	\small{Système} & \small{Méthode} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Total}\\
-	\hline
-	\multirow{2}{*}{1} & BAXI & 57,45\% & 50,00\% & 58,06\% & 56,52\% \\
-		\cline{2-6}
-		& LIME & test & test & test & test \\
-	\hline
-	\multirow{2}{*}{2} & BAXI & 74,47\% & 71,43\% & 51,61\% & 66,30\% \\
-		\cline{2-6}
-		& LIME & test & test & test & test \\
-	\hline
-	\multirow{2}{*}{3} & BAXI & test\% & test\% & test\% & test\% \\
-		\cline{2-6}
-		& LIME & test & test & test & test \\
-	\hline
-	\end{tabular}
-	\caption[Résultats des mesures de BAXI et LIME]{Résultats des mesures de BAXI et LIME avec nos 3 systèmes./*expliquer 
-	quand on aura tous les résultats}
-\end{table}
+		\begin{center}
+		\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\small{Système} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Total} \\
+		\hline
+		1 & \bf{71,43}\% & 60,00\% & 42,86\% & \bf{57,89}\% \\
+		\hline
+		2 & 42,86\% & \bf{80,00}\% & \bf{57,14}\% & \bf{57,89}\% \\
+		\hline
+		3 & \bf{71,43}\% & 40,00\% & 42,86\% & 52,63\% \\
+		\hline
+		\end{tabular}
+		\caption[Résultats des tests de la RTE pour le corpus de l'échantillon de test.]{\bf{Résultats des taux de réussite des étiquettes prédites pour le corpus de 
+			l'échantillon de test.}}
+		\end{center}
+	\end{table}	
+	
+	
+	La table ci-dessous illustre les différents résultats obtenus pour le taux de réussite des explications des trois systèmes décrits en 
+	section <> sur l'échantillon du corpus de test de SNLI et sur le corpus d'explication : \\
+	
+	\begin{table}[h]
+		\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		\small{Système} & \small{Méthode} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Total}\\
+		\hline
+		\multirow{2}{*}{1} & BAXI & 61,70\% & 57,14\% & 51,61\% & 57,61\% \\
+			\cline{2-6}
+			& LIME & test & test & test & test \\
+		\hline
+		\multirow{2}{*}{2} & BAXI & 76,60\% & 57,14\% & 54,84\% & 66,30\% \\
+			\cline{2-6}
+			& LIME & test & test & test & test \\
+		\hline
+		\multirow{2}{*}{3} & BAXI & 61,70\% & 57,14\% & 51,61\% & 57,61\% \\
+			\cline{2-6}
+			& LIME & test & test & test & test \\
+		\hline
+		\end{tabular}
+		\caption[Résultats des mesures de BAXI et LIME]{\bf{Résultats des mesures de BAXI et LIME pour le fichier de l'échantillon 
+			de test et pour le corpus d'explications.}}
+		\end{center}
+	\end{table}
 	
 
 \section{Discussion}
@@ -552,46 +646,13 @@
 \bibliographystyle{unsrt} % Le style est mis entre accolades.
 \bibliography{biblio}
 
-\newpage
-\appendix
-\section{Annexes}
-\subsection*{Résultats expérimentaux}\\
-Pour la représentation des mots, nous utilisons des words embeddings pré-entrainés de dimension 100 via GloVe.6B.100d.
-Pour les mots inconnus, c'est-à-dire les mots qui n'ont pas d'embedding dans GloVe, nous utilisons des embeddings
-initialisés au hasard. Tous les embeddings sont mis-à-jour par le réseau.\\
-La taille des batches est de 16 et le dropout est à 0,3.\\
-Concernant les RNNs utilisés, il n'y a qu'une seule couche et la dimension des états cachés est de 100.\\
+%\newpage
+%\appendix
+%\section{Annexes}
+%\subsection*{Résultats expérimentaux}
 
-\hspace{-5cm}
-\begin{table}[h]
-	\begin{tabular}{|c|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
-	\hline
-	\small{Système} & \small{Taux de réussite Contradiction} & \small{Taux de réussite Inférence} & \small{Taux de réussite Neutre} & \small{Taux de réussite Dev} \\
-	\hline
-	1 & 67,33\% & 73,90\% & 68,38\% & 69,89\% \\
-	\hline
-	2 & 78,55\% & 87,98\% & 74,99\% & 80,57\% \\
-	\hline
-	3 & 68,73\% & 74,92\% & 69,55\% & 71,09\% \\
-	\hline
-	\end{tabular}
-	\caption{Résultats des tests de la RTE pour le fichier de validation.}
-\end{table}
 
-\begin{table}[h]
-	\begin{tabular}{|c|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
-	\hline
-	\small{Système} & \small{Taux de réussite Contradiction} & \small{Taux de réussite Inférence} & \small{Taux de réussite Neutre} & \small{Taux de réussite Test} \\
-	\hline
-	1 & test\% & test\% & test\% & test\% \\
-	\hline
-	2 & 77,70\% & 86,10\% & 76,14\% & 80,07\% \\
-	\hline
-	3 & test\% & test\% & test\% & test\% \\
-	\hline
-	\end{tabular}
-	\caption{Résultats des tests de la RTE pour le fichier de test.}
-\end{table}
+
 
 \end{document}
 

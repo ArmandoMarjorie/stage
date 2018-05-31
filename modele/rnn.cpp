@@ -454,27 +454,18 @@ void explain_label(vector<float>& probs, vector<float>& original_probs, vector<f
 	unsigned true_label)
 {
 	float distance;
-	/*if(label_explained == true_label)
-	{*/
-		for(unsigned label=0; label < NB_CLASSES; ++label)
-		{
-			distance = probs[label] - original_probs[label];
-			if(label == label_explained)
-				distance = -distance;
-			DI[label_explained] += distance;
-		}
-	/*}
-	else
+	float di_tmp = 0;
+
+	for(unsigned label=0; label < NB_CLASSES; ++label)
 	{
-		for(unsigned label=0; label < NB_CLASSES; ++label)
-		{
-			distance = probs[label] - original_probs[label];
-			if(label != label_explained)
-				distance = -distance;
-			DI[label_explained] += distance;
-		}		
-		
-	}*/
+		distance = probs[label] - original_probs[label];
+		if(label == label_explained)
+			distance = -distance;
+		di_tmp += distance;
+	}
+	
+	if(di_tmp > DI[label_explained])
+		DI[label_explained] = di_tmp;
 }
 
 
@@ -487,16 +478,16 @@ void converting_log(vector<float>& probs)
 	}
 }
 
-void adding_result(vector<float>& result, double proba_log, vector<float>& probs)
+void adding_result(vector<float>& result, vector<float>& probs, unsigned label_explained)
 {
-	double mult;
-	for(unsigned i=0; i<probs.size(); ++i)
-	{
+	//double mult;
+	//for(unsigned i=0; i<probs.size(); ++i)
+	//{
 		/*mult = probs[i];
 		result[i] += mult;*/
-		if(probs[i] > result[i])
-			result[i] = probs[i];
-	}
+		if(probs[label_explained] > result[label_explained])
+			result[label_explained] = probs[label_explained];
+	//}
 }
 
 void affichage_vect_DI(vector<float>& vect_DI)
@@ -544,7 +535,7 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 			/*proba_log = pb.get_proba_log(changing_word);
 			if(proba_log == -1)
 				cerr << "ATTENTION incorrect proba log\n";*/
-			adding_result(result, proba_log, probs);
+			adding_result(result, probs, label_explained);
 		}
 		explain_label(result, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample));
 		
@@ -556,7 +547,7 @@ void imp_words(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings
 		for(unsigned i=0; i<result.size(); ++i)
 			cout << "result[" <<i <<"] =" << result[i] << endl;
 	}*/
-	calculate_DI_label(result, original_probs, vect_DI);
+	//calculate_DI_label(result, original_probs, vect_DI);
 		
 	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 	{
@@ -633,7 +624,7 @@ void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set,
 	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample,
 	vector<Switch_Words*>& sw_vect)
 {
-	vector<float> vect_DI(NB_CLASSES, 0.0);
+	vector<float> vect_DI(NB_CLASSES, -999); // contient DI pour neutral, inf, contradiction
 	std::vector<float>::iterator index_min_it;
 	unsigned index_min, label_predicted;
 	unsigned nb_changing_words;
@@ -651,13 +642,9 @@ void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set,
 			changing_word = sw_vect[label_explained]->get_switch_word(word_position, is_premise, nb, num_sample);
 			explication_set.set_word(is_premise, word_position, changing_word, num_sample);
 			vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
-			adding_result(result, proba_log, probs);
+			explain_label(probs, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample)); //max de ça = l'importance du mot
 		}
-		explain_label(result, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample));
-		
-		
 	}
-	calculate_DI_label(result, original_probs, vect_DI);
 		
 	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 	{
@@ -707,9 +694,10 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 	unsigned nb_imp_words_prem;
 	unsigned nb_imp_words_hyp;
 	unsigned true_label;
-	unsigned positive = 0;
 	vector<unsigned> correct(NB_CLASSES,0);  
 	vector<unsigned> nb_label(NB_CLASSES,0);  
+	vector<unsigned> positive(NB_CLASSES,0);  
+	unsigned pos = 0;  
 	
 	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 13
 	{
@@ -727,9 +715,14 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 		
 			// original prediction
 		true_label = explication_set.get_label(i);
+		++nb_label[true_label];
 		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
 		if(label_predicted_true_sample == true_label)
-			++positive;
+		{
+			++pos;
+			++positive[label_predicted_true_sample];
+		}
+			
 		output << true_label << endl << label_predicted_true_sample << endl;
 		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
 		
@@ -781,12 +774,17 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 		/* Calcul pour les taux */
 		correct[true_label] +=  nb_correct(explication_set, save_prem[true_label], i, true);  //nb de correct dans la prémisse du sample i
 		correct[true_label] +=  nb_correct(explication_set, save_hyp[true_label], i, false);  //nb de correct dans l'hypothèse du sample i
-		//correct_total += correct[true_label]; 
-		
-		
 	}	
 	//output.close();
-	cout << "Success Rate = " << 100 * (positive / (double)19) << endl;
+	cout << "Success Rate = " << 100 * (pos / (double)19) << endl;
+	cout << "\tSuccess Rate neutral = " << 100 * (positive[0] / (double)nb_label[0]) << endl;
+	cout << "\tSuccess Rate entailment = " << 100 * (positive[1] / (double)nb_label[1]) << endl;
+	cout << "\tSuccess Rate contradiction = " << 100 * (positive[2] / (double)nb_label[2]) << endl;
+	
+	cout << "\tRate neutral = " << 100 * (nb_label[0] / (double)19) << endl;
+	cout << "\tRate entailment = " << 100 * (nb_label[1] / (double)19) << endl;
+	cout << "\tRate contradiction = " << 100 * (nb_label[2] / (double)19) << endl;
+	
 	mesure(explication_set,correct,19);
 	output.close();
 	char* name_detok = "Files/expl_detoken_changing_word";

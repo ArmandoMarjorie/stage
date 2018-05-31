@@ -97,11 +97,11 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		Data test_set(argv[1]);
 		//test_set.print_infos(3);
 		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
-		//run_prediction_expl_for_sys_4(rnn, model, test_set, embedding, argv[6], argv[8]);
-		//change_words_for_mesure(rnn, model, set, embedding, argv[6], argv[8], sw_vect);
+		Data set(argv[1], 1);
+		cout << "DATA SET OK \n";
+		change_words_for_mesure(rnn, model, set, embedding, argv[6], argv[8], sw_vect);
 	}
 	
 	for (unsigned i =0; i< sw_vect.size();i++)
