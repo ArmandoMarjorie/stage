@@ -68,7 +68,7 @@
     En utilisant des réseaux de neurones complexes, nous pouvons obtenir de bons taux de réussite pour la RTE. Cependant, 
     ces réseaux ne sont pas interprétables, ainsi nous n'avons pas la possibilité de savoir si le modèle s'est basé sur 
     de bonnes informations pour sa décision. 
-    Dans ce travail, nous proposons la méthode Best Adversarial eXemple for Interpretability (BAXI), qui respecte les règles d'une "bonne" 
+    Dans ce travail, nous proposons la méthode Best Adversarial eXample for Interpretability (BAXI), qui respecte les règles d'une "bonne" 
     explication pour rendre un modèle interprétable dans le cadre de la RTE, 
     avec l'utilisation du corpus SNLI. Nous allons la comparer 
     à la méthode Local Interpretable Model-agnostic Explanations (LIME) qui permet 
@@ -117,7 +117,7 @@
 		il faut que le modèle puisse donner de bonnes explications pour que le docteur l'approuve, car les conséquences pourraient 
 		être catastrophique.\\
 		\\
-		Dans le cadre de la RTE, les modèles obtenant les meilleurs taux de réussite, décrit dans la section , sont non interprétables. 
+		Dans le cadre de la RTE, les modèles obtenant les meilleurs taux de réussite, décrits dans la section 3.1, sont non interprétables. 
 		Le problème qui se pose avec l'utilisation de modèles non interprétables est qu'ils fournissent 
 		uniquement les probabilités de chaque étiquette. Comment savoir, de manière humainement compréhensible, pourquoi le modèle a 
 		associé une étiquette particulière à une certaine entrée ?\\
@@ -127,7 +127,7 @@
 		un modèle parmi ceux qu'il a implémenté, 
 		car le taux de réussite n'est pas le seul critère à prendre en compte : un modèle peut fournir l'étiquette attendue 
 		en se basant sur de mauvaises informations.\\
-		Pour qu'un modèle soit digne de confiance, il faut que les explications fournies soient jugées correctes par les 
+		Pour qu'un modèle soit digne de confiance, il faut qu'un grand nombre d'explications fournies soit jugé correcte par les 
 		utilisateurs.
 
 	\subsection{Tâches}
@@ -136,7 +136,7 @@
 		que la recherche d'information, le raisonnement de bon sens, ou encore le système 
 		de question/réponse.\\
 		\\
-		Soit une paire de phrase prémisse/hypothèse, la RTE se voit comme 
+		Plus spécifiquement, soit une paire de phrase prémisse/hypothèse, la RTE se voit comme 
 		objectif de détecter si la seconde phrase est en contradiction, se déduit ou bien est neutre par rapport à la 
 		première phrase. Il y a donc trois étiquettes permettant d'illustrer la 
 		relation entre la prémisse et l'hypothèse : \\
@@ -158,12 +158,13 @@
 		\end{itemize} \\
 		\\
 		\\
-		Dans ce travail, nous proposons d'interpréter les prédictions des modèles axés sur la RTE avec la méthode Best Adversarial eXemple for Interpretability (BAXI), expliquée en section 4. 
+		Dans ce travail, nous proposons d'interpréter les prédictions des modèles axés sur la RTE avec la méthode Best Adversarial eXample for Interpretability (BAXI). 
 		Nous allons comparer ses performances avec 
-		la méthode Local Interpretable Model-agnostic Explanations (LIME) de Ribeiro et al., expliquée dans la section 3.3, grâce à un corpus d'explications que nous avons créé à l'aide de six annotateurs. 
-		Les résultats sont visibles en section 6.\\
-		Nous allons tout d'abord lister nos hypothèses scientifiques, puis énoncer l'état de l'art pour la RTE ainsi que pour l'interprétabilité de prédictions de modèle en général. Puis, nous allons décrire notre méthode 
-		ainsi que le cadre expérimental. Enfin, nous allons décrire nos résultats obtenus puis conclure sur les différentes perspectives.
+		la méthode Local Interpretable Model-agnostic Explanations (LIME) \cite{ref2}, grâce à un corpus d'explications que nous avons créé à l'aide de six annotateurs.\\
+		\\	
+		Nous allons tout d'abord lister nos hypothèses scientifiques, puis énoncer l'état de l'art pour la RTE ainsi que pour l'interprétabilité de prédictions de modèle en général. Nous verrons l'approche de LIME en section 3.3. 
+		Nous allons ensuite décrire ce qu'est une "bonne" explication pour savoir sur quoi faut-il se baser pour implémenter une méthode d'interprétabilité en section 4. Puis, nous décrirons les modèles que nous avons implémentés pour la RTE. 
+		Ces modèles seront les boîtes noires que nous tenterons d'interpréter. Enfin, nous allons décrire la méthode BAXI puis le cadre expérimental pour donner les différents résultats obtenus. Nous conclurons sur une discussion et sur les différentes perspectives.
 
 
 		\begin{comment}
