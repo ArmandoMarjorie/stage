@@ -71,6 +71,17 @@ void init_lenght_tab(char* length_filename, vector<unsigned>& length_tab)
 	}
 }
 
+void init_important_words(char* impwordsfilename, vector<vector<unsigned>>& important_words)
+{
+	
+}
+
+void traitement_mots(Data data, char* sentence)
+{
+	
+	
+}
+
 int main(int argc, char** argv) 
 {	
 	
@@ -177,9 +188,9 @@ int main(int argc, char** argv)
 		char buffer_in[5000] = {0}; // what is received (sentence)
 		char buffer_out[5000] = {0}; // what is sent	
 		char buffer_in_bis[5000] = {0}; // what is received (sentence)	
-		unsigned num_sample=0;
+		unsigned num_sample=0, rcv_finish=0;
 		int n;
-		bool is_premise;
+		bool is_premise, recevoir_prem_or_not=true;
 		// The Code Here !! asking predict here !! 
 		while(strcmp(buffer_in, "quit"))
 		{
@@ -187,40 +198,34 @@ int main(int argc, char** argv)
 				cerr << "*** SAMPLE NUMERO " << num_sample << endl;
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);
+			bzero(buffer_in_bis, 5000);
 			
 			//recevoir si c'est prem ou hyp
-			n = recv(client_socket, buffer_in, 4999, 0);
-			if( n == -1 )
-			{
-				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
-				error(err);		
-			}		
-			cout << "prem ou hyp ? : " << buffer_in << endl;	 
-			 
-			//envoit le nb de mots importants
-			if(!strcmp(buffer_in,"prem"))
-			{
-				is_premise = true;
-				tmp = std::to_string(length_tab[num_sample*2]); //nb de mots important dans la prem
-			}
-			else
-			{
-				is_premise = false;
-				tmp = std::to_string(length_tab[num_sample*2+1]);
-			}
-			strcpy(buffer_out,tmp.c_str());
 			
-		
-			n = write(client_socket, buffer_out, strlen(buffer_out));
-			if(n == -1)
+			if(recevoir_prem_or_not)
 			{
-				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
-				error(err);					
-			}			
-			cout << "on envoit : " << buffer_out << " mots importants" << endl;
-			bzero(buffer_in, 5000);
-			bzero(buffer_out, 5000);
-			bzero(buffer_in_bis, 5000);
+				n = recv(client_socket, buffer_in, 4999, 0);
+				if( n == -1 )
+				{
+					err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
+					error(err);		
+				}		
+				//cout << "prem ou hyp ? : " << buffer_in << endl;
+				if(!strcmp(buffer_in,"prem"))
+					is_premise = true;
+				else
+					is_premise = false;
+				n = write(client_socket, "ok", 3); //envoie "bien recu"
+				if(n == -1)
+				{
+					err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+					error(err);					
+				}
+				//cout << "on envoit OK\n";			
+				bzero(buffer_in, 5000);
+				bzero(buffer_out, 5000);
+				recevoir_prem_or_not = false;
+			}
 			
 			/*if(!strcmp(tmp,"0"))
 				continue;*/
@@ -232,38 +237,42 @@ int main(int argc, char** argv)
 				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
 				error(err);		
 			}
-			cout << "on a recu : \n\t" << buffer_in << endl;
-			
-			n = write(client_socket, "ok", 3); //envoie "bien recu"
-			if(n == -1)
-			{
-				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
-				error(err);					
-			}
-			cout << "on envoit OK\n";
-			
-			n = recv(client_socket, buffer_in_bis, 4999, 0); //recoit hyp
-			if( n == -1 )
-			{
-				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
-				error(err);		
-			}
-			cout << "on a recu : \n\t" << buffer_in_bis << endl;
-			
-			//cerr << "recu " << n << " caracteres\n";
-			//if(strcmp(buffer_in,"-1"))
-			//	cerr << "sentence = \"" << buffer_in <<"\"" <<endl;
-						
-			//write(client_socket, "ok", 3);
-			
+			//cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
 			if( !strcmp(buffer_in, "-1") )
 			{
-				++num_sample;
+				recevoir_prem_or_not=true;
+
 				n = write(client_socket, "-1", 3);
 				if( n == -1)
 				{
 					err = "Error sending message to the client : " + std::to_string(errno) + "\n";
 					error(err);					
+				}
+				//doit recevoir les mots ici et doit les traiter ...
+				/*if(is_premise)
+					imp_words_max = length_tab[num_sample*2];
+				else
+					imp_words_max = length_tab[num_sample*2+1];
+					
+				for(unsigned nb_imp_words=0; nb_imp_words < imp_words_max; ++nb_imp_words)
+				{
+					bzero(buffer_in, 5000);
+					cout << "mot important = " << buffer_in << endl;
+					traitement_mots(data, buffer_in); //il faut les mots importants dans data !
+					
+					n = write(client_socket, "ok", 3);
+					if( n == -1)
+					{
+						err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+						error(err);					
+					}	
+				}		*/
+				// .....	
+				++rcv_finish; 
+				if(rcv_finish==2)
+				{
+					rcv_finish=0;
+					++num_sample;
 				}
 				continue;
 			}
@@ -273,16 +282,41 @@ int main(int argc, char** argv)
 				exit(EXIT_SUCCESS);
 			}
 			
+			
+			n = write(client_socket, "ok", 3); //envoie "bien recu"
+			if(n == -1)
+			{
+				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+				error(err);					
+			}
+			//cout << "on envoit OK\n";
+			
+			n = recv(client_socket, buffer_in_bis, 4999, 0); //recoit hyp
+			if( n == -1 )
+			{
+				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
+				error(err);		
+			}
+			//cout << "on a recu dans buffer_in_bis : \n\t" << buffer_in_bis << endl;
+			n = write(client_socket, "ok", 3); //envoie "bien recu"
+			if(n == -1)
+			{
+				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+				error(err);					
+			}
+			//cout << "on envoit OK\n";			
+			
+
 			Data data(buffer_in, word_to_id, buffer_in_bis, num_sample, is_premise); //nouveau data
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);
 			bzero(buffer_in_bis, 5000);	
-			cout << "data OK\n";		
+			//cout << "data OK\n";		
 			data.print_sentences_of_a_sample(0);
 			
 			//data.print_sentences_of_a_sample(0);
 			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding, print_label);
-			cout << "prediction \n";
+			//cout << "prediction \n";
 			tmp = to_string(probas[0]);
 			strcpy(buffer_out,tmp.c_str());
 			for(unsigned i=1; i<probas.size(); ++i)
@@ -291,24 +325,178 @@ int main(int argc, char** argv)
 				strcat(buffer_out," ");
 				strcat(buffer_out,tmp.c_str());
 			}
-			cout << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
+			//cout << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
 			n = write(client_socket, buffer_out, strlen(buffer_out));
 			if( n == -1)
 			{
 				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
 				error(err);					
 			}
-			cout << "envoyer !" << endl;
+			//cout << "envoyer !" << endl;
 		}
 		
 	}
-	/*else
+	else
 	{
-		Data test_set(argv[1]);
-		test_set.print_infos(3);
-		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
-		run_predict(rnn, model, test_set, embedding, argv[6]);
-	}*/
+		BiLSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
+		// unsigned s, ParameterCollection& model
+		
+		// Load preexisting weights
+		cerr << "Loading parameters ...\n";
+		TextFileLoader loader(argv[7]);
+		loader.populate(model);
+		cerr << "Parameters loaded !\n";
+	
+		char buffer_in[5000] = {0}; // what is received (sentence)
+		char buffer_out[5000] = {0}; // what is sent	
+		char buffer_in_bis[5000] = {0}; // what is received (sentence)	
+		unsigned num_sample=0, rcv_finish=0;
+		int n;
+		bool is_premise, recevoir_prem_or_not=true;
+		// The Code Here !! asking predict here !! 
+		while(strcmp(buffer_in, "quit"))
+		{
+			if(print_label)
+				cerr << "*** SAMPLE NUMERO " << num_sample << endl;
+			bzero(buffer_in, 5000);
+			bzero(buffer_out, 5000);
+			bzero(buffer_in_bis, 5000);
+			
+			//recevoir si c'est prem ou hyp
+			
+			if(recevoir_prem_or_not)
+			{
+				n = recv(client_socket, buffer_in, 4999, 0);
+				if( n == -1 )
+				{
+					err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
+					error(err);		
+				}		
+				//cout << "prem ou hyp ? : " << buffer_in << endl;
+				if(!strcmp(buffer_in,"prem"))
+					is_premise = true;
+				else
+					is_premise = false;
+				n = write(client_socket, "ok", 3); //envoie "bien recu"
+				if(n == -1)
+				{
+					err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+					error(err);					
+				}
+				//cout << "on envoit OK\n";			
+				bzero(buffer_in, 5000);
+				bzero(buffer_out, 5000);
+				recevoir_prem_or_not = false;
+			}
+			
+			/*if(!strcmp(tmp,"0"))
+				continue;*/
+			
+			//receive a premise from a client
+			n = recv(client_socket, buffer_in, 4999, 0); //recoit prem
+			if( n == -1 )
+			{
+				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
+				error(err);		
+			}
+			//cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
+			if( !strcmp(buffer_in, "-1") )
+			{
+				recevoir_prem_or_not=true;
+
+				n = write(client_socket, "-1", 3);
+				if( n == -1)
+				{
+					err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+					error(err);					
+				}
+				//doit recevoir les mots ici et doit les traiter ...
+				/*if(is_premise)
+					imp_words_max = length_tab[num_sample*2];
+				else
+					imp_words_max = length_tab[num_sample*2+1];
+					
+				for(unsigned nb_imp_words=0; nb_imp_words < imp_words_max; ++nb_imp_words)
+				{
+					bzero(buffer_in, 5000);
+					cout << "mot important = " << buffer_in << endl;
+					traitement_mots(data, buffer_in); //il faut les mots importants dans data !
+					
+					n = write(client_socket, "ok", 3);
+					if( n == -1)
+					{
+						err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+						error(err);					
+					}	
+				}		*/
+				// .....	
+				++rcv_finish; 
+				if(rcv_finish==2)
+				{
+					rcv_finish=0;
+					++num_sample;
+				}
+				continue;
+			}
+			else if( !strcmp(buffer_in, "quit") )
+			{
+				close(server_socket);
+				exit(EXIT_SUCCESS);
+			}
+			
+			
+			n = write(client_socket, "ok", 3); //envoie "bien recu"
+			if(n == -1)
+			{
+				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+				error(err);					
+			}
+			//cout << "on envoit OK\n";
+			
+			n = recv(client_socket, buffer_in_bis, 4999, 0); //recoit hyp
+			if( n == -1 )
+			{
+				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
+				error(err);		
+			}
+			//cout << "on a recu dans buffer_in_bis : \n\t" << buffer_in_bis << endl;
+			n = write(client_socket, "ok", 3); //envoie "bien recu"
+			if(n == -1)
+			{
+				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+				error(err);					
+			}
+			//cout << "on envoit OK\n";			
+			
+
+			Data data(buffer_in, word_to_id, buffer_in_bis, num_sample, is_premise); //nouveau data
+			bzero(buffer_in, 5000);
+			bzero(buffer_out, 5000);
+			bzero(buffer_in_bis, 5000);	
+			//cout << "data OK\n";		
+			data.print_sentences_of_a_sample(0);
+			
+			//data.print_sentences_of_a_sample(0);
+			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding, print_label);
+			//cout << "prediction \n";
+			tmp = to_string(probas[0]);
+			strcpy(buffer_out,tmp.c_str());
+			for(unsigned i=1; i<probas.size(); ++i)
+			{
+				tmp = to_string(probas[i]);
+				strcat(buffer_out," ");
+				strcat(buffer_out,tmp.c_str());
+			}
+			//cout << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
+			n = write(client_socket, buffer_out, strlen(buffer_out));
+			if( n == -1)
+			{
+				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
+				error(err);					
+			}
+			//cout << "envoyer !" << endl;
+		}
+	}
 
 
 	return 0;

@@ -70,8 +70,8 @@
     de bonnes informations pour sa décision. 
     Dans ce travail, nous proposons la méthode Best Adversarial eXemple for Interpretability (BAXI), qui respecte les règles d'une "bonne" 
     explication pour rendre un modèle interprétable dans le cadre de la RTE, 
-    avec l'utilisation du corpus SNLI \cite{ref}. Nous allons la comparer 
-    à la méthode Local Interpretable Model-agnostic Explanations (LIME) \cite{ref2} qui permet 
+    avec l'utilisation du corpus SNLI. Nous allons la comparer 
+    à la méthode Local Interpretable Model-agnostic Explanations (LIME) qui permet 
     d'expliquer les prédictions de n'importe quel classifieur en apprenant localement un modèle interprétable dans le voisinage
     de l'entrée. Pour cela, nous avons extrait un échantillon du corpus de test de 
     SNLI, et demandé à six annotateurs de donner les mots expliquant l'étiquette associée à la paire prémisse/hypothèse. 
@@ -188,9 +188,9 @@
 
 \section{Etat de l'art} % SECTION 3
 	\subsection{Dans la RTE}
-		/*DECRIRE UNE APPROCHE COOL*/
+		/*DECRIRE UNE APPROCHE*/
 	\subsection{Dans l'interprétabilité de prédictions de modèles}
-		/*PARLER INTERPRETABILITE EN GENERAL ET PK CA S'APPLIQUE PAS AU TEXTE*/
+		/*PARLER D'INTERPRETABILITE EN GENERAL ET POURQUOI CA NE S'APPLIQUE PAS AU TEXTE*/
 		/*PARLER ARTICLE LREC*/
 \begin{comment}
 	\subsection{Dans le domaine de la RTE}
@@ -579,13 +579,13 @@
 		Nous avons récolté leurs réponses pour en faire un corpus d'explications de références, au format CSV.\\
 		La figure ci-dessous est un échantillon de ce corpus d'explications : \\
 		
-		\begin{figure}[h] % LE FAIRE PLUS GRAND
-			\center
-			\includegraphics[width=16cm, height=16cm, keepaspectratio]{expl_corpus.png}
-			\caption[Echantillon du corpus d'explications]{\bf{Echantillon du corpus d'explications. La première colonne est l'identifiant de la paire prémisse/hypothèse, 
-			la deuxième est l'étiquette, la troisième est la prémisse, la quatrième est l'hypothèse, la cinquième contient les mots de la prémisse expliquant l'étiquette, et la dernière colonne contient les mots 
-			de l'hypothèse expliquant l'étiquette. -1 signifie qu'il n'y a aucun mot important. Chaque numéro à droite d'un mot important correspond à sa position dans la phrase, en commençant par 0.}}
-		\end{figure}	
+		%\begin{figure}[h] % LE FAIRE PLUS GRAND
+		%	\center
+		%	\includegraphics[width=16cm, height=16cm, keepaspectratio]{expl_corpus.png}
+		%	\caption[Echantillon du corpus d'explications]{\bf{Echantillon du corpus d'explications. La première colonne est l'identifiant de la paire prémisse/hypothèse, 
+		%	la deuxième est l'étiquette, la troisième est la prémisse, la quatrième est l'hypothèse, la cinquième contient les mots de la prémisse expliquant l'étiquette, et la dernière colonne contient les mots 
+		%	de l'hypothèse expliquant l'étiquette. -1 signifie qu'il n'y a aucun mot important. Chaque numéro à droite d'un mot important correspond à sa position dans la phrase, en commençant par 0.}}
+		%\end{figure}	
 		
 			 
 	\subsection{Métrique}

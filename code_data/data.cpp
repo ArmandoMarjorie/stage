@@ -41,6 +41,7 @@ Data::Data(char* buffer_in, map<string,unsigned>& word_to_id, char* buffer_in_bi
 			++i;
 		}
 		word = ss.str();
+		//cout << "mot prem = " << word << endl;
 		if(word == "UNKWORDZ")
 			tmp.push_back(0);
 		else
@@ -62,6 +63,7 @@ Data::Data(char* buffer_in, map<string,unsigned>& word_to_id, char* buffer_in_bi
 		}
 	}
 	i=0;
+	tmp.clear();
 	while(i < strlen(buffer_in_bis)) //la prémisse si is_premise = true
 	{
 		stringstream ss;
@@ -71,6 +73,7 @@ Data::Data(char* buffer_in, map<string,unsigned>& word_to_id, char* buffer_in_bi
 			++i;
 		}
 		word = ss.str();
+		//cout << "mot hyp = " << word << endl;
 		if(word == "UNKWORDZ")
 			tmp.push_back(0);
 		else

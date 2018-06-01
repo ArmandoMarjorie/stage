@@ -90,15 +90,11 @@ void BiLSTM::words_representation(Embeddings& embedding, Data& set, unsigned sen
 	/* Run forward LSTM */
 	for(i=0; i<nb_words; ++i)
 	{
-		//if(set.get_word_id(sentence, num_sentence, i) == 0)
-		//	continue;
 		sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) ) );
 	}
 	/* Run backward LSTM */
 	for(j=nb_words-1; j>=0; --j)
 	{
-		if(set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j)) == 0)
-			continue;
 		tmp.push_back(backward_lstm->add_input( 
 				embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j))) ) );
 	}
@@ -291,6 +287,7 @@ Expression BiLSTM::run_KIM(Data& set, Embeddings& embedding, unsigned num_senten
 	/* Representation of each word (of the premise and of the hypothesis)
 	 * by the BiLSTM explained in the step 1 of KIM.
 	 */
+	 cout << "ligne 294\n";
 	vector<Expression> premise_lstm_repr;
 	vector<Expression> hypothesis_lstm_repr;
 	words_representation(embedding, set, 1, cg, num_sentence, premise_lstm_repr);
@@ -318,6 +315,7 @@ Expression BiLSTM::run_KIM(Data& set, Embeddings& embedding, unsigned num_senten
 	cerr<< "Dim of b context vector = "<<b_c_vect.size()<<endl;*/
 
 	// Pooling 
+	cout << "OK\n";
 	vector<Expression> pool(2);
 	pool[0] = sum(a_c_vect) / static_cast<double>(premise_lstm_repr.size());
 	pool[1] = sum(b_c_vect) / static_cast<double>(hypothesis_lstm_repr.size());
