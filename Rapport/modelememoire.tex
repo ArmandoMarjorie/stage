@@ -106,7 +106,7 @@
 
 %-------------------- T E X T E   D U   R A P P O R T -------------------------
 
-\section{Introduction} % SECTION 1
+\section{Introduction} % SECTION 1 FINI
 	\subsection{Contexte et motivations}
 		Dans la pratique, il y a souvent un compromis entre le taux de réussite et l'interprétabilité du modèle. 
 		Certains modèles tels que les arbres de décisions ou encore les modèle linéaires sont facilement interprétables, 
@@ -117,7 +117,7 @@
 		il faut que le modèle puisse donner de bonnes explications pour que le docteur l'approuve, car les conséquences pourraient 
 		être catastrophique.\\
 		\\
-		Dans le cadre de la RTE, les modèles obtenant les meilleurs taux de réussite, décrits dans la section 3.1, sont non interprétables. 
+		Dans le cadre de la reconnaissance de l'inférence textuelle (Recognizing Textual Entailment : RTE), les modèles obtenant les meilleurs taux de réussite, décrits dans la section 3.1, sont non interprétables. 
 		Le problème qui se pose avec l'utilisation de modèles non interprétables est qu'ils fournissent 
 		uniquement les probabilités de chaque étiquette. Comment savoir, de manière humainement compréhensible, pourquoi le modèle a 
 		associé une étiquette particulière à une certaine entrée ?\\
@@ -146,25 +146,26 @@
 				Prémisse : "Le chat est entièrement blanc."\\ 
 				Hypothèse : "Le chat est entièrement noir."}\\
 			\newpage
-			\item Neutre : l'hypothèse est possible dans le contexte de la prémisse. Par exemple :\\
+			\item Neutre : l'hypothèse est possible dans le contexte de la prémisse. \\Par exemple :\\
 				\textit{
 				Prémisse : "Le chat dort sur la banquette."\\
 				Hypothèse : "Le chat aime le chocolat."}\\
 
 			\item Inférence : l'hypothèse est déduite de la prémisse. Par exemple :\\
 				\textit{
-				Prémisse : "Le chat aimerait manger la sourie."\\
+				Prémisse : "Le chat aimerait manger la souris."\\
 				Hypothèse : "Le chat a faim."}\\
 		\end{itemize} \\
 		\\
 		\\
 		Dans ce travail, nous proposons d'interpréter les prédictions des modèles axés sur la RTE avec la méthode Best Adversarial eXample for Interpretability (BAXI). 
 		Nous allons comparer ses performances avec 
-		la méthode Local Interpretable Model-agnostic Explanations (LIME) \cite{ref2}, grâce à un corpus d'explications que nous avons créé à l'aide de six annotateurs.\\
+		la méthode Local Interpretable Model-agnostic Explanations (LIME) \cite{ref2}, grâce à un corpus explicatif que nous avons créé à l'aide de six annotateurs.\\
 		\\	
-		Nous allons tout d'abord lister nos hypothèses scientifiques, puis énoncer l'état de l'art pour la RTE ainsi que pour l'interprétabilité de prédictions de modèle en général. Nous verrons l'approche de LIME en section 3.3. 
-		Nous allons ensuite décrire ce qu'est une "bonne" explication pour savoir sur quoi faut-il se baser pour implémenter une méthode d'interprétabilité en section 4. Puis, nous décrirons les modèles que nous avons implémentés pour la RTE. 
-		Ces modèles seront les boîtes noires que nous tenterons d'interpréter. Enfin, nous allons décrire la méthode BAXI puis le cadre expérimental pour donner les différents résultats obtenus. Nous conclurons sur une discussion et sur les différentes perspectives.
+		Nous allons tout d'abord lister nos hypothèses scientifiques en section 2, puis énoncer l'état de l'art en section 3 pour la RTE ainsi que pour l'interprétabilité de prédictions de modèle en général. Nous verrons l'approche de LIME en section 3.3. 
+		Nous allons ensuite décrire ce qu'est une "bonne" explication pour savoir sur quoi faut-il se baser pour implémenter une méthode d'interprétabilité en section 4. Puis, nous décrirons les modèles que nous avons implémentés pour la RTE en section 5. 
+		Ces modèles seront les boîtes noires que nous tenterons d'interpréter. Enfin, nous allons décrire la méthode BAXI en section 6 puis le cadre expérimental en section 7 pour donner les différents résultats obtenus en section 8. 
+		Nous conclurons sur une discussion et sur les différentes perspectives en section 9 et 10.
 
 
 		\begin{comment}
@@ -179,13 +180,13 @@
 		\end{comment}
 		%\bigskip
 		
-\section{Hypothèse scientifique} % SECTION 2
+\section{Hypothèse scientifique} % SECTION 2 PRESQUE FINI
 	Notre principale hypothèse étudiée lors de ce travail est que BAXI repère de meilleurs mots explicatifs que LIME 
-	pour la tâche de la RTE : \\
+	pour la tâche de la RTE : 
 	BAXI $\underset{RTE}{>}$ LIME.\\
-	La comparaison est effectuée à l'aide d'une métrique expliquée en section , qui utilise un corpus explicatif contenant 
-	les mots les plus intéressants dans la prémisse et dans l'hypothèse. Nous pensons donc que \\
-	mesure(BAXI, corpus explicatif) $\underset{RTE}{>}$ mesure(LIME, corpus explicatif).
+	Un mot explicatif est un mot ayant une grande importance pour l'étiquette considérée. 
+	La comparaison est effectuée à l'aide d'un corpus explicatif contenant 
+	les mots explicatifs dans la prémisse et dans l'hypothèse (voir section 7.3). 
 
 \section{Etat de l'art} % SECTION 3
 	\subsection{Dans la RTE}
@@ -268,6 +269,7 @@
 			par rapport à $x$ (les poids sont représentés par la taille). La droite pointillée est l'explication apprise qui est 
 			localement fidèle.}}
 		\end{figure}
+		\newpage
 		\\
 		Concernant l'évaluation des explications de LIME pour savoir si la méthode fournit des explications correctes, les auteurs 
 		ont utiliser LIME /*A FINIR */.
@@ -320,7 +322,7 @@
 		\end{comment}
 
 \section{Définition d'interprétabilité} % SECTION 4 FINI
-	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
+	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
 	Miller définit cela comme étant le degré auquel un humain peut comprendre la cause d'une décision \cite{ref4}. 
 	Un système a donc une meilleure interprétabilité qu'un autre si ses explications sont plus faciles à comprendre par un humain.
 	\begin{comment}
@@ -336,8 +338,8 @@
 		Le terme "explication" désigne le processus social et cognitif d'expliquer, mais c'est également le produit de ces processus.
 	\subsection{Qu'est-ce-qu'une "bonne" explication ?}
 		La définition d'une bonne explication ne doit pas se baser sur l'intuition de l'auteur, mais plutôt sur des faits. 
-		Miller résume ce qu'est une bonne explication \cite{ref5}, c'est-à-dire ce que les humains attendent d'une explication. 
-		Grâce à cela, nous allons énoncer les types d'explications que BAXI doit suivre.
+		Miller résume ce qu'est une bonne explication, c'est-à-dire ce que les humains attendent d'une explication \cite{ref5}. 
+		BAXI doit suivre les trois règles suivantes, caractérisant une bonne explication :
 		\paragraph*{Explication contrastée}
 			C'est une explication qui doit être comparée. Les utilisateurs se demandent généralement pourquoi cette prédiction a 
 			été faite et pas une autre, via la question "quelle aurait été la prédiction si cette entrée avait été changé 
@@ -348,13 +350,13 @@
 			l'entrée de comparaison.\\
 			L'entrée de comparaison peut être artificielle.
 		\paragraph*{Explication sélective}
-			C'est une explication qui doit être courte. Généralement, on peut expliquer un phénomène par plusieurs facteurs. 
-			Il faut en donner peu, à savoir deux ou trois raisons, même si les explications
+			C'est une explication qui doit être courte. Généralement, un phénomène s'explique par plusieurs facteurs. 
+			Il faut en donner peu, à savoir deux ou trois raisons, même si les explications 
 			peuvent être plus complexes que cela.
 		\paragraph*{Explication sociale}
 			Comme nous l'avons expliqué ci-dessus, une explication est un processus social, 
 			c'est-à-dire qu'il faut prendre en compte les connaissances de la personne à qui l'on veut donner une explication. 
-			Dans notre projet, nous partons du principe qu'une explication doit être comprise par tout le monde, 
+			Dans notre travail, nous partons du principe qu'une explication doit être comprise par tout le monde, 
 			que ce soit par un expert du domaine de l'apprentissage automatique ou bien par quelqu'un qui n'en a jamais entendu parler.
 	\begin{comment}
 	\subsubsection{Explication anormale}
@@ -365,8 +367,8 @@
 	
 
 \section{Systèmes implémentés} % SECTION 5 FINI
-	Nous avons implémenté 3 systèmes différents avec la librairie DyNet \cite{ref6}. 
-	Nous utilisons les LSTMs et les BiLSTMs.
+	Nous avons implémenté trois systèmes différents avec la librairie DyNet \cite{ref6}. 
+	Nous utilisons les LSTMs et les BILSTMs.
 		
 	\subsection{Systèmes basés sur l'encodage des phrases}
 		\paragraph*{Premier système}
@@ -375,7 +377,7 @@
 			\begin{equation}
 			y = softmax( W \times [ LSTM(\textit{prémisse}) ; LSTM(\textit{hypothèse}) ] + b )
 			\end{equation}
-			où $y$ est un vecteur contenant les probabilités de chaque label, $W$ est la matrice de poids, $LSTM(\textit{prémisse})$ et $LSTM(\textit{hypothèse})$ sont respectivement la représentation de 
+			où $y$ est un vecteur contenant les probabilités de chaque étiquette, $W$ est la matrice de poids, $LSTM(\textit{prémisse})$ et $LSTM(\textit{hypothèse})$ sont respectivement la représentation de 
 			la prémisse et de l'hypothèse, $b$ est le biais, et [;] dénote la concaténation.
 		\paragraph*{Deuxième système}
 			Le deuxième système effectue le même mécanisme que le premier système pour avoir une représentation de la prémisse et de 
@@ -387,13 +389,13 @@
 	\subsection{Système avec mécanisme d'attention}
 		\paragraph*{Troisième système}
 			Le troisième système est inspiré de la méthode KIM \cite{ref3}.\\ 
-			On représente les mots de la prémisse et de l'hypothèse en les passant dans un BiLSTM : il utilise un LSTM forward pour 
-			lire la phrase de gauche à droite, puis un LSTM backward pour lire la phrase dans l'autre sens. A chaque mot lu, un 
+			On représente les mots de la prémisse et de l'hypothèse en les passant dans un BILSTM qui utilise un LSTM \textit{forward} pour 
+			lire la phrase de gauche à droite, puis un LSTM \textit{backward} pour lire la phrase dans l'autre sens. A chaque mot lu, un 
 			état caché est généré par les deux LSTMs. Ces deux états cachés sont alors concaténés pour obtenir une 
 			représentation du mot :\\
 			$h_t = [h_t^{\rightarrow} ; h_t^{\leftarrow}]$, 
-			où $h_t^{\rightarrow}$ est l'état caché généré par le LSTM forward à 
-			l'instant t, $h_t^{\leftarrow}$ est celui généré par le LSTM backward à l'instant $t$, et $h_t$ est la 
+			où $h_t^{\rightarrow}$ est l'état caché généré par le LSTM \textit{forward} à 
+			l'instant $t$, $h_t^{\leftarrow}$ est celui généré par le LSTM \textit{backward} à l'instant $t$, et $h_t$ est la 
 			représentation du mot $t$.\\
 			On dénote par $p^s$ (respectivement $h^s$) le vecteur de représentation des mots de la prémisse 
 			(respectivement de l'hypothèse).\\
@@ -412,18 +414,17 @@
 			où $M$ est la longueur de la prémisse, $N$ est la longueur de l'hypothèse, $\alpha \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ 
 			sur la prémisse, et $\beta \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ sur l'hypothèse. Ceci permet à la prémisse de voir le contexte de l'hypothèse 
 			et vice-versa.\\
-			Avec ces nouvelles représentations pour les mots, on effectue du mean-pooling :
+			Avec ces nouvelles représentations pour les mots, on effectue du \textit{mean-pooling} :
 			\begin{equation}
 			pool_p = \frac{\sum_{i=1}^{N} p_i^c}{N} , pool_h = \frac{\sum_{i=1}^{M} h_i^c}{M}
 			\end{equation}
-			puis on effectue une concaténation du mean-pooling de la prémisse et de l'hypothèse pour l'envoyer à une couche de décision :
+			puis on effectue une concaténation du \textit{mean-pooling} de la prémisse et de l'hypothèse pour l'envoyer à une couche de décision :
 			\begin{equation}
 			y = softmax( W \times [ pool_p ; pool_h ] + b )
 			\end{equation}	
 	\subsection{Résultats des systèmes}	
 		Les tables ci-dessous montrent les différents résultats des taux de réussite des étiquettes prédites avec ces 
-		systèmes : \\
-
+		systèmes : \newpage
 		\begin{table}[h]
 			\begin{center}
 			\begin{tabular}{|c|c|c|c|c|}
@@ -437,7 +438,7 @@
 			3 & 74,92\% & 69,55\% & 68,73\% & 71,09\% \\
 			\hline
 			\end{tabular}
-			\caption{\bf{Résultats des tests de la RTE pour le fichier de validation.}}
+			\caption{\bf{Résultats des taux de réussite des étiquettes prédites pour le fichier de validation.}}
 			\end{center}
 		\end{table}
 
@@ -447,18 +448,18 @@
 			\hline
 			\small{Système} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Test} \\
 			\hline
-			1 & test\% & test\% & test\% & test\% \\
+			1 & 74,35\% & 68,13\% & 65,13\% & 69,27\% \\
 			\hline
-			2 & 86,10\% & 76,14\% & 77,70\% & 80,07\% \\
+			2 & \bf{86,10\%} & \bf{76,14\%} & \bf{77,70\%} & \bf{80,07\%} \\
 			\hline
-			3 & test\% & test\% & test\% & test\% \\
+			3 & 74,26\% & 69,18\% & 67,57\% & 70,39\% \\
 			\hline
 			\end{tabular}
-			\caption{\bf{Résultats des tests de la RTE pour le fichier de test.}}
+			\caption{\bf{Résultats des taux de réussite des étiquettes prédites pour le fichier de test.}}
 			\end{center}
 		\end{table}
 
-\section{Description de l'approche BAXI} % PRESQUE FINI
+\section{Description de l'approche BAXI} % SECTION 6 FINI
 	Cette section décrit notre technique pour interpreter une prédiction d'une entrée. L'objectif est de donner des explications pour chaque étiquette 
 	en donnant les $\alpha$ mots les plus importants dans la prémisse et les $\beta$ mots les plus importants dans l'hypothèse. On parle alors "d'expliquer une étiquette". 
 	On veut donc calculer l'importance de chaque mot. 
@@ -468,7 +469,7 @@
 	On veut donner une explication pour l'étiquette $y$ et l'entrée $x$ composée de la prémisse et de l'hypothèse. 
 	On remplace alors un mot et on demande à notre modèle de nous donner les probabilités de chaque étiquette avec cette nouvelle entrée. Si la probabilité 
 	de l'étiquette $y$ a baissé, alors le mot était important : cela veut dire que le mot avait contribué à l'étiquette $y$. A l'inverse, si elle a augmenté, le mot n'avait donc pas contribué à $y$. 
-	De plus, si la probabilité des autres étiquettes a augmenté, alors le mot a d'autant plus d'importance : en le remplacant, l'entrée $x$ a basculé vers une autre étiquette.\\
+	De plus, si la probabilité des autres étiquettes a augmenté, alors le mot a d'autant plus d'importance : en le remplaçant, l'entrée $x$ a basculé vers une autre étiquette.\\
 	\\
 	Pour résumé, lorsque l'on remplace $m_i$, nous pénalisons l'augmentation de la probabilité de l'étiquette que l'on veut 
 	expliquer, et nous encourageons l'augmentation des probabilités des autres étiquettes.
@@ -490,7 +491,7 @@
 	$m_i$ est le mot que l'on retire de l'entrée $x$, $m_a$ est le mot par lequel on remplace $m_i$, 
 	$y_j$ est une étiquette différente de $y_{ref}$, et $|Y|$ est le nombre d'étiquette. \\
 	\\
-	L'équation 9 pénalise l'aumentation de la probabilité de l'étiquette que l'on veut 
+	L'équation 9 pénalise l'augmentation de la probabilité de l'étiquette que l'on veut 
 	expliquer lorsque l'on remplace $m_i$ par $m_a$. \\
 	L'équation 10 encourage l'augmentation des probabilités des autres étiquettes lorsque l'on remplace $m_i$ par $m_a$.\\
 	Pour calculer l'importance d'un mot, on additionne ces deux impacts.
@@ -502,14 +503,20 @@
 	\\
 	Cette méthode permet donc d'avoir une explication contrastée, puisque l'on compare notre entrée de base avec des entrées créées artificiellement en remplacant un mot par un autre. 
 	De plus, elle est également sélective puisque l'on sélectionne les $\alpha$ mots dans la prémisse et les $\beta$ mots dans l'hypothèse ayant le plus contribué à l'étiquette $y_{ref}$. 
-	Enfin, le programme surligne les mots les plus importants pour chaque label, ce qui permet d'avoir une visualisation pour faciliter la compréhension. Nous respectons donc les trois 
+	Enfin, le programme surligne les mots les plus importants pour chaque étiquette, ce qui permet d'avoir une visualisation pour faciliter la compréhension. Nous respectons donc les trois 
 	règles d'une bonne explication citées dans la section 4.2.
 	
-	/* METTRE UN SCREEN D'UNE EXPLICATION */
+	\begin{figure}[h]
+		\center
+		\includegraphics[width=10cm, height=7cm, keepaspectratio]{stuck.png}
+		\caption{\bf{Exemple d'une explication fournie par BAXI sur le système 2. Les mots surlignés en bleu ont contribué à la neutralité, 
+		les mots surlignés en jaune ont contribué à l'inférence, et 
+		les mots surlignés en rouge ont contribué à la contradiction.}}
+	\end{figure}
 		
-\section{Cadre expérimental}
+\section{Cadre expérimental} % SECTION 7
 	\subsection{Corpus SNLI et représentation de mots} %FINI
-		Nous utilisons les corpus SNLI composés d'un fichier d'entraînement, de validation et de test. 
+		Nous utilisons les corpus SNLI composés d'un fichier d'entraînement, de validation et de test \cite{ref}. 
 		Ces corpus ont été réalisé par cinq annotateurs à l'aide d'une image accompagnée d'un texte bref -la prémisse- présentant 
 		la dite image. Les annotateurs ont alors écrit une phrase étant neutre par rapport à la prémisse, une autre 
 		étant en contradiction et une autre phrase qui pouvait être déduite de la prémisse : ils ont donné une hypothèse 
@@ -519,13 +526,16 @@
 		consensus : nous ne prennons pas en compte ce genre d'entrée.\\
 		La table ci-dessous est un échantillon du corpus SNLI : \\ 
 		\begin{table}[h]
-			\center
-			\includegraphics[width=13cm, height=12cm, keepaspectratio]{table_SNLI.png}
-			\caption[Echantillon du corpus de développement de SNLI]{\bf{Echantillon de 5 paires du corpus de développement de SNLI présentant à gauche la prémisse, 
-				à droite l'hypothèse, et au centre les étiquettes des 5 annotateurs (C pour Contradiction, N pour Neutral, et E pour Entailment) 
-				avec en premier l'étiquette de l'auteur de la paire. L'étiquette en gras 
-				est celle qui a eu le plus de voix, et est donc l'étiquette gold de la paire prémisse/hypothèse.}}
-		\end{table}\\
+		\leftskip -2cm
+			{
+				\includegraphics[width=16cm, height=13cm, keepaspectratio]{table_SNLI.png}
+			}
+				\caption[Echantillon du corpus de développement de SNLI]{\bf{Echantillon de 5 paires du corpus de développement de SNLI présentant à gauche la prémisse, 
+					à droite l'hypothèse, et au centre les étiquettes des 5 annotateurs (C pour Contradiction, N pour Neutral, et E pour Entailment) 
+					avec en premier l'étiquette de l'auteur de la paire. L'étiquette en gras 
+					est celle qui a eu le plus de voix, et est donc l'étiquette gold de la paire prémisse/hypothèse.}}
+		
+		\end{table}
 		\\
 		Pour mesurer les taux de réussite des explications, nous utilisons un échantillon du corpus de test de SNLI 
 		composé de 19 paires prémisse/hypothèse avec leur étiquette associée, appelé Corpus Pour l'Interprétabilité (CPI). 
@@ -547,12 +557,13 @@
 		\end{table}\\
 		\\
 		\newpage
-		Pour la représentation des mots, nous utilisons des \textit{words embeddings} pré-entrainés de dimension 100 via GloVe.6B.100d.
+		Pour la représentation des mots, nous utilisons des \textit{words embeddings} pré-entrainés via GloVe.6B.100d.
 		Pour les mots inconnus, c'est-à-dire les mots qui n'ont pas d'\textit{embedding} dans GloVe, nous utilisons des \textit{embeddings}
 		initialisés au hasard. 
 		
-	\subsection{Mots de remplacement} %PRESQUE FINI
-		Pour que BAXI marche bien, il faut remplacer les mots par d'autres mots pertinents. Pour cela, on a annoté 
+	\subsection{Mots de remplacement} % FINI
+		Pour que BAXI marche bien, il faut remplacer les mots par d'autres mots pertinents pour créer 
+		des exemples adversariaux. Pour cela, on a annoté 
 		trois fichiers -un pour chaque étiquette- contenant 19 paires se trouvant dans le corpus explicatif. Dans ces 
 		fichiers, on spécifie pour chaque mot de chaque paires, les mots pouvant le remplacer.\\
 		\\
@@ -566,10 +577,72 @@
 		faire baisser la probabilité des autres étiquettes). Par exemple, si l'étiquette gold est neutre et que l'on veut 
 		expliquer la contradiction, on cherche à créer une contradiction avec les mots de remplacement.\\
 		\\
-		/* FAIRE TABLE EXEMPLE DES MOTS DE REMPLACEMENT */
+		\begin{table}[h]
+			\begin{center}
+			\begin{tabular}{|c|c|}
+			\hline
+			\small{Prémisse} & \small{Liste de mots remplaçants} \\
+			\hline
+			A & Another That This The \\
+			\hline
+			woman & man boy person guy dude \\
+			\hline
+			with & without and wearing selling \\
+			\hline
+			a & that the this those these \\
+			\hline
+			green & blue sad happy depressed \\
+			\hline
+			headscarf & happiness joy sadness depression \\
+			\hline
+			, & and also ; \\
+			\hline
+			blue & sad depressed red green \\
+			\hline
+			shirt & headscarf jacket glasses scarf shoes \\
+			\hline
+			and & also , ;  \\
+			\hline
+			a & that the this those these \\
+			\hline
+			very & small depressed sad few \\
+			\hline
+			big & young old small depressed sad \\
+			\hline
+			grin & sandwich headscarf shirt depression sadness \\
+			\hline
+			. & ! \\
+			\hline
+			\end{tabular}
+			\end{center}
+		\end{table}\\
 		
+		\begin{table}[h]
+			\begin{center}
+			\begin{tabular}{|c|c|}
+			\hline
+			\small{Hypothèse} & \small{Liste de mots remplaçants} \\
+			\hline
+			The & Another A That This \\
+			\hline
+			woman & man boy person guy dude \\
+			\hline
+			is & was were \\
+			\hline
+			very & little few not \\
+			\hline
+			happy & old young tall small depressed \\
+			\hline
+			. & ! \\
+			\hline
+			\end{tabular}
+			\caption{\bf{Exemple d'une prémisse (table d'en haut) et d'une hypothèse (table d'en bas) avec une liste de mots pouvant remplacer 
+			le mot correspondant. L'étiquette de cette paire est inférence, et on veut expliquer l'inférence. Il faut donc des mots de remplacement qui fassent baisser l'inférence.}}
+			\end{center}
+		\end{table}\\
 		
-	\subsection{Corpus d'explications} %PRESQUE FINI
+
+	\subsection{Corpus explicatif} % FINI
 		La méthode habituelle pour ce genre d'expériences est de montrer à plusieurs personnes les paires 
 		de phrases prémisse/hypothèse avec leurs explications associées pour connaître leur avis sur la 
 		qualité de l'explication.\\
@@ -580,25 +653,39 @@
 		Nous avons récolté leurs réponses pour en faire un corpus d'explications de références, au format CSV.\\
 		La figure ci-dessous est un échantillon de ce corpus d'explications : \\
 		
-		%\begin{figure}[h] % LE FAIRE PLUS GRAND
-		%	\center
-		%	\includegraphics[width=16cm, height=16cm, keepaspectratio]{expl_corpus.png}
-		%	\caption[Echantillon du corpus d'explications]{\bf{Echantillon du corpus d'explications. La première colonne est l'identifiant de la paire prémisse/hypothèse, 
-		%	la deuxième est l'étiquette, la troisième est la prémisse, la quatrième est l'hypothèse, la cinquième contient les mots de la prémisse expliquant l'étiquette, et la dernière colonne contient les mots 
-		%	de l'hypothèse expliquant l'étiquette. -1 signifie qu'il n'y a aucun mot important. Chaque numéro à droite d'un mot important correspond à sa position dans la phrase, en commençant par 0.}}
-		%\end{figure}	
-		
-			 
-	\subsection{Métrique}
-		/* A FINIR */
-		
+		\begin{table}[h]
+			\begin{center}
+			\leftskip -2cm
+			{	
+				\begin{tabular}{|p{2cm}|p{5cm}|p{3cm}|p{2cm}|p{2.5cm}|}
+				\hline
+				\small{étiquette} & \small{Prémisse} & \small{Hypothèse} & \small{Mots explicatifs (prémisse)} & \small{Mots explicatifs (hypothèse)}\\
+				\hline
+				inférence & This church choir sings to the masses as they sing joyous songs from the book at a church. &  The church is filled with song. & sings 3 songs 11 church 17 & filled 3 song 5 church 1\\
+				\hline
+				contradiction & A man playing an electric guitar on stage. &  A man playing banjo on the floor. & man 1 guitar 5 stage 7 & man 1 banjo 3 floor 6\\
+				\hline
+				neutre & An old man with a package poses in front of an advertisement. & A man poses in front of an ad for beer. & & for 8 beer 9 \\
+				\hline
+				inférence & A blond-haired doctor and her African american assistant looking threw new medical manuals. & A doctor is looking at a book & doctor 2 looking 8 manuals 12 & doctor 1 looking 3 book 6\\
+				\hline
+				\end{tabular}
+			}
+			\caption{\bf{Echantillon du corpus explicatif. Chaque ligne correspond à une paire. La première colonne est l'étiquette de la paire, la deuxième est 
+			la prémisse, la troisième est l'hypothèse, la quatrième est la liste des mots explicatifs dans la prémisse, et la dernière est la liste 
+			des mots explicatifs dans l'hypothèse. Le nombre à droite de chaque mot explicatif est sa position dans sa phrase correspondante : certains mots pouvent 
+			être présent plusieurs fois dans la phrase, tel que "church" dans la prémisse du premier exemple. Il faut donc les différencier. Le troisième exemple 
+			n'a pas de mot explicatif dans la prémisse.}}
+			\end{center}
+		\end{table}
+			
 	\subsection{Paramètres} %FINI
-		Tous les \textit{embeddings} sont mis-à-jour par le réseau. La taille des \textit{batches} est de 16. \\
+		Tous les \textit{embeddings} sont mis-à-jour par le réseau. Ils sont de dimension 100. La taille des \textit{batches} est de 16. \\
 		Concernant les RNNs utilisés, il n'y a qu'une seule couche, la dimension des états cachés est de 100, et le \textit{dropout} est à 0,3.\\
-		
-\section{Résultats}
-	La table ci-dessous montre les taux de réussite des étiquettes prédites pour les trois systèmes décrits en section 5 
-	sur l'échantillon du corpus de test de SNLI :\\
+		Pour l'utilisation de LIME, on a fixé le voisinage de l'entrée à 500.
+\section{Résultats} % SECTION 8
+	Pour contextualiser, la table ci-dessous montre les taux de réussite des étiquettes prédites pour les trois systèmes décrits en section 5 
+	sur le CPI :\\
 	
 	\begin{table}[h]
 		\begin{center}
@@ -613,13 +700,15 @@
 		3 & \bf{71,43}\% & 40,00\% & 42,86\% & 52,63\% \\
 		\hline
 		\end{tabular}
-		\caption[Résultats des tests de la RTE pour le corpus de l'échantillon de test.]{\bf{Résultats des taux de réussite des étiquettes prédites pour le CPI.}}
+		\caption[Résultats des tests de la RTE pour le corpus de l'échantillon de test.]{\bf{Résultats des taux de réussite des étiquettes prédites sur le CPI.}}
 		\end{center}
 	\end{table}	
 	
 	
 	La table ci-dessous illustre les différents résultats obtenus pour le taux de réussite des explications des trois systèmes décrits en 
-	section <> sur l'échantillon du corpus de test de SNLI et sur le corpus d'explication : \\
+	section 5 sur le CPI et sur le corpus explicatif. 
+	Le taux de réussite des explications correctes est mesuré par le nombre de mots explicatifs correctement trouvés sur le nombre de mots explicatifs total (se trouvant 
+	dans le corpus explicatif). \\
 	
 	\begin{table}[h]
 		\begin{center}
@@ -627,31 +716,68 @@
 		\hline
 		\small{Système} & \small{Méthode} & \small{\% Inférence} & \small{\% Neutre} & \small{\% Contradiction} & \small{\% Total}\\
 		\hline
-		\multirow{2}{*}{1} & BAXI & 61,70\% & 57,14\% & 51,61\% & 57,61\% \\
+		\multirow{2}{*}{1} & BAXI & \bf{61,70\%} & \bf{57,14\%} & \bf{51,61\%} & \bf{57,61\%} \\
 			\cline{2-6}
-			& LIME & test & test & test & test \\
+			& LIME & 27,66\% & 28,57\% & 32,26\% & 29,35\% \\
 		\hline
-		\multirow{2}{*}{2} & BAXI & 76,60\% & 57,14\% & 54,84\% & 66,30\% \\
+		\multirow{2}{*}{2} & BAXI & \bf{76,60\%} & \bf{57,14\%} & 54,84\% & \bf{66,30\%} \\
 			\cline{2-6}
-			& LIME & test & test & test & test \\
+			& LIME & 55,32\% & 50,00\% & \bf{61,29\%} & 56,52\% \\
 		\hline
-		\multirow{2}{*}{3} & BAXI & 61,70\% & 57,14\% & 51,61\% & 57,61\% \\
+		\multirow{2}{*}{3} & BAXI & \bf{61,70\%} & \bf{57,14\%} & 51,61\% & \bf{57,61\%} \\
 			\cline{2-6}
-			& LIME & test & test & test & test \\
+			& LIME & 31,91\% & 35,71\% & \bf{61,29\%} & 42,39\% \\
 		\hline
 		\end{tabular}
-		\caption[Résultats des mesures de BAXI et LIME]{\bf{Résultats des mesures de BAXI et LIME pour le fichier de l'échantillon 
-			de test et pour le corpus d'explications.}}
+		\caption[Résultats des mesures de BAXI et LIME]{\bf{Résultats des mesures de BAXI et LIME sur le CPI avec le corpus explicatif.}}
 		\end{center}
 	\end{table}
 	
+	/* mettre des graphiques */
 
-\section{Discussion}
+\section{Discussion} % SECTION 9 FINI
+	BAXI a cependant des limites que nous allons corriger dans de futurs travaux : en effet, BAXI remplace seulement un seul mot dans l'entrée, 
+	ce qui est problématique face aux expressions polylexicales. Par exemple, si l'entrée contient l'expression \textit{"in front of"}, BAXI remplace le mot \textit{"in"} 
+	pour faire une nouvelle entrée, puis le mot \textit{"front"}, et enfin le mot \textit{"of"}, car un seul mot peut être remplacé. Cela ne donne pas forcément de nouvelles entrées ayant du sens. BAXI est donc 
+	actuellement en ordre 1, l'idéal serait qu'il soit en ordre $N$ pour remplacer $N$ mots.\\
+	Une autre limite de la méthode est l'explication de la neutralité, car il est parfois difficile de l'expliquer avec des mots contribuant à la neutralité. Peut-être faudrait-il 
+	expliquer ce qui est contre l'inférence et contre la contradiction dans une entrée étiquettée "neutre".\\
+	Par ailleurs, nous avons noté à la main les mots pouvant remplacer chaque mot dans l'entrée. Cela peut se faire de manière automatique à l'aide d'outils tel que WordNet, cependant il faudrait alors reconnaitre les 
+	expressions polylexicales, de plus cela deviendrait un exercice aussi difficile que l'inférence textuelle. Nous pensons qu'il est préférable de les annoter à la main.
+	\\
+	Concernant SNLI, le corpus contient des biais que BAXI arrive à retrouver, surtout concernant la neutralité : les annotateurs ont souvent pris l'idée que pour qu'une entrée soit neutre, 
+	l'hypothèse doit rajouter un but \cite{ref23}. Ainsi, BAXI surligne le mot \textit{"for"} en faveur de la neutralité quand il le voit dans l'hypothèse. Il faudrait cependant avoir plus de données de test 
+	pour être certain qu'il retrouve toujours ce genre de biais.\\
+	Ces biais sont la conséquence de la façon dont SNLI a été construit (voir section 7.1 pour l'explication de la construction de SNLI). 
+	De plus, il arrive que certains éléments de l'image présentée ne se trouvent pas dans la prémisse, ce qui engendre des étiquettes difficiles à prédire. La figure ci-dessous en est un exemple :\\
 
-\section{Conclusion}
+	\begin{figure}[h]
+		\center
+		\includegraphics[width=10cm, height=7cm, keepaspectratio]{splashing.png}
+		\caption{\bf{Exemple d'une explication fournie par BAXI sur le système 2. Les mots surlignés en bleu ont contribué à la neutralité, 
+		les mots surlignés en jaune ont contribué à l'inférence, et 
+		les mots surlignés en rouge ont contribué à la contradiction.}}
+	\end{figure}\\	
+	Dans cet exemple, l'étiquette gold est "inférence", cependant il n'y a aucune mention d'éclaboussures d'eau dans la prémisse. Selon BAXI, 
+	\textit{"splashing"} a donc contribué à la neutralité. Il a également contribué à l'inférence, puisqu'il est en présence de mots tels que \textit{"river"} et \textit{"water"}.\\
+	\\
+	En outre, lorsque les annotateurs choisissent une hypothèse et une étiquette, il faudrait qu'ils annotent aussi les mots ayant conduits à leur choix pour pouvoir directement avoir un corpus explicatif 
+	pour mesurer la qualité des explications données. Nous pensons qu'en plus du taux de réussite des étiquettes prédites, il faut prendre en compte le taux de réussite des explications pour savoir si 
+	un modèle est bon ou non. 
 
-\section{Remerciements}
- 
+\section{Conclusion} % SECTION 10
+
+\section{Remerciements} %SECTION 11 FINI
+	J'adresse mes sincères remerciements à M. Benoit Favre pour ses conseils, son écoute, et 
+	la confiance qu'il m'a accordée durant 
+	ce projet, ce qui m'a permit de m'accomplir totalement dans mes missions.\\
+	Je remercie également l'ensemble de l'équipe TALEP pour leur accueil et leur aide 
+	lors des différentes réunions, ainsi que l'ensemble des 
+	membres du jury pour avoir accepté la charge de la lecture critique et de l'évaluation de ce travail.\\
+	Enfin, je remercie les annotateurs du corpus explicatif, Thomas Delfino, Franck Dary, Simone Fuscone, Sébastien Ratel, et Jérémy Auguste
+	 pour m'avoir accordé un peu de temps lors de la création de ce corpus.
+	 
+	 
 \newpage 
 \bibliographystyle{unsrt} % Le style est mis entre accolades.
 \bibliography{biblio}
