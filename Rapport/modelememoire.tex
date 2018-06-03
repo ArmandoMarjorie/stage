@@ -190,46 +190,94 @@
 
 \section{Etat de l'art} % SECTION 3
 	\subsection{Dans la RTE}
-		/*DECRIRE UNE APPROCHE*/
-	\subsection{Dans l'interprétabilité de prédictions de modèles}
-		/*PARLER D'INTERPRETABILITE EN GENERAL ET POURQUOI CA NE S'APPLIQUE PAS AU TEXTE*/
-		/*PARLER ARTICLE LREC*/
-\begin{comment}
-	\subsection{Dans le domaine de la RTE}
 		Les premiers travaux sur la RTE ont été 
 		formé sur de très petits ensembles de données avec des méthodes conventionnelles, 
 		telles que les méthodes peu profondes \cite{ref9} ou encore
 		les méthodes de logique naturelle \cite{ref10}.
 		\\
-		Ces dernières années, on dénote une nette amélioration pour la tâche de la RTE, en particulier 
+		Ces dernières années, la tâche de la RTE a connu une nette amélioration, en particulier 
 		grâce à la publication du corpus SNLI (the Stanford Natural Language Inference) qui contient 
-		570K paires de phrases annotées. Cela a permit d'entrainer des réseaux de neurones 
-		complexes, puisqu'ils nécessitent une quantité relativement importante de données. En 
+		570K paires de phrases annotées \cite{ref}. Cela a permit d'entrainer des réseaux de neurones 
+		complexes qui nécessitent une quantité relativement importante de données. En 
 		effet, la recherche sur l'apprentissage automatique dans ce domaine été limitée 
 		par le manque de corpus assez grand.\\
 		\\
-		On peut distinguer deux types d'approches parmis ces modèles : les modèles basés sur l'encodage 
-		des phrases 
-		et les modèles axés sur l'attention inter-phrases.\\
-		Les premiers types de modèles encodent les phrases puis un classifieur (un  
-		perceptron multi-couches) décide de la relation entre ces deux phrases encodées. Différents encodeurs ont été 
-		proposés, tels que les Long-Short Term Memory (LSTM) \cite{ref}, les Gated Recurrent Unit 
-		(GRU) \cite{ref11}, les réseaux de neurones à convolution (Convolutionnal Neural 
-		Network : CNN) \cite{ref12}, les Bidirectionnal Long-Short Term Memory (BiLSTM) et ses 
-		variantes \cite{ref13} \cite{ref14} \cite{ref15}, et des réseaux neuronaux plus 
-		complexes \cite{ref16} \cite{ref17}.\\
-		L'avantage de ces modèles est que les encodeurs transforment les phrases 
-		en vecteur de taille fixe, ce qui peut aider à un large éventail de tâches 
-		de transfert \cite{ref18}. Cependant, cette architecture ignore l'interaction 
-		locale entre deux phrases, pourtant nécessaire \cite{ref10}.\\
-		Les seconds modèles ont alors été proposé pour éviter ce problème.  
-		Dans ce cadre, l'information d'inférence locale est collectée par le mécanisme d'attention 
-		puis introduite dans des réseaux de neurones pour composer des vecteurs de taille fixe avant la 
-		classification finale. Beaucoup suivent cette route. Parmis eux, Rocktäschel et al. \cite{ref19} 
-		ont été les premiers à proposer des réseaux basés sur l'attention pour la RTE. 
-		Chen et al. \cite{ref20} ont proposé un modèle d'inférence séquentielle amélioré qui est 
-		l'un des meilleurs modèles à ce jour (88,6\% de taux de réussite).
-\end{comment}		
+		
+		/*DECRIRE UNE APPROCHE*/
+	\subsection{Dans l'interprétabilité de prédictions de modèles}
+		Plusieurs méthodes existent pour l'interprétation de prédictions de modèles, mais toutes ne s'appliquent pas au texte. La méthode 
+		de Fong et Vedaldi \cite{ref25} en est un exemple : les auteurs perturbent une image en appliquant un masque par dessus pour 
+		flouter quelques parties, puis voient si la probabilité de l'étiquette initiale a baissé. Si c'est le cas, alors l'objet flouté 
+		dans l'image est un facteur explicatif à la décision du modèle.\\
+		\\
+		D'autres méthodes d'interprétation existent, telle que la méthode Deep Learning Important FeaTures (DeepLIFT) pour l'apprentissage profond, 
+		qui décompose la prédiction d'un 
+		réseau de neurones sur une entrée spécifique en rétropropageant les contributions de tous les neurones du réseau à 
+		chaque \textit{feature} de l'entrée. DeepLIFT compare l'activation de chaque neurone à son "activation de référence" et 
+		attribue des scores de contribution en fonction de la différence. L'activation de référence est choisie par 
+		l'utilisateur \cite{deeplift}.\\
+		On peut également citer la méthode de propagation de pertinence par couche pour l'interprétation des 
+		réseaux de neurones profonds, une méthode équivalente à DeepLIFT avec l'activation de référence de tous les neurones 
+		fixée à 0 \cite{ref26}.\\
+		\\
+		Une autre approche est la méthode SHapley Additive exPlanations (SHAP) \cite{shap} : 
+		elle explique la prédiction de n'importe quel modèle en utilisant les valeurs de Shapley, introduites dans la théorie des jeux coopératives en 1953 \cite{shapley}.\\
+		SHAP attribue des paiements aux joueurs en fonction de leur contribution au paiement total. Les joueurs coopèrent dans une coalition et obtiennent un certain gain de cette coopération.\\
+		Ici, le "jeu" est la tâche de prédiction pour une seule instance. Le "gain" est la prédiction réelle pour cette instance moins la prédiction moyenne de toutes les instances. 
+		Les "joueurs" sont les valeurs des \textit{features} présentes dans l'instance (formant une coopération), qui collaborent pour recevoir le gain.
+		La valeur de Shapley d'une valeur pour une \textit{feature} est la contribution marginale moyenne de cette valeur de \textit{feature} sur toutes les coopérations de \textit{features} possibles.\\
+		\\
+		Ces valeurs ont récemment été utilisées pour attribuer une mesure d'importance aux \textit{features} \cite{ref5}. SHAP appartient à la classe des "méthodes d'attribution de \textit{features} additives" : 
+		elle attribue une valeur à chaque valeur de \textit{features} pour chaque prédiction (c'est-à-dire une attribution de \textit{feature}). 
+		Plus la valeur est haute, plus l'attribution de la \textit{feature} à la prédiction spécifique est grande. Un bon exemple est décrit dans le livre \textit{"Interpretable Machine Learning"} 
+		de Molnar en section 5.7 \cite{ref5}.
+		\\
+		SHAP est la seule méthode qui respecte les trois propriétés suivantes, ce qui en fait la seule méthode basée sur une théorie solide :\\
+		\begin{itemize}\renewcommand{\labelitemi}{$\bullet$}
+			\item Précision locale : les explications sont fidèles et véridiques au modèle.\\
+			\item \textit{Feature} manquante : les \textit{features} retirées n'ont aucun impact attribué aux prédictions du modèle.\\
+			\item Cohérence : les explications sont cohérentes avec l'intuition humaine. Techniquement, la cohérence indique que si un modèle change de sorte que la 
+			contribution d'une entrée augmente ou reste la même indépendamment des autres entrées, l'attribution de cette entrée ne devrait pas diminuer.\\
+		\end{itemize}\\
+		\\
+		Le calcul de ces valeurs est cependant très coûteux : il faut générer toutes les coopérations possibles pour une instance, ce qui en fait une complexité 
+		exponentielle et n'est donc pas utilisable dans la pratique. 
+		Un algorithme efficace a été mis au point par les auteurs de SHAP, cependant il fonctionne uniquement sur les modèles basés sur les arbres.
+		\\
+		\\
+		Concernant l'interprétabilité dans la tâche de la RTE, ce n'est que très récemment qu'une méthode a été proposée, mais uniquement 
+		pour expliquer l'inférence \cite{ref21}. 
+		Cette méthode entraîne un classifieur pour qu'il puisse apprendre automatiquement la relation sémantique entre   
+		les mots de la prémisse et l'hypothèse grâce à WordNet. Pour interpréter la décision de l'inférence, 
+		il faut naviguer dans le graphe WordNetGraph, créé par les auteurs à partir des définitions de WordNet. Voici un exemple :
+		\begin{center}
+		\textit{
+		Prémisse : "Many cellphones have built-in digital cameras."\\
+		Hypothèse : "Many cellphones can take pictures."}\end{center}\\
+		Premièrement, la méthode recherche des paires de mots qui ont une forte relation sémantique et qui peuvent 
+		prouver que cette inférence est vraie, puis ces paires sont envoyées en entrée à l'algorithme de navigation 
+		graphique. Dans cet exemple, la meilleure paire est "\textit{digital camera}" (la source) et "\textit{pictures}" (la cible). 
+		En partant de la source, la méthode récupère tous les noeuds de 
+		WordNetGraph, et calcule la similarité sémantique entre chaque noeud et la cible et choisit le noeud qui a la 
+		valeur la plus élevée comme prochain noeud à visiter. Cela est fait récursivement jusqu'à atteindre la cible. 
+		Les segments suivants sont trouvés par l'algorithme de navigation :
+		\begin{center}
+		\textit{
+		<digital camera has\_supertype camera>\\
+		<camera has\_supertype equipment>\\
+		<equipment has\_diffqual for taking photographs>}\\
+		\end{center}
+		où le premier segment signifie que "\textit{digital camera}" appartient à la classe "\textit{camera}", le deuxième segment 
+		signifie que "\textit{camera}" appartient à la classe "\textit{equipment}", et le dernier segment signifie que "\textit{equipment}" a la 
+		qualité de pouvoir prendre des photographies ("\textit{for taking photographs}").\\
+		"\textit{photographs}" et "\textit{pictures}" sont synonymes, donc la recherche dans le graphe s'arrête ici, 
+		et confirme bien l'inférence. Les explications suivantes, construites à partir des segments, sont alors données : 
+		\begin{center}
+		\textit{
+		A digital camera is a kind of camera\\
+		A camera is an equipment for taking photographs\\
+		Photograph is synonym of picture}
+		\end{center}
 	\subsection{Description de LIME}
 		Nous étudions dans ce travail la méthode LIME qui permet d'expliquer les prédictions de n'importe quel classifieur 
 		ou regresseur. L'objectif global de LIME est d'identifier un modèle interprétable parmi le voisinage de l'entrée $x$.\\
@@ -279,47 +327,7 @@
 		
 	%	/*PARLER ARTICLE LREC*/
 		
-		\begin{comment}
-		D'autres méthodes d'interprétation existent, telle que DeepLIFT (Deep Learning Important FeaTures :
-		DeepLIFT) \cite{ref9} pour l'apprentissage profond, 
-		qui décompose la prédiction d'un 
-		réseau de neurones sur une entrée spécifique en rétropropageant les contributions de tous les neurones du réseau à 
-		chaque feature de l'entrée. DeepLIFT compare l'activation de chaque neurone à son "activation de référence" et 
-		attribue des scores de contribution en fonction de la différence. L'activation de référence est choisi par 
-		l'utilisateur.\\
-		On peut également citer la méthode de propagation de pertinence par couche \cite{ref10} pour l'interprétation des 
-		réseaux de neurones profonds, une méthode équivalente à DeepLIFT avec l'activation de référence de tous les neurones 
-		fixée à 0. 
-		\end{comment}
-		
 	
-		
-		\begin{comment}
-		mais nous pouvons également citer la méthode SHapley Additive exPlanations (SHAP) \cite{ref8} : 
-		elle explique la prédiction de n'importe quel modèle en utilisant les valeurs de Shapley, introduites dans la théorie des jeux en 1953. 
-		Ces valeurs ont récemment été utilisées pour attribuer une mesure d'importance aux features \cite{ref5}. SHAP appartient à la classe des "méthodes d'attribution de features additives" : 
-		elle attribue une valeur à chaque feature pour chaque prédiction (c'est-à-dire une attribution de feature). 
-		Plus la valeur est haute, plus l'attribution de la feature à la prédiction spécifique est grande :  
-		la somme de ces valeurs devrait donc être proche de la prédiction initiale du modèle.\\
-		\\
-		SHAP a rassemblé et unifié six méthodes d'attribution de features additives, dont LIME, et est la seule méthode qui respecte les trois propriétés suivantes :
-		\begin{description}
-			\item[- Précision locale] : les explications sont fidèles et véridiques au modèle.\\
-			\item[- Feature manquante] : les features retirées n'ont aucun impact attribué aux prédictions du modèle.\\
-			\item[- Cohérence] : les explications sont cohérentes avec l'intuition humaine. Techniquement, la cohérence indique que si un modèle change de sorte que la 
-			contribution d'une entrée augmente ou reste la même indépendamment des autres entrées, l'attribution de cette entrée ne devrait pas diminuer.\\
-		\end{description}\\
-		\\
-		Le calcul de ces valeurs est cependant très coûteux : il faut entraîner le modèle sur tous les sous-ensembles de features S inclu F, où F est l'ensemble de toutes les features. 
-		Les valeurs Shapley attribuent une valeur d'importance à chaque feature, ce qui représente l'effet sur la prédiction du modèle d'inclure cette feature. 
-		Pour cela, un modèle est entraîné avec la feature présente, et un autre modèle est entraîné avec la feature retirée. 
-		Ensuite, les prédictions des deux modèles sont comparées sur l'entrée courante, c'est-à-dire qu'on calcule leur différence. 
-		Comme l'effet de la supression d'une feature dépend d'autres features du modèle, les différences précédentes sont 
-		calculées pour tous les sous-ensembles possibles de features. Les valeurs de Shapley sont une moyenne pondérée de toutes 
-		les différences possibles et sont utilisées comme attribution de feature.\\
-		\\
-		Un algorithme efficace a été mis au point, cependant il fonctionne uniquement sur les modèles basés sur les arbres.
-		\end{comment}
 
 \section{Définition d'interprétabilité} % SECTION 4 FINI
 	Il n'y a malheureusement pas de consensus concernant la définition d' "interprétabilité". 
@@ -366,62 +374,61 @@
 	\end{comment}
 	
 
-\section{Systèmes implémentés} % SECTION 5 FINI
+\section{Approches pour la RTE} % SECTION 5 FINI
 	Nous avons implémenté trois systèmes différents avec la librairie DyNet \cite{ref6}. 
-	Nous utilisons les LSTMs et les BILSTMs.
-		
-	\subsection{Systèmes basés sur l'encodage des phrases}
-		\paragraph*{Premier système}
-			Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases.  
-			On les concatène pour les envoyer ensuite à une couche de décision : 
-			\begin{equation}
-			y = softmax( W \times [ LSTM(\textit{prémisse}) ; LSTM(\textit{hypothèse}) ] + b )
-			\end{equation}
-			où $y$ est un vecteur contenant les probabilités de chaque étiquette, $W$ est la matrice de poids, $LSTM(\textit{prémisse})$ et $LSTM(\textit{hypothèse})$ sont respectivement la représentation de 
-			la prémisse et de l'hypothèse, $b$ est le biais, et [;] dénote la concaténation.
-		\paragraph*{Deuxième système}
-			Le deuxième système effectue le même mécanisme que le premier système pour avoir une représentation de la prémisse et de 
-			l'hypothèse. On compare les deux représentations pour envoyer la comparaison à une couche de décision :
-			\begin{equation}
-			y = softmax( W \times ( LSTM(\textit{prémisse}) \times LSTM(\textit{hypothèse})^{T} ) + b )
-			\end{equation}
-			où $T$ dénote la transposée.
-	\subsection{Système avec mécanisme d'attention}
-		\paragraph*{Troisième système}
-			Le troisième système est inspiré de la méthode KIM \cite{ref3}.\\ 
-			On représente les mots de la prémisse et de l'hypothèse en les passant dans un BILSTM qui utilise un LSTM \textit{forward} pour 
-			lire la phrase de gauche à droite, puis un LSTM \textit{backward} pour lire la phrase dans l'autre sens. A chaque mot lu, un 
-			état caché est généré par les deux LSTMs. Ces deux états cachés sont alors concaténés pour obtenir une 
-			représentation du mot :\\
-			$h_t = [h_t^{\rightarrow} ; h_t^{\leftarrow}]$, 
-			où $h_t^{\rightarrow}$ est l'état caché généré par le LSTM \textit{forward} à 
-			l'instant $t$, $h_t^{\leftarrow}$ est celui généré par le LSTM \textit{backward} à l'instant $t$, et $h_t$ est la 
-			représentation du mot $t$.\\
-			On dénote par $p^s$ (respectivement $h^s$) le vecteur de représentation des mots de la prémisse 
-			(respectivement de l'hypothèse).\\
-			Nous construisons ensuite une matrice d'alignement comme suit :
-			\begin{equation}
-			e_{ij} = (p_i^s)^T h_j^s
-			\end{equation}
-			où $p_i^s$ est la représentation du i\up{ème} mot de la prémisse, $h_j^s$ est celle du j\up{ième} mot de l'hypothèse.\\
-			Avec cette matrice, nous pouvons alors construire les vecteurs de contexte $p^c$ et $h^c$ suivants pour la prémisse et l'hypothèse :
-			\begin{equation}
-			\alpha_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{N} exp(e_{ik})} , p_i^c = \sum_{j=1}^{N} \alpha_{ij} h_j^s   
-			\end{equation}
-			\begin{equation}
-			\beta_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{M} exp(e_{kj})} , h_j^c = \sum_{i=1}^{M} \beta_{ij} p_i^s   
-			\end{equation}
-			où $M$ est la longueur de la prémisse, $N$ est la longueur de l'hypothèse, $\alpha \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ 
-			sur la prémisse, et $\beta \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ sur l'hypothèse. Ceci permet à la prémisse de voir le contexte de l'hypothèse 
-			et vice-versa.\\
-			Avec ces nouvelles représentations pour les mots, on effectue du \textit{mean-pooling} :
-			\begin{equation}
-			pool_p = \frac{\sum_{i=1}^{N} p_i^c}{N} , pool_h = \frac{\sum_{i=1}^{M} h_i^c}{M}
-			\end{equation}
-			puis on effectue une concaténation du \textit{mean-pooling} de la prémisse et de l'hypothèse pour l'envoyer à une couche de décision :
-			\begin{equation}
-			y = softmax( W \times [ pool_p ; pool_h ] + b )
-			\end{equation}	
+	Nous utilisons les LSTMs et les BILSTMs.\\
+	
+	\paragraph*{Premier système}
+		Le premier système passe la prémisse et l'hypothèse au LSTM pour avoir une représentation pour chacune de ces deux phrases.  
+		On les concatène pour les envoyer ensuite à une couche de décision : 
+		\begin{equation}
+		y = softmax( W \times [ LSTM(\textit{prémisse}) ; LSTM(\textit{hypothèse}) ] + b )
+		\end{equation}
+		où $y$ est un vecteur contenant les probabilités de chaque étiquette, $W$ est la matrice de poids, $LSTM(\textit{prémisse})$ et $LSTM(\textit{hypothèse})$ sont respectivement la représentation de 
+		la prémisse et de l'hypothèse, $b$ est le biais, et [;] dénote la concaténation.
+	\paragraph*{Deuxième système}
+		Le deuxième système effectue le même mécanisme que le premier système pour avoir une représentation de la prémisse et de 
+		l'hypothèse. On compare les deux représentations pour envoyer la comparaison à une couche de décision :
+		\begin{equation}
+		y = softmax( W \times ( LSTM(\textit{prémisse}) \times LSTM(\textit{hypothèse})^{T} ) + b )
+		\end{equation}
+		où $T$ dénote la transposée.
+	
+	\paragraph*{Troisième système}
+		Le troisième système est inspiré de la méthode KIM \cite{ref3}.\\ 
+		On représente les mots de la prémisse et de l'hypothèse en les passant dans un BILSTM qui utilise un LSTM \textit{forward} pour 
+		lire la phrase de gauche à droite, puis un LSTM \textit{backward} pour lire la phrase dans l'autre sens. A chaque mot lu, un 
+		état caché est généré par les deux LSTMs. Ces deux états cachés sont alors concaténés pour obtenir une 
+		représentation du mot :\\
+		$h_t = [h_t^{\rightarrow} ; h_t^{\leftarrow}]$, 
+		où $h_t^{\rightarrow}$ est l'état caché généré par le LSTM \textit{forward} à 
+		l'instant $t$, $h_t^{\leftarrow}$ est celui généré par le LSTM \textit{backward} à l'instant $t$, et $h_t$ est la 
+		représentation du mot $t$.\\
+		On dénote par $p^s$ (respectivement $h^s$) le vecteur de représentation des mots de la prémisse 
+		(respectivement de l'hypothèse).\\
+		Nous construisons ensuite une matrice d'alignement comme suit :
+		\begin{equation}
+		e_{ij} = (p_i^s)^T h_j^s
+		\end{equation}
+		où $p_i^s$ est la représentation du i\up{ème} mot de la prémisse, $h_j^s$ est celle du j\up{ième} mot de l'hypothèse.\\
+		Avec cette matrice, nous pouvons alors construire les vecteurs de contexte $p^c$ et $h^c$ suivants pour la prémisse et l'hypothèse :
+		\begin{equation}
+		\alpha_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{N} exp(e_{ik})} , p_i^c = \sum_{j=1}^{N} \alpha_{ij} h_j^s   
+		\end{equation}
+		\begin{equation}
+		\beta_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{M} exp(e_{kj})} , h_j^c = \sum_{i=1}^{M} \beta_{ij} p_i^s   
+		\end{equation}
+		où $M$ est la longueur de la prémisse, $N$ est la longueur de l'hypothèse, $\alpha \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ 
+		sur la prémisse, et $\beta \in \mathbb{R}^{M \times N}$ est un $softmax(e)$ sur l'hypothèse. Ceci permet à la prémisse de voir le contexte de l'hypothèse 
+		et vice-versa.\\
+		Avec ces nouvelles représentations pour les mots, on effectue du \textit{mean-pooling} :
+		\begin{equation}
+		pool_p = \frac{\sum_{i=1}^{N} p_i^c}{N} , pool_h = \frac{\sum_{i=1}^{M} h_i^c}{M}
+		\end{equation}
+		puis on effectue une concaténation du \textit{mean-pooling} de la prémisse et de l'hypothèse pour l'envoyer à une couche de décision :
+		\begin{equation}
+		y = softmax( W \times [ pool_p ; pool_h ] + b )
+		\end{equation}	
 	\subsection{Résultats des systèmes}	
 		Les tables ci-dessous montrent les différents résultats des taux de réussite des étiquettes prédites avec ces 
 		systèmes : \newpage
@@ -522,7 +529,7 @@
 		étant en contradiction et une autre phrase qui pouvait être déduite de la prémisse : ils ont donné une hypothèse 
 		et une étiquette. Pour que le corpus ne soit pas trop subjectif, les annotateurs ont eu accès à quelques paires 
 		prémisse/hypothèse sans étiquette. Chacun d'entre eux a donné une étiquette, celle ayant eu le plus de voix a été décidé comme 
-		l'étiquette gold de la paire observée. Ainsi, certaines paires n'ont pas d'étiquette car les annotateurs n'ont pas trouvé de 
+		l'étiquette \textit{gold} de la paire observée. Ainsi, certaines paires n'ont pas d'étiquette car les annotateurs n'ont pas trouvé de 
 		consensus : nous ne prennons pas en compte ce genre d'entrée.\\
 		La table ci-dessous est un échantillon du corpus SNLI : \\ 
 		\begin{table}[h]
@@ -531,14 +538,14 @@
 				\includegraphics[width=16cm, height=13cm, keepaspectratio]{table_SNLI.png}
 			}
 				\caption[Echantillon du corpus de développement de SNLI]{\bf{Echantillon de 5 paires du corpus de développement de SNLI présentant à gauche la prémisse, 
-					à droite l'hypothèse, et au centre les étiquettes des 5 annotateurs (C pour Contradiction, N pour Neutral, et E pour Entailment) 
+					à droite l'hypothèse, et au centre les étiquettes des 5 annotateurs (C pour Contradiction, N pour \textit{Neutral} (neutre), et E pour \textit{Entailment} (inférence)) 
 					avec en premier l'étiquette de l'auteur de la paire. L'étiquette en gras 
-					est celle qui a eu le plus de voix, et est donc l'étiquette gold de la paire prémisse/hypothèse.}}
+					est celle qui a eu le plus de voix, et est donc l'étiquette \textit{gold} de la paire prémisse/hypothèse.}}
 		
 		\end{table}
 		\\
 		Pour mesurer les taux de réussite des explications, nous utilisons un échantillon du corpus de test de SNLI 
-		composé de 19 paires prémisse/hypothèse avec leur étiquette associée, appelé Corpus Pour l'Interprétabilité (CPI). 
+		composé de 19 paires prémisse/hypothèse avec leur étiquette associée, que nous avons appelé Corpus Pour l'Interprétabilité (CPI). 
 		Ce corpus contient des paires se trouvant dans le corpus explicatifs (voir section 7.3) 
 		et ayant des mots de remplacement (voir section 3.2). La table ci-dessous montre les taux des 
 		étiquettes présentes dans ce petit corpus : \\
@@ -561,6 +568,43 @@
 		Pour les mots inconnus, c'est-à-dire les mots qui n'ont pas d'\textit{embedding} dans GloVe, nous utilisons des \textit{embeddings}
 		initialisés au hasard. 
 		
+	\subsection{Corpus explicatif} % FINI
+		La méthode habituelle pour ce genre d'expériences est de montrer à plusieurs personnes les paires 
+		de phrases prémisse/hypothèse avec leurs explications associées pour connaître leur avis sur la 
+		qualité de l'explication.\\
+		Nous proposons une autre méthode qui permet d'évaluer automatiquement la qualité d'une explication : nous 
+		avons montré un échantillon de 43 exemples issus du fichier de test de SNLI à six personnes pour 
+		qu'elles puissent annoter ce qu'elles pensent être une explication correcte, c'est-à-dire les mots 
+		de la prémisse et les mots de l'hypothèse qui conduisent au label associé.
+		Nous avons récolté leurs réponses pour en faire un corpus d'explications de références, au format CSV.\\
+		La figure ci-dessous est un échantillon de ce corpus d'explications : \\
+		
+		\begin{table}[h]
+			\begin{center}
+			\leftskip -2cm
+			{	
+				\begin{tabular}{|p{2cm}|p{5cm}|p{3cm}|p{2cm}|p{2.5cm}|}
+				\hline
+				\small{étiquette} & \small{Prémisse} & \small{Hypothèse} & \small{Mots explicatifs (prémisse)} & \small{Mots explicatifs (hypothèse)}\\
+				\hline
+				inférence & This church choir sings to the masses as they sing joyous songs from the book at a church. &  The church is filled with song. & sings 3 songs 11 church 17 & filled 3 song 5 church 1\\
+				\hline
+				contradiction & A man playing an electric guitar on stage. &  A man playing banjo on the floor. & man 1 guitar 5 stage 7 & man 1 banjo 3 floor 6\\
+				\hline
+				neutre & An old man with a package poses in front of an advertisement. & A man poses in front of an ad for beer. & & for 8 beer 9 \\
+				\hline
+				inférence & A blond-haired doctor and her African american assistant looking threw new medical manuals. & A doctor is looking at a book & doctor 2 looking 8 manuals 12 & doctor 1 looking 3 book 6\\
+				\hline
+				\end{tabular}
+			}
+			\caption{\bf{Echantillon du corpus explicatif. Chaque ligne correspond à une paire. La première colonne est l'étiquette de la paire, la deuxième est 
+			la prémisse, la troisième est l'hypothèse, la quatrième est la liste des mots explicatifs dans la prémisse, et la dernière est la liste 
+			des mots explicatifs dans l'hypothèse. Le nombre à droite de chaque mot explicatif est sa position dans sa phrase correspondante : certains mots pouvent 
+			être présent plusieurs fois dans la phrase, tel que "church" dans la prémisse du premier exemple. Il faut donc les différencier. Le troisième exemple 
+			n'a pas de mot explicatif dans la prémisse.}}
+			\end{center}
+		\end{table}
+			
 	\subsection{Mots de remplacement} % FINI
 		Pour que BAXI marche bien, il faut remplacer les mots par d'autres mots pertinents pour créer 
 		des exemples adversariaux. Pour cela, on a annoté 
@@ -642,47 +686,13 @@
 		\end{table}\\
 		
 
-	\subsection{Corpus explicatif} % FINI
-		La méthode habituelle pour ce genre d'expériences est de montrer à plusieurs personnes les paires 
-		de phrases prémisse/hypothèse avec leurs explications associées pour connaître leur avis sur la 
-		qualité de l'explication.\\
-		Nous proposons une autre méthode qui permet d'évaluer automatiquement la qualité d'une explication : nous 
-		avons montré un échantillon de 43 exemples issus du fichier de test de SNLI à six personnes pour 
-		qu'elles puissent annoter ce qu'elles pensent être une explication correcte, c'est-à-dire les mots 
-		de la prémisse et les mots de l'hypothèse qui conduisent au label associé.
-		Nous avons récolté leurs réponses pour en faire un corpus d'explications de références, au format CSV.\\
-		La figure ci-dessous est un échantillon de ce corpus d'explications : \\
-		
-		\begin{table}[h]
-			\begin{center}
-			\leftskip -2cm
-			{	
-				\begin{tabular}{|p{2cm}|p{5cm}|p{3cm}|p{2cm}|p{2.5cm}|}
-				\hline
-				\small{étiquette} & \small{Prémisse} & \small{Hypothèse} & \small{Mots explicatifs (prémisse)} & \small{Mots explicatifs (hypothèse)}\\
-				\hline
-				inférence & This church choir sings to the masses as they sing joyous songs from the book at a church. &  The church is filled with song. & sings 3 songs 11 church 17 & filled 3 song 5 church 1\\
-				\hline
-				contradiction & A man playing an electric guitar on stage. &  A man playing banjo on the floor. & man 1 guitar 5 stage 7 & man 1 banjo 3 floor 6\\
-				\hline
-				neutre & An old man with a package poses in front of an advertisement. & A man poses in front of an ad for beer. & & for 8 beer 9 \\
-				\hline
-				inférence & A blond-haired doctor and her African american assistant looking threw new medical manuals. & A doctor is looking at a book & doctor 2 looking 8 manuals 12 & doctor 1 looking 3 book 6\\
-				\hline
-				\end{tabular}
-			}
-			\caption{\bf{Echantillon du corpus explicatif. Chaque ligne correspond à une paire. La première colonne est l'étiquette de la paire, la deuxième est 
-			la prémisse, la troisième est l'hypothèse, la quatrième est la liste des mots explicatifs dans la prémisse, et la dernière est la liste 
-			des mots explicatifs dans l'hypothèse. Le nombre à droite de chaque mot explicatif est sa position dans sa phrase correspondante : certains mots pouvent 
-			être présent plusieurs fois dans la phrase, tel que "church" dans la prémisse du premier exemple. Il faut donc les différencier. Le troisième exemple 
-			n'a pas de mot explicatif dans la prémisse.}}
-			\end{center}
-		\end{table}
+
 			
 	\subsection{Paramètres} %FINI
 		Tous les \textit{embeddings} sont mis-à-jour par le réseau. Ils sont de dimension 100. La taille des \textit{batches} est de 16. \\
 		Concernant les RNNs utilisés, il n'y a qu'une seule couche, la dimension des états cachés est de 100, et le \textit{dropout} est à 0,3.\\
-		Pour l'utilisation de LIME, on a fixé le voisinage de l'entrée à 500.
+		Pour l'utilisation de LIME, on a fixé le nombre de voisin de l'entrée à 500.
+		
 \section{Résultats} % SECTION 8
 	Pour contextualiser, la table ci-dessous montre les taux de réussite des étiquettes prédites pour les trois systèmes décrits en section 5 
 	sur le CPI :\\
@@ -776,9 +786,7 @@
 	membres du jury pour avoir accepté la charge de la lecture critique et de l'évaluation de ce travail.\\
 	Enfin, je remercie les annotateurs du corpus explicatif, Thomas Delfino, Franck Dary, Simone Fuscone, Sébastien Ratel, et Jérémy Auguste
 	 pour m'avoir accordé un peu de temps lors de la création de ce corpus.
-	 
-	 
-\newpage 
+	  
 \bibliographystyle{unsrt} % Le style est mis entre accolades.
 \bibliography{biblio}
 
