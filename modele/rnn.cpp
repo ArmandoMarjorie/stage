@@ -614,9 +614,10 @@ void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_sample
 	
 	//cout << "P = "<< precision << "\nR = " << recall << "\nF = " << f_mesure << endl;
 	cout << "Accuracy total imp. words = " << recall << endl;
-	cout << "\tAccurracy for neutral = " <<correct[0] / (double)nb_label[0] << endl;
-	cout << "\tAccurracy for entailment = " << correct[1] / (double)nb_label[1] << endl;
-	cout << "\tAccurracy for contradiction = " << correct[2] / (double)nb_label[2] << endl;
+	cout << "\ttotal imp. words = " << total_imp_size << endl;
+	cout << "\tAccurracy for neutral = " <<correct[0] <<"/"<< (double)nb_label[0] << endl;
+	cout << "\tAccurracy for entailment = " << correct[1] <<"/"<< (double)nb_label[1] << endl;
+	cout << "\tAccurracy for contradiction = " << correct[2] <<"/"<< (double)nb_label[2] << endl;
 	
 }
 

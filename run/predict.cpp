@@ -90,10 +90,10 @@ int main(int argc, char** argv)
 		Data explication_set(argv[1]);
 		generate_couple_masks(rnn, model, explication_set, embedding, argv[6], argv[8]); //methode O(n*m) retire chaque couple */
 		
-		/* For 'normal' test prediction
-		Data set(argv[1]);
-		run_predict(rnn, model, set, embedding, argv[6]);
-		*/ 
+		/* For 'normal' test prediction*/
+		/*Data set(argv[1]);
+		run_predict(rnn, model, set, embedding, argv[6]);*/
+		
 	}
 	else
 	{
