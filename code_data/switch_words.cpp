@@ -79,6 +79,11 @@ SW::SW(ifstream& database)
 	}
 }
 
+unsigned SW::get_nb_token()
+{
+	return real_words.size();
+}
+
 unsigned SW::get_word(unsigned num_remplace, unsigned num_w)
 {
 	return remplacing_words[num_remplace][num_w].get_word();
@@ -87,7 +92,7 @@ unsigned SW::get_nb_replace() //nb de lignes (nb d'expressions pouvant remplacer
 {
 	return remplacing_words.size();
 }
-unsigned SW::get_nb_replace_word(unsigned num_remplace) //nb de mots pour la ligne "num_remplace" (nb de mots dans l'expression courrante)
+unsigned SW::get_nb_replace_word(unsigned num_remplace) //nb de mots pour la ligne "num_remplace" (nb de mots dans l'expression courrante qui va remplacer)
 {
 	return remplacing_words[num_remplace].size();
 }
@@ -102,37 +107,52 @@ unsigned SW::is_insert(unsigned num_remplace, unsigned num_w)
 }
 
 
-unsigned Switch_Words::get_word(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample)
+unsigned Switch_Words::get_word(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample, unsigned num_real_expression) //mot remplacant
 {
 	if(is_premise)
-		return prem[num_sample].get_word(num_remplace,num_w);
-	return hyp[num_sample].get_word(num_remplace,num_w);
+		return prem[num_sample][num_real_expression].get_word(num_remplace,num_w);
+	return hyp[num_sample][num_real_expression].get_word(num_remplace,num_w);
 }
-unsigned Switch_Words::get_nb_replace_word(unsigned num_remplace, bool is_premise, unsigned num_sample)
+unsigned Switch_Words::get_nb_replace_word(unsigned num_remplace, bool is_premise, unsigned num_sample, unsigned num_real_expression) //nb de mots pour la ligne "num_remplace" (nb de mots dans l'expression courrante qui va remplacer)
 {
 	if(is_premise)
-		return prem[num_sample].get_nb_replace_word(num_remplace);
-	return hyp[num_sample].get_nb_replace_word(num_remplace);
-}
-unsigned Switch_Words::get_nb_replace(bool is_premise, unsigned num_sample)
-{
-	if(is_premise)
-		return prem[num_sample].get_nb_replace();
-	return hyp[num_sample].get_nb_replace();
+		return prem[num_sample][num_real_expression].get_nb_replace_word(num_remplace);
+	return hyp[num_sample][num_real_expression].get_nb_replace_word(num_remplace);
 }
 
-unsigned Switch_Words::get_position(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample)
+unsigned Switch_Words::get_nb_replace(bool is_premise, unsigned num_sample, unsigned num_real_expression) //nb de lignes (nb d'expressions pouvant remplacer)
 {
 	if(is_premise)
-		return prem[num_sample].get_position(num_remplace,num_w);
-	return hyp[num_sample].get_position(num_remplace,num_w);
+		return prem[num_sample][num_real_expression].get_nb_replace();
+	return hyp[num_sample][num_real_expression].get_nb_replace();
 }
 
-unsigned Switch_Words::is_insert(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample)
+unsigned Switch_Words::get_position(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample, unsigned num_real_expression) //position du mot remplacant
 {
 	if(is_premise)
-		return prem[num_sample].is_insert(num_remplace,num_w);
-	return hyp[num_sample].is_insert(num_remplace,num_w);
+		return prem[num_sample][num_real_expression].get_position(num_remplace,num_w);
+	return hyp[num_sample][num_real_expression].get_position(num_remplace,num_w);
+}
+
+unsigned Switch_Words::is_insert(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample, unsigned num_real_expression) // est ce que le mot remplacant s'insere à sa position donnée ou supprime (remplace) le mot à sa position donnée
+{
+	if(is_premise)
+		return prem[num_sample][num_real_expression].is_insert(num_remplace,num_w);
+	return hyp[num_sample][num_real_expression].is_insert(num_remplace,num_w);
+}
+
+unsigned Switch_Words::get_nb_token(bool is_premise, unsigned num_sample, unsigned num_real_expression) //nb de mot dans l'expression que l'on remplace
+{
+	if(is_premise)
+		return prem[num_sample][num_real_expression].get_nb_token();
+	return hyp[num_sample][num_real_expression].get_nb_token();
+}
+
+unsigned Switch_Words::get_nb_expr(bool is_premise, unsigned num_sample) //nb d'expression dans la premisse ou l'hypothèse
+{
+	if(is_premise)
+		return prem[num_sample].size();
+	return hyp[num_sample].size();
 }
 
 

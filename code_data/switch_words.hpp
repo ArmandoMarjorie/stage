@@ -42,6 +42,7 @@
 			unsigned get_nb_replace_word(unsigned num_remplace);
 			unsigned get_position(unsigned num_remplace, unsigned num_w);
 			unsigned is_insert(unsigned num_remplace, unsigned num_w);
+			unsigned get_nb_token();
 	};
 	
 
@@ -49,16 +50,17 @@
 	class Switch_Words
 	{
 		private:
-			std::vector<SW> prem;  //toutes les prémises du jeu de données
-			std::vector<SW> hyp;
+			std::vector<std::vector<SW>> prem;  
+			std::vector<std::vector<SW>> hyp;
 		public:
 			Switch_Words(char* filename);
-			unsigned get_word(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample);
-			unsigned get_nb_replace_word(unsigned num_remplace, bool is_premise, unsigned num_sample);
-			unsigned get_nb_replace(bool is_premise, unsigned num_sample);
-			unsigned get_position(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample);
-			unsigned is_insert(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample);
-			
+			unsigned get_word(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample, unsigned num_real_expression);
+			unsigned get_nb_replace_word(unsigned num_remplace, bool is_premise, unsigned num_sample, unsigned num_real_expression);
+			unsigned get_nb_replace(bool is_premise, unsigned num_sample, unsigned num_real_expression);
+			unsigned get_position(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample, unsigned num_real_expression);
+			unsigned is_insert(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample, unsigned num_real_expression);
+			unsigned get_nb_token(bool is_premise, unsigned num_sample, unsigned num_real_expression);
+			unsigned get_nb_expr(bool is_premise, unsigned num_sample);
 	};
 	
 #endif

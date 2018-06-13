@@ -263,264 +263,6 @@ void run_prediction_expl_for_sys_4(RNN& rnn, ParameterCollection& model, Data& e
 
 
 
-void explain_label(vector<float>& probs, vector<float>& original_probs, vector<float>& DI, unsigned label_explained, 
-	unsigned true_label)
-{
-	float distance;
-	float di_tmp = 0;
-
-	for(unsigned label=0; label < NB_CLASSES; ++label)
-	{
-		distance = probs[label] - original_probs[label];
-		if(label == label_explained)
-			distance = -distance;
-		di_tmp += distance;
-	}
-	
-	if(di_tmp > DI[label_explained])
-		DI[label_explained] = di_tmp;
-}
-
-
-
-void affichage_vect_DI(vector<float>& vect_DI)
-{
-	for(unsigned i=0; i<vect_DI.size(); ++i)
-		cout << "vect_di[" <<i <<"] =" << vect_DI[i] << endl;
-}
-
-void affichage_max_DI(vector<vector<float>>& max_DI)
-{
-	for(unsigned i=0; i<max_DI.size(); ++i)
-	{
-		for(unsigned j=0; j<max_DI[i].size(); ++j)
-			cout << "max_DI[" <<i << "][" << j << "] = "<< max_DI[i][j] << " ";
-		cout << endl;
-	}
-}
-
-void init_DI_words(unsigned size, vector<vector<float>>& max_DI)
-{
-	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-		if(size != 0)
-			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -99999);
-}
-unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_sample, bool is_premise)
-{
-	unsigned correct = 0;
-	unsigned true_imp_position;
-	for(unsigned word = 0; word < save.size(); ++word)
-	{
-		true_imp_position = explication_set.get_important_words_position(is_premise, num_sample, word);
-		if( std::find(save.begin(), save.end(), true_imp_position) != save.end() )
-			++correct;
-	}
-	return correct;
-	
-}
-
-void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_samples)
-{
-	//float precision;
-	float recall;
-	//float f_mesure;
-	vector<unsigned> nb_label(NB_CLASSES,0);
-	unsigned correct_total = 0;
-	for(unsigned i=0; i<NB_CLASSES; ++i)
-	{
-		nb_label[i] = explication_set.get_nb_important_words_in_label(i, nb_samples);
-		correct_total += correct[i];	
-	}
-	
-	/*unsigned total_size = explication_set.get_nb_words_total();
-	precision = correct_total / (double)total_size;
-	*/
-	unsigned total_imp_size = explication_set.get_nb_words_imp_total(nb_samples);
-	recall = correct_total / (double)total_imp_size;
-	//cout << "correct_total = " << correct_total << " total_imp_size = " << total_imp_size << endl;
-	//f_mesure = (2 * precision * recall) / (double)(precision + recall);
-	
-	//cout << "P = "<< precision << "\nR = " << recall << "\nF = " << f_mesure << endl;
-	cout << "Accuracy total imp. words = " << recall << endl;
-	cout << "\ttotal imp. words = " << total_imp_size << endl;
-	cout << "\tAccurracy for neutral = " <<correct[0] <<"/"<< (double)nb_label[0] << endl;
-	cout << "\tAccurracy for entailment = " << correct[1] <<"/"<< (double)nb_label[1] << endl;
-	cout << "\tAccurracy for contradiction = " << correct[2] <<"/"<< (double)nb_label[2] << endl;
-	
-}
-
-void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
-	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample,
-	vector<Switch_Words*>& sw_vect)
-{
-	vector<float> vect_DI(NB_CLASSES, -999); // contient DI pour neutral, inf, contradiction
-	std::vector<float>::iterator index_min_it;
-	unsigned index_min, label_predicted;
-	unsigned nb_changing_words;
-	unsigned changing_word;
-	double proba_log=0;
-	vector<float> result(NB_CLASSES, 0.0);
-	
-	for(unsigned label_explained=0; label_explained < NB_CLASSES; ++label_explained)
-	{
-		nb_changing_words = sw_vect[label_explained]->get_nb_switch_words(word_position, is_premise, num_sample);
-		
-		for(unsigned nb=0; nb<nb_changing_words; ++nb)
-		{
-			cg.clear();
-			changing_word = sw_vect[label_explained]->get_switch_word(word_position, is_premise, nb, num_sample);
-			explication_set.set_word(is_premise, word_position, changing_word, num_sample);
-			vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
-			explain_label(probs, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample)); //max de ça = l'importance du mot
-		}
-	}
-		
-	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-	{
-		index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
-		index_min = std::distance(std::begin(max_DI[lab]), index_min_it);
-		
-		
-		if(vect_DI[lab] > max_DI[lab][index_min]) 
-		{
-			max_DI[lab][index_min] = vect_DI[lab];
-			save[lab][index_min] = word_position; 
-		}										
-	}	
-	
-	explication_set.set_word(is_premise, word_position, word, num_sample);
-}
-
-void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
-	vector<Switch_Words*>& sw_vect)
-{
-	cerr << "Loading parameters ...\n";
-	TextFileLoader loader(parameters_filename);
-	loader.populate(model);
-	cerr << "Parameters loaded !\n";
-
-	cerr << "Testing ...\n";
-	unsigned label_predicted;
-	unsigned label_predicted_true_sample;
-	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
-	rnn.disable_dropout();
-	char* name = "Files/expl_token_changing_word";
-	ofstream output(name, ios::out | ios::trunc);
-	if(!output)
-	{
-		cerr << "Problem with the output file " << name << endl;
-		exit(EXIT_FAILURE);
-	}		
-	vector<unsigned> premise;
-	vector<unsigned> hypothesis;
-	/*vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(3));
-	vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(3));
-	vector<vector<float>> max_DI(NB_CLASSES, vector<float>(3)); // 3 DI for each label*/
-	
-	
-	unsigned prem_size, hyp_size, position;
-	float DI;
-	unsigned nb_imp_words_prem;
-	unsigned nb_imp_words_hyp;
-	unsigned true_label;
-	vector<unsigned> correct(NB_CLASSES,0);  
-	vector<unsigned> nb_label(NB_CLASSES,0);  
-	vector<unsigned> positive(NB_CLASSES,0);  
-	unsigned pos = 0;  
-	
-	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 13
-	{
-		nb_imp_words_prem = explication_set.get_nb_important_words(true, i);
-		nb_imp_words_hyp = explication_set.get_nb_important_words(false, i);
-		
-		vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(nb_imp_words_prem));
-		vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(nb_imp_words_hyp));
-		vector<vector<float>> max_DI_prem(NB_CLASSES, vector<float>(nb_imp_words_prem));
-		vector<vector<float>> max_DI_hyp(NB_CLASSES, vector<float>(nb_imp_words_hyp));
-		
-		cout << "SAMPLE " << i+1 << "\n";
-		ComputationGraph cg;
-		save_sentences(explication_set, premise, hypothesis, i);
-		
-			// original prediction
-		true_label = explication_set.get_label(i);
-		++nb_label[true_label];
-		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
-		if(label_predicted_true_sample == true_label)
-		{
-			++pos;
-			++positive[label_predicted_true_sample];
-		}
-			
-		output << true_label << endl << label_predicted_true_sample << endl;
-		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
-		
-			// init DI of words
-		init_DI_words(nb_imp_words_prem, max_DI_prem);
-		init_DI_words(nb_imp_words_hyp, max_DI_hyp);
-		
-		prem_size = explication_set.get_nb_words(1,i);
-		hyp_size = explication_set.get_nb_words(2,i);
-		
-		// In the premise
-		if(nb_imp_words_prem != 0)
-		{
-			for( position=0; position<prem_size; ++position)
-			{
-				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI_prem, save_prem, i, sw_vect);
-				cout << premise[position] << endl;
-			}
-		}
-		cout << "HYP :\n";
-		// In the hypothesis
-		if(nb_imp_words_hyp != 0)
-		{
-			for(position=0; position<hyp_size; ++position)
-			{	
-				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI_hyp, save_hyp, i, sw_vect);
-				cout << hypothesis[position] << endl;
-			}
-		}
-		
-		premise.clear();
-		hypothesis.clear();
-		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-		{
-			for(unsigned j=0; j<max_DI_prem[lab].size(); ++j)
-				output << save_prem[lab][j] << " ";
-			output << "-1\n";
-		}
-		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-		{
-			for(unsigned j=0; j<max_DI_hyp[lab].size(); ++j)
-				output << save_hyp[lab][j] << " ";
-			output << "-1\n";
-		}
-		
-		explication_set.print_sentences_of_a_sample(i, output);
-		output << "-3\n";
-		
-		/* Calcul pour les taux */
-		correct[true_label] +=  nb_correct(explication_set, save_prem[true_label], i, true);  //nb de correct dans la prémisse du sample i
-		correct[true_label] +=  nb_correct(explication_set, save_hyp[true_label], i, false);  //nb de correct dans l'hypothèse du sample i
-	}	
-	//output.close();
-	cout << "Success Rate = " << 100 * (pos / (double)19) << endl;
-	cout << "\tSuccess Rate neutral = " << 100 * (positive[0] / (double)nb_label[0]) << endl;
-	cout << "\tSuccess Rate entailment = " << 100 * (positive[1] / (double)nb_label[1]) << endl;
-	cout << "\tSuccess Rate contradiction = " << 100 * (positive[2] / (double)nb_label[2]) << endl;
-	
-	cout << "\tRate neutral = " << 100 * (nb_label[0] / (double)19) << endl;
-	cout << "\tRate entailment = " << 100 * (nb_label[1] / (double)19) << endl;
-	cout << "\tRate contradiction = " << 100 * (nb_label[2] / (double)19) << endl;
-	
-	mesure(explication_set,correct,19);
-	output.close();
-	char* name_detok = "Files/expl_detoken_changing_word";
-	detoken_expl(lexique_filename, name, name_detok);
-	//char* name_detok = "Files/expl_detoken_changing_word";
-	//detoken_expl(lexique_filename, name, name_detok);
-}
 
 
 
@@ -641,6 +383,282 @@ void dev_score(RNN& rnn, ParameterCollection& model, Data& dev_set, Embeddings& 
 			embedding.print_embedding(output_emb_filename);
 	}
 
+}
+
+	/* BAXI !!!! */
+	
+
+void explain_label(vector<float>& probs, vector<float>& original_probs, vector<float>& DI, unsigned label_explained, 
+	unsigned true_label)
+{
+	float distance;
+	float di_tmp = 0;
+
+	for(unsigned label=0; label < NB_CLASSES; ++label)
+	{
+		distance = probs[label] - original_probs[label];
+		if(label == label_explained)
+			distance = -distance;
+		di_tmp += distance;
+	}
+	
+	if(di_tmp > DI[label_explained])
+		DI[label_explained] = di_tmp;
+}
+
+
+
+void affichage_vect_DI(vector<float>& vect_DI)
+{
+	for(unsigned i=0; i<vect_DI.size(); ++i)
+		cout << "vect_di[" <<i <<"] =" << vect_DI[i] << endl;
+}
+
+void affichage_max_DI(vector<vector<float>>& max_DI)
+{
+	for(unsigned i=0; i<max_DI.size(); ++i)
+	{
+		for(unsigned j=0; j<max_DI[i].size(); ++j)
+			cout << "max_DI[" <<i << "][" << j << "] = "<< max_DI[i][j] << " ";
+		cout << endl;
+	}
+}
+
+void init_DI_words(unsigned size, vector<vector<float>>& max_DI)
+{
+	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+		if(size != 0)
+			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -99999);
+}
+unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_sample, bool is_premise)
+{
+	unsigned correct = 0;
+	unsigned true_imp_position;
+	for(unsigned word = 0; word < save.size(); ++word)
+	{
+		true_imp_position = explication_set.get_important_words_position(is_premise, num_sample, word);
+		if( std::find(save.begin(), save.end(), true_imp_position) != save.end() )
+			++correct;
+	}
+	return correct;
+	
+}
+
+void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_samples)
+{
+	//float precision;
+	float recall;
+	//float f_mesure;
+	vector<unsigned> nb_label(NB_CLASSES,0);
+	unsigned correct_total = 0;
+	for(unsigned i=0; i<NB_CLASSES; ++i)
+	{
+		nb_label[i] = explication_set.get_nb_important_words_in_label(i, nb_samples);
+		correct_total += correct[i];	
+	}
+	
+	/*unsigned total_size = explication_set.get_nb_words_total();
+	precision = correct_total / (double)total_size;
+	*/
+	unsigned total_imp_size = explication_set.get_nb_words_imp_total(nb_samples);
+	recall = correct_total / (double)total_imp_size;
+	//cout << "correct_total = " << correct_total << " total_imp_size = " << total_imp_size << endl;
+	//f_mesure = (2 * precision * recall) / (double)(precision + recall);
+	
+	//cout << "P = "<< precision << "\nR = " << recall << "\nF = " << f_mesure << endl;
+	cout << "Accuracy total imp. words = " << recall << endl;
+	cout << "\ttotal imp. words = " << total_imp_size << endl;
+	cout << "\tAccurracy for neutral = " <<correct[0] <<"/"<< (double)nb_label[0] << endl;
+	cout << "\tAccurracy for entailment = " << correct[1] <<"/"<< (double)nb_label[1] << endl;
+	cout << "\tAccurracy for contradiction = " << correct[2] <<"/"<< (double)nb_label[2] << endl;
+	
+}
+
+
+// POUR L'EXPRESSION COURRANTE (dans la prem. ou l'hyp.)
+void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
+	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample,
+	vector<Switch_Words*>& sw_vect)
+{
+	vector<float> vect_DI(NB_CLASSES, -999); // contient DI pour neutral, inf, contradiction
+	std::vector<float>::iterator index_min_it;
+	unsigned index_min, label_predicted;
+	unsigned nb_changing_words;
+	unsigned changing_word, changing_word_position;
+	bool changing_word_insertion;
+	vector<float> result(NB_CLASSES, 0.0);
+	
+	for(unsigned label_explained=0; label_explained < NB_CLASSES; ++label_explained)
+	{
+		nb_changing_words = sw_vect[label_explained]->get_nb_replace(is_premise, num_sample, word_position); 
+		
+		for(unsigned nb=0; nb<nb_changing_words; ++nb)
+		{
+			cg.clear();
+			for(unsigned word_remplacing=0; word_remplacing < sw_vect[label_explained]->get_nb_replace_word(nb, is_premise, num_sample, word_position); ++word_remplacing)
+			{
+				changing_word = sw_vect[label_explained]->get_word(nb, word_remplacing,is_premise, num_sample, word_position);
+				changing_word_position = sw_vect[label_explained]->get_position(nb, word_remplacing,is_premise, num_sample, word_position); 
+				changing_word_insertion = sw_vect[label_explained]->is_insert(nb, word_remplacing,is_premise, num_sample, word_position); 
+				
+				explication_set.set_word(is_premise, word_position, changing_word, num_sample, changing_word_position, changing_word_insertion); //methode à changer (se trouve dans data.cpp)
+			}
+			
+			//changing_word = sw_vect[label_explained]->get_switch_word(word_position, is_premise, nb, num_sample); // changement ici dans la boucle for
+			//explication_set.set_word(is_premise, word_position, changing_word, num_sample);
+			
+			
+			vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL); //a garder
+			explain_label(probs, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample)); //max de ça = l'importance du mot
+		}
+	}
+		
+	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+	{
+		index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
+		index_min = std::distance(std::begin(max_DI[lab]), index_min_it);
+		
+		
+		if(vect_DI[lab] > max_DI[lab][index_min]) 
+		{
+			max_DI[lab][index_min] = vect_DI[lab];
+			save[lab][index_min] = word_position; 
+		}										
+	}	
+	
+	explication_set.set_word(is_premise, word_position, word, num_sample);
+}
+
+void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
+	vector<Switch_Words*>& sw_vect)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+
+	cerr << "Testing ...\n";
+	unsigned label_predicted;
+	unsigned label_predicted_true_sample;
+	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	rnn.disable_dropout();
+	char* name = "Files/expl_token_changing_word";
+	ofstream output(name, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file " << name << endl;
+		exit(EXIT_FAILURE);
+	}		
+	vector<unsigned> premise;
+	vector<unsigned> hypothesis;
+	/*vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(3));
+	vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(3));
+	vector<vector<float>> max_DI(NB_CLASSES, vector<float>(3)); // 3 DI for each label*/
+	
+	
+	unsigned prem_size, hyp_size, position;
+	float DI;
+	unsigned nb_imp_words_prem;
+	unsigned nb_imp_words_hyp;
+	unsigned true_label;
+	vector<unsigned> correct(NB_CLASSES,0);  
+	vector<unsigned> nb_label(NB_CLASSES,0);  
+	vector<unsigned> positive(NB_CLASSES,0);  
+	unsigned pos = 0;  
+	
+	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 13
+	{
+		nb_imp_words_prem = explication_set.get_nb_important_words(true, i);
+		nb_imp_words_hyp = explication_set.get_nb_important_words(false, i);
+		
+		vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(nb_imp_words_prem));
+		vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(nb_imp_words_hyp));
+		vector<vector<float>> max_DI_prem(NB_CLASSES, vector<float>(nb_imp_words_prem));
+		vector<vector<float>> max_DI_hyp(NB_CLASSES, vector<float>(nb_imp_words_hyp));
+		
+		cout << "SAMPLE " << i+1 << "\n";
+		ComputationGraph cg;
+		save_sentences(explication_set, premise, hypothesis, i);
+		
+			// original prediction
+		true_label = explication_set.get_label(i);
+		++nb_label[true_label];
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
+		if(label_predicted_true_sample == true_label)
+		{
+			++pos;
+			++positive[label_predicted_true_sample];
+		}
+			
+		output << true_label << endl << label_predicted_true_sample << endl;
+		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
+		
+			// init DI of words
+		init_DI_words(nb_imp_words_prem, max_DI_prem);
+		init_DI_words(nb_imp_words_hyp, max_DI_hyp);
+		
+		prem_size = sw_vect[0].get_nb_expr(true,i);
+		hyp_size = sw_vect[0].get_nb_expr(false,i);
+		
+		// In the premise
+		if(nb_imp_words_prem != 0)
+		{
+			for( position=0; position<prem_size; ++position)
+			{
+				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI_prem, save_prem, i, sw_vect);
+				//cout << premise[position] << endl;
+			}
+		}
+		//cout << "HYP :\n";
+		// In the hypothesis
+		if(nb_imp_words_hyp != 0)
+		{
+			for(position=0; position<hyp_size; ++position)
+			{	
+				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI_hyp, save_hyp, i, sw_vect);
+				//cout << hypothesis[position] << endl;
+			}
+		}
+		
+		premise.clear();
+		hypothesis.clear();
+		// a revoir a partir d'ici
+		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+		{
+			for(unsigned j=0; j<max_DI_prem[lab].size(); ++j)
+				output << save_prem[lab][j] << " ";
+			output << "-1\n";
+		}
+		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
+		{
+			for(unsigned j=0; j<max_DI_hyp[lab].size(); ++j)
+				output << save_hyp[lab][j] << " ";
+			output << "-1\n";
+		}
+		
+		explication_set.print_sentences_of_a_sample(i, output);
+		output << "-3\n";
+		
+		/* Calcul pour les taux */
+		correct[true_label] +=  nb_correct(explication_set, save_prem[true_label], i, true);  //nb de correct dans la prémisse du sample i
+		correct[true_label] +=  nb_correct(explication_set, save_hyp[true_label], i, false);  //nb de correct dans l'hypothèse du sample i
+	}	
+	//output.close();
+	cout << "Success Rate = " << 100 * (pos / (double)19) << endl;
+	cout << "\tSuccess Rate neutral = " << 100 * (positive[0] / (double)nb_label[0]) << endl;
+	cout << "\tSuccess Rate entailment = " << 100 * (positive[1] / (double)nb_label[1]) << endl;
+	cout << "\tSuccess Rate contradiction = " << 100 * (positive[2] / (double)nb_label[2]) << endl;
+	
+	cout << "\tRate neutral = " << 100 * (nb_label[0] / (double)19) << endl;
+	cout << "\tRate entailment = " << 100 * (nb_label[1] / (double)19) << endl;
+	cout << "\tRate contradiction = " << 100 * (nb_label[2] / (double)19) << endl;
+	
+	mesure(explication_set,correct,19);
+	output.close();
+	char* name_detok = "Files/expl_detoken_changing_word";
+	detoken_expl(lexique_filename, name, name_detok);
+	//char* name_detok = "Files/expl_detoken_changing_word";
+	//detoken_expl(lexique_filename, name, name_detok);
 }
 
 
