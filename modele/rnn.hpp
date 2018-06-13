@@ -62,34 +62,9 @@
 	void dev_score(RNN& rnn, dynet::ParameterCollection& model, Data& dev_set, Embeddings& embedding, std::string parameter_filename, unsigned nb_of_sentences_dev,
 		unsigned& best, char* output_emb_filename);
 		
-		
-	void run_predict_couple(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);
-		
-	void save_sentences(Data& explication_set,std::vector<unsigned>& premise,std::vector<unsigned>& hypothesis, unsigned num_sample);
-	void write_couple(std::ofstream& output, Data& explication_set, unsigned num_sample, unsigned num_couple);
-	void write_sentences(std::ofstream& output, std::vector<unsigned>& premise, std::vector<unsigned>& hypothesis);
-	
-	void run_predict_removing_couple(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);
-	float calculate_DI(std::vector<float>& probs, std::vector<float>& original_probs, unsigned label_predicted);
-	void calculate_DI_label(std::vector<float>& probs, std::vector<float>& original_probs, std::vector<float>& DI);
-
 	
 	std::vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& embedding, bool print_label);
-	
-	void saving_branch(std::vector<std::pair<bool,bool>>& stack, std::vector<std::pair<unsigned,unsigned>>& save_premise, 
-		std::vector<std::pair<unsigned,unsigned>>& save_hypothesis, Data& explication_set, unsigned num_sample);
-	bool premise_empty(std::vector<std::pair<bool,bool>>& stack, unsigned premise_length);
-	bool hypothesis_empty(std::vector<std::pair<bool,bool>>& stack, unsigned premise_length);
-	void change_val(std::vector<std::pair<bool,bool>>& stack, unsigned& nb_words_removed);
-	void generate_all_masks(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename);
-	void generate_couple_masks(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
-	
-	
-	void print_stack(std::vector<std::pair<bool,bool>>& stack, unsigned premise_length);
-	
 	void run_prediction_expl_for_sys_4(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
-	
-	void change_words(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename, std::vector<Switch_Words*>& sw_vect);
 	void change_words_for_mesure(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
 		std::vector<Switch_Words*>& sw_vect);
 	

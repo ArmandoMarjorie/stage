@@ -3,93 +3,6 @@
 
 using namespace std;
 
-/*
-Switch_Words::Switch_Words(char* filename)
-{
-	ifstream database(filename, ios::in);
-	if(!database)
-	{ 
-		cerr << "Impossible to open the file " << filename << endl;
-		exit(EXIT_FAILURE);
-	}
-	int word;
-	while(database >> word)
-	{
-		SW sample(database);
-		sw.push_back(sample);
-	}
-	
-	database.close();
-}
-
-unsigned Switch_Words::get_nb_switch_words(unsigned word_position, bool is_premise, unsigned num_sample)
-{
-	return sw[num_sample].get_nb_switch_words(word_position, is_premise);
-}
-
-unsigned Switch_Words::get_switch_word(unsigned word_position, bool is_premise, unsigned num_switch_word, unsigned num_sample)
-{
-	return sw[num_sample].get_switch_word(word_position, is_premise, num_switch_word);
-}
-*/ 
-
-/*
-SW::SW(ifstream& database)
-{
-	int word;
-	unsigned cpt=0;
-	bool is_premise = true, ok = true;
-	while(ok && database >> word) //read a 'real' word (appearing in the sentences test file)
-	{
-		++cpt;
-		if(word == -2)
-		{
-			cpt=0;
-			is_premise = false;
-			continue;
-		}
-		else if(word == -3)
-		{
-			is_premise = true;
-			ok = false;
-		}
-		else
-		{
-			vector<unsigned> tmp;
-			//tmp.push_back(static_cast<unsigned>(word));
-			
-			database >> word;
-			while( word != -1 )
-			{
-				tmp.push_back(static_cast<unsigned>(word));
-				database >> word;
-			}
-			if(is_premise)
-				prem.push_back(tmp);
-			else
-				hyp.push_back(tmp);
-		}
-
-		
-	}
-}
-
-unsigned SW::get_nb_switch_words(unsigned word_position, bool is_premise)
-{
-	if(is_premise)
-		return prem[word_position].size();
-	else
-		return hyp[word_position].size();
-}
-
-unsigned SW::get_switch_word(unsigned word_position, bool is_premise, unsigned num_switch_word)
-{
-	if(is_premise)
-		return prem[word_position][num_switch_word];
-	else
-		return hyp[word_position][num_switch_word];
-}
-*/
 
 Switch_Words::Switch_Words(char* filename)
 {
@@ -111,10 +24,25 @@ Switch_Words::Switch_Words(char* filename)
 	database.close();
 }
 
+RW::RW(unsigned w, unsigned p, int in)
+{
+	word = w;
+	position = p;
+	if(in == -4)
+		insert = true;
+	else
+		insert = false;
+}
+
+bool RW::is_insert() { return insert; }
+unsigned RW::get_word() { return word; }
+unsigned RW::get_position() { return position; }
+
+
 SW::SW(ifstream& database)
 {
-	int word, nb_words, i;
-	unsigned cpt=0, position;
+	int word, nb_words, i, insertion;
+	unsigned position;
 	bool is_premise = true, ok = true;
 	while(ok && database >> nb_words) //read a 'real' word (appearing in the sentences test file)
 	{
@@ -136,12 +64,13 @@ SW::SW(ifstream& database)
 		database >> nb_words; //nb de mots/d'expressions pouvant le remplacer	
 		for(i=0; i<nb_words; ++i)
 		{
-			vector<pair<unsigned,unsigned>> tmp;
+			vector<RW> tmp;
 			database >> word;
 			while(word!=-1)
 			{
 				database >> position;
-				tmp.push_back(make_pair(static_cast<unsigned>(word), position));
+				database >> insertion;
+				tmp.push_back(RW(word, position, insertion));
 				database >> word;
 			}
 			remplacing_words.push_back(tmp);
@@ -150,6 +79,60 @@ SW::SW(ifstream& database)
 	}
 }
 
+unsigned SW::get_word(unsigned num_remplace, unsigned num_w)
+{
+	return remplacing_words[num_remplace][num_w].get_word();
+}
+unsigned SW::get_nb_replace() //nb de lignes (nb d'expressions pouvant remplacer)
+{
+	return remplacing_words.size();
+}
+unsigned SW::get_nb_replace_word(unsigned num_remplace) //nb de mots pour la ligne "num_remplace" (nb de mots dans l'expression courrante)
+{
+	return remplacing_words[num_remplace].size();
+}
 
+unsigned SW::get_position(unsigned num_remplace, unsigned num_w)
+{
+	return remplacing_words[num_remplace][num_w].get_position();
+}
+unsigned SW::is_insert(unsigned num_remplace, unsigned num_w)
+{
+	return remplacing_words[num_remplace][num_w].is_insert();
+}
+
+
+unsigned Switch_Words::get_word(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample)
+{
+	if(is_premise)
+		return prem[num_sample].get_word(num_remplace,num_w);
+	return hyp[num_sample].get_word(num_remplace,num_w);
+}
+unsigned Switch_Words::get_nb_replace_word(unsigned num_remplace, bool is_premise, unsigned num_sample)
+{
+	if(is_premise)
+		return prem[num_sample].get_nb_replace_word(num_remplace);
+	return hyp[num_sample].get_nb_replace_word(num_remplace);
+}
+unsigned Switch_Words::get_nb_replace(bool is_premise, unsigned num_sample)
+{
+	if(is_premise)
+		return prem[num_sample].get_nb_replace();
+	return hyp[num_sample].get_nb_replace();
+}
+
+unsigned Switch_Words::get_position(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample)
+{
+	if(is_premise)
+		return prem[num_sample].get_position(num_remplace,num_w);
+	return hyp[num_sample].get_position(num_remplace,num_w);
+}
+
+unsigned Switch_Words::is_insert(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample)
+{
+	if(is_premise)
+		return prem[num_sample].is_insert(num_remplace,num_w);
+	return hyp[num_sample].is_insert(num_remplace,num_w);
+}
 
 

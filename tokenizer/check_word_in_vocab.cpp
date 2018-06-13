@@ -27,6 +27,8 @@ void reading_lexique(char* lexique_filename, map<string, int>& word_to_id)
 	word_to_id["-1"] = -1;
 	word_to_id["-2"] = -2;
 	word_to_id["-3"] = -3;
+	word_to_id["INSERT"] = -4;
+	word_to_id["SUPP"] = -5;
 	cerr << lexique_filename << " has been read" << endl;
 	lexique_file.close();	
 }
@@ -84,6 +86,9 @@ void tokeniser_nouveau_remplacement(map<string, int>& word_to_id, char* file, ch
 					output << word_to_id[word] << " ";
 				f >> position;
 				output << position << " ";
+				f >> word;
+				output << word_to_id[word] << " ";
+				
 				f >> word;
 			}
 			output << "-1 ";
