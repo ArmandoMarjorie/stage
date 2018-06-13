@@ -14,7 +14,7 @@
 	 * \brief Class representing the database containing, for each word in the explication_test file, words that can replace them
 	 * ex : dog cat animal man person human
 	 * dog is the real word in the dataset, the rest can replace it
-	*/
+	*//*
 	class SW
 	{
 		private:
@@ -25,8 +25,21 @@
 			SW(std::ifstream& database);
 			unsigned get_nb_switch_words(unsigned word_position, bool is_premise);
 			unsigned get_switch_word(unsigned word_position, bool is_premise, unsigned num_switch_word);
+	};*/
+	
+	class SW
+	{
+		private:
+			std::vector<std::pair<unsigned,unsigned>> real_words; 
+			std::vector<std::vector<std::pair<unsigned,unsigned>>> remplacing_words; 
+		
+		public:
+			SW(std::ifstream& database);
+			//unsigned get_nb_switch_words(unsigned word_position, bool is_premise);
+			//unsigned get_switch_word(unsigned word_position, bool is_premise, unsigned num_switch_word);
 	};
 	
+	/*
 	class Switch_Words
 	{
 		private:
@@ -37,20 +50,18 @@
 			unsigned get_switch_word(unsigned word_position, bool is_premise, unsigned num_switch_word, unsigned num_sample);
 			
 	};
+	*/
 	
-	
-	/*
 	class Switch_Words
 	{
 		private:
-			std::map<unsigned, unsigned> correspondance;
-			std::vector<std::vector<unsigned>> sw; 
-		
+			std::vector<SW> prem;
+			std::vector<SW> hyp;
 		public:
 			Switch_Words(char* filename);
-			unsigned get_corresponding(unsigned word_id);
-			unsigned get_nb_switch_words(unsigned word_id);
-			unsigned get_switch_word(unsigned word_id, unsigned num_switch_word);
+			//unsigned get_nb_switch_words(unsigned word_position, bool is_premise, unsigned num_sample);
+			//unsigned get_switch_word(unsigned word_position, bool is_premise, unsigned num_switch_word, unsigned num_sample);
+			
 	};
-	*/
+	
 #endif

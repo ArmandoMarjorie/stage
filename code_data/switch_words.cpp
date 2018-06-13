@@ -4,65 +4,6 @@
 using namespace std;
 
 /*
-
-Switch_Words::Switch_Words(char* filename)
-{
-	ifstream database(filename, ios::in);
-	if(!database)
-	{ 
-		cerr << "Impossible to open the file " << filename << endl;
-		exit(EXIT_FAILURE);
-	}
-	int word;
-	unsigned cpt=0;
-	while(database >> word) //read a 'real' word in the test file
-	{
-		vector<unsigned> tmp;
-		tmp.push_back(static_cast<unsigned>(word));
-		
-		database >> word;
-		while( word != -1 )
-		{
-			tmp.push_back(static_cast<unsigned>(word));
-			database >> word;
-		}
-		
-		sw.push_back(tmp);
-		correspondance[tmp[0]] = cpt;
-		++cpt;
-	}
-	
-	database.close();
-}
-
-
-unsigned Switch_Words::get_corresponding(unsigned word_id)
-{
-	return correspondance[word_id];
-}
-
-
-
-	* \name get_nb_switch_words
-	* \brief Give the number of words that can replace word_id
-	*
-	* \param word_id : id of the word
-	* 
-	* \return The number of words that can replace word_id
-
-unsigned Switch_Words::get_nb_switch_words(unsigned word_id)
-{
-	return sw[correspondance[word_id]].size();
-}
-
-unsigned Switch_Words::get_switch_word(unsigned word_id, unsigned num_switch_word)
-{
-	return sw[correspondance[word_id]][num_switch_word];
-}
-
-
-*/
-
 Switch_Words::Switch_Words(char* filename)
 {
 	ifstream database(filename, ios::in);
@@ -90,7 +31,9 @@ unsigned Switch_Words::get_switch_word(unsigned word_position, bool is_premise, 
 {
 	return sw[num_sample].get_switch_word(word_position, is_premise, num_switch_word);
 }
+*/ 
 
+/*
 SW::SW(ifstream& database)
 {
 	int word;
@@ -146,9 +89,66 @@ unsigned SW::get_switch_word(unsigned word_position, bool is_premise, unsigned n
 	else
 		return hyp[word_position][num_switch_word];
 }
+*/
 
+Switch_Words::Switch_Words(char* filename)
+{
+	ifstream database(filename, ios::in);
+	if(!database)
+	{ 
+		cerr << "Impossible to open the file " << filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	int word;
+	while(database >> word)
+	{
+		SW premise(database);
+		prem.push_back(premise);
+		SW hypothesis(database);
+		hyp.push_back(hypothesis);
+	}
+	
+	database.close();
+}
 
-
+SW::SW(ifstream& database)
+{
+	int word, nb_words, i;
+	unsigned cpt=0, position;
+	bool is_premise = true, ok = true;
+	while(ok && database >> nb_words) //read a 'real' word (appearing in the sentences test file)
+	{
+		if(nb_words == -2)
+		{
+			ok = false;
+			continue;
+		}
+		
+		// Gère les vrais mots (ceux dans la phrase de base)
+		for(i=0; i<nb_words; ++i)
+		{
+			database >> word;
+			database >> position;
+			real_words.push_back(make_pair(static_cast<unsigned>(word), position));
+		}
+		
+		// Gère les mots/expressions de remplacement
+		database >> nb_words; //nb de mots/d'expressions pouvant le remplacer	
+		for(i=0; i<nb_words; ++i)
+		{
+			vector<pair<unsigned,unsigned>> tmp;
+			database >> word;
+			while(word!=-1)
+			{
+				database >> position;
+				tmp.push_back(make_pair(static_cast<unsigned>(word), position));
+				database >> word;
+			}
+			remplacing_words.push_back(tmp);
+		}		
+		
+	}
+}
 
 
 

@@ -31,41 +31,6 @@ void reading_lexique(char* lexique_filename, map<string, int>& word_to_id)
 	lexique_file.close();	
 }
 
-/* *//*
-void check(char* lexique, char* file, char* output_f, bool specific)
-{
-	ifstream f(file, ios::in);
-	if(!f)
-	{ 
-		cerr << "Impossible to open the file " << file << endl;
-		exit(EXIT_FAILURE);
-	}		
-	ofstream output(output_f, ios::out | ios::trunc);
-	if(!output)
-	{
-		cerr << "Problem with the output file "<< output_f << endl;
-		exit(EXIT_FAILURE);
-	}
-	map<string, int> word_to_id;
-	reading_lexique(lexique, word_to_id);
-	if(specific)
-	{
-		word_to_id["NEU"] = -2;
-		word_to_id["SYN"] = -3;
-	}
-	map< string, int >::iterator it;
-	string word;
-	while(f >> word)
-	{
-		it = word_to_id.find(word);
-		if( it == word_to_id.end() )
-			output << "INCONNU ";
-		else
-			output << word_to_id[word] << " ";
-	}
-	
-	f.close();
-}*/
 
 void tokeniser_nouveau_remplacement(map<string, int>& word_to_id, char* file, char* output_f)
 {
@@ -84,15 +49,46 @@ void tokeniser_nouveau_remplacement(map<string, int>& word_to_id, char* file, ch
 
 	map< string, int >::iterator it;
 	string word;
-	while(f >> word)
+	int nb_words, i, position;
+	while(f >> nb_words)
 	{
-		it = word_to_id.find(word);
-		if( it == word_to_id.end() )
-			output << "INCONNU ";
-		else
-			output << word_to_id[word] << " ";
-		if(word == "-1" || word == "-2" || word == "-3")
-			output << endl;
+		if(nb_words == -3 || nb_words == -2)
+		{
+			output << nb_words << endl;
+			continue;
+		}	
+
+		output << nb_words << " ";
+		for(i=0; i<nb_words; ++i)
+		{
+			f >> word;
+			it = word_to_id.find(word);
+			if( it == word_to_id.end() )
+				output << "INCONNU ";
+			else
+				output << word_to_id[word] << " ";
+			f >> position;
+			output << position << " ";
+		}
+		f >> nb_words;
+		output << nb_words << " ";
+		for(i=0; i<nb_words; ++i)
+		{
+			f >> word;
+			while(word != "-1")
+			{
+				it = word_to_id.find(word);
+				if( it == word_to_id.end() )
+					output << "INCONNU ";
+				else
+					output << word_to_id[word] << " ";
+				f >> position;
+				output << position << " ";
+				f >> word;
+			}
+			output << "-1 ";
+		}		
+		output << endl;
 	}
 	
 	f.close();	
