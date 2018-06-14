@@ -43,6 +43,7 @@
 			unsigned get_position(unsigned num_remplace, unsigned num_w);
 			unsigned is_insert(unsigned num_remplace, unsigned num_w);
 			unsigned get_nb_token();
+			unsigned get_real_word_position(unsigned num_word_real_expression);
 	};
 	
 
@@ -61,6 +62,7 @@
 			unsigned is_insert(unsigned num_remplace, unsigned num_w, bool is_premise, unsigned num_sample, unsigned num_real_expression);
 			unsigned get_nb_token(bool is_premise, unsigned num_sample, unsigned num_real_expression);
 			unsigned get_nb_expr(bool is_premise, unsigned num_sample);
+			unsigned get_real_word_position(bool is_premise, unsigned num_sample,  unsigned num_real_expression, unsigned num_word_real_expression);
 	};
 	
 #endif

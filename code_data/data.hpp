@@ -81,7 +81,7 @@
 			void reset_words_from_vectors(std::vector<unsigned>& sentence, unsigned word_position, unsigned num_sample, bool is_premise);
 			void remove_words_from_vectors(unsigned word_position, unsigned num_sample, bool is_premise);
 			
-			void set_word(bool is_premise, unsigned word_position, unsigned word, unsigned num_sample);
+			void set_word(bool is_premise, unsigned word_position, unsigned word, unsigned num_sample, unsigned changing_word_position, bool changing_word_insertion);
 			
 			unsigned get_nb_words_total(); //for each sample : nb_word in prem + nb_word in hyp
 			

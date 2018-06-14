@@ -60,8 +60,8 @@ Expression LSTM::sentence_representation(Data& set, Embeddings& embedding, unsig
 
 	for(unsigned i=0; i<nb_words; ++i)
 	{
-		//if(set.get_word_id(sentence, num_sentence, i) == 0) // 0 means "this is not a word, there is no word here !"
-		//	continue;
+		if(set.get_word_id(sentence, num_sentence, i) == 0) // 0 means "this is not a word, there is no word here !"
+			continue;
 		repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) );
 	}
 

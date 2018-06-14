@@ -90,11 +90,15 @@ void BiLSTM::words_representation(Embeddings& embedding, Data& set, unsigned sen
 	/* Run forward LSTM */
 	for(i=0; i<nb_words; ++i)
 	{
+		if(set.get_word_id(sentence, num_sentence, i) == 0)
+			continue;
 		sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) ) );
 	}
 	/* Run backward LSTM */
 	for(j=nb_words-1; j>=0; --j)
 	{
+		if(set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j)) == 0)
+			continue;
 		tmp.push_back(backward_lstm->add_input( 
 				embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j))) ) );
 	}

@@ -822,12 +822,24 @@ void Data::reset_words_from_vectors(vector<unsigned>& sentence, unsigned word_po
 		hypothesis[num_sample][word_position] = sentence[word_position];	
 }
 
-void Data::set_word(bool is_premise, unsigned word_position, unsigned word, unsigned num_sample)
+
+
+void Data::set_word(bool is_premise, unsigned word_position, unsigned word, unsigned num_sample, unsigned changing_word_position, bool changing_word_insertion)
 {
-	if(is_premise)
-		premise[num_sample][word_position] = word;
-	else
-		hypothesis[num_sample][word_position] = word;
+	if(!changing_word_insertion) //pas d'insertion mais un remplacement de mot
+	{
+		if(is_premise)
+			premise[num_sample][changing_word_position] = word;	
+		else
+			hypothesis[num_sample][changing_word_position] = word;		
+	}
+	else //insertion d'un mot (bouge les elts du vecteur vers la droite)
+	{
+		if(is_premise)
+			premise[num_sample].insert(premise[num_sample].begin()+changing_word_position, word);
+		else
+			hypothesis[num_sample].insert(hypothesis[num_sample].begin()+changing_word_position, word);
+	}
 }
 
 
