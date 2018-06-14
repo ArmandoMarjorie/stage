@@ -25,6 +25,7 @@ void reading_lexique(char* lexique_filename, map<string, int>& word_to_id)
 	while(lexique_file >> word && lexique_file >> id)
 		word_to_id[word] = id;
 	word_to_id["-1"] = -1;
+	word_to_id["0"] = 0;
 	word_to_id["-2"] = -2;
 	word_to_id["-3"] = -3;
 	word_to_id["INSERT"] = -4;
