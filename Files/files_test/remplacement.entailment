@@ -206,92 +206,94 @@ OK
 1 advertisement 11 8 a 10 SUPP beer 11 SUPP -1 ad 11 SUPP -1 a 10 SUPP man 11 SUPP -1 a 10 SUPP church 11 SUPP -1 a 10 SUPP woman 11 SUPP -1 a 10 SUPP river 11 SUPP -1 a 10 SUPP mountain 11 SUPP -1 a 10 SUPP restaurant 11 SUPP -1
 1 . 12 1 ! 12 SUPP -1
 -2
-
-// ICI
-
-a that the this those these -1
-man dude boy guy male -1
-poses sits motionless still sitting posing -1
-in inside about middle by over upon -1
-front about middle by over upon -1
-of about but the -1
-an that the this a these -1
-ad advertisement billboard sign commercial -1
-for to by of with without -1
-beer posing pose package man men -1
-. ! -1 
+1 a 0 2 another 0 SUPP -1 the 0 SUPP -1
+1 man 1 6 dude 1 SUPP -1 boy 1 SUPP -1 woman 1 SUPP -1 beer 1 SUPP -1 dog 1 SUPP -1 girl 1 SUPP -1
+1 poses 2 6 sits 2 SUPP -1 sitting 2 SUPP -1 posing 2 SUPP -1 runs 2 SUPP -1 moves 2 SUPP -1 walks 2 SUPP -1
+3 in 3 front 4 of 5 3 far 3 SUPP away 4 SUPP of 5 SUPP -1 near 3 SUPP 0 4 SUPP 0 5 SUPP -1 in 3 SUPP the 4 SUPP middle 5 SUPP of 6 INSERT -1
+1 an 6 2 another 6 SUPP -1 the 6 SUPP -1
+1 advertisement 7 7 a 4 SUPP restaurant 5 SUPP -1 a 4 SUPP church 5 SUPP -1 a 4 SUPP river 5 SUPP -1 a 4 SUPP mountain 5 SUPP -1 a 4 SUPP wall 5 SUPP -1 a 4 SUPP place 5 SUPP -1 a 4 SUPP billboard 5 SUPP -1
+1 for 8 5 to 8 SUPP -1 by 8 SUPP -1 of 8 SUPP -1 with 8 SUPP -1 without 8 SUPP -1
+1 beer 9 6 posing 9 SUPP -1 package 9 SUPP -1 men 9 SUPP -1 women 9 SUPP -1 running 9 SUPP -1 people 9 SUPP -1
+1 . 10 1 ! 10 SUPP -1 
 -3
+
+OK
 
 
 
 -3
-an that the this those these -1
-old walking nervous moving running -1
-man dude boy guy male -1
-with beside and without -1
-a that the this another these -1
-package ad advertisement man dude guy -1
-poses walks moves runs -1
-in inside about middle by over upon -1
-front about middle by over upon -1
-of about but the -1
-an that the this another these -1
-advertisement ad billboard sign commercial -1
-. ! -1
+1 an 0 2 another 0 SUPP -1 the 0 SUPP -1
+1 old 1 9 a 0 SUPP walking 1 SUPP -1 a 0 SUPP nervous 1 SUPP -1 a 0 SUPP moving 1 SUPP -1 a 0 SUPP running 1 SUPP -1 a 0 SUPP young 1 SUPP -1 a 0 SUPP tall 1 SUPP -1 a 0 SUPP small 1 SUPP -1 a 0 SUPP big 1 SUPP -1 a 0 SUPP fat 1 SUPP -1
+1 man 2 4 dude 2 SUPP -1 boy 2 SUPP -1 guy 2 SUPP -1 male 2 SUPP -1
+1 with 3 3 beside 3 SUPP -1 and 3 SUPP -1 without 3 SUPP -1
+1 a 4 2 another 4 SUPP -1 the 4 SUPP -1
+1 package 5 6 an 4 SUPP ad 5 SUPP -1 an 4 SUPP advertisement 5 SUPP -1 man 5 SUPP -1 beer 5 SUPP -1 dog 5 SUPP -1 bag 5 SUPP -1
+1 poses 6 8 walks 6 SUPP -1 moves 6 SUPP -1 runs 6 SUPP -1  eats 6 SUPP -1 sings 6 SUPP -1 talks 6 SUPP -1 speaks 6 SUPP -1 drinks 6 SUPP -1
+3 in 7 front 8 of 9 3 far 7 SUPP away 8 SUPP of 9 SUPP -1 near 7 SUPP 0 8 SUPP 0 9 SUPP -1 in 7 SUPP the 8 SUPP middle 9 SUPP of 10 INSERT -1		
+1 an 10 2 another 10 SUPP -1 the 10 SUPP -1
+1 advertisement 11 7 ad 11 SUPP -1 a 10 SUPP billboard 11 SUPP -1 a 10 SUPP commercial 11 SUPP -1 a 10 SUPP wall 11 SUPP -1 a 10 SUPP thing 11 SUPP -1 a 10 SUPP building 11 SUPP -1 a 10 SUPP tv 11 SUPP -1
+1 . 12 1 ! 12 SUPP -1
 -2
-a that the this those these -1
-man dude boy guy male -1
-walks poses sits motionless still sitting -1 
-by front along inside under -1
-an that the this a these -1
-ad advertisement billboard sign commercial -1
-. ! -1
+1 a 0 2 another 0 SUPP -1 the 0 SUPP -1
+1 man 1 4 dude 1 SUPP -1 boy 1 SUPP -1 guy 1 SUPP -1 male 1 SUPP -1
+1 walks 2 9 poses 2 SUPP -1 sits 2 SUPP -1 is 2 SUPP motionless 3 INSERT -1 posing 2 SUPP -1 eats 2 SUPP -1 sings 2 SUPP -1 talks 2 SUPP -1 speaks 2 SUPP -1 drinks 2 SUPP -1
+1 by 3 3 along 3 SUPP -1 under 3 SUPP -1 in 3 SUPP front 4 INSERT of 5 INSERT -1
+1 an 4 2 another 4 SUPP -1 the 4 SUPP -1
+1 ad 5 7 advertisement 5 SUPP -1 a 4 SUPP billboard 5 SUPP -1 a 4 SUPP commercial 5 SUPP -1 a 4 SUPP wall 5 SUPP -1 a 4 SUPP thing 5 SUPP -1 a 4 SUPP building 5 SUPP -1 a 4 SUPP tv 5 SUPP -1
+1 . 6 1 ! 6 SUPP -1
 -3
+
+
+OK
+
+
 -3
-a that another this those these -1
-land mountain river car vehicle -1
-rover bus truck vehicle car -1
-is was were -1
-being done had -1
-driven still motionless stuck drowned -1
-across outside not beside by -1
-a that another this those these -1
-river mountain restaurant road land -1
-. ! -1
+1 a 0 2 another 0 SUPP -1 the 0 SUPP -1
+2 land 1 rover 2 5 0 1 SUPP dog 2 SUPP -1 0 1 SUPP cat 2 SUPP -1 0 1 SUPP car 2 SUPP -1 0 1 SUPP vehicle 2 SUPP -1 0 1 SUPP thing 2 SUPP -1
+3 is 3 being 4 driven 5 6 is 3 SUPP being 4 SUPP stuck 5 SUPP -1 is 3 SUPP being 4 SUPP still 5 SUPP -1 is 3 SUPP being 4 SUPP motionless 5 SUPP -1 is 3 SUPP being 4 SUPP crossed 5 SUPP -1 is 3 SUPP being 4 SUPP here 5 SUPP -1 is 3 SUPP not 4 SUPP being 5 SUPP driven 6 INSERT -1
+1 across 6 7 outside -1 beside -1 by -1 on -1 down -1 in -1 inside -1
+1 a 7 2 another 7 SUPP -1 the 7 SUPP -1
+1 river 8 6 mountain 8 SUPP -1 restaurant 8 SUPP -1 road 8 SUPP -1 land 8 SUPP -1 lake 8 SUPP -1 an 7 SUPP ocean 8 SUPP -1
+1 . 9 1 ! 9 SUPP -1
 -2
-a that another this those these -1
-land mountain river car vehicle -1
-rover bus truck vehicle car -1
-is was were -1
-splashing painting coloring dyeing -1
-water blood paint juice drink -1
-as and but also -1
-it she he they we i -1
-crosses flies watches cleans -1
-a that another this those these -1
-river mountain restaurant road land -1
-. ! -1
+1 a 0 2 another 0 SUPP -1 the 0 SUPP -1
+2 land 1 rover 2 5 mountain 2 SUPP -1 river 2 SUPP -1 car 2 SUPP -1 vehicle 2 SUPP -1 thing 2 SUPP -1
+2 is 3 splashing 4 7 is 3 SUPP painting 4 SUPP -1 is 3 SUPP coloring 4 SUPP -1 is 3 SUPP dyeing 4 SUPP -1 is 3 SUPP losing 4 SUPP -1 is 3 SUPP missing 4 SUPP -1 is 3 SUPP avoiding 4 SUPP -1 is 3 SUPP feeling 4 SUPP -1
+1 water 5 6 blood 5 SUPP -1 paint 5 SUPP -1 juice 5 SUPP -1 drink 5 SUPP -1 rain 5 SUPP -1 thing 5 SUPP -1
+1 as 6 3 and 6 SUPP -1 but 6 SUPP -1 also 6 SUPP -1
+1 it 7 3 the 7 SUPP dog 8 INSERT -1 the 7 SUPP woman 8 INSERT -1 the 7 SUPP man 8 INSERT -1
+1 crosses 8 5 flies 8 SUPP over 9 INSERT -1 watches 8 SUPP -1 cleans 8 SUPP -1 feels 8 SUPP -1 touches 8 SUPP -1
+1 a 9 2 another 9 SUPP -1 the 9 SUPP -1
+1 river 10 6 mountain 10 SUPP -1 restaurant 10 SUPP -1 road 10 SUPP -1 land 10 SUPP -1 lake 10 SUPP -1 an 9 SUPP ocean 10 SUPP -1
+1 . 11 1 ! 11 SUPP -1
 -3
+
+
+OK
+
+
+
 -3
-a that another this those these -1
-land mountain river car vehicle -1
-rover dog cat woman man -1
-is was were -1
-being done had -1
-driven still motionless stuck drowned -1
-across inside outside beside with -1
-a that another this those these -1
-river mountain restaurant road land -1 
-. ! -1
+1 a 0 2 another 0 SUPP -1 the 0 SUPP -1
+2 land 1 rover 2 5 0 1 SUPP dog 2 SUPP -1 0 1 SUPP cat 2 SUPP -1 0 1 SUPP car 2 SUPP -1 0 1 SUPP vehicle 2 SUPP -1 0 1 SUPP thing 2 SUPP -1
+3 is 3 being 4 driven 5 6 is 3 SUPP being 4 SUPP stuck 5 SUPP -1 is 3 SUPP being 4 SUPP still 5 SUPP -1 is 3 SUPP being 4 SUPP motionless 5 SUPP -1 is 3 SUPP being 4 SUPP fixed 5 SUPP -1 is 3 SUPP being 4 SUPP checked 5 SUPP -1 is 3 SUPP not 4 SUPP being 5 SUPP driven 6 INSERT -1
+1 across 6 7 outside -1 beside -1 by -1 on -1 down -1 in -1 inside -1
+1 a 7 2 another 7 SUPP -1 the 7 SUPP -1
+1 river 8 6 mountain 8 SUPP -1 restaurant 8 SUPP -1 road 8 SUPP -1 land 8 SUPP -1 lake 8 SUPP -1 an 7 SUPP ocean 8 SUPP -1
+1 . 9 1 ! 9 SUPP -1
 -2
-a that another this those these -1
-vehicle man woman dog cat -1
-is was were -1
-crossing outside painting drinking watching -1
-a that another this those these -1
-river mountain restaurant road land -1
-. ! -1
+1 a 0 2 another 0 SUPP -1 the 0 SUPP -1
+1 vehicle 1 6 man 1 SUPP -1 woman 1 SUPP -1 dog 1 SUPP -1 cat 1 SUPP -1 car 1 SUPP -1 thing 1 SUPP -1
+2 is 2 crossing 3 7 is 2 SUPP not 3 SUPP crossing 4 INSERT -1 is 2 SUPP not 3 SUPP in 4 INSERT -1 is 2 SUPP painting 3 SUPP -1 is 2 SUPP drinking 3 SUPP -1 is 2 SUPP watching 3 SUPP -1 is 2 SUPP touching 3 SUPP -1 is 2 SUPP feeling 3 SUPP -1
+1 a 4 2 another 4 SUPP -1 the 4 SUPP -1
+1 river 5 6 mountain 5 SUPP -1 restaurant 5 SUPP -1 road 5 SUPP -1 land 5 SUPP -1 lake 5 SUPP -1 an 4 SUPP ocean 5 SUPP -1
+1 . 6 1 ! 6 SUPP -1
 -3
+
+
+OK
+
+
 -3
 a that the this those these -1
 land vehicle car sedan -1
@@ -316,6 +318,10 @@ a that the this those these -1
 river lake water beach -1
 . ! -1
 -3
+
+
+
+
 -3
 a that the this those these -1
 man dude guy male boy -1
