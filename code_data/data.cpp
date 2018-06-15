@@ -738,12 +738,15 @@ void Data::taking_couple(unsigned num_couple, unsigned num_sample)
 */
 void Data::reset_sentences(vector<unsigned>& original_premise,vector<unsigned>& original_hypothesis, unsigned num_sample, bool is_premise)
 {
+	premise[num_sample].clear();
+	hypothesis[num_sample].clear();
+	
 	if(is_premise)
 		for(unsigned j=0; j<original_premise.size(); ++j)
-			premise[num_sample][j] = original_premise[j];
+			premise[num_sample].push_back(original_premise[j]);
 	else
 		for(unsigned j=0; j<original_hypothesis.size(); ++j)
-			hypothesis[num_sample][j] = original_hypothesis[j];
+			hypothesis[num_sample].push_back(original_hypothesis[j]);
 
 }
 
