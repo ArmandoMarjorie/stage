@@ -1208,7 +1208,7 @@ entailment
 Young boys in green and blue jerseys kick around a soccer ball while other soccer games take place in the background . -1 22
 Young boys kicking around a soccer ball . -1 8
 neutral
-A man in a one piece tunic is riding a bike in front of a sandstone wall while touching his nose . -1 22
+A man in a one piece tunic is riding a bike in front of a sandstone wall thieveswhile touching his nose . -1 22
 The man is testing the bike . -1 7
 contradiction
 A man in a one piece tunic is riding a bike in front of a sandstone wall while touching his nose . -1 22
@@ -29233,9 +29233,7 @@ a man at a restaurant waiting for his wife -1 9
 contradiction
 Cheerleaders in blue performing on a football field underneath a yellow football goal post . -1 15
 The San Francisco 49ers cheerleaders perform in a dark basement . -1 11
-neutral
-Cheerleaders in blue performing on a football field underneath a yellow football goal post . -1 15
-A group of girls shake pom poms . -1 8
+
 entailment
 Cheerleaders in blue performing on a football field underneath a yellow football goal post . -1 15
 A group of people dance outdoors . -1 7
