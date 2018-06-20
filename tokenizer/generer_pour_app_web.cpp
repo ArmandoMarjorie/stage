@@ -14,16 +14,16 @@
 
 using namespace std;
 
-void write_output(string label, ofstream& output)
+void write_output_label(string label, ofstream& output)
 {
-	if(label != "neutral" || label != "entailment" || label != "contradiction")
+	if(label != "neutral" && label != "entailment" && label != "contradiction")
 		output << "incorrect entry\n";
 	else
-		output << "label : " << label << endl;
+		output << "label: " << label << endl;
 }
 
 
-void write_output(string sentence, map<string, unsigned>& word_to_id, ofstream& output)
+void write_output_words(string sentence, ofstream& output)
 {
 	unsigned nb_words=0;
 	for(unsigned i=0; i<sentence.size(); ++i)
@@ -34,47 +34,12 @@ void write_output(string sentence, map<string, unsigned>& word_to_id, ofstream& 
 		string word = word_ss.str();
 		++nb_words;
 		std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
-		output << word_to_id[word] << " ";
+		output <<"[" << word << "] ";
 	}
 	output << "-1 " << nb_words << endl;
 }
 
 
-void write_output_important_words(string sentence, map<string, unsigned>& word_to_id, ofstream& output)
-{
-	for(unsigned i=0; i<sentence.size(); ++i)
-	{
-		stringstream word_ss;
-		stringstream position_ss;
-		
-		// extracting words
-		for(;i<sentence.size() && sentence[i] != ' '; ++i)
-			word_ss << sentence[i];
-		++i;
-		string word = word_ss.str();
-		//cout << "[WORD]" << word << " ";
-		if(word == "-1")
-		{
-			output << "-2 -2 ";
-			continue;
-		}
-		
-		// extracting words' positions
-		for(;i<sentence.size() && sentence[i] != ' '; ++i)
-			position_ss << sentence[i];
-
-		
-		string position = position_ss.str();
-		//cout << "[POS]" << position << " ";
-		
-		std::transform(word.begin(), word.end(), word.begin(), ::tolower); 
-		output << word_to_id[word] << " " << position << " ";
-		cout << word_to_id[word] << " " << position << " ";
-
-	}
-	cout << "-1\n";
-	output << "-1\n";
-}
 
 string extract_sequences_between_guillemet(unsigned& i, string line)
 {
@@ -88,7 +53,7 @@ string extract_sequences_between_guillemet(unsigned& i, string line)
 
 
 
-void generating_tokenizing_explication(char* lexique_filename, char* explication_filename, char* output_filename)
+void generating_words(char* explication_filename, char* output_filename)
 {
 
 	ifstream explication_file(explication_filename, ios::in);
@@ -103,11 +68,8 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 		cerr << "Problem with the output file " << output_filename << endl;
 		exit(EXIT_FAILURE);
 	}
-	cerr << "Reading " << lexique_filename << endl;
 	
 	string word;
-	map<string, unsigned> word_to_id;
-	reading_lexique(lexique_filename, word_to_id);
 	
 	getline(explication_file, word); //read the label of each column in the csv file
 	unsigned cpt_guillemet;
@@ -118,6 +80,8 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 		cout << "\n\tSAMPLE " << cpt << endl;
 		++cpt;
 		cpt_guillemet=0;
+		output << "-3\n";
+		
 		// Extracting label, premise, hypothesis and couple
 		for(unsigned i=0; i<word.size(); ++i)
 		{
@@ -128,18 +92,23 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 			else if(cpt_guillemet == 3)
 			{
 				extract = extract_sequences_between_guillemet(i, word);
-				write_output(extract, output);
+				write_output_label(extract, output);
 			}
 			
 			// premise and hypothesis
 			else if(cpt_guillemet == 5 || cpt_guillemet == 7)
 			{
+				if(cpt_guillemet == 5)
+					output <<"premise -2\n";
+				else
+					output <<"hypothesis -2\n";
 				extract = extract_sequences_between_guillemet(i, word);
-				write_output(extract, word_to_id, output);			
+				write_output_words(extract, output);			
 			}
 			
 
 		}
+		output << "-3\n\n\n";
 	}
 	explication_file.close();
 	output.close();
@@ -151,16 +120,15 @@ void generating_tokenizing_explication(char* lexique_filename, char* explication
 
 int main(int argc, char** argv)
 {
-	if(argc != 4)
+	if(argc != 3)
 	{
 		cerr << "Usage :\n " << argv[0] << "\n\n"
-			 << "lexique_file\n"
 			 << "explication_file (format csv)\n"
 			 << "output_name (explication file tokenized)\n";
 		exit(EXIT_FAILURE);
 	}
 	
-	generating_tokenizing_explication(argv[1], argv[2], argv[3]);
+	generating_words(argv[1], argv[2]);
 	
 	return 0;
 }
