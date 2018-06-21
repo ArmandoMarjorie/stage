@@ -1,135 +1,135 @@
 -3
 label: neutral
 premise -2
-[this] [church] [choir] [sings] [to] [the] [masses] [as] [they] [sing] [joyous] [songs] [from] [the] [book] [at] [a] [church] [.] -1 19
+[this] [church] great -1 crack -1 baseball -1 [choir] crack -1 dog -1 singer -1  [sings] looks at -1 eats with -1 chants -1 [to] [the] [masses] dogs -1 cracks -1 persons -1 [as] [they] [sing] crack -1 write -1 look at -1 [joyous] cracked -1 sad -1 great -1 [songs] things -1 chants -1 yells -1 [from] by -1 with -1 at -1 [the] [book] restaurant -1 ceiling -1 manual -1  [at] [a] [church] baseball game -1 chapel -1 place -1 [.] -1 19
 hypothesis -2
-[the] [church] [has] [cracks] [in] [the] [ceiling] [.] -1 8
+[the] [church] stadium -1 chapel -1 place -1 [has] [cracks] songs -1 paint -1 singers -1 [in] from -1 by -1 outside -1 [the] [ceiling] book -1 church -1 singers -1 [.] -1 8
 -3
 
 
 -3
 label: entailment
 premise -2
-[this] [church] [choir] [sings] [to] [the] [masses] [as] [they] [sing] [joyous] [songs] [from] [the] [book] [at] [a] [church] [.] -1 19
+[this] [church] great -1 chapel -1 baseball -1 [choir] singer -1 dog -1 person -1 [sings] looks at -1 eats with -1 chants -1 [to] [the] [masses] dogs -1 persons -1 birds -1 [as] [they] [sing] write -1 look at -1 chant -1 [joyous] sad -1 empty -1 full -1 [songs] things -1 chants -1 yells -1 [from] by -1 with -1 at -1 [the] [book] restaurant -1 manual -1 bible -1 [at] [a] [church] baseball game -1 chapel -1 place -1 [.] -1 19
 hypothesis -2
-[the] [church] [is] [filled] [with] [song] [.] -1 7
+[the] [church] restaurant -1 place -1 chapel -1 [is] [filled] empty -1 here -1 full -1 [with] without -1 by -1 [song] masses -1 dogs -1 benches -1 [.] -1 7
 -3
 
 
 -3
 label: contradiction
 premise -2
-[this] [church] [choir] [sings] [to] [the] [masses] [as] [they] [sing] [joyous] [songs] [from] [the] [book] [at] [a] [church] [.] -1 19
+[this] [church] great -1 chapel -1 baseball -1 [choir] player -1 dog -1 person -1 [sings] looks at -1 plays with -1 chants -1 [to] [the] [masses] supporters -1 people -1 dogs -1 [as] [they] [sing] write -1 look at -1 chant -1 [joyous] supportive -1 sad -1 great -1 [songs] chants -1 things -1 yells -1 [from] by -1 with -1 at -1 [the] [book] baseball stadium -1 manual -1 chapel -1 [at] [a] [church] baseball stadium -1 chapel -1 place -1 [.] -1 19
 hypothesis -2
-[a] [choir] [singing] [at] [a] [baseball game] [.] -1 8
+[a] [choir] person -1 dog -1 singer -1 [singing] sleeping -1 chanting -1 not -1 [at] [a] [baseball game] church -1 mountain -1 place -1 [.] -1 8
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [woman] [with] [a] [green] [headscarf] [,] [blue] [shirt] [and] [a] [very] [big] [grin] [.] -1 15
+[a] [woman] man -1 person -1 lady -1 [with] without -1 wearing -1 selling -1 [a] [green] red -1 an old -1 new -1 [headscarf] shirt -1 shoe -1 man -1 [,] [blue] red -1 old -1 new -1 [shirt] headscarf -1 shoe -1 man -1 [and] without -1 wearing -1 [a] [very] huge -1 an old -1 tiny -1 [big] huge -1 old -1 tiny -1 [grin] child -1 smile -1 old woman -1 [.] -1 15
 hypothesis -2
-[the] [woman] [is] [young] [.] -1 5
+[the] [woman] man -1 person -1 lady -1 [is] is not -1 were -1 [young] depressed -1 smiling -1 old -1 [.] -1 5
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [woman] [with] [a] [green] [headscarf] [,] [blue] [shirt] [and] [a] [very] [big] [grin] [.] -1 15
+[a] [woman] man -1 person -1 lady -1 [with] without -1 wearing -1 selling -1 [a] [green] colorful -1 red -1 an old -1 [headscarf] shirt -1 shoe -1 man -1 [,] [blue] colorful -1 red -1 old -1 [shirt] headscarf -1 shoe -1 man -1 [and] without -1 wearing -1 [a] [very] huge -1 an old -1 tiny -1 [big] huge -1 old -1 tiny -1 [grin] dog -1 smile -1 man -1 [.] -1 15
 hypothesis -2
-[the] [woman] [is] [very] [happy] [.] -1 6
+[the] [woman] man -1 person -1 lady -1 [is] is not -1 were -1 [very] not -1 really -1 here and -1 [happy] depressed -1 dressed -1 old -1 [.] -1 6
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [woman] [with] [a] [green] [headscarf] [,] [blue] [shirt] [and] [a] [very] [big] [grin] [.] -1 15
+[a] [woman] man -1 person -1 lady -1 [with] without -1 wearing -1 selling -1 [a] [green] bloody -1 colorful -1 red -1 [headscarf] shirt -1 gun -1 man -1 [,] [blue] bloody -1 colorful -1 red -1 [shirt] headscarf -1 gun -1 man -1 [and] without -1 wearing -1 [a] [very] huge -1 an old -1 tiny -1 [big] huge -1 old -1 tiny -1 [grin] injury -1 sandwich -1 man -1 [.] -1 15
 hypothesis -2
-[the] [woman] [has been] [shot] [.] -1 6
+[the] [woman] man -1 person -1 lady -1 [has been] [shot] smiling -1 depressed -1 old -1 [.] -1 6
 -3
 
 
 -3
 label: entailment
 premise -2
-[an] [old] [man] [with] [a] [package] [poses] [in front of] [an] [advertisement] [.] -1 13
+[an] [old] a posing -1 a moving -1 a small -1 [man] woman -1 person -1 guy -1 [with] without -1 breaking -1 posing -1 [a] [package] woman -1 dog -1 an ad -1 [poses] runs -1 eats -1 still -1 [in front of] outside -1 by -1 beside -1 [an] [advertisement] ad -1 restaurant -1 place -1 [.] -1 13
 hypothesis -2
-[a] [man] [poses] [in front of] [an] [ad] [.] -1 9
+[a] [man] woman -1 person -1 guy -1 [poses] runs -1 eats -1 still -1 [in front of] outside -1 by -1 beside -1 [an] [ad] advertisement -1 restaurant -1 place -1 [.] -1 9
 -3
 
 
 -3
 label: neutral
 premise -2
-[an] [old] [man] [with] [a] [package] [poses] [in front of] [an] [advertisement] [.] -1 13
+[an] [old] a posing -1 a moving -1 a small -1 [man] woman -1 person -1 guy -1 [with] without -1 breaking -1 posing -1 [a] [package] woman -1 beer -1 an ad -1 [poses] runs -1 eats -1 is still -1 [in front of] outside -1 by -1 beside -1 [an] [advertisement] ad -1 restaurant -1 place -1 [.] -1 13
 hypothesis -2
-[a] [man] [poses] [in front of] [an] [ad] [for] [beer] [.] -1 11
+[a] [man] woman -1 person -1 guy -1 [poses] runs -1 eats -1 still -1 [in front of] outside -1 by -1 beside -1 [an] [ad] advertisement -1 restaurant -1 place -1 [for] drinking -1 with a -1 without a -1 [beer] woman -1 man -1 dogs [.] -1 11
 -3
 
 
 -3
 label: contradiction
 premise -2
-[an] [old] [man] [with] [a] [package] [poses] [in front of] [an] [advertisement] [.] -1 13
+[an] [old] a walking -1 a small -1 a posing -1 [man] woman -1 person -1 guy -1 [with] without -1 breaking -1 posing -1 [a] [package] woman -1 beer -1 an ad -1 [poses] walks -1 eats -1 is still -1 [in front of] outside -1 by -1 beside -1 [an] [advertisement] ad -1 restaurant -1 place -1 [.] -1 13
 hypothesis -2
-[a] [man] [walks] [by] [an] [ad] [.] -1 7
+[a] [man] woman -1 person -1 guy -1 [walks] poses -1 runs -1 eats -1 [by] in front of -1 outside -1 beside -1 [an] [ad] advertisement -1 restaurant -1 place -1  [.] -1 7
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [land rover] [is being] [driven] [across] [a] [river] [.] -1 10
+[a] [land rover] car -1 bike -1 vehicle -1 [is being] were -1 [driven] painted -1 broke -1 fixed -1 [across] beside -1 by -1 outside -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 10
 hypothesis -2
-[a] [land rover] [is] [splashing] [water] [as] [it] [crosses] [a] [river] [.] -1 12
+[a] [land rover] car -1 bike -1 vehicle -1 [is] were -1 [splashing] painting -1 crossing -1 avoiding -1 [water] blood -1 paint -1 drops -1 [as] [it] [crosses] flies over -1 touches -1 cleans -1 [a] [river] [.] restaurant -1 lake -1 field -1 12
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [land rover] [is being] [driven] [across] [a] [river] [.] -1 10
+[a] [land rover] car -1 bike -1 vehicle -1 [is being] were -1 [driven] painted -1 broke -1 fixed -1 [across] beside -1 by -1 outside -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 10
 hypothesis -2
-[a] [vehicle] [is] [crossing] [a] [river] [.] -1 7
+[a] [vehicle] car -1 bike -1 land rover -1 [is] were -1 [crossing] watching -1 feeling -1 parking at -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 7
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [land rover] [is being] [driven] [across] [a] [river] [.] -1 10
+[a] [land rover] car -1 bike -1 sedan -1 [is being] were -1 [driven] stuck -1 [across] beside -1 by -1 outside -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 10
 hypothesis -2
-[a] [sedan] [is] [stuck] [in] [the] [middle] [of] [a] [river] [.] -1 11
+[a] [sedan] car -1 bike -1 land rover -1 [is] were -1 [stuck] driving -1 crossing -1 still -1 [in the middle of] through -1 by -1 beside -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 11
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [man] [playing] [an] [electric] [guitar] [on] [stage] [.] -1 9
+[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [an] [electric] accoustic -1 a small -1 a red -1 [guitar] banjo -1 instrument -1 piano -1 [on] [stage] the floor -1 scene -1 outside -1 [.] -1 9
 hypothesis -2
-[a] [man] [playing] [banjo] [on] [the] [floor] [.] -1 8
+[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [banjo] an electric guitar -1 guitar -1 an instrument -1 [on] [the] [floor] stage -1 scene -1 outside [.] -1 8
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [man] [playing] [an] [electric] [guitar] [on] [stage] [.] -1 9
+[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [an] [electric] accoustic -1 a small -1 a red -1 [guitar] banjo -1 instrument -1 piano -1 [on] [stage] the floor -1 scene -1 outside -1 [.] -1 9
 hypothesis -2
-[a] [man] [playing] [guitar] [on] [stage] [.] -1 7
+[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [guitar] banjo -1 an instrument -1 piano -1 [on] [stage] the floor -1 scene -1 outside -1 [.] -1 7
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [man] [playing] [an] [electric] [guitar] [on] [stage] [.] -1 9
+[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [an] [electric] accoustic -1 a small -1 a red -1 [guitar] banjo -1 instrument -1 piano -1 [on] [stage] the floor -1 scene -1 outside -1 [.] -1 9
 hypothesis -2
-[a] [man] [is] [performing] [for] [cash] [.] -1 7
+[a] [man] woman -1 person -1 guy -1 [is] [performing] playing -1 eating -1 sleeping -1 [for] with -1 looking at -1 counting -1 [cash] the public -1 women -1 dogs [.] -1 7
 -3
 
 
