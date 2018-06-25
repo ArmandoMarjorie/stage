@@ -555,159 +555,161 @@ hypothesis -2
 [a] [volleyball] football -1 sport -1 baseball -1 [team] show -1 crowd -1 contestants -1 [is] was -1 [performing] playing -1 assisting -1 not -1 [in] [a] [national] big -1 green -1 volleyball -1 [competition] gymnasium -1 place -1 team -1 [.] -1 10
 -3
 
-======================================================================
 
 -3
 label: entailment
 premise -2
-[man] [in] [traditional] [costume] [holding] [small] [guitar] [with] [a] [silver] [bike] [behind] [him] [.] -1 14
+[man] woman -1 guy -1 person -1 [in] [traditional] red -1 musical -1 big -1 [costume] clothes -1 instrument -1 dress -1 [holding] carying -1 with a -1 breaking -1 [small] musical -1 tall -1 toy -1 [guitar] instrument -1 bag -1 dog -1 [with] without -1 and -1 [a] [silver] musical -1 big -1 red -1 [bike] instrument -1 costume -1 car -1 [behind] in front of -1 with -1 by -1 [him] her -1 the man -1 [.] -1 14
 hypothesis -2
-[a] [man] [is] [holding] [a] [musical] [instrument] [.] -1 8
+[a] [man] woman -1 guy -1 person -1 [is] [holding] carying -1 looking at -1 breaking -1 [a] [musical] scientific -1 kind of -1 tall -1 [instrument] manual -1 guitar -1 thing -1 [.] -1 8
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [woman] [in] [a] [long] [,] [dark] [coat] [looks through] [trashcans] [in] [winter] [.] -1 14
+[a] [woman] man -1 person -1 lady -1 [in] [a] [long] cold -1 light -1 white -1 [,] [dark] cold -1 light -1 white -1 [coat] short -1 shirt -1 scarf -1 [looks through] breaking -1 throwing -1 painting -1 [trashcans] men -1 snow -1 winter -1 [in] [winter] summer -1 coat -1 the snow -1  [.] -1 14
 hypothesis -2
-[a] [woman] [older] [than] [thirty] [is] [outside] [in] [winter] [.] -1 10
+[a] [woman] man -1 person -1 lady -1 [older] younger -1 better -1 smaller -1 [than] [thirty] the man -1 seventy -1 the trashcans -1 [is] [outside] inside -1 under the snow -1 dressed -1 [in] [winter] summer -1 coat -1 the snow -1 [.] -1 10
+-3
+
+
+					-3
+					label: contradiction
+					premise -2
+					[two] some -1 no -1 three -1 [young] tall -1 children -1 bored -1 [boys] girls -1 children -1 people -1 [are] [playing] watching girls -1 bored -1 happy -1 [with] [a] [toy] tall -1 red -1 girl 's -1 [train] doll -1 plush -1 thing -1 [set] [on] [a] [wood] [floor] [.] -1 15
+					hypothesis -2
+					[two] some -1 no -1 three -1 [girls] boys -1 children -1 people -1 [are] [playing] watching boys -1 bored -1 happy -1 [with] without -1 looking at -1 [dolls] toys -1 train -1 boys -1 [.] -1 7
+					-3
+
+
+-3
+label: neutral
+premise -2
+[two] no -1 some -1 three -1 [little] tall -1 sisters -1 friends -1 [girls] boys -1 children -1 women -1 [reading] looking at -1 writing -1 tearing up -1 [a] [book] manual -1 paper -1 menu -1 [at] [the] [library] bar -1 family house -1 river -1 [.] -1 10
+hypothesis -2
+[the] [girls] boys -1 children -1 women -1 [are] [sisters] reading -1 sleeping -1 tall -1 [.] -1 5
+-3
+
+
+					-3
+					label: neutral
+					premise -2
+					[three] four -1 no -1 some -1 [young] old -1 friends -1 sisters -1 [girls] sisters -1 brothers -1 children -1 [and] [a] [baby] sister -1 boy -1 child -1 [are] [sitting in] sleeping on -1 laying on -1 burning -1 [the]
+					 [grass] bed -1 wall -1 restaurant -1 [on] [a] [blue] red -1 girl 's -1 boy 's -1 [blanket] jacket -1  [with] [baby] [toys] [scattered] [on] [it] [.] -1 22
+					hypothesis -2
+					[four] three -1 no -1 some -1 [sisters] girls -1 children -1 men -1 [play] fight -1 speak -1 work -1 [with] [each other] dogs -1 toys -1 their parents -1 [.] -1 7
+					-3
+
+
+-3
+label: neutral
+premise -2
+[two] no -1 some -1 three -1 [smiling] sisters -1 tall -1 friends -1 [young] sisters -1 tall -1 friends -1 [girls] sisters -1 boys -1 children -1 [wearing] looking at -1 burning -1 selling -1 [plastic] red -1 boy 's -1 girl 's -1 [sunglasses] cap -1 dress -1 shirt -1 [are] [lying on] sitting on -1 fighting on -1 sleeping on -1 [the] [grass] family house -1 wall -1 blanket -1 [.] -1 13
+hypothesis -2
+[the] [two] three -1 tall -1 young -1 [girls] people -1 children -1 men -1 [are] [sisters] smiling -1 tall -1 standing -1 [.] -1 6
+-3
+
+
+					-3
+					label: neutral
+					premise -2
+					[the] [female] [soccer] [team] [is] [getting] [last] [minute] [instruction] [from] [their] [coach] [.] -1 13
+					hypothesis -2
+					[the] [soccer] [team] [is] [listening to] [their] [coach] [for] [their] [last] [play] [to] [win] [the] [soccer game] [.] -1 18
+					-3
+
+
+-3
+label: neutral
+premise -2
+[a] [dog] an animal -1 man -1 pet -1 [biting] looking at -1 pushing -1 hurting -1 [a] [man 's] cat 's -1 woman 's -1 its owner 's -1 [rear] leg -1 toy -1 pet -1 -1 7
+hypothesis -2
+[an] [animal] a dog -1 a cat -1 a golden retriever -1 [bit] plays with -1 hurts -1 fights -1 [its] [owner] the man -1 legs -1 toys -1 [.] -1 6
+-3
+
+
+					-3
+					label: contradiction
+					premise -2
+					[a] [golfer] person -1 cook -1 dog -1 [shoots] [his] [ball] [out of] [a] [sand trap] [.] -1 11
+					hypothesis -2
+					[a] [drive off] [of] [the] [first] [tee] [.] -1 8
+					-3
+
+
+					-3
+					label: neutral
+					premise -2
+					[a] [surfer] [is] [riding] [a] [wave] [in] [a] [large] [body] [of] [water] [.] -1 13
+					hypothesis -2
+					[this] [is] [his] [first] [wave] [of] [the] [day] [.] -1 9
+					-3
+
+
+					-3
+					label: neutral
+					premise -2
+					[a] [woman] [finishing] [a] [marathon] [race] [.] -1 7
+					hypothesis -2
+					[the] [woman] [is] [in] [first] [place] [.] -1 7
+					-3
+
+
+					-3
+					label: neutral
+					premise -2
+					[man] [with] [blue] [and] [yellow] [shirt] [rides] [bike] [.] -1 9
+					hypothesis -2
+					[a] [man] [rides] [a] [bike] [for] [the] [first time] -1 9
+					-3
+
+
+-3
+label: entailment
+premise -2
+[a] [baby] an adult -1 child -1 girl -1 [with] [a] [green] brown -1 black -1 white -1 [bottom] top -1 short -1 cat -1 [and] [red] brown -1 black -1 white -1 [top] bottom -1 shirt -1 cat -1 [lying] making -1 sleeping on -1 eating on -1 [in] [bed] on animals -1 children -1 blanket -1 [with] beside -1 without -1 [a] [brown] red -1 black -1 white -1 [and] [white] brown -1 black -1 red -1 [cat] toy -1 blanket -1 animal -1 [and] [also] with -1 not -1 [a] [black] red -1 brown -1 white -1 [and] [white] red -1 brown -1 black -1 [cat] toy -1 blanket -1 animal -1 [.] -1 26
+hypothesis -2
+[there is] [a] [child] an adult -1 baby -1 girl -1 [and] [two] no -1 some -1 three -1 [animals] cats -1 men -1 pets -1 [.] -1 8
 -3
 
 
 -3
 label: contradiction
 premise -2
-[two] [young] [boys] [are] [playing] [with] [a] [toy] [train] [set] [on] [a] [wood] [floor] [.] -1 15
+[a] [brown] sleepy -1 tall -1 tired -1 [dog] animal -1 cat -1 insect -1 [wearing] with -1 biting -1 looking at -1 [a] [collar] jacket -1 scarf -1 shoe -1 [is] [chasing] sleeping -1 happy -1 tired -1 [and] [biting] sleeping -1 eating -1 laying -1 [on] [a] [red] brown -1 black -1 white -1 [broom] grass -1 animal -1 thing -1 [.] -1 15
 hypothesis -2
-[two] [girls] [are] [playing] [with] [dolls] [.] -1 7
+[an] [animal] a dog -1 the owner -1 a cat -1 [is] [sleeping] chasing -1 happy -1 fighting -1 [outside] inside -1 on the grass -1 in the restaurant -1 [.] -1 6
 -3
 
 
--3
-label: neutral
-premise -2
-[two] [little] [girls] [reading] [a] [book] [at] [the] [library] [.] -1 10
-hypothesis -2
-[the] [girls] [are] [sisters] [.] -1 5
--3
+					-3
+					label: entailment
+					premise -2
+					[brown] [and] [cream] [dog] animal -1 man -1 silhouette -1 [with] [tongue out] [in front of] outside a -1 beside a -1 by a -1 [grassy] [forest] -1 12
+					hypothesis -2
+					[there is] [an] [animal] a dog -1 a man -1 a silhouette -1 [standing] sleeping -1 dead -1 playing -1 [outdoors] in the forest -1 inside -1 somewhere -1 [.] -1 7
+					-3
 
 
--3
-label: neutral
-premise -2
-[three] [young] [girls] [and] [a] [baby] [are] [sitting in] [the] [grass] [on] [a] [blue] [blanket] [with] [baby] [toys] [scattered] [on] [it] [.] -1 22
-hypothesis -2
-[four] [sisters] [play] [with] [each] [other] [.] -1 7
--3
+					-3
+					label: entailment
+					premise -2
+					[the] [dog] animal -1 man -1 cat -1 [is] [in] [snow] bed -1 the forest -1 dirt -1 [,] [and] [has] [a] [stick] toy -1 some food -1 an animal -1 [in] [its] [mouth] [.] -1 14
+					hypothesis -2
+					[there is] [an] [animal] a dog -1 a man -1 a cat -1 [outdoors] in snow -1 inside -1 playing -1 [.] -1 6
+					-3
 
 
--3
-label: neutral
-premise -2
-[two] [smiling] [young] [girls] [wearing] [plastic] [sunglasses] [are] [lying on] [the] [grass] [.] -1 13
-hypothesis -2
-[the] [two] [girls] [are] [sisters] [.] -1 6
--3
+					-3
+					label: contradiction
+					premise -2
+					[the] [women] man -1 person -1 animal -1 [is] [photographing] looking at -1 facing -1 enjoying -1 [statues] animals -1 men -1 dogs -1 [outdoors] inside -1 at home -1 at the zoo -1 [on] [a] [sunny] cold -1 great -1 long -1 [day]          [.] -1 11
+					hypothesis -2
+					[two] some -1 no -1 three -1 [men] women -1 people -1 animals -1 [taking] looking at -1 facing -1 enjoying -1 [pictures] photographies -1        [of] [animals] statues -1 women -1 dogs -1 -1 6
+					-3
 
-
--3
-label: neutral
-premise -2
-[the] [female] [soccer] [team] [is] [getting] [last] [minute] [instruction] [from] [their] [coach] [.] -1 13
-hypothesis -2
-[the] [soccer] [team] [is] [listening to] [their] [coach] [for] [their] [last] [play] [to] [win] [the] [soccer game] [.] -1 18
--3
-
-
--3
-label: neutral
-premise -2
-[a] [dog] [biting] [a] [man 's] [rear] -1 7
-hypothesis -2
-[an] [animal] [bit] [its] [owner] [.] -1 6
--3
-
-
--3
-label: contradiction
-premise -2
-[a] [golfer] [shoots] [his] [ball] [out of] [a] [sand trap] [.] -1 11
-hypothesis -2
-[a] [drive off] [of] [the] [first] [tee] [.] -1 8
--3
-
-
--3
-label: neutral
-premise -2
-[a] [surfer] [is] [riding] [a] [wave] [in] [a] [large] [body] [of] [water] [.] -1 13
-hypothesis -2
-[this] [is] [his] [first] [wave] [of] [the] [day] [.] -1 9
--3
-
-
--3
-label: neutral
-premise -2
-[a] [woman] [finishing] [a] [marathon] [race] [.] -1 7
-hypothesis -2
-[the] [woman] [is] [in] [first] [place] [.] -1 7
--3
-
-
--3
-label: neutral
-premise -2
-[man] [with] [blue] [and] [yellow] [shirt] [rides] [bike] [.] -1 9
-hypothesis -2
-[a] [man] [rides] [a] [bike] [for] [the] [first time] -1 9
--3
-
-
--3
-label: entailment
-premise -2
-[a] [baby] [with] [a] [green] [bottom] [and] [red] [top] [lying in] [bed] [with] [a] [brown] [and] [white] [cat] [and] [also] [a] [black] [and] [white] [cat] [.] -1 26
-hypothesis -2
-[there] [is] [a] [child] [and] [two] [animals] [.] -1 8
--3
-
-
--3
-label: contradiction
-premise -2
-[a] [brown] [dog] [wearing] [a] [collar] [is] [chasing] [and] [biting] [on] [a] [red] [broom] [.] -1 15
-hypothesis -2
-[an] [animal] [is] [sleeping] [outside] [.] -1 6
--3
-
-
--3
-label: entailment
-premise -2
-[brown] [and] [cream] [dog] [with] [tongue out] [in front of] [grassy] [forest] -1 12
-hypothesis -2
-[there] [is] [an] [animal] [standing] [outdoors] [.] -1 7
--3
-
-
--3
-label: entailment
-premise -2
-[the] [dog] [is] [in] [snow] [,] [and] [has] [a] [stick] [in] [its] [mouth] [.] -1 14
-hypothesis -2
-[there] [is] [an] [animal] [outdoors] [.] -1 6
--3
-
-
--3
-label: contradiction
-premise -2
-[the] [women] [is] [photographing] [statues] [outdoors] [on] [a] [sunny] [day] [.] -1 11
-hypothesis -2
-[two] [men] [taking] [pictures] [of] [animals] -1 6
--3
+====================
 
 
 -3
