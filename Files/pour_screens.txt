@@ -301,12 +301,6 @@ hypothesis : There are men using scientific instruments .
 
 
 
-label : entailment
-premise : Man in traditional costume holding small guitar 
-		  with a silver bike behind him .
-hypothesis : A man is holding a musical instrument .
-
-
 
 label : entailment
 premise : A woman with red-hair and a leather jacket holds a 
@@ -319,4 +313,12 @@ label : entailment
 premise : A man in a white shirt and baseball hat is pushing 
 		  a cart carrying several bags on a street .
 hypothesis : A man is walking outside .
+
+
+
+label : entailment
+premise : A biker races .
+hypothesis : A person is riding a bike
+
+
 
