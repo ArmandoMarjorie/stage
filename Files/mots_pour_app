@@ -235,7 +235,7 @@ hypothesis -2
 -3
 label: contradiction
 premise -2
-[a] [couple] group -1 two dogs -1 two persons -1 [walk] sleep -1 eat -1 sit -1 [hand in hand] together -1 separately -1 side by side -1 [down] at -1 [a] [street] road -1 river -1 bench -1 [.] -1 10
+[a] [couple] group -1 two dogs -1 two persons -1 [walk] sleep -1 eat -1 sit -1 [hand in hand] together -1 separately -1 fast -1 [down] at -1 [a] [street] road -1 river -1 bench -1 [.] -1 10
 hypothesis -2
 [a] [couple] group -1 two dogs are -1 two persons are -1 [is] were -1 [sitting on] sleeping on -1 walking down -1 looking at -1 [a] [bench] street -1 bed -1 place -1 [.] -1 8
 -3
