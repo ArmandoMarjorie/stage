@@ -641,9 +641,9 @@ hypothesis -2
 					-3
 					label: neutral
 					premise -2
-					[a] [surfer] [is] [riding] [a] [wave] [in] [a] [large] [body] [of] [water] [.] -1 13
+					[a] [surfer] woman -1 dog -1 man -1 [is] [riding] looking at -1 swimming in -1 watching -1 [a] [wave] horse -1 sea -1 waterfall -1 [in] [a] [large]     [body] [of] [water] [.] -1 13
 					hypothesis -2
-					[this] [is] [his] [first] [wave] nap -1 outing -1 look -1 [of] [the] [day] [.] -1 9
+					[this] [is] [his] [first] tallest -1 largest -1 ridden -1 [wave] nap -1 outing -1 look -1 [of] [the] [day] life -1 night -1 beach -1 [.] -1 9
 					-3
 
 
