@@ -1,900 +1,2872 @@
 -3
 label: neutral
 premise -2
-[this] [church] great -1 crack -1 baseball -1 [choir] crack -1 dog -1 singer -1 [sings] looks at -1 eats with -1 chants -1 [to] [the] [masses] dogs -1 cracks -1 persons -1 [as] [they] [sing] crack -1 write -1 look at -1 [joyous] cracked -1 sad -1 great -1 [songs] things -1 chants -1 yells -1 [from] by -1 with -1 at -1 [the] [book] restaurant -1 ceiling -1 manual -1 [at] [a] [church] baseball game -1 chapel -1 place -1 [.] -1 19
+19
+{this}
+[church] great SUPP  -1 crack SUPP  -1 baseball SUPP  -1
+[choir] crack SUPP  -1 dog SUPP  -1 singer SUPP  -1
+[sings] looks at SUPP  -1 eats with SUPP  -1 chants SUPP  -1 
+{to}
+{the}
+[masses] dogs SUPP  -1 cracks SUPP  -1 persons SUPP  -1 
+{as}
+{they}
+[sing] crack SUPP  -1 write SUPP  -1 look at SUPP  -1
+[joyous] cracked SUPP  -1 sad SUPP  -1 great SUPP  -1
+[songs] things SUPP  -1 chants SUPP  -1 yells SUPP  -1
+[from] by SUPP  -1 with SUPP  -1 at SUPP  -1
+{the}
+[book] restaurant SUPP  -1 ceiling SUPP  -1 manual SUPP  -1
+[at] from -1 in front of -1 in -1
+{a}
+[church] baseball game SUPP  -1 chapel SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[the] [church] stadium -1 chapel -1 place -1 [has] [cracks] songs -1 paint -1 singers -1 [in] from -1 by -1 outside -1 [the] [ceiling] book -1 church -1 singers -1 [.] -1 8
+8
+{the}
+[church] stadium SUPP  -1 chapel SUPP  -1 place SUPP  -1
+{has}
+[cracks] songs SUPP  -1 paint SUPP  -1 singers SUPP  -1
+[in] from SUPP  -1 by SUPP  -1 outside SUPP  -1
+{the}
+[ceiling] book SUPP  -1 church SUPP  -1 singers SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[this] [church] great -1 chapel -1 baseball -1 [choir] singer -1 dog -1 person -1 [sings] looks at -1 eats with -1 chants -1 [to] [the] [masses] dogs -1 persons -1 birds -1 [as] [they] [sing] write -1 look at -1 chant -1 [joyous] sad -1 empty -1 full -1 [songs] things -1 chants -1 yells -1 [from] by -1 with -1 at -1 [the] [book] restaurant -1 manual -1 bible -1 [at] [a] [church] baseball game -1 chapel -1 place -1 [.] -1 19
+19
+{this}
+[church] great SUPP  -1 chapel SUPP  -1 baseball SUPP  -1
+[choir] singer SUPP  -1 dog SUPP  -1 person SUPP  -1
+[sings] looks at SUPP  -1 eats with SUPP  -1 chants SUPP  -1
+{to}
+{the}
+[masses] dogs SUPP  -1 persons SUPP  -1 birds SUPP  -1
+{as}
+{they}
+[sing] write SUPP  -1 look at SUPP  -1 chant SUPP  -1
+[joyous] sad SUPP  -1 empty SUPP  -1 full SUPP  -1
+[songs] things SUPP  -1 chants SUPP  -1 yells SUPP  -1
+[from] by SUPP  -1 with SUPP  -1 at SUPP  -1
+{the}
+[book] restaurant SUPP  -1 manual SUPP  -1 bible SUPP  -1
+[at] from -1 in front of -1 in -1
+{a}
+[church] baseball game SUPP  -1 chapel SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[the] [church] restaurant -1 place -1 chapel -1 [is] [filled] empty -1 here -1 full -1 [with] without -1 by -1 [song] masses -1 dogs -1 benches -1 [.] -1 7
+7
+{the}
+[church] restaurant SUPP  -1 place SUPP  -1 chapel SUPP  -1
+{is}
+[filled] empty SUPP  -1 here SUPP  -1 full SUPP  -1
+[with] without SUPP  -1 by SUPP  -1
+[song] masses SUPP  -1 dogs SUPP  -1 benches SUPP  -1
+{.} 
 -3
 
 
 -3
 label: contradiction
 premise -2
-[this] [church] great -1 chapel -1 baseball -1 [choir] player -1 dog -1 person -1 [sings] looks at -1 plays with -1 chants -1 [to] [the] [masses] supporters -1 people -1 dogs -1 [as] [they] [sing] write -1 look at -1 chant -1 [joyous] supportive -1 sad -1 great -1 [songs] chants -1 things -1 yells -1 [from] by -1 with -1 at -1 [the] [book] baseball stadium -1 manual -1 chapel -1 [at] [a] [church] baseball stadium -1 chapel -1 place -1 [.] -1 19
+19
+{this}
+[church] great SUPP  -1 chapel SUPP  -1 baseball SUPP  -1
+[choir] player SUPP  -1 dog SUPP  -1 person SUPP  -1
+[sings] looks at SUPP  -1 plays with SUPP  -1 chants SUPP  -1
+{to}
+{the}
+[masses] supporters SUPP  -1 people SUPP  -1 dogs SUPP  -1
+{as}
+{they}
+[sing] write SUPP  -1 look at SUPP  -1 chant SUPP  -1
+[joyous] supportive SUPP  -1 sad SUPP  -1 great SUPP  -1
+[songs] chants SUPP  -1 things SUPP  -1 yells SUPP  -1
+[from] by SUPP  -1 with SUPP  -1 at SUPP  -1
+{the}
+[book] baseball stadium SUPP  -1 manual SUPP  -1 chapel SUPP  -1
+[at] from -1 in front of -1 in -1
+{a}
+[church] baseball stadium SUPP  -1 chapel SUPP  -1 place SUPP  -1
+{.} 
 hypothesis -2
-[a] [choir] person -1 dog -1 singer -1 [singing] sleeping -1 chanting -1 not -1 [at] [a] [baseball game] church -1 mountain -1 place -1 [.] -1 8
+8
+{a}
+[choir] person SUPP  -1 dog SUPP  -1 singer SUPP  -1
+[singing] sleeping SUPP  -1 chanting SUPP  -1 not SUPP  -1
+[at] watching -1 supporting -1 on -1
+{a}
+[baseball game] church SUPP  -1 mountain SUPP  -1 place SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [woman] man -1 person -1 lady -1 [with] without -1 wearing -1 selling -1 [a] [green] red -1 an old -1 new -1 [headscarf] shirt -1 shoe -1 man -1 [,] [blue] red -1 old -1 new -1 [shirt] headscarf -1 shoe -1 man -1 [and] without -1 wearing -1 [a] [very] huge -1 an old -1 tiny -1 [big] huge -1 old -1 tiny -1 [grin] child -1 smile -1 old woman -1 [.] -1 15
+15
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[with] without SUPP  -1 wearing SUPP  -1 selling SUPP  -1
+{a}
+[green] red SUPP  -1 an old SUPP  -1 new SUPP  -1
+[headscarf] shirt SUPP  -1 shoe SUPP  -1 man SUPP  -1
+{,}
+[blue] red SUPP  -1 old SUPP  -1 new SUPP  -1
+[shirt] headscarf SUPP  -1 shoe SUPP  -1 man SUPP  -1
+[and] without SUPP  -1 wearing SUPP  -1
+{a}
+[very] huge SUPP  -1 an old SUPP  -1 tiny SUPP  -1
+[big] huge SUPP  -1 old SUPP  -1 tiny SUPP  -1
+[grin] child SUPP  -1 smile SUPP  -1 old woman SUPP  -1
+{.}
 hypothesis -2
-[the] [woman] man -1 person -1 lady -1 [is] is not -1 were -1 [young] depressed -1 smiling -1 old -1 [.] -1 5
+5
+{the}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[is] is not SUPP  -1 was SUPP  -1
+[young] depressed SUPP  -1 smiling SUPP  -1 old SUPP  -1
+{.} 
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [woman] man -1 person -1 lady -1 [with] without -1 wearing -1 selling -1 [a] [green] colorful -1 red -1 an old -1 [headscarf] shirt -1 shoe -1 man -1 [,] [blue] colorful -1 red -1 old -1 [shirt] headscarf -1 shoe -1 man -1 [and] without -1 wearing -1 [a] [very] huge -1 an old -1 tiny -1 [big] huge -1 old -1 tiny -1 [grin] dog -1 smile -1 man -1 [.] -1 15
+15
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[with] without SUPP  -1 wearing SUPP  -1 selling SUPP  -1
+{a}
+[green] colorful SUPP  -1 red SUPP  -1 an old SUPP  -1
+[headscarf] shirt SUPP  -1 shoe SUPP  -1 man SUPP  -1
+{,}
+[blue] colorful SUPP  -1 red SUPP  -1 old SUPP  -1
+[shirt] headscarf SUPP  -1 shoe SUPP  -1 man SUPP  -1
+[and] without SUPP  -1 wearing SUPP  -1
+{a}
+[very] huge SUPP  -1 an old SUPP  -1 tiny SUPP  -1
+[big] huge SUPP  -1 old SUPP  -1 tiny SUPP  -1
+[grin] dog SUPP  -1 smile SUPP  -1 man SUPP  -1
+{.}
 hypothesis -2
-[the] [woman] man -1 person -1 lady -1 [is] is not -1 were -1 [very] not -1 really -1 here and -1 [happy] depressed -1 dressed -1 old -1 [.] -1 6
+6
+{the}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[is] is not SUPP  -1 was SUPP  -1
+[very] not SUPP  -1 really SUPP  -1 here and SUPP  -1
+[happy] depressed SUPP  -1 dressed SUPP  -1 old SUPP  -1
+{.} 
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [woman] man -1 person -1 lady -1 [with] without -1 wearing -1 selling -1 [a] [green] bloody -1 colorful -1 red -1 [headscarf] shirt -1 gun -1 man -1 [,] [blue] bloody -1 colorful -1 red -1 [shirt] headscarf -1 gun -1 man -1 [and] without -1 wearing -1 [a] [very] huge -1 an old -1 tiny -1 [big] huge -1 old -1 tiny -1 [grin] injury -1 sandwich -1 man -1 [.] -1 15
+15
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[with] without SUPP  -1 wearing SUPP  -1 selling SUPP  -1
+{a}
+[green] bloody SUPP  -1 colorful SUPP  -1 red SUPP  -1
+[headscarf] shirt SUPP  -1 gun SUPP  -1 man SUPP  -1
+{,}
+[blue] bloody SUPP  -1 colorful SUPP  -1 red SUPP  -1
+[shirt] headscarf SUPP  -1 gun SUPP  -1 man SUPP  -1
+[and] without SUPP  -1 wearing SUPP  -1
+{a}
+[very] huge SUPP  -1 an old SUPP  -1 tiny SUPP  -1
+[big] huge SUPP  -1 old SUPP  -1 tiny SUPP  -1
+[grin] injury SUPP  -1 sandwich SUPP  -1 man SUPP  -1
+{.}
 hypothesis -2
-[the] [woman] man -1 person -1 lady -1 [has been] [shot] smiling -1 depressed -1 old -1 [.] -1 6
+6
+{the}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[has been] likes to -1 had been -1 has not been -1 
+[shot] smiling SUPP  -1 depressed SUPP  -1 old SUPP  -1
+{.} 
 -3
 
 
 -3
 label: entailment
 premise -2
-[an] [old] a posing -1 a moving -1 a small -1 [man] woman -1 person -1 guy -1 [with] without -1 breaking -1 posing -1 [a] [package] woman -1 dog -1 an ad -1 [poses] runs -1 eats -1 still -1 [in front of] outside -1 by -1 beside -1 [an] [advertisement] ad -1 restaurant -1 place -1 [.] -1 13
+13
+{an}
+[old] a posing SUPP  -1 a moving SUPP  -1 a small SUPP  -1
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[with] without SUPP  -1 breaking SUPP  -1 posing SUPP  -1
+{a}
+[package] woman SUPP  -1 dog SUPP  -1 an ad SUPP  -1
+[poses] runs SUPP  -1 eats SUPP  -1 still SUPP  -1
+[in front of] outside SUPP  -1 by SUPP  -1 beside SUPP  -1
+{an}
+[advertisement] ad SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[a] [man] woman -1 person -1 guy -1 [poses] runs -1 eats -1 still -1 [in front of] outside -1 by -1 beside -1 [an] [ad] advertisement -1 restaurant -1 place -1 [.] -1 9
+9
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[poses] runs SUPP  -1 eats SUPP  -1 still SUPP  -1
+[in front of] outside SUPP  -1 by SUPP  -1 beside SUPP  -1
+{an}
+[ad] advertisement SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{.} 
 -3
 
 
 -3
 label: neutral
 premise -2
-[an] [old] a posing -1 a moving -1 a small -1 [man] woman -1 person -1 guy -1 [with] without -1 breaking -1 posing -1 [a] [package] woman -1 beer -1 an ad -1 [poses] runs -1 eats -1 is still -1 [in front of] outside -1 by -1 beside -1 [an] [advertisement] ad -1 restaurant -1 place -1 [.] -1 13
+13
+{an}
+[old] a posing SUPP  -1 a moving SUPP  -1 a small SUPP  -1
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[with] without SUPP  -1 breaking SUPP  -1 posing SUPP  -1
+{a}
+[package] woman SUPP  -1 beer SUPP  -1 an ad SUPP  -1
+[poses] runs SUPP  -1 eats SUPP  -1 is still SUPP  -1
+[in front of] outside SUPP  -1 by SUPP  -1 beside SUPP  -1
+{an}
+[advertisement] ad SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[a] [man] woman -1 person -1 guy -1 [poses] runs -1 eats -1 still -1 [in front of] outside -1 by -1 beside -1 [an] [ad] advertisement -1 restaurant -1 place -1 [for] drinking -1 with a -1 without a -1 [beer] woman -1 man -1 dogs [.] -1 11
+11
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[poses] runs SUPP  -1 eats SUPP  -1 still SUPP  -1
+[in front of] outside SUPP  -1 by SUPP  -1 beside SUPP  -1
+{an}
+[ad] advertisement SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+[for] drinking SUPP  -1 with a SUPP  -1 without a SUPP  -1
+[beer] woman SUPP  -1 man SUPP  -1 dogs SUPP  -1
+{.} 
 -3
 
 
 -3
 label: contradiction
 premise -2
-[an] [old] a walking -1 a small -1 a posing -1 [man] woman -1 person -1 guy -1 [with] without -1 breaking -1 posing -1 [a] [package] woman -1 beer -1 an ad -1 [poses] walks -1 eats -1 is still -1 [in front of] outside -1 by -1 beside -1 [an] [advertisement] ad -1 restaurant -1 place -1 [.] -1 13
+13
+{an}
+[old] a walking SUPP  -1 a small SUPP  -1 a posing SUPP  -1
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[with] without SUPP  -1 breaking SUPP  -1 posing SUPP  -1
+{a}
+[package] woman SUPP  -1 beer SUPP  -1 an ad SUPP  -1
+[poses] walks SUPP  -1 eats SUPP  -1 is still SUPP  -1
+[in front of] outside SUPP  -1 by SUPP  -1 beside SUPP  -1
+{an}
+[advertisement] ad SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[a] [man] woman -1 person -1 guy -1 [walks] poses -1 runs -1 eats -1 [by] in front of -1 outside -1 beside -1 [an] [ad] advertisement -1 restaurant -1 place -1  [.] -1 7
+7
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[walks] poses SUPP  -1 runs SUPP  -1 eats SUPP  -1
+[by] in front of SUPP  -1 outside SUPP  -1 beside SUPP  -1
+{an}
+[ad] advertisement SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{.} 
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [land rover] car -1 bike -1 vehicle -1 [is being] were -1 [driven] painted -1 broke -1 fixed -1 [across] beside -1 by -1 outside -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 10
+10
+{a}
+[land rover] car SUPP  -1 bike SUPP  -1 vehicle SUPP  -1
+[is being] were SUPP  -1
+[driven] painted SUPP  -1 broke SUPP  -1 fixed SUPP  -1
+[across] beside SUPP  -1 by SUPP  -1 outside SUPP  -1
+{a}
+[river] restaurant SUPP  -1 lake SUPP  -1 field SUPP  -1
+{.} 
 hypothesis -2
-[a] [land rover] car -1 bike -1 vehicle -1 [is] were -1 [splashing] painting -1 crossing -1 avoiding -1 [water] blood -1 paint -1 drops -1 [as] [it] [crosses] flies over -1 touches -1 cleans -1 [a] [river] [.] restaurant -1 lake -1 field -1 12
+12
+{a}
+[land rover] car SUPP  -1 bike SUPP  -1 vehicle SUPP  -1
+{is}
+[splashing] painting SUPP  -1 crossing SUPP  -1 avoiding SUPP  -1
+[water] blood SUPP  -1 paint SUPP  -1 drops SUPP  -1
+{as}
+{it}
+[crosses] flies over SUPP  -1 touches SUPP  -1 cleans SUPP  -1
+{a}
+[river] restaurant SUPP  -1 lake SUPP  -1 field SUPP  -1 
+{.} 
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [land rover] car -1 bike -1 vehicle -1 [is being] were -1 [driven] painted -1 broke -1 fixed -1 [across] beside -1 by -1 outside -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 10
+10
+{a}
+[land rover] car SUPP  -1 bike SUPP  -1 vehicle SUPP  -1
+[is being] was being SUPP  -1 has been SUPP  -1
+[driven] painted SUPP  -1 broke SUPP  -1 fixed SUPP  -1
+[across] beside SUPP  -1 by SUPP  -1 outside SUPP  -1
+{a}
+[river] restaurant SUPP  -1 lake SUPP  -1 field SUPP  -1
+{.} 
 hypothesis -2
-[a] [vehicle] car -1 bike -1 land rover -1 [is] were -1 [crossing] watching -1 feeling -1 parking at -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 7
+7
+{a}
+[vehicle] car SUPP  -1 bike SUPP  -1 land rover SUPP  -1
+[is] was SUPP  -1 rolling SUPP  -1
+[crossing] watching SUPP  -1 feeling SUPP  -1 parking at SUPP  -1
+{a}
+[river] restaurant SUPP  -1 lake SUPP  -1 field SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [land rover] car -1 bike -1 sedan -1 [is being] were -1 [driven] stuck -1 [across] beside -1 by -1 outside -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 10
+10
+{a}
+[land rover] car SUPP  -1 bike SUPP  -1 sedan SUPP  -1
+[is being] was being SUPP  -1 has been SUPP  -1
+[driven] stuck SUPP  -1 rolled SUPP  -1 watched SUPP  -1
+[across] beside SUPP  -1 by SUPP  -1 outside SUPP  -1
+{a}
+[river] restaurant SUPP  -1 lake SUPP  -1 field SUPP  -1
+{.} 
 hypothesis -2
-[a] [sedan] car -1 bike -1 land rover -1 [is] were -1 [stuck] driving -1 crossing -1 still -1 [in the middle of] through -1 by -1 beside -1 [a] [river] restaurant -1 lake -1 field -1 [.] -1 11
+11
+{a}
+[sedan] car SUPP  -1 bike SUPP  -1 land rover SUPP  -1
+{is}
+[stuck] driving SUPP  -1 crossing SUPP  -1 still SUPP  -1
+[in the middle of] through SUPP  -1 by SUPP  -1 beside SUPP  -1
+{a}
+[river] restaurant SUPP  -1 lake SUPP  -1 field SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [an] [electric] accoustic -1 a small -1 a red -1 [guitar] banjo -1 instrument -1 piano -1 [on] [stage] the floor -1 scene -1 outside -1 [.] -1 9
+9
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[playing] looking at SUPP  -1 breaking SUPP  -1 holding SUPP  -1
+{an}
+[electric] accoustic SUPP  -1 a small SUPP  -1 a red SUPP  -1
+[guitar] banjo SUPP  -1 instrument SUPP  -1 piano SUPP  -1
+[on] from -1 beside a -1 in front of a -1
+[stage] the floor SUPP  -1 scene SUPP  -1 outside SUPP  -1
+{.}
 hypothesis -2
-[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [banjo] an electric guitar -1 guitar -1 an instrument -1 [on] [the] [floor] stage -1 scene -1 outside [.] -1 8
+8
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[playing] looking at SUPP  -1 breaking SUPP  -1 holding SUPP  -1
+[banjo] an electric guitar SUPP  -1 guitar SUPP  -1 an instrument SUPP  -1
+[on] from -1 up -1 in front of -1
+{the}
+[floor] stage SUPP  -1 scene SUPP  -1 outside -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [an] [electric] accoustic -1 a small -1 a red -1 [guitar] banjo -1 instrument -1 piano -1 [on] [stage] the floor -1 scene -1 outside -1 [.] -1 9
+9
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[playing] looking at SUPP  -1 breaking SUPP  -1 holding SUPP  -1
+{an}
+[electric] accoustic SUPP  -1 a small SUPP  -1 a red SUPP  -1
+[guitar] banjo SUPP  -1 instrument SUPP  -1 piano SUPP  -1
+[on] at the -1 beside a -1 in front of a -1
+[stage] the floor SUPP  -1 scene SUPP  -1 outside SUPP  -1
+{.}
 hypothesis -2
-[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [guitar] banjo -1 an instrument -1 piano -1 [on] [stage] the floor -1 scene -1 outside -1 [.] -1 7
+7
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[playing] looking at SUPP  -1 breaking SUPP  -1 holding SUPP  -1
+[guitar] banjo SUPP  -1 an instrument SUPP  -1 piano SUPP  -1
+[on] at the -1 beside a -1 in front of a -1
+[stage] the floor SUPP  -1 scene SUPP  -1 outside SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [man] woman -1 person -1 guy -1 [playing] looking at -1 breaking -1 holding -1 [an] [electric] accoustic -1 a small -1 a red -1 [guitar] banjo -1 instrument -1 piano -1 [on] [stage] the floor -1 scene -1 outside -1 [.] -1 9
+9
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[playing] looking at SUPP  -1 breaking SUPP  -1 holding SUPP  -1
+{an}
+[electric] accoustic SUPP  -1 a small SUPP  -1 a red SUPP  -1
+[guitar] banjo SUPP  -1 instrument SUPP  -1 piano SUPP  -1
+[on] at the -1 beside a -1 in front of a -1
+[stage] the floor SUPP  -1 scene SUPP  -1 outside SUPP  -1
+{.}
 hypothesis -2
-[a] [man] woman -1 person -1 guy -1 [is] [performing] playing -1 eating -1 sleeping -1 [for] with -1 looking at -1 counting -1 [cash] the public -1 women -1 dogs [.] -1 7
+7
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+{is}
+[performing] playing SUPP  -1 eating SUPP  -1 sleeping SUPP  -1
+[for] with SUPP  -1 looking at SUPP  -1 counting SUPP  -1
+[cash] the public SUPP  -1 women SUPP  -1 dogs SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [blond-haired] smart -1 reader -1 blind -1 [doctor] cook -1 person -1 reader -1 [and] [her] his -1 [african american] tall -1 blind -1 reader -1 [assistant] reader -1 expert -1 wife -1 [looking threw] looking at -1 burning -1 reading -1 [new] old -1 unreading -1 red -1 [medical] baseball -1 doctor -1 biology -1 [manuals] show -1 books -1 instruments -1 [.] -1 14
+14
+{a}
+[blond-haired] smart SUPP  -1 reader SUPP  -1 blind SUPP  -1
+[doctor] cook SUPP  -1 person SUPP  -1 reader SUPP  -1
+{and}
+[her] his SUPP  -1 the SUPP  -1
+[african american] tall SUPP  -1 blind SUPP  -1 reader SUPP  -1
+[assistant] reader SUPP  -1 expert SUPP  -1 wife SUPP  -1
+[looking threw] looking at SUPP  -1 burning SUPP  -1 reading SUPP  -1
+[new] old SUPP  -1 unreading SUPP  -1 red SUPP  -1
+[medical] baseball SUPP  -1 doctor SUPP  -1 biology SUPP  -1
+[manuals] show SUPP  -1 books SUPP  -1 instruments SUPP  -1
+{.}
 hypothesis -2
-[a] [doctor] an assistant -1 dog -1 person -1 [is] were -1 [looking at] looking threw -1 burning -1 reading -1 [a] [book] manual -1 tv show -1 instruments -1 -1 7
+7
+{a}
+[doctor] an assistant SUPP  -1 dog SUPP  -1 person SUPP  -1
+{is}
+[looking at] looking threw SUPP  -1 burning SUPP  -1 reading SUPP  -1
+{a}
+[book] manual SUPP  -1 tv SUPP  -1 instruments SUPP  -1
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [blond-haired] hungry -1 tall -1 female -1 [doctor] man -1 woman -1 person -1 [and] [her] his -1 [african american] hungry -1 tall -1 female -1 [assistant] husband -1 wife -1 boss -1 [looking threw] eating -1 reading -1 looking at -1 [new] old -1 unreading -1 red -1 [medical] cooking -1 men -1 biology -1 [manuals] food -1 books -1 instruments -1 [.] -1 14
+14
+{a}
+[blond-haired] hungry SUPP  -1 tall SUPP  -1 female SUPP  -1
+[doctor] man SUPP  -1 woman SUPP  -1 person SUPP  -1
+{and}
+[her] his SUPP  -1 the SUPP  -1
+[african american] hungry SUPP  -1 tall SUPP  -1 female SUPP  -1
+[assistant] husband SUPP  -1 wife SUPP  -1 boss SUPP  -1
+[looking threw] eating SUPP  -1 reading SUPP  -1 looking at SUPP  -1
+[new] old SUPP  -1 unreading SUPP  -1 red SUPP  -1
+[medical] cooking SUPP  -1 men SUPP  -1 biology SUPP  -1
+[manuals] food SUPP  -1 books SUPP  -1 instruments SUPP  -1
+{.}
 hypothesis -2
-[a] [man] doctor -1 person -1 woman -1 [is] were -1 [eating] looking threw -1 watching -1 throwing -1 [pb and j] medical manuals -1 books -1 food -1 -1 7
+7
+{a}
+[man] doctor SUPP  -1 person SUPP  -1 woman SUPP  -1
+{is}
+[eating] looking threw SUPP  -1 watching SUPP  -1 throwing SUPP  -1
+[pb and j] medical manuals SUPP  -1 books SUPP  -1 food SUPP  -1
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [blond-haired] studying -1 lazy -1 tall -1 [doctor] cook -1 person -1 student -1 [and] [her] his -1 [african american] studying -1 lazy -1 tall -1 [assistant] cook -1 person -1 student -1 [looking threw] studying with -1 looking at -1 burning -1 [new] old -1 unreading -1 red -1 [medical] learning -1 cooking -1 biology -1 [manuals] notebook -1 show -1 advertisements -1 [.] -1 14
+14
+{a}
+[blond-haired] studying SUPP  -1 lazy SUPP  -1 tall SUPP  -1
+[doctor] cook SUPP  -1 person SUPP  -1 student SUPP  -1
+{and}
+[her] his SUPP  -1 the SUPP  -1
+[african american] studying SUPP  -1 lazy SUPP  -1 tall SUPP  -1
+[assistant] cook SUPP  -1 person SUPP  -1 student SUPP  -1
+[looking threw] studying with SUPP  -1 looking at SUPP  -1 burning SUPP  -1
+[new] old SUPP  -1 unreading SUPP  -1 red SUPP  -1
+[medical] learning SUPP  -1 cooking SUPP  -1 biology SUPP  -1
+[manuals] notebook SUPP  -1 show SUPP  -1 advertisements SUPP  -1
+{.}
 hypothesis -2
-[a] [doctor] cook -1 person -1 an assistant -1 [is] were -1 [studying] reading -1 learning -1 sleeping -1 -1 4
+4
+{a}
+[doctor] cook SUPP  -1 person SUPP  -1 an assistant SUPP  -1
+[is] loves SUPP  -1 was SUPP  -1 hates SUPP  -1
+[studying] reading SUPP  -1 learning SUPP  -1 sleeping SUPP  -1
 -3
 
 
 -3
 label: contradiction
 premise -2
-[one] two -1 a -1 [tan] running -1 tall -1 smart -1 [girl] boy -1 woman -1 person -1 [with] without -1 wearing -1 [a] [wool] cement -1 red -1 blue -1 [hat] cap -1 shirt -1 [is] were -1 [running] walking -1 eating -1 rushing -1 [and] [leaning] running -1 eating -1 walking -1 [over] into -1 [an] [object] a wall -1 a bag -1 something -1 [,] [while] beside -1 and -1 [another] a -1 [person] boy -1 girl -1 someone -1 [in] [a] [wool] cement -1 red -1 blue -1 [hat] cap -1 shirt -1 [is] were -1 [sitting] running -1 sleeping -1 walking -1 [on] into -1 [the] [ground] wall -1 floor -1 grass -1 [.] -1 28
+28
+[one] two SUPP  -1 a SUPP  -1
+[tan] running SUPP  -1 tall SUPP  -1 smart SUPP  -1
+[girl] boy SUPP  -1 woman SUPP  -1 person SUPP  -1
+[with] without SUPP  -1 wearing SUPP  -1
+{a}
+[wool] cement SUPP  -1 red SUPP  -1 blue SUPP  -1
+[hat] cap SUPP  -1 shirt SUPP  -1
+{is}
+[running] walking SUPP  -1 eating SUPP  -1 rushing SUPP  -1
+{and}
+[leaning] running SUPP  -1 eating SUPP  -1 walking SUPP  -1
+[over] into SUPP  -1
+{an}
+[object] a wall SUPP  -1 a bag SUPP  -1 something SUPP  -1
+{,}
+[while] beside SUPP  -1 and SUPP  -1
+[another] a SUPP  -1
+[person] boy SUPP  -1 girl SUPP  -1 someone SUPP  -1
+[in] wearing SUPP  -1 in SUPP  -1 without SUPP  -1
+{a}
+[wool] cement SUPP  -1 red SUPP  -1 blue SUPP  -1
+[hat] cap SUPP  -1 shirt SUPP  -1
+{is}
+[sitting] running SUPP  -1 sleeping SUPP  -1 walking SUPP  -1
+[on] into SUPP  -1
+{the}
+[ground] wall SUPP  -1 floor SUPP  -1 grass SUPP  -1
+{.}
 hypothesis -2
-[a] [boy] girl -1 dog -1 person -1 [runs] sits -1 leans -1 watches -1 [into] over -1 [a] [wall] an object -1 wool hat -1 something -1 -1 6
+6
+{a}
+[boy] girl SUPP  -1 dog SUPP  -1 person SUPP  -1
+[runs] sits SUPP  -1 leans SUPP  -1 watches SUPP  -1
+[into] over SUPP  -1 on SUPP  -1
+{a}
+[wall] an object SUPP  -1 wool hat SUPP  -1 something SUPP  -1 SUPP  -1 6
 -3
 
 
 -3
 label: entailment
 premise -2
-[one] two -1 a -1 [tan] running -1 tall -1 still -1 [girl] boy -1 woman -1 person -1 [with] without -1 wearing -1 [a] [wool] red -1 blue -1 pink -1 [hat] object -1 cap -1 shirt -1 [is] were -1 [running] sleeping -1 walking -1 rushing -1 [and] [leaning] running -1 eating -1 walking -1 [over] into -1 [an] [object] something -1 a dog -1 a book -1 [,] [while] beside -1 and -1 [another] a -1 [person] boy -1 girl -1 someone -1 [in] [a] [wool] red -1 blue -1 pink -1 [hat] object -1 cap -1 shirt -1 [is] were -1 [sitting] leaning -1 sleeping -1 running -1 [on] [the] [ground] wall -1 floor -1 grass -1 [.] -1 28
+28
+[one] two SUPP  -1 a SUPP  -1
+[tan] running SUPP  -1 tall SUPP  -1 still SUPP  -1
+[girl] boy SUPP  -1 woman SUPP  -1 person SUPP  -1
+[with] without SUPP  -1 wearing SUPP  -1
+{a}
+[wool] red SUPP  -1 blue SUPP  -1 pink SUPP  -1
+[hat] object SUPP  -1 cap SUPP  -1 shirt SUPP  -1
+{is}
+[running] sleeping SUPP  -1 walking SUPP  -1 rushing SUPP  -1
+{and}
+[leaning] running SUPP  -1 eating SUPP  -1 walking SUPP  -1
+[over] into SUPP  -1
+{an}
+[object] something SUPP  -1 a dog SUPP  -1 a book SUPP  -1
+{,}
+[while] beside SUPP  -1 and SUPP  -1
+[another] a SUPP  -1
+[person] boy SUPP  -1 girl SUPP  -1 someone SUPP  -1
+[in] wearing SUPP  -1 in SUPP  -1 without SUPP  -1
+{a}
+[wool] red SUPP  -1 blue SUPP  -1 pink SUPP  -1
+[hat] object SUPP  -1 cap SUPP  -1 shirt SUPP  -1
+[is] were SUPP  -1
+[sitting] leaning SUPP  -1 sleeping SUPP  -1 running SUPP  -1
+[on] into SUPP  -1
+{the}
+[ground] wall SUPP  -1 floor SUPP  -1 grass SUPP  -1
+{.}
 hypothesis -2
-[a] [tan] running -1 tall -1 still -1 [girl] boy -1 woman -1 person -1 [runs] walks -1 eats -1 rushes -1 [leans] eats -1 runs -1 sleeps -1 [over] into -1 [an] [object] something -1 a dog -1 a book -1 -1 8
+8
+{a}
+[tan] running SUPP  -1 tall SUPP  -1 still SUPP  -1
+[girl] boy SUPP  -1 woman SUPP  -1 person SUPP  -1
+[runs] walks SUPP  -1 eats SUPP  -1 rushes SUPP  -1
+[leans] eats SUPP  -1 runs SUPP  -1 sleeps SUPP  -1
+[over] into SUPP  -1
+{an}
+[object] something SUPP  -1 a dog SUPP  -1 a book SUPP  -1
 -3
 
 
 -3
 label: neutral
 premise -2
-[one] two -1 a -1 no -1 [tan] daugter -1 tall -1 smart -1 [girl] daughter -1 child -1 man -1 [with] wearing -1 in -1 without -1 [a] [wool] fur -1 plastic -1 men -1 [hat] shirt -1 short -1 jacket -1 [is] [running] sleeping -1 walking -1 eating -1 [and] [leaning] flying -1 jumping -1 eating -1 [over] beside -1 by -1 on -1 [an] [object] a dad -1 a dog -1 a child -1 [,] [while] [another] some -1 one -1 a -1 [person] dad -1 woman -1 dog -1 [in] wearing -1 in -1 without -1 [a] [wool] fur -1 plastic -1 men -1 [hat] shirt -1 short -1 jacket -1 [is] [sitting] watching -1 sleeping -1 here -1 [on] [the] [ground] object -1 floor -1 restaurant -1 [.] -1 28
+28
+[one] two SUPP  -1 a SUPP  -1 no SUPP  -1
+[tan] daugter SUPP  -1 tall SUPP  -1 smart SUPP  -1
+[girl] daughter SUPP  -1 child SUPP  -1 man SUPP  -1
+[with] wearing SUPP  -1 in SUPP  -1 without SUPP  -1
+{a}
+[wool] fur SUPP  -1 plastic SUPP  -1 men SUPP  -1
+[hat] shirt SUPP  -1 short SUPP  -1 jacket SUPP  -1
+{is}
+[running] sleeping SUPP  -1 walking SUPP  -1 eating SUPP  -1
+{and}
+[leaning] flying SUPP  -1 jumping SUPP  -1 eating SUPP  -1
+[over] beside SUPP  -1 by SUPP  -1 on SUPP  -1
+{an}
+[object] a dad SUPP  -1 a dog SUPP  -1 a child SUPP  -1
+{,}
+[while] beside SUPP  -1 and SUPP  -1
+[another] some SUPP  -1 one SUPP  -1 a SUPP  -1
+[person] dad SUPP  -1 woman SUPP  -1 dog SUPP  -1
+[in] wearing SUPP  -1 in SUPP  -1 without SUPP  -1
+{a}
+[wool] fur SUPP  -1 plastic SUPP  -1 men SUPP  -1
+[hat] shirt SUPP  -1 short SUPP  -1 jacket SUPP  -1
+{is}
+[sitting] watching SUPP  -1 sleeping SUPP  -1 here SUPP  -1
+{on}
+{the}
+[ground] object SUPP  -1 floor SUPP  -1 restaurant SUPP  -1
+[.] SUPP  -1 28
 hypothesis -2
-[a] [man] dog -1 person -1 dad -1 [watches] laughs at -1 hates -1 looks at -1 [his] [daughter] girl -1 dog -1 wife -1 [leap] sits -1 jump -1 pet -1 -1 6
+{a}
+6
+[man] dog SUPP  -1 person SUPP  -1 dad SUPP  -1
+[watches] laughs at SUPP  -1 hates SUPP  -1 looks at SUPP  -1
+{his}
+[daughter] girl SUPP  -1 dog SUPP  -1 wife SUPP  -1
+[leap] sits SUPP  -1 jump SUPP  -1 pet SUPP  -1
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [young] an old -1 big -1 curious -1 [family] dog -1 group -1 person -1 [enjoys] hates -1 likes -1 discovers -1 [feeling] touching -1 drinking -1 looking at -1 [ocean waves] beach waves -1 water -1 something -1 [lap at] touching -1 avoiding -1 [their] [feet] dog -1 arms -1 child -1 [.] -1 12
+12
+{a}
+[young] an old SUPP  -1 big SUPP  -1 curious SUPP  -1
+[family] dog SUPP  -1 group SUPP  -1 person SUPP  -1
+[enjoys] hates SUPP  -1 likes SUPP  -1 discovers SUPP  -1
+[feeling] touching SUPP  -1 drinking SUPP  -1 looking at SUPP  -1
+[ocean waves] beach waves SUPP  -1 water SUPP  -1 something SUPP  -1
+[lap at] touching SUPP  -1 avoiding SUPP  -1
+{their}
+[feet] dog SUPP  -1 arms SUPP  -1 child SUPP  -1
+{.}
 hypothesis -2
-[a] [young] an old -1 big -1 curious -1 [man] dog -1 husband -1 person -1 [and] [woman] dog -1 wife -1 person -1 [take] talk to -1 push -1 sleep with -1 [their] [child] dog -1 animal -1 son -1 [to] [the] [beach] ocean -1 a place -1 lake -1 [for] it is -1 not -1 [the] [first time] fun -1 waves -1 second time [.] -1 16
+16
+{a}
+[young] an old SUPP  -1 big SUPP  -1 curious SUPP  -1
+[man] dog SUPP  -1 husband SUPP  -1 person SUPP  -1
+{and}
+[woman] dog SUPP  -1 wife SUPP  -1 person SUPP  -1
+[take] talk to SUPP  -1 push SUPP  -1 sleep with SUPP  -1
+{their}
+[child] dog SUPP  -1 animal SUPP  -1 son SUPP  -1
+[to] at -1 in front of -1 far from -1
+{the}
+[beach] ocean SUPP  -1 a place SUPP  -1 lake SUPP  -1
+[for] it is SUPP  -1 not SUPP  -1
+{the}
+[first time] fun SUPP  -1 waves SUPP  -1 second time SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [young] big -1 hungry -1 feed -1 [family] group -1 person -1 dog -1 [enjoys] hates -1 likes -1 discovers -1 [feeling] touching -1 drinking -1 looking at -1 [ocean waves] beach waves -1 water -1 something -1 [lap at] touching -1 avoiding -1 [their] [feet] food -1 restaurant -1 dog -1 [.] -1 12
+12
+{a}
+[young] big SUPP  -1 hungry SUPP  -1 feed SUPP  -1
+[family] group SUPP  -1 person SUPP  -1 dog SUPP  -1
+[enjoys] hates SUPP  -1 likes SUPP  -1 discovers SUPP  -1
+[feeling] touching SUPP  -1 drinking SUPP  -1 looking at SUPP  -1
+[ocean waves] beach waves SUPP  -1 water SUPP  -1 something SUPP  -1
+[lap at] touching SUPP  -1 avoiding SUPP  -1
+{their}
+[feet] food SUPP  -1 restaurant SUPP  -1 dog SUPP  -1
+{.} 
 hypothesis -2
-[a] [family] group -1 person -1 dog -1 [is] were -1 [out] not -1 here -1 outside -1 [at] [a] [restaurant] ocean -1 place -1 church -1 [.] -1 8
+8
+{a}
+[family] group SUPP  -1 person SUPP  -1 dog SUPP  -1
+{is}
+[out] not SUPP  -1 here SUPP  -1 outside SUPP  -1
+[at] far from -1 in front of -1 in -1
+{a}
+[restaurant] ocean SUPP  -1 place SUPP  -1 church SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [young] big -1 hungry -1 swimmer -1 [family] group -1 person -1 dog -1 [enjoys] hates -1 likes -1 discovers -1 [feeling] touching -1 drinking -1 looking at -1 [ocean waves] beach waves -1 water -1 something -1 [lap at] touching -1 avoiding -1 [their] [feet] food -1 restaurant -1 dog -1 [.] -1 12
+12
+{a}
+[young] big SUPP  -1 hungry SUPP  -1 swimmer SUPP  -1
+[family] group SUPP  -1 person SUPP  -1 dog SUPP  -1
+[enjoys] hates SUPP  -1 likes SUPP  -1 discovers SUPP  -1
+[feeling] touching SUPP  -1 drinking SUPP  -1 looking at SUPP  -1
+[ocean waves] beach waves SUPP  -1 water SUPP  -1 something SUPP  -1
+[lap at] touching SUPP  -1 avoiding SUPP  -1
+{their}
+[feet] food SUPP  -1 restaurant SUPP  -1 dog SUPP  -1
+{.} 
 hypothesis -2
-[a] [family] group -1 person -1 dog -1 [is] were -1 [at] [the] [beach] restaurant -1 ocean -1 a place -1 [.] -1 7
+7
+{a}
+[family] group SUPP  -1 person SUPP  -1 dog SUPP  -1
+{is}
+[at] far from -1 in front of -1 in -1
+{the}
+[beach] restaurant SUPP  -1 ocean SUPP  -1 a place SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [couple] group -1 two dogs -1 two persons -1 [walk] sleep -1 eat -1 run -1 [hand in hand] together -1 separately -1 side by side -1 [down] at -1 [a] [street] road -1 river -1 bench -1 [.] -1 10
+10
+{a}
+[couple] group SUPP  -1 two dogs SUPP  -1 two persons SUPP  -1
+[walk] sleep SUPP  -1 eat SUPP  -1 run SUPP  -1
+[hand in hand] together SUPP  -1 separately SUPP  -1 side by side SUPP  -1
+[down] at SUPP  -1 beside SUPP  -1 in front of SUPP  -1
+{a}
+[street] road SUPP  -1 river SUPP  -1 bench SUPP  -1
+{.}
 hypothesis -2
-[a] [couple] group -1 two dogs -1 two persons [is] [walking] sleeping -1 eating -1 running -1 [together] hand in hand -1 separately -1 side by side -1 [.] -1 6
+6
+{a}
+[couple] group SUPP  -1 two dogs SUPP  -1 two persons [is}
+[walking] sleeping SUPP  -1 eating SUPP  -1 running SUPP  -1
+[together] hand in hand SUPP  -1 separately SUPP  -1 side by side SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [couple] group -1 two dogs -1 two persons -1 [walk] sleep -1 eat -1 run -1 [hand in hand] together -1 separately -1 side by side -1 [down] at -1 [a] [street] road -1 river -1 bench -1 [.] -1 10
+10
+{a}
+[couple] group SUPP  -1 two dogs SUPP  -1 two persons SUPP  -1
+[walk] sleep SUPP  -1 eat SUPP  -1 run SUPP  -1
+[hand in hand] together SUPP  -1 separately SUPP  -1 side by side SUPP  -1
+[down] at SUPP  -1 beside SUPP  -1 in front of SUPP  -1
+{a}
+[street] road SUPP  -1 river SUPP  -1 bench SUPP  -1
+{.}
 hypothesis -2
-[the] [couple] group -1 two dogs are -1 two persons are -1 [is] were -1 [married] walking -1 cute -1 sleeping -1 [.] -1 5
+5
+{the}
+[couple] group SUPP  -1 two dogs are SUPP  -1 two persons are SUPP  -1
+{is}
+[married] walking SUPP  -1 cute SUPP  -1 sleeping SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [couple] group -1 two dogs -1 two persons -1 [walk] sleep -1 eat -1 sit -1 [hand in hand] together -1 separately -1 fast -1 [down] at -1 [a] [street] road -1 river -1 bench -1 [.] -1 10
+10
+{a}
+[couple] group SUPP  -1 two dogs SUPP  -1 two persons SUPP  -1
+[walk] sleep SUPP  -1 eat SUPP  -1 sit SUPP  -1
+[hand in hand] together SUPP  -1 separately SUPP  -1 fast SUPP  -1
+[down] at SUPP  -1 beside SUPP  -1 in front of SUPP  -1
+{a}
+[street] road SUPP  -1 river SUPP  -1 bench SUPP  -1
+{.}
 hypothesis -2
-[a] [couple] group -1 two dogs are -1 two persons are -1 [is] were -1 [sitting on] sleeping on -1 walking down -1 looking at -1 [a] [bench] street -1 bed -1 place -1 [.] -1 8
+8
+{a}
+[couple] group SUPP  -1 two dogs are SUPP  -1 two persons are SUPP  -1
+{is}
+[sitting on] sleeping on SUPP  -1 walking down SUPP  -1 looking at SUPP  -1
+{a}
+[bench] street SUPP  -1 bed SUPP  -1 place SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[3] 2 -1 no -1 some -1 [young] old -1 busy -1 sitting -1 [man] women -1 persons -1 guys -1 [in] [hoods] hats -1 shirt -1 jacket -1 [standing] sitting -1 running -1 eating -1 [in the middle of] by -1 outside -1 [a] [quiet] busy -1 an empty -1 long -1 [street] road -1 restaurant -1 place -1 [facing] looking at -1 with -1 breaking -1 [the] [camera] street -1 restaurant -1 river -1 [.] -1 17
+17
+[3] 2 SUPP  -1 no SUPP  -1 some SUPP  -1
+[young] old SUPP  -1 busy SUPP  -1 sitting SUPP  -1
+[man] women SUPP  -1 persons SUPP  -1 guys SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+[hoods] hats SUPP  -1 shirt SUPP  -1 jacket SUPP  -1
+[standing] sitting SUPP  -1 running SUPP  -1 eating SUPP  -1
+[in the middle of] by SUPP  -1 outside SUPP  -1
+{a}
+[quiet] busy SUPP  -1 an empty SUPP  -1 long SUPP  -1
+[street] road SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+[facing] looking at SUPP  -1 with SUPP  -1 breaking SUPP  -1
+{the}
+[camera] street SUPP  -1 restaurant SUPP  -1 river SUPP  -1
+{.}
 hypothesis -2
-[three] 2 -1 no -1 some -1 [people] women -1 persons -1 men -1 [sit] stands -1 sleeps -1 eats -1 [by] in the middle of -1 outside -1 [a] [busy] quiet -1 an empty -1 long [street] road -1 restaurant -1 place -1 [bareheaded] in hoods -1 in hats -1 tired -1 [.] -1 9
+9
+[three] 2 SUPP  -1 no SUPP  -1 some SUPP  -1
+[people] women SUPP  -1 persons SUPP  -1 men SUPP  -1
+[sit] stands SUPP  -1 sleeps SUPP  -1 eats SUPP  -1
+[by] in the middle of SUPP  -1 outside SUPP  -1
+{a}
+[busy] quiet SUPP  -1 an empty SUPP  -1 long [street] road SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+[bareheaded] in hoods SUPP  -1 in hats SUPP  -1 tired SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[3] 2 -1 no -1 some [young] old -1 busy -1 posing -1 [man] women -1 persons -1 guys -1 [in] [hoods] hats -1 shirt -1 jacket -1 [standing] sitting -1 posing -1 eating -1 [in the middle of] in -1 outside -1 [a] [quiet] busy -1 an empty -1 long -1 [street] road -1 restaurant -1 place -1 [facing] looking at -1 with -1 breaking -1 [the] [camera] street -1 restaurant -1 river -1 [.] -1 17
+17
+[3] 2 SUPP  -1 no SUPP  -1 some [young] old SUPP  -1 busy SUPP  -1 posing SUPP  -1
+[man] women SUPP  -1 persons SUPP  -1 guys SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+[hoods] hats SUPP  -1 shirt SUPP  -1 jacket SUPP  -1
+[standing] sitting SUPP  -1 posing SUPP  -1 eating SUPP  -1
+[in the middle of] in SUPP  -1 outside SUPP  -1
+{a}
+[quiet] busy SUPP  -1 an empty SUPP  -1 long SUPP  -1
+[street] road SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+[facing] looking at SUPP  -1 with SUPP  -1 breaking SUPP  -1
+{the}
+[camera] street SUPP  -1 restaurant SUPP  -1 river SUPP  -1
+{.}
 hypothesis -2
-[three] 2 -1 no -1 some [hood wearing] bareheaded -1 tall -1 dressed -1 [people] men -1 women -1 persons -1 [pose] run -1 look -1 eat -1 [for] with -1 beside -1 [a] [picture] camera -1 an advertisement -1 cash [.] -1 9
+9
+[three] 2 SUPP  -1 no SUPP  -1 some [hood wearing] bareheaded SUPP  -1 tall SUPP  -1 dressed SUPP  -1
+[people] men SUPP  -1 women SUPP  -1 persons SUPP  -1
+[pose] run SUPP  -1 look SUPP  -1 eat SUPP  -1
+[for] with SUPP  -1 beside SUPP  -1
+{a}
+[picture] camera SUPP  -1 an advertisement SUPP  -1 cash SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[3] 2 -1 no -1 some [young] old -1 busy -1 sitting -1 [man] women -1 persons -1 guys -1 [in] [hoods] hats -1 shirt -1 jacket -1 [standing] sitting -1 still -1 eating -1 [in the middle of] in -1 outside -1 [a] [quiet] busy -1 an empty -1 long -1 [street] road -1 restaurant -1 place -1 [facing] looking at -1 with -1 breaking -1 [the] [camera] street -1 restaurant -1 river -1 [.] -1 17
+17
+[3] 2 SUPP  -1 no SUPP  -1 some [young] old SUPP  -1 busy SUPP  -1 sitting SUPP  -1
+[man] women SUPP  -1 persons SUPP  -1 guys SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+[hoods] hats SUPP  -1 shirt SUPP  -1 jacket SUPP  -1
+[standing] sitting SUPP  -1 still SUPP  -1 eating SUPP  -1
+[in the middle of] in SUPP  -1 outside SUPP  -1
+{a}
+[quiet] busy SUPP  -1 an empty SUPP  -1 long SUPP  -1
+[street] road SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+[facing] looking at SUPP  -1 with SUPP  -1 breaking SUPP  -1
+{the}
+[camera] street SUPP  -1 restaurant SUPP  -1 river SUPP  -1
+{.}
 hypothesis -2
-[three] 2 -1 no -1 some [hood wearing] bareheaded -1 tall -1 dressed -1 [people] men -1 women -1 persons -1 [stand] eat -1 are still -1 sit -1 [in] outside -1 [a] [street] restaurant -1 road -1 place -1 [.] -1 9
+9
+[three] 2 SUPP  -1 no SUPP  -1 some [hood wearing] bareheaded SUPP  -1 tall SUPP  -1 dressed SUPP  -1
+[people] men SUPP  -1 women SUPP  -1 persons SUPP  -1
+[stand] eat SUPP  -1 are still SUPP  -1 sit SUPP  -1
+[in] outside SUPP  -1 at SUPP  -1
+{a}
+[street] restaurant SUPP  -1 road SUPP  -1 place SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [man] woman -1 person -1 guy -1 [reads] looks at -1 burns -1 write -1 [the] [paper] sportspage -1 newspaper -1 menu -1 [in] [a] [bar] river -1 place -1 house -1 [with] without -1 looking at -1 [green] dark -1 red -1 bright -1 [lighting] paper -1 sportspage -1 worm -1 [.] -1 12
+12
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[reads] looks at SUPP  -1 burns SUPP  -1 write SUPP  -1
+{the}
+[paper] sportspage SUPP  -1 newspaper SUPP  -1 menu SUPP  -1
+[in] at SUPP  -1 outside SUPP  -1 in front of SUPP  -1
+{a}
+[bar] river SUPP  -1 place SUPP  -1 house SUPP  -1
+[with] without SUPP  -1 looking at SUPP  -1
+[green] dark SUPP  -1 red SUPP  -1 bright SUPP  -1
+[lighting] paper SUPP  -1 sportspage SUPP  -1 worm SUPP  -1
+{.}
 hypothesis -2
-[the] [man] woman -1 person -1 guy -1 [is] were -1 [inside] outside -1 reading -1 young -1 [.] -1 5
+5
+{the}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+{is}
+[inside] outside SUPP  -1 reading SUPP  -1 young SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [man] woman -1 person -1 guy -1 [reads] looks at -1 burns -1 write -1 [the] [paper] sportspage -1 book -1 menu -1 [in] [a] [bar] river -1 place -1 house -1 [with] without -1 looking at -1 [green] dark -1 red -1 bright -1 [lighting] paper -1 sportspage -1 worm -1 [.] -1 12
+12
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[reads] looks at SUPP  -1 burns SUPP  -1 write SUPP  -1
+{the}
+[paper] sportspage SUPP  -1 book SUPP  -1 menu SUPP  -1
+[in] at SUPP  -1 outside SUPP  -1 in front of SUPP  -1
+{a}
+[bar] river SUPP  -1 place SUPP  -1 house SUPP  -1
+[with] without SUPP  -1 looking at SUPP  -1
+[green] dark SUPP  -1 red SUPP  -1 bright SUPP  -1
+[lighting] paper SUPP  -1 sportspage SUPP  -1 worm SUPP  -1
+{.}
 hypothesis -2
-[the] [man] woman -1 person -1 guy -1 [is] were -1 [reading] burning -1 looking at -1 writing -1 [the] [sportspage] paper -1 menu -1 book -1 [.] -1 7
+7
+{the}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+{is}
+[reading] burning SUPP  -1 looking at SUPP  -1 writing SUPP  -1
+{the}
+[sportspage] paper SUPP  -1 menu SUPP  -1 book SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [man] woman -1 person -1 guy -1 [reads] looks at -1 burns -1 write -1 [the] [paper] sportspage -1 book -1 menu -1 [in] [a] [bar] mountain -1 place -1 house -1 [with] without -1 looking at -1 [green] dark -1 white -1 bright -1 [lighting] paper -1 sportspage -1 worm -1 [.] -1 12
+12
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[reads] looks at SUPP  -1 burns SUPP  -1 write SUPP  -1
+{the}
+[paper] sportspage SUPP  -1 book SUPP  -1 menu SUPP  -1
+[in] at SUPP  -1 outside SUPP  -1 in front of SUPP  -1
+{a}
+[bar] mountain SUPP  -1 place SUPP  -1 house SUPP  -1
+[with] without SUPP  -1 looking at SUPP  -1
+[green] dark SUPP  -1 white SUPP  -1 bright SUPP  -1
+[lighting] paper SUPP  -1 sportspage SUPP  -1 worm SUPP  -1
+{.}
 hypothesis -2
-[the] [man] woman -1 person -1 guy -1 [is] were -1 [climbing] reading at -1 at -1 running at -1 [a] [mountain] bar -1 house -1 hill -1 [.] -1 7
+7
+{the}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+{is}
+[climbing] reading at SUPP  -1 at SUPP  -1 running at SUPP  -1
+{a}
+[mountain] bar SUPP  -1 house SUPP  -1 hill SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[three] two -1 some -1 young -1 [firefighter] cooks -1 people -1 firemen -1 [come out of] inside of a -1 outside of a -1 beside a -1 [subway] fire -1 train -1 harbor -1 [station] stop -1 car -1 bench -1 [.] -1 8
+8
+[three] two SUPP  -1 some SUPP  -1 young SUPP  -1
+[firefighter] cooks SUPP  -1 people SUPP  -1 firemen SUPP  -1
+[come out of] inside of a SUPP  -1 outside of a SUPP  -1 beside a SUPP  -1
+[subway] fire SUPP  -1 train SUPP  -1 harbor SUPP  -1
+[station] stop SUPP  -1 car SUPP  -1 bench SUPP  -1
+{.}
 hypothesis -2
-[three] two -1 some -1 young -1 [firefighters] cooks -1 people -1 firemen -1 [putting out] start up -1 watching -1 looking at -1 [a] [fire] light -1 candle -1 tv -1 [inside of] out of -1 coming out of -1 outside -1 [a] [subway] fire -1 train -1 harbor -1 [station] stop -1 car -1 bench -1 [.] -1 12
+12
+[three] two SUPP  -1 some SUPP  -1 young SUPP  -1
+[firefighters] cooks SUPP  -1 people SUPP  -1 firemen SUPP  -1
+[putting out] start up SUPP  -1 watching SUPP  -1 looking at SUPP  -1
+{a}
+[fire] light SUPP  -1 candle SUPP  -1 tv SUPP  -1
+[inside of] out of SUPP  -1 coming out of SUPP  -1 outside SUPP  -1
+{a}
+[subway] fire SUPP  -1 train SUPP  -1 harbor SUPP  -1
+[station] stop SUPP  -1 car SUPP  -1 bench SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[three] two -1 some -1 young -1 [firefighter] cooks -1 people -1 firemen -1 [come out of] inside of a -1 outside of a -1 beside a -1 [subway] fire -1 train -1 harbor -1 [station] stop -1 car -1 bench -1 [.] -1 8
+8
+[three] two SUPP  -1 some SUPP  -1 young SUPP  -1
+[firefighter] cooks SUPP  -1 people SUPP  -1 firemen SUPP  -1
+[come out of] inside of a SUPP  -1 outside of a SUPP  -1 beside a SUPP  -1
+[subway] fire SUPP  -1 train SUPP  -1 harbor SUPP  -1
+[station] stop SUPP  -1 car SUPP  -1 bench SUPP  -1
+{.}
 hypothesis -2
-[three] two -1 some -1 young -1 [firefighters] cooks -1 people -1 firemen -1 [coming up from] come out of -1 outside of -1 beside -1 [a] [subway] fire -1 train -1 harbor -1 [station] stop -1 car -1 bench -1 [.] -1 8
+8
+[three] two SUPP  -1 some SUPP  -1 young SUPP  -1
+[firefighters] cooks SUPP  -1 people SUPP  -1 firemen SUPP  -1
+[coming up from] come out of SUPP  -1 outside of SUPP  -1 beside SUPP  -1
+{a}
+[subway] fire SUPP  -1 train SUPP  -1 harbor SUPP  -1
+[station] stop SUPP  -1 car SUPP  -1 bench SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[three] two -1 some -1 young -1 [firefighter] cooks -1 people -1 firemen -1 [come out of] inside of a -1 outside of a -1 beside a -1 [subway] fire -1 train -1 harbor -1 [station] stop -1 car -1 bench -1 [.] -1 8
+8
+[three] two SUPP  -1 some SUPP  -1 young SUPP  -1
+[firefighter] cooks SUPP  -1 people SUPP  -1 firemen SUPP  -1
+[come out of] inside of a SUPP  -1 outside of a SUPP  -1 beside a SUPP  -1
+[subway] fire SUPP  -1 train SUPP  -1 harbor SUPP  -1
+[station] stop SUPP  -1 car SUPP  -1 bench SUPP  -1
+{.}
 hypothesis -2
-[three] two -1 some -1 young -1 [firefighters] cooks -1 people -1 firemen -1 [playing] burning -1 looking at -1 with -1 [cards] piano -1 instruments -1 guitar -1 [inside] come out of -1 outside of a -1 beside a -1 [a] [fire] subway -1 train -1 harbor -1 [station] stop -1 car -1 bench -1 [.] -1 9
+9
+[three] two SUPP  -1 some SUPP  -1 young SUPP  -1
+[firefighters] cooks SUPP  -1 people SUPP  -1 firemen SUPP  -1
+[playing] burning SUPP  -1 looking at SUPP  -1 with SUPP  -1
+[cards] piano SUPP  -1 instruments SUPP  -1 guitar SUPP  -1
+[inside] come out of SUPP  -1 outside of a SUPP  -1 beside a SUPP  -1
+{a}
+[fire] subway SUPP  -1 train SUPP  -1 harbor SUPP  -1
+[station] stop SUPP  -1 car SUPP  -1 bench SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [person] woman -1 human -1 cat -1 [wearing] without -1 selling -1 in -1 [a] [straw] wool -1 coconuts -1 red -1 [hat] coconuts -1 shirt -1 pile -1 [,] [standing] sleeping -1 sitting -1 is -1 [outside] inside -1 outdoors -1 on bed -1 [working] selling -1 looking at -1 eating -1 [a] [steel] wool -1 coconuts -1 red -1 [apparatus] machine -1 coconut -1 shop -1 [with] without -1 near -1 looking at -1 [a] [pile] an advertisement -1 heap -1 hole -1 [of] [coconuts] fruits -1 dogs -1 coco -1 [on] [the] [ground] billboard -1 shop -1 floor -1 [.] -1 22
+22
+{a}
+[person] woman SUPP  -1 human SUPP  -1 cat SUPP  -1
+[wearing] without SUPP  -1 selling SUPP  -1 in SUPP  -1
+{a}
+[straw] wool SUPP  -1 coconuts SUPP  -1 red SUPP  -1
+[hat] coconuts SUPP  -1 shirt SUPP  -1 pile SUPP  -1
+{,}
+[standing] sleeping SUPP  -1 sitting SUPP  -1 is SUPP  -1
+[outside] inside SUPP  -1 outdoors SUPP  -1 on bed SUPP  -1
+[working] selling SUPP  -1 looking at SUPP  -1 eating SUPP  -1
+{a}
+[steel] wool SUPP  -1 coconuts SUPP  -1 red SUPP  -1
+[apparatus] machine SUPP  -1 coconut SUPP  -1 shop SUPP  -1
+[with] without SUPP  -1 near SUPP  -1 looking at SUPP  -1
+{a}
+[pile] an advertisement SUPP  -1 heap SUPP  -1 hole SUPP  -1
+{of}
+[coconuts] fruits SUPP  -1 dogs SUPP  -1 coco SUPP  -1
+{on}
+{the}
+[ground] billboard SUPP  -1 shop SUPP  -1 floor SUPP  -1
+{.}
 hypothesis -2
-[a] [person] woman -1 human -1 cat -1 [is] [near] far from -1 with -1 looking at -1 [a] [pile] an advertisement -1 heap -1 hole -1 [of] [coconuts] fruits -1 dogs -1 things -1 [.] -1 9
+9
+{a}
+[person] woman SUPP  -1 human SUPP  -1 cat SUPP  -1
+{is}
+[near] far from SUPP  -1 with SUPP  -1 looking at SUPP  -1
+{a}
+[pile] an advertisement SUPP  -1 heap SUPP  -1 hole SUPP  -1
+{of}
+[coconuts] fruits SUPP  -1 dogs SUPP  -1 things SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [person] woman -1 human -1 cat -1 [wearing] without -1 selling -1 in -1 [a] [straw] wool -1 coconuts -1 red -1 [hat] coconuts -1 shirt -1 pile -1 [,] [standing] sleeping -1 sitting -1 selling -1 [outside] inside -1 outdoors -1 in shop -1 [working] selling -1 looking at -1 eating -1 [a] [steel] wool -1 coconuts -1 red -1 [apparatus] machine -1 coconut -1 shop -1 [with] without -1 near -1 looking at -1 [a] [pile] an advertisement -1 heap -1 hole -1 [of] [coconuts] fruits -1 dogs -1 coco -1 [on] [the] [ground] billboard -1 shop -1 floor -1 [.] -1 22
+22
+{a}
+[person] woman SUPP  -1 human SUPP  -1 cat SUPP  -1
+[wearing] without SUPP  -1 selling SUPP  -1 in SUPP  -1
+{a}
+[straw] wool SUPP  -1 coconuts SUPP  -1 red SUPP  -1
+[hat] coconuts SUPP  -1 shirt SUPP  -1 pile SUPP  -1
+{,}
+[standing] sleeping SUPP  -1 sitting SUPP  -1 selling SUPP  -1
+[outside] inside SUPP  -1 outdoors SUPP  -1 in shop SUPP  -1
+[working] selling SUPP  -1 looking at SUPP  -1 eating SUPP  -1
+{a}
+[steel] wool SUPP  -1 coconuts SUPP  -1 red SUPP  -1
+[apparatus] machine SUPP  -1 coconut SUPP  -1 shop SUPP  -1
+[with] without SUPP  -1 near SUPP  -1 looking at SUPP  -1
+{a}
+[pile] an advertisement SUPP  -1 heap SUPP  -1 hole SUPP  -1
+{of}
+[coconuts] fruits SUPP  -1 dogs SUPP  -1 coco SUPP  -1
+{on}
+{the}
+[ground] billboard SUPP  -1 shop SUPP  -1 floor SUPP  -1
+{.}
 hypothesis -2
-[a] [person] woman -1 human -1 cat -1 [is] [selling] hating -1 with -1 far from -1 [coconuts] fruits -1 dogs -1 things -1 [.] -1 6
+6
+{a}
+[person] woman SUPP  -1 human SUPP  -1 cat SUPP  -1
+{is}
+[selling] hating SUPP  -1 with SUPP  -1 far from SUPP  -1
+[coconuts] fruits SUPP  -1 dogs SUPP  -1 things SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [person] woman -1 human -1 cat -1 [wearing] without -1 burning -1 in -1 [a] [straw] funny -1 fire -1 red -1 [hat] coconuts -1 cap -1 pile -1 [,] [standing] burning -1 sitting -1 selling -1 [outside] inside -1 outdoors -1 in shop -1 [working] selling -1 looking at -1 burning -1 [a] [steel] wool -1 coconuts -1 red -1 [apparatus] machine -1 coconut -1 shop -1 [with] without -1 near -1 looking at -1 [a] [pile] an advertisement -1 heap -1 hole -1 [of] [coconuts] fruits -1 dogs -1 ashes -1 [on] [the] [ground] billboard -1 shop -1 floor -1 [.] -1 22
+22
+{a}
+[person] woman SUPP  -1 human SUPP  -1 cat SUPP  -1
+[wearing] without SUPP  -1 burning SUPP  -1 in SUPP  -1
+{a}
+[straw] funny SUPP  -1 fire SUPP  -1 red SUPP  -1
+[hat] coconuts SUPP  -1 cap SUPP  -1 pile SUPP  -1
+{,}
+[standing] burning SUPP  -1 sitting SUPP  -1 selling SUPP  -1
+[outside] inside SUPP  -1 outdoors SUPP  -1 in shop SUPP  -1
+[working] selling SUPP  -1 looking at SUPP  -1 burning SUPP  -1
+{a}
+[steel] wool SUPP  -1 coconuts SUPP  -1 red SUPP  -1
+[apparatus] machine SUPP  -1 coconut SUPP  -1 shop SUPP  -1
+[with] without SUPP  -1 near SUPP  -1 looking at SUPP  -1
+{a}
+[pile] an advertisement SUPP  -1 heap SUPP  -1 hole SUPP  -1
+{of}
+[coconuts] fruits SUPP  -1 dogs SUPP  -1 ashes SUPP  -1
+{on}
+{the}
+[ground] billboard SUPP  -1 shop SUPP  -1 floor SUPP  -1
+{.}
 hypothesis -2
-[a] [person] woman -1 human -1 cat -1 [is] [burning] wearing -1 enjoying -1 without -1 [a] [straw] funny -1 coconuts -1 red -1 [hat] coconuts -1 cap -1 pile -1  [.] -1 8
+8
+{a}
+[person] woman SUPP  -1 human SUPP  -1 cat SUPP  -1
+{is}
+[burning] wearing SUPP  -1 enjoying SUPP  -1 without SUPP  -1
+{a}
+[straw] funny SUPP  -1 coconuts SUPP  -1 red SUPP  -1
+[hat] coconuts SUPP  -1 cap SUPP  -1 pile SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[male] woman -1 guy -1 person -1 [in] [a] [blue] yellow -1 green -1 colorful -1 [jacket] shirt -1 clothe -1 hat -1 [decides] wants -1 agrees -1 refuses [to] [lay in] roll on -1 stay on -1 sleep on -1 [the] [grass] bed -1 floor -1 dirt -1 [.] -1 12
+12
+[male] woman SUPP  -1 guy SUPP  -1 person SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+{a}
+[blue] yellow SUPP  -1 green SUPP  -1 colorful SUPP  -1
+[jacket] shirt SUPP  -1 clothe SUPP  -1 hat SUPP  -1
+[decides] wants SUPP  -1 agrees SUPP  -1 refuses [to}
+[lay in] roll on SUPP  -1 stay on SUPP  -1 sleep on SUPP  -1
+{the}
+[grass] bed SUPP  -1 floor SUPP  -1 dirt SUPP  -1
+{.}
 hypothesis -2
-[the] [guy] woman -1 male -1 person -1 [in] [yellow] blue -1 green -1 color -1 [is] were -1 [rolling on] laying in -1 staying on -1 sleeping on -1 [the] [grass] bed -1 floor -1 dirt -1 -1 9
+9
+{the}
+[guy] woman SUPP  -1 male SUPP  -1 person SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+[yellow] blue SUPP  -1 green SUPP  -1 color SUPP  -1
+{is}
+[rolling on] laying in SUPP  -1 staying on SUPP  -1 sleeping on SUPP  -1
+{the}
+[grass] bed SUPP  -1 floor SUPP  -1 dirt SUPP  -1 
 -3
 
 
 -3
 label: entailment
 premise -2
-[male] woman -1 guy -1 person -1 [in] [a] [blue] yellow -1 green -1 colorful -1 [jacket] shirt -1 clothe -1 hat -1 [decides] wants -1 agrees -1 refuses [to] [lay in] roll on -1 stay on -1 sleep on -1 [the] [grass] bed -1 floor -1 dirt -1 [.] -1 12
+12
+[male] woman SUPP  -1 guy SUPP  -1 person SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+{a}
+[blue] yellow SUPP  -1 green SUPP  -1 colorful SUPP  -1
+[jacket] shirt SUPP  -1 clothe SUPP  -1 hat SUPP  -1
+[decides] wants SUPP  -1 agrees SUPP  -1 refuses [to}
+[lay in] roll on SUPP  -1 stay on SUPP  -1 sleep on SUPP  -1
+{the}
+[grass] bed SUPP  -1 floor SUPP  -1 dirt SUPP  -1
+{.}
 hypothesis -2
-[the] [guy] woman -1 male -1 person -1 [wearing] in -1 looking at -1 with -1 [a] [blue] yellow -1 green -1 colorful -1 [jacket] shirt -1 clothe -1 hat -1 [is] were -1 [laying on] sleeping on -1 rolling on -1 staying on -1 [the] [green] blue -1 dirty -1 yellow -1 [grass] bed -1 floor -1 dirt -1 -1 12
+12
+{the}
+[guy] woman SUPP  -1 male SUPP  -1 person SUPP  -1
+[wearing] in SUPP  -1 looking at SUPP  -1 without SUPP  -1
+{a}
+[blue] yellow SUPP  -1 green SUPP  -1 colorful SUPP  -1
+[jacket] shirt SUPP  -1 clothe SUPP  -1 hat SUPP  -1
+[is] were SUPP  -1
+[laying on] sleeping on SUPP  -1 rolling on SUPP  -1 staying on SUPP  -1
+{the}
+[green] blue SUPP  -1 dirty SUPP  -1 yellow SUPP  -1
+[grass] bed SUPP  -1 floor SUPP  -1 dirt SUPP  -1
 -3
 
 
 -3
 label: neutral
 premise -2
-[male] woman -1 guy -1 person -1 [in] [a] [blue] yellow -1 green -1 colorful -1 [jacket] shirt -1 clothe -1 hat -1 [decides] wants -1 agrees -1 refuses [to] [lay in] roll on -1 stay on -1 sleep on -1 [the] [grass] bed -1 floor -1 dirt -1 [.] -1 12
+12
+[male] woman SUPP  -1 guy SUPP  -1 person SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+{a}
+[blue] yellow SUPP  -1 green SUPP  -1 colorful SUPP  -1
+[jacket] shirt SUPP  -1 clothe SUPP  -1 hat SUPP  -1
+[decides] wants SUPP  -1 agrees SUPP  -1 refuses [to}
+[lay in] roll on SUPP  -1 stay on SUPP  -1 sleep on SUPP  -1
+{the}
+[grass] bed SUPP  -1 floor SUPP  -1 dirt SUPP  -1
+{.}
 hypothesis -2
-[the] [guy] woman -1 male -1 person -1 [wearing] in -1 without -1 looking at -1 [a] [blue] yellow -1 green -1 colorful -1 [jacket] shirt -1 clothe -1 hat -1 [is] were -1 [laying on] sleeping on -1 rolling on -1 staying on -1 [the] [green] blue -1 dirty -1 yellow -1 [grass] bed -1 floor -1 dirt -1 [taking a nap] taking a shower -1 sleeping on it -1 laying on it -1 [.] -1 16
+16
+{the}
+[guy] woman SUPP  -1 male SUPP  -1 person SUPP  -1
+[wearing] in SUPP  -1 without SUPP  -1 looking at SUPP  -1
+{a}
+[blue] yellow SUPP  -1 green SUPP  -1 colorful SUPP  -1
+[jacket] shirt SUPP  -1 clothe SUPP  -1 hat SUPP  -1
+{is}
+[laying on] sleeping on SUPP  -1 rolling on SUPP  -1 staying on SUPP  -1
+{the}
+[green] blue SUPP  -1 dirty SUPP  -1 yellow SUPP  -1
+[grass] bed SUPP  -1 floor SUPP  -1 dirt SUPP  -1
+[taking a nap] taking a shower SUPP  -1 sleeping on it SUPP  -1 laying on it SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [golden retriever] dog -1 an animal -1 cat -1 [nurses] looks at -1 eats -1 takes care of -1 [puppies] cats -1 animals -1 humans -1 [.] -1 6
+6
+{a}
+[golden retriever] dog SUPP  -1 an animal SUPP  -1 cat SUPP  -1
+[nurses] looks at SUPP  -1 eats SUPP  -1 takes care of SUPP  -1
+[puppies] cats SUPP  -1 animals SUPP  -1 humans SUPP  -1
+{.}
 hypothesis -2
-[a] [cat] an animal -1 golden retriever -1 man -1 [nurses] looks at -1 eats -1 takes care of -1 [puppies] golden retriever -1 animals -1 humans -1 -1 4
+4
+{a}
+[cat] an animal SUPP  -1 golden retriever SUPP  -1 man SUPP  -1
+[nurses] looks at SUPP  -1 eats SUPP  -1 takes care of SUPP  -1
+[puppies] golden retriever SUPP  -1 animals SUPP  -1 humans SUPP  -1
 -3
 
 
 -3
 label: neutral
 premise -2
-[during] first -1 in -1 with -1 [calf roping] horse riding -1 dinner -1 sport -1 [a] [cowboy] man -1 cook -1 roper -1 [calls off] falls off -1 washes -1 looks at -1 [his] her -1 [horse] pet -1 dog -1 animal -1 [.] -1 10
+10
+[during] first SUPP  -1 in SUPP  -1 with SUPP  -1
+[calf roping] horse riding SUPP  -1 dinner SUPP  -1 sport SUPP  -1
+{a}
+[cowboy] man SUPP  -1 cook SUPP  -1 roper SUPP  -1
+[calls off] falls off SUPP  -1 washes SUPP  -1 looks at SUPP  -1
+[his] her SUPP  -1 the SUPP  -1
+[horse] pet SUPP  -1 dog SUPP  -1 animal SUPP  -1
+{.}
 hypothesis -2
-[a] [first time] tall -1 calf -1 horse -1 [roper] cowboy -1 cook -1 man -1 [falls off] calls off -1  washes -1 looks at -1 [his] her -1 [horse] pet -1 dog -1 animal -1 [.] -1 9
+9
+{a}
+[first time] tall SUPP  -1 calf SUPP  -1 horse SUPP  -1
+[roper] cowboy SUPP  -1 cook SUPP  -1 man SUPP  -1
+[falls off] calls off SUPP  -1  washes SUPP  -1 looks at SUPP  -1
+[his] her SUPP  -1 the SUPP  -1
+[horse] pet SUPP  -1 dog SUPP  -1 animal SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[cheerleaders] girls -1 people -1 boys -1 [in] [blue] pom poms -1 red -1 colors -1 [performing] shaking -1 sleeping -1 are -1 [on] [a] [football] baseball -1 big -1 stadium -1 [field] stadium -1 tv show -1 player -1 [underneath] beside -1 by -1 on -1 [a] [yellow] blue -1 red -1 green -1 [football] baseball -1 big -1 tall -1 [goal] player -1 girl -1 boy -1 [post] place -1 boy -1 girl -1 [.] -1 15
+15
+[cheerleaders] girls SUPP  -1 people SUPP  -1 boys SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+[blue] pom poms SUPP  -1 red SUPP  -1 colors SUPP  -1
+[performing] shaking SUPP  -1 sleeping SUPP  -1 are SUPP  -1
+[on] outside SUPP  -1 beside SUPP  -1 in SUPP  -1
+{a}
+[football] baseball SUPP  -1 big SUPP  -1 stadium SUPP  -1
+[field] stadium SUPP  -1 tv show SUPP  -1 player SUPP  -1
+[underneath] beside SUPP  -1 by SUPP  -1 on SUPP  -1
+{a}
+[yellow] blue SUPP  -1 red SUPP  -1 green SUPP  -1
+[football] baseball SUPP  -1 big SUPP  -1 tall SUPP  -1
+[goal] player SUPP  -1 girl SUPP  -1 boy SUPP  -1
+[post] place SUPP  -1 boy SUPP  -1 girl SUPP  -1
+{.}
 hypothesis -2
-[a] [group] family -1 crowd -1 band -1 [of] [girls] cheerleaders -1 people -1 boys -1 [shake] performing with -1 with -1 looking at -1 [pom poms] goal -1 player -1 things -1 [.] -1 8
+8
+{a}
+[group] family SUPP  -1 crowd SUPP  -1 band SUPP  -1
+{of}
+[girls] cheerleaders SUPP  -1 people SUPP  -1 boys SUPP  -1
+[shake] performing with SUPP  -1 with SUPP  -1 looking at SUPP  -1
+[pom poms] goal SUPP  -1 player SUPP  -1 things SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[two] group of -1 some -1 no -1 [women] fathers -1 mothers -1 people -1 [on] looking at -1 outside -1 at -1 [a] [beach] lake -1 restaurant -1 place -1 [.] -1 6
+6
+[two] group of SUPP  -1 some SUPP  -1 no SUPP  -1
+[women] fathers SUPP  -1 mothers SUPP  -1 people SUPP  -1
+[on] looking at SUPP  -1 outside SUPP  -1 at SUPP  -1
+{a}
+[beach] lake SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[two] group of -1 some -1 no -1 [mothers] men -1 women -1 people -1 [enjoy] hate -1 want -1 looking for -1 [a] [day] night -1 dream -1 sandwich -1 [at] on -1 outside -1 looking at -1 [the] [beach] lake -1 restaurant -1 place -1 [with] without -1 thinking about -1 talking with -1 [their] [husbands] wives -1 pets -1 swimsuits [.] -1 12
+12
+[two] group of SUPP  -1 some SUPP  -1 no SUPP  -1
+[mothers] men SUPP  -1 women SUPP  -1 people SUPP  -1
+[enjoy] hate SUPP  -1 want SUPP  -1 looking for SUPP  -1
+{a}
+[day] night SUPP  -1 dream SUPP  -1 sandwich SUPP  -1
+[at] on SUPP  -1 outside SUPP  -1 looking at SUPP  -1
+{the}
+[beach] lake SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+[with] without SUPP  -1 thinking about SUPP  -1 talking with SUPP  -1
+{their}
+[husbands] wives SUPP  -1 pets SUPP  -1 swimsuits SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[four] no -1 some -1 group of -1 [men] women -1 guys -1 people -1 [playing] dreaming about -1 breaking -1 beside -1 [drums] piano -1 on bed -1 in motel -1 [in] [very] light -1 little -1 heavy -1 [orange] red -1 green -1 night -1 [lighting] night light -1 beds -1 motel -1 [while] and -1 also -1 beside -1 [one of them] a man -1 a person -1 a woman -1 [is] were -1 [also] [drinking] sleeping on -1 beside -1 playing with -1 [something] water -1 thing -1 sleeping pill -1 [out of] [a] [bottle] motel -1 glass -1 thing -1 [.] -1 21
+21
+[four] no SUPP  -1 some SUPP  -1 group of SUPP  -1
+[men] women SUPP  -1 guys SUPP  -1 people SUPP  -1
+[playing] dreaming about SUPP  -1 breaking SUPP  -1 beside SUPP  -1
+[drums] piano SUPP  -1 on bed SUPP  -1 in motel SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 looking at SUPP  -1
+[very] light SUPP  -1 little SUPP  -1 heavy SUPP  -1
+[orange] red SUPP  -1 green SUPP  -1 night SUPP  -1
+[lighting] night light SUPP  -1 beds SUPP  -1 motel SUPP  -1
+[while] and SUPP  -1 also SUPP  -1 beside SUPP  -1
+[one of them] a man SUPP  -1 a person SUPP  -1 a woman SUPP  -1
+{is}
+{also}
+[drinking] sleeping on SUPP  -1 beside SUPP  -1 playing with SUPP  -1
+[something] water SUPP  -1 thing SUPP  -1 sleeping pill SUPP  -1
+[out of] from -1 flowing of -1 
+{a}
+[bottle] motel SUPP  -1 glass SUPP  -1 thing SUPP  -1
+{.}
 hypothesis -2
-[the] [men] women -1 people -1 guys -1 [are] were -1 [asleep] playing -1 drinking -1 reading -1 [in] outside -1 [the] [motel] bottle -1 drums -1 snow -1 -1 7
+7
+{the}
+[men] women SUPP  -1 people SUPP  -1 guys SUPP  -1
+{are}
+[asleep] playing SUPP  -1 drinking SUPP  -1 reading SUPP  -1
+[in] outside SUPP  -1 at SUPP  -1 dreaming about SUPP  -1
+{the}
+[motel] bottle SUPP  -1 drums SUPP  -1 snow SUPP  -1
 -3
 
 
 -3
 label: contradiction
 premise -2
-[two] some -1 no -1 three -1 [men] women -1 people -1 guys -1 [have] had -1 [an] [after dinner] a sleepy -1 a tired -1 great -1 [discussion] nap -1 fight -1 yawn -1 [at] outside -1 by -1 [the] [dinner] motel -1 big -1 red -1 [table] motel -1 bed -1 place -1 [.] -1 12
+12
+[two] some SUPP  -1 no SUPP  -1 three SUPP  -1
+[men] women SUPP  -1 people SUPP  -1 guys SUPP  -1
+[have] had SUPP  -1
+{an}
+[after dinner] a sleepy SUPP  -1 a tired SUPP  -1 great SUPP  -1
+[discussion] nap SUPP  -1 fight SUPP  -1 yawn SUPP  -1
+[at] outside SUPP  -1 by SUPP  -1
+{the}
+[dinner] motel SUPP  -1 big SUPP  -1 red SUPP  -1
+[table] motel SUPP  -1 bed SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[the] [men] women -1 people -1 guys -1 [are] were -1 [asleep] talking -1 sleeping -1 not -1 [in] outside -1 by -1 [the] [motel] dinner table -1 table -1 place -1 -1 7
+7
+{the}
+[men] women SUPP  -1 people SUPP  -1 guys SUPP  -1
+[are] were SUPP  -1 really SUPP  -1
+[asleep] talking SUPP  -1 sleeping SUPP  -1 not SUPP  -1
+[in] outside SUPP  -1 by SUPP  -1
+{the}
+[motel] dinner table SUPP  -1 table SUPP  -1 place SUPP  -1
 -3
 
 
 -3
 label: entailment
 premise -2
-[man] person -1 woman -1 dog -1 [on] with -1 without -1 [phone] drugs -1 horse -1 telephone -1 [in] [business] red -1 outdoors -1 inside -1 [suit] outdoors -1 inside -1 phone -1 [walking] sleeping -1 running -1 is -1 [down] outside -1 by -1 [a] [busy] quiet -1 women -1 men -1 [street] restaurant -1 field -1 house -1 [.] -1 12
+12
+[man] person SUPP  -1 woman SUPP  -1 dog SUPP  -1
+[on] with SUPP  -1 without SUPP  -1
+[phone] drugs SUPP  -1 horse SUPP  -1 telephone SUPP  -1
+[in] wearing SUPP  -1 without SUPP  -1 on SUPP  -1
+[business] red SUPP  -1 outdoors SUPP  -1 inside SUPP  -1
+[suit] outdoors SUPP  -1 inside SUPP  -1 phone SUPP  -1
+[walking] sleeping SUPP  -1 running SUPP  -1 is SUPP  -1
+[down] outside SUPP  -1 by SUPP  -1
+{a}
+[busy] quiet SUPP  -1 women SUPP  -1 men SUPP  -1
+[street] restaurant SUPP  -1 field SUPP  -1 house SUPP  -1
+{.}
 hypothesis -2
-[a] [person] man -1 woman -1 human -1 [on] with -1 without -1 [a] [phone] drug -1 horse -1 telephone -1 [is] were -1 [outdoors] inside -1 on a street -1 somewhere -1 -1 7
+{a}
+[person] man SUPP  -1 woman SUPP  -1 human SUPP  -1
+[on] with SUPP  -1 without SUPP  -1
+{a}
+[phone] drug SUPP  -1 horse SUPP  -1 telephone SUPP  -1
+{is}
+[outdoors] inside SUPP  -1 on a street SUPP  -1 somewhere SUPP  -1 SUPP  -1 7
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [woman] man -1 person -1 lady -1 [in] without -1 wearing -1 looking at -1 [jeans] bikini -1 swimsuit -1 clothe -1 [and] [a] [woman] man -1 person -1 lady -1 [in] without -1 wearing -1 looking at -1 [shorts] bikini -1 swimsuit -1 clothe -1 [are] were -1 [petting] looking at -1 nursing -1 laughing at -1 [a] [baby] huge -1 big -1 tall -1 [kangaroo] elephant -1 animal -1 dog -1 [.] -1 15
+15
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[in] without SUPP  -1 wearing SUPP  -1 looking at SUPP  -1
+[jeans] bikini SUPP  -1 swimsuit SUPP  -1 clothe SUPP  -1
+{and}
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[in] without SUPP  -1 wearing SUPP  -1 looking at SUPP  -1
+[shorts] bikini SUPP  -1 swimsuit SUPP  -1 clothe SUPP  -1
+[are] were SUPP  -1
+[petting] looking at SUPP  -1 nursing SUPP  -1 laughing at SUPP  -1
+{a}
+[baby] huge SUPP  -1 big SUPP  -1 tall SUPP  -1
+[kangaroo] elephant SUPP  -1 animal SUPP  -1 dog SUPP  -1
+{.}
 hypothesis -2
-[the] [woman] man -1 person -1 lady -1 [are] were -1 [wearing] without -1 in -1 looking at -1 [bikinis] jeans -1 shorts -1 clothes -1 [and] [petting] looking at -1 nursing -1 laughing at -1 [an] [elephant] a kangaroo -1 animal -1 a dog -1 [.] -1 10
+10
+{the}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+{are}
+[wearing] without SUPP  -1 in SUPP  -1 looking at SUPP  -1
+[bikinis] jeans SUPP  -1 shorts SUPP  -1 clothes SUPP  -1
+{and}
+[petting] looking at SUPP  -1 nursing SUPP  -1 laughing at SUPP  -1
+{an}
+[elephant] a kangaroo SUPP  -1 animal SUPP  -1 a dog SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [teenager] person -1 giant -1 man -1 [blows] eats -1 looks at -1 wants -1 [a] [whistle] flower -1 some paint -1 thing -1 [and] [wears] likes -1 hates -1 enjoys -1 [white] red -1 green -1 no -1 [face paint] makeup -1 shirt -1 hat -1 [,] [earmuffs] shirt -1 hat -1 shoes -1 [,] [and] [a] [yellow] red -1 green -1 white -1 [hat] face paint -1 earmuffs -1 shirt -1 [while] [another] [teen] person -1 giant -1 man -1 [watches] sits -1 laughs -1 stands -1 [.] -1 22
+22
+{a}
+[teenager] person SUPP  -1 giant SUPP  -1 man SUPP  -1
+[blows] eats SUPP  -1 looks at SUPP  -1 wants SUPP  -1
+{a}
+[whistle] flower SUPP  -1 some paint SUPP  -1 thing SUPP  -1
+{and}
+[wears] likes SUPP  -1 hates SUPP  -1 enjoys SUPP  -1
+[white] red SUPP  -1 green SUPP  -1 no SUPP  -1
+[face paint] makeup SUPP  -1 shirt SUPP  -1 hat SUPP  -1
+{,}
+[earmuffs] shirt SUPP  -1 hat SUPP  -1 shoes SUPP  -1
+{,}
+{and}
+{a}
+[yellow] red SUPP  -1 green SUPP  -1 white SUPP  -1
+[hat] face paint SUPP  -1 earmuffs SUPP  -1 shirt SUPP  -1
+{while}
+{another}
+[teen] person SUPP  -1 giant SUPP  -1 man SUPP  -1
+[watches] sits SUPP  -1 laughs SUPP  -1 stands SUPP  -1
+{.}
 hypothesis -2
-[a] [tall] teenager -1 big -1 blowing -1 [person] teenager -1 man -1 woman -1 [in] without -1 wearing -1 with -1 [face paint] earmuffs -1 hat -1 clothes -1 -1 6
+6
+{a}
+[tall] teenager SUPP  -1 big SUPP  -1 blowing SUPP  -1
+[person] teenager SUPP  -1 man SUPP  -1 woman SUPP  -1
+[in] without SUPP  -1 wearing SUPP  -1 with SUPP  -1
+[face paint] earmuffs SUPP  -1 hat SUPP  -1 clothes SUPP  -1
 -3
 
 
 -3
 label: neutral
 premise -2
-[four] tall -1 no -1 some -1 [men] humans -1 women -1 dogs -1 [wearing] in -1 with -1 without -1 [orange] colored -1 green -1 blue -1 [vests] shirt -1 clothes -1 bottles -1 [are] were -1 [putting] looking at -1 breaking -1 watching -1 [in] [a] [steel] an orange -1 blue -1 red -1 [beam] vest -1 orange -1 thing -1 [on] [the] [ground] floor -1 building -1 church -1 [.] -1 15
+15
+[four] tall SUPP  -1 no SUPP  -1 some SUPP  -1
+[men] humans SUPP  -1 women SUPP  -1 dogs SUPP  -1
+[wearing] in SUPP  -1 with SUPP  -1 without SUPP  -1
+[orange] colored SUPP  -1 green SUPP  -1 blue SUPP  -1
+[vests] shirt SUPP  -1 clothes SUPP  -1 bottles SUPP  -1
+[are] were SUPP  -1
+[putting] looking at SUPP  -1 breaking SUPP  -1 watching SUPP  -1
+[in] wearing SUPP  -1 without SUPP  -1 with SUPP  -1
+{a}
+[steel] an orange SUPP  -1 blue SUPP  -1 red SUPP  -1
+[beam] vest SUPP  -1 orange SUPP  -1 thing SUPP  -1
+{on}
+{the}
+[ground] floor SUPP  -1 building SUPP  -1 church SUPP  -1
+{.}
 hypothesis -2
-[tall] four -1 no -1 some -1 [humans] men -1 women -1 people -1 [in] wearing -1 with -1 without -1 [orange] color -1 green -1 blue -1 -1 4
+4
+[tall] four SUPP  -1 no SUPP  -1 some SUPP  -1
+[humans] men SUPP  -1 women SUPP  -1 people SUPP  -1
+[in] wearing SUPP  -1 with SUPP  -1 without SUPP  -1
+[orange] color SUPP  -1 green SUPP  -1 blue SUPP  -1
 -3
 
 
 -3
 label: neutral
 premise -2
-[women] person -1 men -1 dogs -1 [in] wearing -1 with -1 without -1 [a] [red] tall -1 blue -1 big -1 [hat] shirt -1 jacket -1 cap -1 [and] [beige] red -1 big -1 blue -1 [shoes] hat -1 cap -1 shirt -1 [standing] sitting -1 eating -1 speaking -1 [with] without -1 [hands] giant -1 sandwich -1 persons -1 [behind] on -1 [her] his -1 [back] hat -1 knees -1 dog -1 [in front of] beside -1 on -1 by -1 [a] [cement] tall -1 person 's -1 red -1 [wall] hat -1 person -1 thing -1 [.] -1 21
+21
+[women] person SUPP  -1 men SUPP  -1 dogs SUPP  -1
+[in] wearing SUPP  -1 with SUPP  -1 without SUPP  -1
+{a}
+[red] tall SUPP  -1 blue SUPP  -1 big SUPP  -1
+[hat] shirt SUPP  -1 jacket SUPP  -1 cap SUPP  -1
+{and}
+[beige] red SUPP  -1 big SUPP  -1 blue SUPP  -1
+[shoes] hat SUPP  -1 cap SUPP  -1 shirt SUPP  -1
+[standing] sitting SUPP  -1 eating SUPP  -1 speaking SUPP  -1
+[with] without SUPP  -1
+[hands] giant SUPP  -1 sandwich SUPP  -1 persons SUPP  -1
+[behind] on SUPP  -1
+[her] his SUPP  -1
+[back] hat SUPP  -1 knees SUPP  -1 dog SUPP  -1
+[in front of] beside SUPP  -1 on SUPP  -1 by SUPP  -1
+{a}
+[cement] tall SUPP  -1 person 's SUPP  -1 red SUPP  -1
+[wall] hat SUPP  -1 person SUPP  -1 thing SUPP  -1
+{.}
 hypothesis -2
-[a] [tall] dressed -1 standing -1 sitting -1 [person] women -1 men -1 dog -1 [in] wearing -1 with -1 without -1 [a] [hat] shoe -1 clothe -1 dress -1 -1 6
+6
+{a}
+[tall] dressed SUPP  -1 standing SUPP  -1 sitting SUPP  -1
+[person] women SUPP  -1 men SUPP  -1 dog SUPP  -1
+[in] wearing SUPP  -1 with SUPP  -1 without SUPP  -1
+{a}
+[hat] shoe SUPP  -1 clothe SUPP  -1 dress SUPP  -1
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [person] human -1 dog -1 man -1 [sweeping] on -1 looking at -1 far from -1 [stairs] outside -1 walls -1 roofs -1 [in] [a] [park] restaurant -1 place -1 field -1 [.] -1 8
+8
+{a}
+[person] human SUPP  -1 dog SUPP  -1 man SUPP  -1
+[sweeping] on SUPP  -1 looking at SUPP  -1 far from SUPP  -1
+[stairs] outside SUPP  -1 walls SUPP  -1 roofs SUPP  -1
+[in] in front of SUPP  -1 outside SUPP  -1 beside SUPP  -1
+{a}
+[park] restaurant SUPP  -1 place SUPP  -1 field SUPP  -1
+{.}
 hypothesis -2
-[a] [person] human -1 dog -1 man -1 [outside] inside -1 somewhere -1 in park -1 [.] -1 4
+4
+{a}
+[person] human SUPP  -1 dog SUPP  -1 man SUPP  -1
+[outside] inside SUPP  -1 somewhere SUPP  -1 in park SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [brown] black -1 tall -1 colorful -1 [dog] cat -1 human -1 animal -1 [plays] is cold -1 sleeps -1 eats -1 [in] [a] [deep] tall -1 white -1 small -1 [pile] snowman -1 place -1 wall -1 [of] [snow] dirt -1 water -1 things -1 [.] -1 11
+11
+{a}
+[brown] black SUPP  -1 tall SUPP  -1 colorful SUPP  -1
+[dog] cat SUPP  -1 human SUPP  -1 animal SUPP  -1
+[plays] is cold SUPP  -1 sleeps SUPP  -1 eats SUPP  -1
+[in] beside SUPP  -1 inside SUPP  -1 in front of SUPP  -1
+{a}
+[deep] tall SUPP  -1 white SUPP  -1 small SUPP  -1
+[pile] snowman SUPP  -1 place SUPP  -1 wall SUPP  -1
+{of}
+[snow] dirt SUPP  -1 water SUPP  -1 things SUPP  -1
+{.}
 hypothesis -2
-[a] [brown] black -1 tall -1 colorful -1 [dog] cat -1 human -1 animal -1 [is] was -1 [outside] inside -1 somewhere -1 in snow -1 [and] [it 's] it was -1 [snowing] cold -1 hot -1 raining -1 -1 9
+9
+{a}
+[brown] black SUPP  -1 tall SUPP  -1 colorful SUPP  -1
+[dog] cat SUPP  -1 human SUPP  -1 animal SUPP  -1
+{is}
+[outside] inside SUPP  -1 somewhere SUPP  -1 in snow SUPP  -1
+{and}
+[it 's] it was SUPP  -1 loves SUPP  -1 it was not SUPP  -1
+[snowing] cold SUPP  -1 hot SUPP  -1 raining SUPP  -1 
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [girl] boy -1 person -1 woman -1 [making] watching -1 dreaming about -1 hating -1 [a] [snow angel] snowman -1 bread -1 drawing -1 [,] [wearing] in -1 with -1 without -1 [a] [black] white -1 red -1 no -1 [hat] lipstick -1 shirt -1 pajamas -1 [and] [glasses] pajamas -1 slippers -1 pants -1 [.] -1 14
+14
+{a}
+[girl] boy SUPP  -1 person SUPP  -1 woman SUPP  -1
+[making] watching SUPP  -1 dreaming about SUPP  -1 hating SUPP  -1
+{a}
+[snow angel] snowman SUPP  -1 bread SUPP  -1 drawing SUPP  -1
+{,}
+[wearing] in SUPP  -1 with SUPP  -1 without SUPP  -1
+{a}
+[black] white SUPP  -1 red SUPP  -1 no SUPP  -1
+[hat] lipstick SUPP  -1 shirt SUPP  -1 pajamas SUPP  -1
+{and}
+[glasses] pajamas SUPP  -1 slippers SUPP  -1 pants SUPP  -1
+{.}
 hypothesis -2
-[a] [girl] boy -1 person -1 woman -1 [is] was -1 [outside] inside -1 somewhere -1 tall -1 [in] [the] [snow] summer -1 cold -1 place -1 [.] -1 8
+8
+{a}
+[girl] boy SUPP  -1 person SUPP  -1 woman SUPP  -1
+{is}
+[outside] inside SUPP  -1 somewhere SUPP  -1 tall SUPP  -1
+[in] far from  -1 inside  -1 looking at  -1
+{the}
+[snow] summer SUPP  -1 cold SUPP  -1 place SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[two] 2 -1 no -1 some -1 [men] males -1 women -1 persons -1 [in] [hard] night -1 tall -1 some -1 [hats] pajamas -1 jackets -1 things -1 [look at] sleep in -1 run in -1 sit in -1 [a] [building] bed -1 restaurant -1 place -1 [while] [on] [the] [side] bed -1 outside -1 inside -1 [of] [a] [street] bed -1 restaurant -1 place -1 [.] -1 17
+17
+[two] 2 SUPP  -1 no SUPP  -1 some SUPP  -1
+[men] males SUPP  -1 women SUPP  -1 persons SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+[hard] night SUPP  -1 tall SUPP  -1 some SUPP  -1
+[hats] pajamas SUPP  -1 jackets SUPP  -1 things SUPP  -1
+[look at] sleep in SUPP  -1 run in SUPP  -1 sit in SUPP  -1
+{a}
+[building] bed SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{while}
+{on}
+{the}
+[side] bed SUPP  -1 outside SUPP  -1 inside SUPP  -1
+{of}
+{a}
+[street] bed SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[2] two -1 no -1 some -1 [male] men -1 women -1 persons -1 [humans] dogs -1 animals -1 persons -1 [are] were -1 [sleeping] looking -1 awake -1 sitting -1 [.] -1 6
+6
+[2] two SUPP  -1 no SUPP  -1 some SUPP  -1
+[male] men SUPP  -1 women SUPP  -1 persons SUPP  -1
+[humans] dogs SUPP  -1 animals SUPP  -1 persons SUPP  -1
+{are}
+[sleeping] looking SUPP  -1 awake SUPP  -1 sitting SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [silhouette] look -1 pet -1 kind -1 [of] [a] [man] person -1 woman -1 guy -1 [fishing] sleeping -1 sitting -1 running -1 [.] -1 7
+7
+{a}
+[silhouette] look SUPP  -1 pet SUPP  -1 kind SUPP  -1
+{of}
+{a}
+[man] person SUPP  -1 woman SUPP  -1 guy SUPP  -1
+[fishing] sleeping SUPP  -1 sitting SUPP  -1 running SUPP  -1
+{.}
 hypothesis -2
-[a] [man] person -1 woman -1 guy -1 [is] was -1 [sleeping] fishing -1 sitting -1 running -1 [.] -1 5
+5
+{a}
+[man] person SUPP  -1 woman SUPP  -1 guy SUPP  -1
+{is}
+[sleeping] fishing SUPP  -1 sitting SUPP  -1 running SUPP  -1
+{.}
+-3
+
+
+-3
+label: contradiction
+6
+premise -2
+[people] animals SUPP  -1 persons SUPP  -1 men SUPP  -1
+[trying] want SUPP  -1 sleeping SUPP  -1 laying SUPP  -1
+{to}
+[get warm] sleep SUPP  -1 run SUPP  -1 dream SUPP  -1
+{.}
+hypothesis -2
+4
+[people] animals SUPP  -1 persons SUPP  -1 men SUPP  -1
+{are}
+[sleeping] getting warm SUPP  -1 cold SUPP  -1 tall SUPP  -1
+{.}
+-3
+
+
+-3
+label: neutral
+premise -2
+19
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[cook] firefighter SUPP  -1 cooking SUPP  -1 is SUPP  -1
+[in] with SUPP  -1 without SUPP  -1 wearing SUPP  -1
+{an}
+[apron] a hat SUPP  -1 a competition SUPP  -1 a restaurant SUPP  -1
+{is}
+[smiling at] looking at SUPP  -1 facing SUPP  -1 breaking SUPP  -1
+{the}
+[camera] contestant SUPP  -1 masses SUPP  -1 cooks SUPP  -1
+{with}
+[two] no SUPP  -1 some SUPP  -1 several SUPP  -1
+{other}
+[cooks] contestants SUPP  -1 persons SUPP  -1 dogs SUPP  -1
+{in}
+{the}
+[background] set SUPP  -1 public SUPP  -1 contestants SUPP  -1
+{.}
+hypothesis -2
+7
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+{is}
+[in] watching SUPP  -1 at SUPP  -1 enjoying SUPP  -1
+{a}
+[cooking] national SUPP  -1 an apron SUPP  -1 big SUPP  -1
+[competition] show SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+-3
+
+
+-3
+label: neutral
+premise -2
+10
+{a}
+[woman] man SUPP  -1 person SUPP  -1 dog SUPP  -1
+[in] wearing SUPP  -1 watching SUPP  -1 with SUPP  -1
+{a}
+[striped] tv SUPP  -1 red SUPP  -1 cool SUPP  -1
+[shirt] tv SUPP  -1 hat SUPP  -1 pajamas SUPP  -1
+[holds] watches SUPP  -1 looks at SUPP  -1 likes SUPP  -1
+{an}
+[infant] a tv SUPP  -1 a dog SUPP  -1 a child SUPP  -1
+{.}
+hypothesis -2
+6
+{a}
+[person] man SUPP  -1 woman SUPP  -1 dog SUPP  -1
+{is}
+[watching] holding SUPP  -1 cleaning SUPP  -1 breaking SUPP  -1
+[tv] an infant SUPP  -1 a shirt SUPP  -1 cats SUPP  -1
+{.}
+-3
+
+
+-3
+label: neutral
+premise -2
+13
+{a}
+[women 's] group of SUPP  -1 men 's SUPP  -1 girls SUPP  -1
+[volleyball] football SUPP  -1 sport SUPP  -1 baseball SUPP  -1
+[team] show SUPP  -1 crowd SUPP  -1 contestants SUPP  -1
+[plays] performs SUPP  -1 looks at SUPP  -1 compete SUPP  -1
+[in] at SUPP  -1 outside SUPP  -1 into SUPP  -1
+{a}
+[brown] national SUPP  -1 blue SUPP  -1 red SUPP  -1
+{and}
+[green] national SUPP  -1 blue SUPP  -1 red SUPP  -1
+[gymnasium] competition SUPP  -1 stadium SUPP  -1 place SUPP  -1
+{.}
+hypothesis -2
+10
+{a}
+[volleyball] football SUPP  -1 sport SUPP  -1 baseball SUPP  -1
+[team] show SUPP  -1 crowd SUPP  -1 contestants SUPP  -1
+{is}
+[performing] playing SUPP  -1 assisting SUPP  -1 not SUPP  -1
+[in] at SUPP  -1 for SUPP  -1 playing SUPP  -1
+{a}
+[national] big SUPP  -1 green SUPP  -1 volleyball SUPP  -1
+[competition] gymnasium SUPP  -1 place SUPP  -1 team SUPP  -1
+{.}
+-3
+
+
+-3
+label: entailment
+premise -2
+14
+[man] woman SUPP  -1 guy SUPP  -1 person SUPP  -1
+[in] wearing SUPP  -1 without SUPP  -1 with SUPP  -1
+[traditional] red SUPP  -1 musical SUPP  -1 big SUPP  -1
+[costume] clothes SUPP  -1 instrument SUPP  -1 dress SUPP  -1
+[holding] carying SUPP  -1 with a SUPP  -1 breaking SUPP  -1
+[small] musical SUPP  -1 tall SUPP  -1 toy SUPP  -1
+[guitar] instrument SUPP  -1 bag SUPP  -1 dog SUPP  -1
+[with] without SUPP  -1 and SUPP  -1
+{a}
+[silver] musical SUPP  -1 big SUPP  -1 red SUPP  -1
+[bike] instrument SUPP  -1 costume SUPP  -1 car SUPP  -1
+[behind] in front of SUPP  -1 with SUPP  -1 by SUPP  -1
+[him] her SUPP  -1 the man SUPP  -1
+{.}
+hypothesis -2
+8
+{a}
+[man] woman SUPP  -1 guy SUPP  -1 person SUPP  -1
+{is}
+[holding] carying SUPP  -1 looking at SUPP  -1 breaking SUPP  -1
+{a}
+[musical] scientific SUPP  -1 kind of SUPP  -1 tall SUPP  -1
+[instrument] manual SUPP  -1 guitar SUPP  -1 thing SUPP  -1
+{.}
+-3
+
+
+-3
+label: neutral
+premise -2
+14
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[in] wearing SUPP  -1 without SUPP  -1 with SUPP  -1
+{a}
+[long] cold SUPP  -1 light SUPP  -1 white SUPP  -1
+{,}
+[dark] cold SUPP  -1 light SUPP  -1 white SUPP  -1
+[coat] short SUPP  -1 shirt SUPP  -1 scarf SUPP  -1
+[looks through] breaking SUPP  -1 throwing SUPP  -1 painting SUPP  -1
+[trashcans] men SUPP  -1 snow SUPP  -1 winter SUPP  -1
+{in}
+[winter] summer SUPP  -1 coat SUPP  -1 the snow SUPP  -1
+{.}
+hypothesis -2
+10
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[older] younger SUPP  -1 better SUPP  -1 smaller SUPP  -1
+[than}
+[thirty] the man SUPP  -1 seventy SUPP  -1 the trashcans SUPP  -1
+{is}
+[outside] inside SUPP  -1 under the snow SUPP  -1 dressed SUPP  -1
+{in}
+[winter] summer SUPP  -1 coat SUPP  -1 the snow SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[people] animals -1 persons -1 men -1 [trying] want -1 sleeping -1 laying -1 [to] [get warm] sleep -1 run -1 dream -1 [.] -1 6
+15
+[two] some SUPP  -1 no SUPP  -1 three SUPP  -1
+[young] tall SUPP  -1 children SUPP  -1 bored SUPP  -1
+[boys] girls SUPP  -1 children SUPP  -1 people SUPP  -1
+{are}
+[playing] watching girls SUPP  -1 bored SUPP  -1 happy SUPP  -1
+[with] without SUPP  -1 beside SUPP  -1
+{a}
+[toy] tall SUPP  -1 red SUPP  -1 girl 's SUPP  -1
+[train] doll SUPP  -1 plush SUPP  -1 thing SUPP  -1
+[set] burning SUPP  -1 scattered SUPP  -1 playing SUPP  -1
+{on}
+{a}
+[wood] girls SUPP  -1 dolls SUPP  -1 dirty SUPP  -1
+[floor] ground SUPP  -1 bed SUPP  -1 house SUPP  -1
+{.}
 hypothesis -2
-[people] animals -1 persons -1 men -1 [are] were -1 [sleeping] getting warm -1 cold -1 tall -1 [.] -1 4
+7
+[two] some SUPP  -1 no SUPP  -1 three SUPP  -1
+[girls] boys SUPP  -1 children SUPP  -1 people SUPP  -1
+{are}
+[playing] watching boys SUPP  -1 bored SUPP  -1 happy SUPP  -1
+[with] without SUPP  -1 looking at SUPP  -1
+[dolls] toys SUPP  -1 train SUPP  -1 boys SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [woman] man -1 person -1 lady -1 [cook] firefighter -1 cooking -1 is -1 [in] [an] [apron] a hat -1 a competition -1 a restaurant -1 [is] was -1 [smiling at] looking at -1 facing -1 breaking -1 [the] [camera] contestant -1 masses -1 cooks -1 [with] [two] no -1 some -1 several -1 [other] [cooks] contestants -1 persons -1 dogs -1 [in] [the] [background] set -1 public -1 contestants -1 [.] -1 19
+10
+[two] no SUPP  -1 some SUPP  -1 three SUPP  -1
+[little] tall SUPP  -1 sisters SUPP  -1 friends SUPP  -1
+[girls] boys SUPP  -1 children SUPP  -1 women SUPP  -1
+[reading] looking at SUPP  -1 writing SUPP  -1 tearing up SUPP  -1
+{a}
+[book] manual SUPP  -1 paper SUPP  -1 menu SUPP  -1
+[at] from SUPP  -1 outside SUPP  -1 by SUPP  -1
+{the}
+[library] bar SUPP  -1 family house SUPP  -1 river SUPP  -1
+{.}
 hypothesis -2
-[a] [woman] man -1 person -1 lady -1 [is] was -1 [in] [a] [cooking] national -1 an apron -1 big -1 [competition] show -1 restaurant -1 place -1 -1 7
+5
+{the}
+[girls] boys SUPP  -1 children SUPP  -1 women SUPP  -1
+[are] looks like SUPP  -1 likes SUPP  -1 with SUPP  -1
+[sisters] reading SUPP  -1 sleeping SUPP  -1 tall SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [woman] man -1 person -1 dog -1 [in] [a] [striped] tv -1 red -1 cool -1 [shirt] tv -1 hat -1 pajamas -1 [holds] watches -1 looks at -1 likes -1 [an] [infant] a tv -1 a dog -1 a child -1 [.] -1 10
+22
+[three] four SUPP  -1 no SUPP  -1 some SUPP  -1
+[young] old SUPP  -1 friends SUPP  -1 sisters SUPP  -1
+[girls] sisters SUPP  -1 brothers SUPP  -1 children SUPP  -1
+{and}
+{a}
+[baby] sister SUPP  -1 boy SUPP  -1 child SUPP  -1
+{are}
+[sitting in] sleeping on SUPP  -1 laying on SUPP  -1 burning SUPP  -1
+{the}
+[grass] bed SUPP  -1 wall SUPP  -1 restaurant SUPP  -1
+{on}
+{a}
+[blue] red SUPP  -1 girl 's SUPP  -1 boy 's SUPP  -1
+[blanket] jacket SUPP  -1 bed SUPP  -1 house SUPP  -1
+[with] without SUPP  -1 in front of SUPP  -1 by SUPP  -1
+[baby] sister 's SUPP  -1 girl 's SUPP  -1 wood SUPP  -1
+[toys] games SUPP  -1 clothes SUPP  -1 tools SUPP  -1
+[scattered] set SUPP  -1 burning SUPP  -1 playing SUPP  -1
+{on}
+[it] the blanket SUPP  -1 the floor SUPP  -1 the road SUPP  -1
+{.}
 hypothesis -2
-[a] [person] man -1 woman -1 dog -1 [is] [watching] holding -1 cleaning -1 breaking -1 [tv] an infant -1 a shirt -1 cats -1 [.] -1 6
+7
+[four] three SUPP  -1 no SUPP  -1 some SUPP  -1
+[sisters] girls SUPP  -1 children SUPP  -1 men SUPP  -1
+[play] fight SUPP  -1 speak SUPP  -1 work SUPP  -1
+{with}
+[each other] dogs SUPP  -1 toys SUPP  -1 their parents SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [women 's] group of -1 men 's -1 girls -1 [volleyball] football -1 sport -1 baseball -1 [team] show -1 crowd -1 contestants -1 [plays] performs -1 looks at -1 compete -1 [in] [a] [brown] national -1 blue -1 red -1 [and] [green] national -1 blue -1 red -1 [gymnasium] competition -1 stadium -1 place -1 [.] -1 13
+13
+[two] no SUPP  -1 some SUPP  -1 three SUPP  -1
+[smiling] sisters SUPP  -1 tall SUPP  -1 friends SUPP  -1
+[young] sisters SUPP  -1 tall SUPP  -1 friends SUPP  -1
+[girls] sisters SUPP  -1 boys SUPP  -1 children SUPP  -1
+[wearing] looking at SUPP  -1 burning SUPP  -1 selling SUPP  -1
+[plastic] red SUPP  -1 boy 's SUPP  -1 girl 's SUPP  -1
+[sunglasses] cap SUPP  -1 dress SUPP  -1 shirt SUPP  -1
+{are}
+[lying on] sitting on SUPP  -1 fighting on SUPP  -1 sleeping on SUPP  -1
+{the}
+[grass] family house SUPP  -1 wall SUPP  -1 blanket SUPP  -1
+{.}
 hypothesis -2
-[a] [volleyball] football -1 sport -1 baseball -1 [team] show -1 crowd -1 contestants -1 [is] was -1 [performing] playing -1 assisting -1 not -1 [in] [a] [national] big -1 green -1 volleyball -1 [competition] gymnasium -1 place -1 team -1 [.] -1 10
--3
-
-
--3
-label: entailment
-premise -2
-[man] woman -1 guy -1 person -1 [in] [traditional] red -1 musical -1 big -1 [costume] clothes -1 instrument -1 dress -1 [holding] carying -1 with a -1 breaking -1 [small] musical -1 tall -1 toy -1 [guitar] instrument -1 bag -1 dog -1 [with] without -1 and -1 [a] [silver] musical -1 big -1 red -1 [bike] instrument -1 costume -1 car -1 [behind] in front of -1 with -1 by -1 [him] her -1 the man -1 [.] -1 14
-hypothesis -2
-[a] [man] woman -1 guy -1 person -1 [is] [holding] carying -1 looking at -1 breaking -1 [a] [musical] scientific -1 kind of -1 tall -1 [instrument] manual -1 guitar -1 thing -1 [.] -1 8
+6
+{the}
+[two] three SUPP  -1 tall SUPP  -1 young SUPP  -1
+[girls] people SUPP  -1 children SUPP  -1 men SUPP  -1
+[are] looks like SUPP  -1 likes SUPP  -1 with SUPP  -1
+[sisters] smiling SUPP  -1 tall SUPP  -1 standing SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [woman] man -1 person -1 lady -1 [in] [a] [long] cold -1 light -1 white -1 [,] [dark] cold -1 light -1 white -1 [coat] short -1 shirt -1 scarf -1 [looks through] breaking -1 throwing -1 painting -1 [trashcans] men -1 snow -1 winter -1 [in] [winter] summer -1 coat -1 the snow -1  [.] -1 14
+13
+{the}
+[female] great SUPP  -1 winning SUPP  -1 male SUPP  -1
+[soccer] badminton SUPP  -1 sport SUPP  -1 great SUPP  -1
+[team] group SUPP  -1 coach SUPP  -1 player SUPP  -1
+{is}
+[getting] listening to the SUPP  -1 understanding SUPP  -1 yelling SUPP  -1
+[last] first SUPP  -1 some SUPP  -1 helpful SUPP  -1
+[minute] helpful SUPP  -1 play SUPP  -1 winning SUPP  -1
+[instruction] advices SUPP  -1 tips SUPP  -1 talks SUPP  -1
+[from] by SUPP  -1 for SUPP  -1
+{their}
+[coach] trainer SUPP  -1 dog SUPP  -1 son SUPP  -1
+{.}
 hypothesis -2
-[a] [woman] man -1 person -1 lady -1 [older] younger -1 better -1 smaller -1 [than] [thirty] the man -1 seventy -1 the trashcans -1 [is] [outside] inside -1 under the snow -1 dressed -1 [in] [winter] summer -1 coat -1 the snow -1 [.] -1 10
+18
+{the}
+[soccer] female SUPP  -1 great SUPP  -1 male SUPP  -1
+[team] group SUPP  -1 coach SUPP  -1 player SUPP  -1
+{is}
+[listening to] facing SUPP  -1 fighting SUPP  -1 attentive to SUPP  -1
+{their}
+[coach] trainer SUPP  -1 dog SUPP  -1 son SUPP  -1
+[for] thinking about SUPP  -1 in SUPP  -1 during SUPP  -1
+{their}
+[last] great SUPP  -1 soccer SUPP  -1 team SUPP  -1
+[play] match SUPP  -1 instruction SUPP  -1 minute SUPP  -1
+{to}
+[win] compete in SUPP  -1 play SUPP  -1 lose SUPP  -1
+{the}
+[soccer game] match SUPP  -1 lottery SUPP  -1 competition SUPP  -1
+{.}
+-3
+
+
+-3
+label: neutral
+premise -2
+7
+{a}
+[dog] an animal SUPP  -1 man SUPP  -1 pet SUPP  -1
+[biting] looking at SUPP  -1 pushing SUPP  -1 hurting SUPP  -1
+{a}
+[man 's] cat 's SUPP  -1 woman 's SUPP  -1 its owner 's SUPP  -1
+[rear] leg SUPP  -1 toy SUPP  -1 pet SUPP  -1
+hypothesis -2
+6
+{an}
+[animal] a dog SUPP  -1 a cat SUPP  -1 a golden retriever SUPP  -1
+[bit] plays with SUPP  -1 hurts SUPP  -1 fights SUPP  -1
+[its] an SUPP  -1 the SUPP  -1 someone 's SUPP  -1
+[owner] the man SUPP  -1 legs SUPP  -1 toys SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[two] some -1 no -1 three -1 [young] tall -1 children -1 bored -1 [boys] girls -1 children -1 people -1 [are] [playing] watching girls -1 bored -1 happy -1 [with] without -1 beside -1 [a] [toy] tall -1 red -1 girl 's -1 [train] doll -1 plush -1 thing -1 [set] burning -1 scattered -1 playing -1 [on] [a] [wood] girls -1 dolls -1 dirty -1 [floor] ground -1 bed -1 house -1 [.] -1 15
+11
+{a}
+[golfer] person SUPP  -1 cook SUPP  -1 dog SUPP  -1
+[shoots] looks at SUPP  -1 takes SUPP  -1 eats SUPP  -1
+[his] her SUPP  -1 the SUPP  -1
+[ball] tee SUPP  -1 dog SUPP  -1 golf SUPP  -1
+[out of] from SUPP  -1 off SUPP  -1 beside SUPP  -1
+{a}
+[sand trap] tee SUPP  -1 hole SUPP  -1 the grass SUPP  -1
+{.}
 hypothesis -2
-[two] some -1 no -1 three -1 [girls] boys -1 children -1 people -1 [are] [playing] watching boys -1 bored -1 happy -1 [with] without -1 looking at -1 [dolls] toys -1 train -1 boys -1 [.] -1 7
+8
+{a}
+[drive off] shoot SUPP  -1 golfer SUPP  -1 ball SUPP  -1
+{of}
+{the}
+[first] last SUPP  -1 white SUPP  -1 sand SUPP  -1
+[tee] sand trap SUPP  -1 ball SUPP  -1 grass trap SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[two] no -1 some -1 three -1 [little] tall -1 sisters -1 friends -1 [girls] boys -1 children -1 women -1 [reading] looking at -1 writing -1 tearing up -1 [a] [book] manual -1 paper -1 menu -1 [at] [the] [library] bar -1 family house -1 river -1 [.] -1 10
+13
+{a}
+[surfer] woman SUPP  -1 dog SUPP  -1 man SUPP  -1
+{is}
+[riding] looking at SUPP  -1 swimming in SUPP  -1 watching SUPP  -1
+{a}
+[wave] horse SUPP  -1 sea SUPP  -1 waterfall SUPP  -1
+[in] from SUPP  -1 outside SUPP  -1 by SUPP  -1
+{a}
+[large] full SUPP  -1 the first SUPP  -1 deep SUPP  -1
+[body] sea SUPP  -1 ocean SUPP  -1 pot SUPP  -1
+{of}
+[water] blood SUPP  -1 paint SUPP  -1 sea SUPP  -1
+{.}
 hypothesis -2
-[the] [girls] boys -1 children -1 women -1 [are] [sisters] reading -1 sleeping -1 tall -1 [.] -1 5
+9
+[this] the wave SUPP  -1 the sea SUPP  -1 the water SUPP  -1
+{is}
+[his] her SUPP  -1 the SUPP  -1
+[first] tallest SUPP  -1 largest SUPP  -1 ridden SUPP  -1
+[wave] nap SUPP  -1 outing SUPP  -1 look SUPP  -1
+{of}
+{the}
+[day] life SUPP  -1 night SUPP  -1 beach SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[three] four -1 no -1 some -1 [young] old -1 friends -1 sisters -1 [girls] sisters -1 brothers -1 children -1 [and] [a] [baby] sister -1 boy -1 child -1 [are] [sitting in] sleeping on -1 laying on -1 burning -1 [the] [grass] bed -1 wall -1 restaurant -1 [on] [a] [blue] red -1 girl 's -1 boy 's -1 [blanket] jacket -1 bed -1 house -1 [with] [baby] sister 's -1 girl 's -1 wood -1 [toys] games -1 clothes -1 tools -1 [scattered] set -1 burning -1 playing -1 [on] [it] the blanket -1 the floor -1 the road -1 [.] -1 22
+7
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[finishing] winning SUPP  -1 running in SUPP  -1 sleeping in SUPP  -1
+{a}
+[marathon] bike SUPP  -1 dog SUPP  -1 horse SUPP  -1
+[race] competition SUPP  -1 tv show SUPP  -1 run SUPP  -1
+{.}
 hypothesis -2
-[four] three -1 no -1 some -1 [sisters] girls -1 children -1 men -1 [play] fight -1 speak -1 work -1 [with] [each other] dogs -1 toys -1 their parents -1 [.] -1 7
+7
+{the}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+{is}
+{in}
+[first] a SUPP  -1 marathon SUPP  -1 second SUPP  -1
+[place] marathon SUPP  -1 competition SUPP  -1 race SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[two] no -1 some -1 three -1 [smiling] sisters -1 tall -1 friends -1 [young] sisters -1 tall -1 friends -1 [girls] sisters -1 boys -1 children -1 [wearing] looking at -1 burning -1 selling -1 [plastic] red -1 boy 's -1 girl 's -1 [sunglasses] cap -1 dress -1 shirt -1 [are] [lying on] sitting on -1 fighting on -1 sleeping on -1 [the] [grass] family house -1 wall -1 blanket -1 [.] -1 13
+9
+[man] woman SUPP  -1 guy SUPP  -1 person SUPP  -1
+[with] in SUPP  -1 without SUPP  -1
+[blue] yellow SUPP  -1 cement SUPP  -1 red SUPP  -1
+{and}
+[yellow] blue SUPP  -1 cement SUPP  -1 red SUPP  -1
+[shirt] bike SUPP  -1 horse SUPP  -1 hat SUPP  -1
+[rides] sells SUPP  -1 on a SUPP  -1 with a SUPP  -1
+[bike] horse SUPP  -1 bycicle SUPP  -1 vehicle SUPP  -1
+{.}
 hypothesis -2
-[the] [two] three -1 tall -1 young -1 [girls] people -1 children -1 men -1 [are] [sisters] smiling -1 tall -1 standing -1 [.] -1 6
+9
+{a}
+[man] woman SUPP  -1 guy SUPP  -1 person SUPP  -1
+[rides] sells SUPP  -1 on SUPP  -1 with SUPP  -1
+{a}
+[bike] horse SUPP  -1 bycicle SUPP  -1 vehicle SUPP  -1
+[for] sleeping SUPP  -1 falling SUPP  -1 watching SUPP  -1
+{the}
+[first time] fun SUPP  -1 biker SUPP  -1 race SUPP  -1
+-3
+
+
+-3
+label: entailment
+premise -2
+26
+{a}
+[baby] an adult SUPP  -1 child SUPP  -1 girl SUPP  -1
+[with] in SUPP  -1 wearing SUPP  -1 without SUPP  -1
+{a}
+[green] brown SUPP  -1 black SUPP  -1 white SUPP  -1
+[bottom] top SUPP  -1 short SUPP  -1 cat SUPP  -1
+{and}
+[red] brown SUPP  -1 black SUPP  -1 white SUPP  -1
+[top] bottom SUPP  -1 shirt SUPP  -1 cat SUPP  -1
+[lying] making SUPP  -1 sleeping on SUPP  -1 eating on SUPP  -1
+[in] on SUPP  -1 outside SUPP  -1 by SUPP  -1
+[bed] on animals SUPP  -1 children SUPP  -1 blanket SUPP  -1
+[with] beside SUPP  -1 without SUPP  -1
+{a}
+[brown] red SUPP  -1 black SUPP  -1 white SUPP  -1
+{and}
+[white] brown SUPP  -1 black SUPP  -1 red SUPP  -1
+[cat] toy SUPP  -1 blanket SUPP  -1 animal SUPP  -1
+{and}
+[also] with SUPP  -1 not SUPP  -1
+{a}
+[black] red SUPP  -1 brown SUPP  -1 white SUPP  -1
+{and}
+[white] red SUPP  -1 brown SUPP  -1 black SUPP  -1
+[cat] toy SUPP  -1 blanket SUPP  -1 animal SUPP  -1
+{.}
+hypothesis -2
+8
+[there is] with SUPP  -1 not one SUPP  -1
+{a}
+[child] an adult SUPP  -1 baby SUPP  -1 girl SUPP  -1
+{and}
+[two] no SUPP  -1 some SUPP  -1 three SUPP  -1
+[animals] cats SUPP  -1 men SUPP  -1 pets SUPP  -1
+{.}
+-3
+
+
+-3
+label: contradiction
+premise -2
+15
+{a}
+[brown] sleepy SUPP  -1 tall SUPP  -1 tired SUPP  -1
+[dog] animal SUPP  -1 cat SUPP  -1 insect SUPP  -1
+[wearing] with SUPP  -1 biting SUPP  -1 looking at SUPP  -1
+{a}
+[collar] jacket SUPP  -1 scarf SUPP  -1 shoe SUPP  -1
+{is}
+[chasing] sleeping SUPP  -1 happy SUPP  -1 tired SUPP  -1
+{and}
+[biting] sleeping SUPP  -1 eating SUPP  -1 laying SUPP  -1
+{on}
+{a}
+[red] brown SUPP  -1 black SUPP  -1 white SUPP  -1
+[broom] grass SUPP  -1 animal SUPP  -1 thing SUPP  -1
+{.}
+hypothesis -2
+6
+{an}
+[animal] a dog SUPP  -1 the owner SUPP  -1 a cat SUPP  -1
+{is}
+[sleeping] chasing SUPP  -1 happy SUPP  -1 fighting SUPP  -1
+[outside] inside SUPP  -1 on the grass SUPP  -1 in the restaurant SUPP  -1
+{.}
+-3
+
+
+-3
+label: entailment
+premise -2
+12
+[brown] sitting SUPP  -1 sleepy SUPP  -1 standing SUPP  -1
+{and}
+[cream] sitting SUPP  -1 sleepy SUPP  -1 standing SUPP  -1
+[dog] animal SUPP  -1 man SUPP  -1 silhouette SUPP  -1
+[with] without SUPP  -1 and SUPP  -1
+[tongue out] cats SUPP  -1 people SUPP  -1 jacket SUPP  -1
+[in front of] outside a SUPP  -1 beside a SUPP  -1 by a SUPP  -1
+[grassy] dirty SUPP  -1 snowy SUPP  -1 dark SUPP  -1
+[forest] restaurant SUPP  -1 park SUPP  -1 place SUPP  -1
+hypothesis -2
+7
+[there is] not one SUPP  -1 with SUPP  -1
+{an}
+[animal] a dog SUPP  -1 a man SUPP  -1 a silhouette SUPP  -1
+[standing] sleeping SUPP  -1 dead SUPP  -1 playing SUPP  -1
+[outdoors] in the forest SUPP  -1 inside SUPP  -1 somewhere SUPP  -1
+{.}
+-3
+
+
+-3
+label: entailment
+premise -2
+14
+{the}
+[dog] animal SUPP  -1 man SUPP  -1 cat SUPP  -1
+{is}
+[in] looking at SUPP  -1 into SUPP  -1 dreaming about SUPP  -1
+[snow] bed SUPP  -1 the forest SUPP  -1 dirt SUPP  -1
+{,}
+{and}
+[has] looks at SUPP  -1 chews on SUPP  -1 plays with SUPP  -1
+{a}
+[stick] toy SUPP  -1 some food SUPP  -1 an animal SUPP  -1
+{in}
+[its] the SUPP  -1 a SUPP  -1 her SUPP  -1
+[mouth] ear SUPP  -1 bed SUPP  -1 house SUPP  -1
+{.}
+hypothesis -2
+6
+[there is] not one SUPP  -1 with SUPP  -1
+{an}
+[animal] a dog SUPP  -1 a man SUPP  -1 a cat SUPP  -1
+[outdoors] in snow SUPP  -1 inside SUPP  -1 playing SUPP  -1
+{.}
+-3
+
+
+-3
+label: contradiction
+premise -2
+11
+{the}
+[women] man SUPP  -1 person SUPP  -1 animal SUPP  -1
+{is}
+[photographing] looking at SUPP  -1 facing SUPP  -1 enjoying SUPP  -1
+[statues] animals SUPP  -1 men SUPP  -1 dogs SUPP  -1
+[outdoors] inside SUPP  -1 at home SUPP  -1 at the zoo SUPP  -1
+{on}
+{a}
+[sunny] cold SUPP  -1 great SUPP  -1 long SUPP  -1
+[day] night SUPP  -1 light SUPP  -1 animal SUPP  -1
+{.}
+hypothesis -2
+6
+[two] some SUPP  -1 no SUPP  -1 three SUPP  -1
+[men] women SUPP  -1 people SUPP  -1 animals SUPP  -1
+[taking] looking at SUPP  -1 facing SUPP  -1 enjoying SUPP  -1
+[pictures] photographies SUPP  -1 statues SUPP  -1 clothes SUPP  -1
+{of}
+[animals] statues SUPP  -1 women SUPP  -1 dogs SUPP  -1
+-3
+
+
+-3
+label: entailment
+premise -2
+14
+{a}
+[woman] human SUPP  -1 dog SUPP  -1 person SUPP  -1
+[in] wearing SUPP  -1 with SUPP  -1 without SUPP  -1
+{a}
+[striped] horse SUPP  -1 dog SUPP  -1 an animal SUPP  -1
+[shirt] cap SUPP  -1 boots SUPP  -1 helmet SUPP  -1
+{is}
+[walking] looking at SUPP  -1 thinking about SUPP  -1 washing SUPP  -1
+{a}
+[horse] an animal SUPP  -1 someone SUPP  -1 a pet SUPP  -1
+[across] outside SUPP  -1 by SUPP  -1
+{a}
+[street] restaurant SUPP  -1 river SUPP  -1 place SUPP  -1
+{.}
+hypothesis -2
+8
+{a}
+[human] woman SUPP  -1 man SUPP  -1 person SUPP  -1
+{and}
+{an}
+[animal] a horse SUPP  -1 a dog SUPP  -1 a big one SUPP  -1
+[are] play -1 walk -1 sleep -1
+[outdoors] in a street SUPP  -1 in a restaurant SUPP  -1 there SUPP  -1
+{.}
+-3
+
+
+-3
+label: entailment
+premise -2
+10
+[four] some SUPP  -1 no SUPP  -1 severals SUPP  -1
+[dogs] animals SUPP  -1 men SUPP  -1 persons SUPP  -1
+{of}
+[varying] outdoors SUPP  -1 inside SUPP  -1 different SUPP  -1
+[breeds] owners SUPP  -1 places SUPP  -1 countries SUPP  -1
+[running through] sleeping on SUPP  -1 thinking about SUPP  -1 walking on SUPP  -1
+{a}
+[field] park SUPP  -1 restaurant SUPP  -1 place SUPP  -1
+{.}
+hypothesis -2
+4
+[some] no SUPP  -1 four SUPP  -1 with SUPP  -1
+[animals] dogs SUPP  -1 golden retriever SUPP  -1 cats SUPP  -1
+[outdoors] inside SUPP  -1 in a field SUPP  -1 in a park -1
+{.}
+-3
+
+
+-3
+label: contradiction
+premise -2
+13
+[army] no SUPP  -1 some SUPP  -1 tall SUPP  -1
+[men] animal SUPP  -1 persons SUPP  -1 women SUPP  -1
+[grilling] preparing SUPP  -1 thinking about SUPP  -1 selling SUPP  -1
+[a lot of] some SUPP  -1 a few SUPP  -1 red SUPP  -1
+[meat] vegetables SUPP  -1 beef SUPP  -1 food SUPP  -1
+{while}
+[his] her SUPP  -1 the SUPP  -1
+[troop] pet SUPP  -1 animal SUPP  -1 husband SUPP  -1
+[looks on] eats SUPP  -1 sleeps SUPP  -1 cooks SUPP  -1
+{.}
+hypothesis -2
+8
+[no] some SUPP  -1 a lot of SUPP  -1 not one SUPP  -1
+[animal] milk SUPP  -1 meat SUPP  -1 food SUPP  -1
+[products] meat SUPP  -1 alive SUPP  -1 food SUPP  -1
+[can be] could be SUPP  -1 cannot be SUPP  -1
+[seen] grilled SUPP  -1 smelled SUPP  -1 touched SUPP  -1
+[here] outside SUPP  -1 there SUPP  -1 inside SUPP  -1
+{.}
+-3
+
+
+-3
+label: contradiction
+premise -2
+24
+{a}
+[man] dog SUPP  -1 cat SUPP  -1 woman SUPP  -1
+[in] wearing SUPP  -1 selling SUPP  -1 looking at SUPP  -1
+{a}
+[green] big SUPP  -1 red SUPP  -1 an old SUPP  -1
+[shirt] short SUPP  -1 hat SUPP  -1 top SUPP  -1
+{and}
+[dark] green SUPP  -1 big SUPP  -1 old SUPP  -1
+[pants] shirt SUPP  -1 short SUPP  -1 hat SUPP  -1
+{and}
+[carrying] selling SUPP  -1 eating SUPP  -1 stealing SUPP  -1
+{a}
+[really] verry SUPP  -1 long SUPP  -1 huge SUPP  -1
+[big] small SUPP  -1 red SUPP  -1 long SUPP  -1
+[pot] shirt SUPP  -1 top SUPP  -1 jacket SUPP  -1
+[turns around] undresses SUPP  -1 runs SUPP  -1 walks SUPP  -1
+{to}
+[talk to] speak to SUPP  -1 fight SUPP  -1 push SUPP  -1
+[3] some SUPP  -1 2 SUPP  -1 several SUPP  -1
+[other] dresses SUPP  -1 shirted SUPP  -1 tall SUPP  -1
+[people] women SUPP  -1 persons SUPP  -1 dogs SUPP  -1
+{.}
+hypothesis -2
+5
+[nobody] a man SUPP  -1 a dog SUPP  -1 an animal SUPP  -1
+[has] is wearing SUPP  -1 is selling SUPP  -1 is looking at SUPP  -1
+{a}
+[shirt] short SUPP  -1 pants SUPP  -1 crush SUPP  -1
+[on] at home SUPP  -1 with them SUPP  -1 here SUPP  -1
+-3
+
+
+-3
+label: contradiction
+premise -2
+9
+{a}
+[little] working SUPP  -1 tall SUPP  -1 studient SUPP  -1
+[boy] girl SUPP  -1 child SUPP  -1 guy SUPP  -1
+[playing] studying SUPP  -1 sleeping SUPP  -1 reading SUPP  -1
+[outside] inside SUPP  -1 here SUPP  -1
+{on}
+{the}
+[cement] at school SUPP  -1 at home SUPP  -1 in the park SUPP  -1
+{.}
+hypothesis -2
+6
+{a}
+[boy] girl SUPP  -1 child SUPP  -1 guy SUPP  -1
+{is}
+[doing] looking at SUPP  -1 playing with SUPP  -1 thinking about SUPP  -1
+[homework] a play SUPP  -1 great SUPP  -1 things SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[the] [female] great -1 winning -1 male -1 [soccer] badminton -1 sport -1 great -1 [team] group -1 coach -1 player -1 [is] [getting] listening to the -1 understanding -1 yelling -1 [last] first -1 some -1 helpful -1 [minute] helpful -1 play -1 winning -1 [instruction] advices -1 tips -1 talks -1 [from] by -1 for -1 [their] [coach] trainer -1 dog -1 son -1 [.] -1 13
+5
+[two] no SUPP  -1 some SUPP  -1 three SUPP  -1
+[men] people SUPP  -1 women SUPP  -1 guys SUPP  -1
+[talk] sleeps SUPP  -1 speaks SUPP  -1 are SUPP  -1
+[outdoors] inside SUPP  -1 at home SUPP  -1 at the restaurant SUPP  -1
+{.}
 hypothesis -2
-[the] [soccer] female -1 great -1 male -1 [team] [is] [listening to] facing -1 fighting -1 attentive to -1 [their] [coach] trainer -1 dog -1 son -1	[for] thinking about -1 in -1 during -1 [their] [last] great -1 soccer -1 team -1 [play] match -1 instruction -1 minute -1 [to] [win] compete in -1 play -1 lose -1 [the] [soccer game] match -1 lottery -1 competition -1 [.] -1 18
+7
+{the}
+[men] women SUPP  -1 people SUPP  -1 guys SUPP  -1
+{are}
+[talking] lying SUPP  -1 fighting SUPP  -1 speaking SUPP  -1
+[about] with SUPP  -1 beside SUPP  -1 by SUPP  -1
+{their}
+[wives] inside SUPP  -1 speech SUPP  -1 husbands SUPP  -1
+-3
+
+
+-3
+label: contradiction
+premise -2
+17
+[dark-haired] tall SUPP  -1 sitting SUPP  -1 lazy SUPP  -1
+[man] woman SUPP  -1 person SUPP  -1 child SUPP  -1
+[wearing] in SUPP  -1 with SUPP  -1 without SUPP  -1
+{a}
+[watch] pajamas SUPP  -1 hat SUPP  -1 shirt SUPP  -1
+{and}
+[oven] some SUPP  -1 no SUPP  -1 tv SUPP  -1
+[mitt] 
+[about] wants SUPP  -1 decides SUPP  -1 hates SUPP  -1
+{to}
+[cook] watch SUPP  -1 eat SUPP  -1 take SUPP  -1
+[some] the SUPP  -1 another SUPP  -1 with SUPP  -1
+[meat] tv SUPP  -1 food SUPP  -1 rice SUPP  -1
+[in] outside SUPP  -1 inside SUPP  -1 by SUPP  -1
+{the}
+[kitchen] bedroom SUPP  -1 living room SUPP  -1 room SUPP  -1
+{.}
+hypothesis -2
+7
+{a}
+[man] woman SUPP  -1 dog SUPP  -1 person SUPP  -1
+{is}
+[sitting] cooking SUPP  -1 eating SUPP  -1 dressed SUPP  -1
+[watching] with SUPP  -1 cooking with SUPP  -1 listening to the SUPP  -1
+[tv] meat SUPP  -1 things SUPP  -1 dogs SUPP  -1
+{.}
+-3
+
+
+-3
+label: contradiction
+premise -2
+13
+{a}
+[little] tv SUPP  -1 tall SUPP  -1 young SUPP  -1
+[boy] girl SUPP  -1 guy SUPP  -1 dog SUPP  -1
+[punching out] watching SUPP  -1 thinking about SUPP  -1 writing SUPP  -1
+[flashcards] tv SUPP  -1 girls SUPP  -1 cards SUPP  -1
+{from}
+{the}
+[cardboard] tv SUPP  -1 box SUPP  -1 thing SUPP  -1
+{they}
+[came] are SUPP  -1 play SUPP  -1 sleep SUPP  -1
+{in}
+{.}
+hypothesis -2
+5
+{a}
+[boy] girl SUPP  -1 guy SUPP  -1 dog SUPP  -1
+[watches] punching out SUPP  -1 is on SUPP  -1 painting SUPP  -1
+[tv] flashcards SUPP  -1 pokemon cards SUPP  -1 dogs SUPP  -1
+{.}
+-3
+
+
+-3
+label: entailment
+premise -2
+19
+[this}
+[man] woman SUPP  -1 silhouette SUPP  -1 guy SUPP  -1
+[dressed] is SUPP  -1 outside SUPP  -1 inside SUPP  -1
+[in] wearing SUPP  -1 with SUPP  -1 without SUPP  -1
+[white] blue SUPP  -1 dark SUPP  -1 black SUPP  -1
+[pants] scarf SUPP  -1 short SUPP  -1 bikini SUPP  -1
+{and}
+[blue] white SUPP  -1 dark SUPP  -1 black SUPP  -1
+[shirt] scarf SUPP  -1 short SUPP  -1 bikini SUPP  -1
+{,}
+{is}
+[standing on] sleeping SUPP  -1 looking SUPP  -1 dreaming about SUPP  -1
+{a}
+[ledge] couch SUPP  -1 bed SUPP  -1 bench SUPP  -1
+[in] watching SUPP  -1 under SUPP  -1 thinking about SUPP  -1
+{the}
+[snow] summer SUPP  -1 winter SUPP  -1 ground SUPP  -1
+{.}
+hypothesis -2
+8
+{a}
+[man] woman SUPP  -1 silhouette SUPP  -1 guy SUPP  -1
+{is}
+[outside] inside SUPP  -1 here SUPP  -1 tired SUPP  -1
+[in] watching SUPP  -1 under SUPP  -1 thinking about SUPP  -1
+{the}
+[snow] cold SUPP  -1 summer SUPP  -1 ledge SUPP  -1
+{.}
+-3
+
+
+-3
+label: entailment
+premise -2
+13
+{a}
+[woman] dog SUPP  -1 person SUPP  -1 man SUPP  -1
+[with] beside SUPP  -1 breaking SUPP  -1 selling SUPP  -1 
+{a}
+[stroller] child SUPP  -1 dog SUPP  -1 tv SUPP  -1
+{is}
+[passing] fighting SUPP  -1 calling SUPP  -1 insulting SUPP  -1
+{a}
+[man] dog SUPP  -1 woman SUPP  -1 an animal SUPP  -1
+[walking] fighting SUPP  -1 cleaning SUPP  -1 petting SUPP  -1
+{a}
+[dog] horse SUPP  -1 pet SUPP  -1 cat SUPP  -1
+{.}
+hypothesis -2
+5
+[there are] no SUPP  -1 tall SUPP  -1 some SUPP  -1
+[people] women SUPP  -1 persons SUPP  -1 dogs SUPP  -1
+[outside] inside SUPP  -1 on the street SUPP  -1 outdoors SUPP  -1
+{.}
 -3
 
 
 -3
 label: neutral
 premise -2
-[a] [dog] an animal -1 man -1 pet -1 [biting] looking at -1 pushing -1 hurting -1 [a] [man 's] cat 's -1 woman 's -1 its owner 's -1 [rear] leg -1 toy -1 pet -1 -1 7
+13
+{a}
+[woman] dog SUPP  -1 person SUPP  -1 man SUPP  -1
+[with] beside SUPP  -1 breaking SUPP  -1 selling SUPP  -1 
+{a}
+[stroller] child SUPP  -1 dog SUPP  -1 tv SUPP  -1
+{is}
+[passing] fighting SUPP  -1 calling SUPP  -1 insulting SUPP  -1
+{a}
+[man] dog SUPP  -1 woman SUPP  -1 an animal SUPP  -1
+[walking] fighting SUPP  -1 cleaning SUPP  -1 petting SUPP  -1
+{a}
+[dog] horse SUPP  -1 pet SUPP  -1 cat SUPP  -1
+{.}
 hypothesis -2
-[an] [animal] a dog -1 a cat -1 a golden retriever -1 [bit] plays with -1 hurts -1 fights -1 [its] [owner] the man -1 legs -1 toys -1 [.] -1 6
+7
+[there is] not SUPP  -1 walking SUPP  -1 with SUPP  -1
+{a}
+[black] tall SUPP  -1 woman 's SUPP  -1 walking SUPP  -1
+[dog] man SUPP  -1 bike SUPP  -1 animal SUPP  -1
+[outside] inside SUPP  -1 here SUPP  -1 at the park SUPP  -1
+{.}
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [golfer] person -1 cook -1 dog -1 [shoots] looks at -1 takes -1 eats -1 [his] [ball] tee -1 dog -1 golf -1 [out of] from -1 off -1 beside -1 [a] [sand trap] tee -1 hole -1 the grass -1 [.] -1 11
+5
+[two] no SUPP  -1 some SUPP  -1 three SUPP  -1
+[people] basketball players SUPP  -1 dogs SUPP  -1 women SUPP  -1
+[playing] watching SUPP  -1 thinking about SUPP  -1 supporting SUPP  -1
+[badminton] basketball SUPP  -1 sport SUPP  -1 baseball SUPP  -1
+{.}
 hypothesis -2
-[a] [drive off] shoot -1 golfer -1 ball -1 [of] [the] [first] last -1 white -1 sand -1 [tee] sand trap -1 ball -1 grass trap -1 [.] -1 8
--3
-
-
--3
-label: neutral
-premise -2
-[a] [surfer] woman -1 dog -1 man -1 [is] [riding] looking at -1 swimming in -1 watching -1 [a] [wave] horse -1 sea -1 waterfall -1 [in] [a] [large] full -1 the first -1 deep -1 [body] sea -1 ocean -1 pot -1 [of] [water] blood -1 paint -1 sea -1 [.] -1 13
-hypothesis -2
-[this] [is] [his] [first] tallest -1 largest -1 ridden -1 [wave] nap -1 outing -1 look -1 [of] [the] [day] life -1 night -1 beach -1 [.] -1 9
--3
-
-
--3
-label: neutral
-premise -2
-[a] [woman] man -1 person -1 lady -1 [finishing] winning -1 running in -1 sleeping in -1 [a] [marathon] bike -1 dog -1 horse -1 [race] competition -1 tv show -1 run -1 [.] -1 7
-hypothesis -2
-[the] [woman] man -1 person -1 lady -1 [is] [in] [first] a -1 marathon -1 second -1 [place] marathon -1 competition -1 race -1 [.] -1 7
--3
-
-
--3
-label: neutral
-premise -2
-[man] woman -1 guy -1 person -1 [with] in -1 without -1 [blue] yellow -1 cement -1 red -1 [and] [yellow] blue -1 cement -1 red -1 [shirt] bike -1 horse -1 hat -1 [rides] sells -1 on a -1 with a -1 [bike] horse -1 bycicle -1 vehicle -1 [.] -1 9
-hypothesis -2
-[a] [man] woman -1 guy -1 person -1 [rides] sells -1 on -1 with -1 [a] [bike] horse -1 bycicle -1 vehicle -1 [for] sleeping -1 falling -1 watching -1 [the] [first time] fun -1 biker -1 race -1 -1 9
+6
+[two] no SUPP  -1 some SUPP  -1 three SUPP  -1
+[people] badminton players SUPP  -1 dogs SUPP  -1 women SUPP  -1
+[playing] watching SUPP  -1 thinking about SUPP  -1 supporting SUPP  -1
+[basketball] badminton SUPP  -1 sport SUPP  -1 baseball SUPP  -1
+[outside] inside SUPP  -1 together SUPP  -1 and badminton SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [baby] an adult -1 child -1 girl -1 [with] [a] [green] brown -1 black -1 white -1 [bottom] top -1 short -1 cat -1 [and] [red] brown -1 black -1 white -1 [top] bottom -1 shirt -1 cat -1 [lying] making -1 sleeping on -1 eating on -1 [in] [bed] on animals -1 children -1 blanket -1 [with] beside -1 without -1 [a] [brown] red -1 black -1 white -1 [and] [white] brown -1 black -1 red -1 [cat] toy -1 blanket -1 animal -1 [and] [also] with -1 not -1 [a] [black] red -1 brown -1 white -1 [and] [white] red -1 brown -1 black -1 [cat] toy -1 blanket -1 animal -1 [.] -1 26
+17
+{a}
+[woman] man SUPP  -1 lady SUPP  -1 silhouette SUPP  -1
+[in] wearing SUPP  -1 selling SUPP  -1 with SUPP  -1
+{a}
+[burgundy] an outside SUPP  -1 long SUPP  -1 black SUPP  -1
+[coat] cart SUPP  -1 jacket SUPP  -1 short SUPP  -1
+[exits] leaves SUPP  -1 looking at SUPP  -1 in SUPP  -1
+[trader joe 's] her house SUPP  -1 her bed SUPP  -1 the shop SUPP  -1
+[with] without SUPP  -1 carying SUPP  -1
+{a}
+[cart] bag SUPP  -1 pot SUPP  -1 basket SUPP  -1
+[full] filled with SUPP  -1 empty SUPP  -1 lacking SUPP  -1
+{of}
+[groceries] dogs SUPP  -1 couch SUPP  -1 tv SUPP  -1
+{.}
 hypothesis -2
-[there is] [a] [child] an adult -1 baby -1 girl -1 [and] [two] no -1 some -1 three -1 [animals] cats -1 men -1 pets -1 [.] -1 8
+3
+{a}
+[woman] man SUPP  -1 lady SUPP  -1 silhouette SUPP  -1
+[outside] inside SUPP  -1 at trader joe 's SUPP  -1 in a parking SUPP
 -3
 
 
 -3
 label: contradiction
 premise -2
-[a] [brown] sleepy -1 tall -1 tired -1 [dog] animal -1 cat -1 insect -1 [wearing] with -1 biting -1 looking at -1 [a] [collar] jacket -1 scarf -1 shoe -1 [is] [chasing] sleeping -1 happy -1 tired -1 [and] [biting] sleeping -1 eating -1 laying -1 [on] [a] [red] brown -1 black -1 white -1 [broom] grass -1 animal -1 thing -1 [.] -1 15
+17
+{a}
+[boy] girl SUPP  -1 child SUPP  -1 dog SUPP  -1
+[plays] eats SUPP  -1 is SUPP  -1 runs SUPP  -1
+[with] by SUPP  -1 without SUPP  -1
+{a}
+[motorized] street SUPP  -1 red SUPP  -1 toy SUPP  -1
+[car] bike SUPP  -1 vehicle SUPP  -1 toy SUPP  -1
+[next to] outside SUPP  -1 beside SUPP  -1 by SUPP  -1
+{a}
+[dirty] playing SUPP  -1 long SUPP  -1 red SUPP  -1
+[street] house SUPP  -1 road SUPP  -1 restaurant SUPP  -1
+[lined] playing SUPP  -1 eating on SUPP  -1 marked SUPP  -1
+[with] beside SUPP  -1 without SUPP  -1 by SUPP  -1
+[real] toy SUPP  -1 fake SUPP  -1 red SUPP  -1
+[cars] street SUPP  -1 toys SUPP  -1 bags SUPP  -1
+{.}
 hypothesis -2
-[an] [animal] a dog -1 the owner -1 a cat -1 [is] [sleeping] chasing -1 happy -1 fighting -1 [outside] inside -1 on the grass -1 in the restaurant -1 [.] -1 6
+9
+[no] a SUPP  -1 not a SUPP  -1 some SUPP  -1
+[boy] girl SUPP  -1 child SUPP  -1 dog SUPP  -1
+{is}
+[outside] sleeping SUPP  -1 tired SUPP  -1 eating SUPP  -1
+[in] in front of SUPP  -1 by SUPP  -1 on SUPP  -1
+{the}
+[streets] park SUPP  -1 road SUPP  -1 place SUPP  -1
+[playing] sleeping SUPP  -1 happy SUPP  -1 with toys SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[brown] sitting -1 sleepy -1 standing -1 [and] [cream] sitting -1 sleepy -1 standing -1 [dog] animal -1 man -1 silhouette -1 [with] without -1 and -1 [tongue out] cats -1 people -1 jacket -1 [in front of] outside a -1 beside a -1 by a -1 [grassy] dirty -1 snowy -1 dark -1 [forest] restaurant -1 park -1 place -1 -1 12
+11
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+{is}
+[walking] watching SUPP  -1 thinking about SUPP  -1 playing with SUPP  -1
+[her] his SUPP  -1 the SUPP  -1
+[dog] pet SUPP  -1 cat SUPP  -1 golden retriever SUPP  -1
+[along] on SUPP  -1 outside SUPP  -1 by SUPP  -1
+{a}
+[snowy] dirty SUPP  -1 house SUPP  -1 long SUPP  -1
+[ground] restaurant SUPP  -1 floor SUPP  -1 park SUPP  -1
+{.}
 hypothesis -2
-[there is] not one -1 with -1 [an] [animal] a dog -1 a man -1 a silhouette -1 [standing] sleeping -1 dead -1 playing -1 [outdoors] in the forest -1 inside -1 somewhere -1 [.] -1 7
+8
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+{is}
+[with] by SUPP  -1 beside SUPP  -1 without SUPP  -1
+[her] his SUPP  -1 the SUPP  -1
+[dog] pet SUPP  -1 cat SUPP  -1 golden retriever SUPP  -1
+[outside] inside SUPP  -1 somewhere SUPP  -1 in the snow SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[the] [dog] animal -1 man -1 cat -1 [is] [in] [snow] bed -1 the forest -1 dirt -1 [,] [and] [has] [a] [stick] toy -1 some food -1 an animal -1 [in] [its] [mouth] ear -1 bed -1 house -1 [.] -1 14
+14
+{a}
+[crowd] group SUPP  -1 wave SUPP  -1 lot SUPP  -1
+{of}
+[people] dogs SUPP  -1 women SUPP  -1 persons SUPP  -1
+[fill] on SUPP  -1 ouside SUPP  -1 beside SUPP  -1
+{the}
+[street] road SUPP  -1 restaurant SUPP  -1 house SUPP  -1
+[in front of] beside SUPP  -1 by SUPP  -1 in SUPP  -1
+{a}
+[mcdonald 's] restaurant SUPP  -1 park SUPP  -1 house SUPP  -1
+{.}
 hypothesis -2
-[there is] not one -1 with -1 [an] [animal] a dog -1 a man -1 a cat -1 [outdoors] in snow -1 inside -1 playing -1 [.] -1 6
--3
-
-
--3
-label: contradiction
-premise -2
-[the] [women] man -1 person -1 animal -1 [is] [photographing] looking at -1 facing -1 enjoying -1 [statues] animals -1 men -1 dogs -1 [outdoors] inside -1 at home -1 at the zoo -1 [on] [a] [sunny] cold -1 great -1 long -1 [day] night -1 light -1 animal -1 [.] -1 11
-hypothesis -2
-[two] some -1 no -1 three -1 [men] women -1 people -1 animals -1 [taking] looking at -1 facing -1 enjoying -1 [pictures] photographies -1 statues -1 clothes -1 [of] [animals] statues -1 women -1 dogs -1 -1 6
+8
+[there is] not SUPP  -1 with SUPP  -1 by SUPP  -1
+{a}
+[crowd] girl SUPP  -1 group SUPP  -1 dog SUPP  -1
+[outside] inside SUPP  -1 beside SUPP  -1 in front of SUPP  -1
+{the}
+[restaurant] mcdonald 's SUPP  -1 park SUPP  -1 place SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [woman] human -1 dog -1 person -1 [in] [a] [striped] horse -1 dog -1 an animal -1 [shirt] cap -1 boots -1 helmet -1 [is] [walking] looking at -1 thinking about -1 washing -1 [a] [horse] an animal -1 someone -1 a pet -1 [across] outside -1 by -1 [a] [street] restaurant -1 river -1 place -1 [.] -1 14
+20
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+[in] wearing SUPP  -1 with SUPP  -1 without SUPP  -1
+{a}
+[white] women SUPP  -1 dog SUPP  -1 red SUPP  -1
+[shirt] hat SUPP  -1 cap SUPP  -1 pajamas SUPP  -1
+{and}
+[baseball] women SUPP  -1 dog SUPP  -1 red SUPP  -1
+[hat] shirt SUPP  -1 cap SUPP  -1 pajamas SUPP  -1
+{is}
+[pushing] walking SUPP  -1 beside SUPP  -1 with SUPP  -1
+{a}
+[cart] dog SUPP  -1 woman SUPP  -1 toy SUPP  -1
+[carrying] with SUPP  -1 pushing SUPP  -1 walking with SUPP  -1
+[several] some SUPP  -1 a lot of SUPP  -1 red SUPP  -1
+[bags] beds SUPP  -1 dogs SUPP  -1 women SUPP  -1
+[on] outside SUPP  -1 inside SUPP  -1 in SUPP  -1
+{a}
+[street] restaurant SUPP  -1 road SUPP  -1 place SUPP  -1
+{.}
 hypothesis -2
-[a] [human] woman -1 man -1 person -1 [and] [an] [animal] a horse -1 a dog -1 a big one -1 [are] [outdoors] in a street -1 in a restaurant -1 there -1 [.] -1 8
+6
+{a}
+[man] woman SUPP  -1 person SUPP  -1 guy SUPP  -1
+{is}
+[walking] sleeping SUPP  -1 dressed SUPP  -1 running SUPP  -1
+[outside] inside SUPP  -1 a dog SUPP  -1 on a street SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[four] some -1 no -1 severals -1 [dogs] animals -1 men -1 persons -1 [of] [varying] outdoors -1 inside -1 different -1 [breeds] owners -1 places -1 countries -1 [running through] sleeping on -1 thinking about -1 walking on -1 [a] [field] park -1 restaurant -1 place -1 [.] -1 10
+18
+{a}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+[with] wearing SUPP  -1 without SUPP  -1 in SUPP  -1
+[red-hair] guitars SUPP  -1 men SUPP  -1 dogs SUPP  -1
+{and}
+{a}
+[leather] red SUPP  -1 men SUPP  -1 blue SUPP  -1
+[jacket] instrument SUPP  -1 guitar SUPP  -1 dress SUPP  -1
+[holds] plays SUPP  -1 sells SUPP  -1 looking at SUPP  -1
+{a}
+[harp] dog SUPP  -1 an instrument SUPP  -1 something SUPP  -1
+[in front of] beside SUPP  -1 in SUPP  -1 outside SUPP  -1
+{a}
+[snowy] grassy SUPP  -1 green SUPP  -1 big SUPP  -1
+[forest] ground SUPP  -1 house SUPP  -1 restaurant SUPP  -1
+{.}
 hypothesis -2
-[some] no -1 four -1 with -1 [animals] dogs -1 golden retriever -1 cats -1 [outdoors] inside -1 in a field -1 in a park [.] -1 4
--3
-
-
--3
-label: contradiction
-premise -2
-[army] no -1 some -1 tall -1 [men] animal -1 persons -1 women -1 [grilling] preparing -1 thinking about -1 selling -1 [a lot of] some -1 a few -1 red -1 [meat] vegetables -1 beef -1 food -1 [while] [his] [troop] pet -1 animal -1 husband -1 [looks on] eats -1 sleeps -1 cooks -1 [.] -1 13
-hypothesis -2
-[no] some -1 a lot of -1 not one -1 [animal] milk -1 meat -1 food -1 [products] meat -1 alive -1 food -1 [can be] [seen] grilled -1 smelled -1 touched -1 [here] outside -1 there -1 inside -1 [.] -1 8
--3
-
-
--3
-label: contradiction
-premise -2
-[a] [man] dog -1 cat -1 woman -1 [in] wearing -1 selling -1 looking at -1 [a] [green] big -1 red -1 an old -1 [shirt] short -1 hat -1 top -1 [and] [dark] green -1 big -1 old -1 [pants] shirt -1 short -1 hat -1 [and] [carrying] selling -1 eating -1 stealing -1 [a] [really] verry -1 long -1 huge -1 [big] small -1 red -1 long -1 [pot] shirt -1 top -1 jacket -1 [turns around] undresses -1 runs -1 walks -1 [to] [talk to] speak to -1 fight -1 push -1 [3] some -1 2 -1 several -1 [other] dresses -1 shirted -1 tall -1 [people] women -1 persons -1 dogs -1 [.] -1 24
-hypothesis -2
-[nobody] a man -1 a dog -1 an animal -1 [has] is wearing -1 is selling -1 is looking at -1 [a] [shirt] short -1 pants -1 crush -1 [on] at home -1 with them -1 here -1 -1 5
--3
-
-
--3
-label: contradiction
-premise -2
-[a] [little] working -1 tall -1 studient -1 [boy] girl -1 child -1 guy -1 [playing] studying -1 sleeping -1 reading -1 [outside] inside -1 here -1 [on] [the] [cement] at school -1 at home -1 in the park -1 [.] -1 9
-hypothesis -2
-[a] [boy] girl -1 child -1 guy -1 [is] [doing] looking at -1 playing with -1 thinking about -1 [homework] a play -1 great -1 things -1 [.] -1 6
--3
-
-
--3
-label: neutral
-premise -2
-[two] no -1 some -1 three -1 [men] people -1 women -1 guys -1 [talk] sleeps -1 speaks -1 are -1 [outdoors] inside -1 at home -1 at the restaurant -1 [.] -1 5
-hypothesis -2
-[the] [men] women -1 people -1 guys -1 [are] [talking] lying -1 fighting -1 speaking -1 [about] with -1 beside -1 by -1 [their] [wives] inside -1 speech -1 husbands -1 -1 7
--3
-
-
--3
-label: contradiction
-premise -2
-[dark-haired] [man] [wearing] [a] [watch] [and] [oven] [mitt] [about] [to] [cook] [some] [meat] [in] [the] [kitchen] [.] -1 17
-hypothesis -2
-[a] [man] [is] [sitting] [watching] [tv] [.] -1 7
--3
-
-
--3
-label: contradiction
-premise -2
-[a] [little] tv -1 tall -1 young -1 [boy] girl -1 guy -1 dog -1 [punching out] watching -1 thinking about -1 writing -1 [flashcards] tv -1 girls -1 cards -1 [from] [the] [cardboard] tv -1 box -1 thing -1 [they] [came] are -1 play -1 sleep -1 [in] [.] -1 13
-hypothesis -2
-[a] [boy] girl -1 guy -1 dog -1 [watches] punching out -1 is on -1 painting -1 [tv] flashcards -1 pokemon cards -1 dogs -1 [.] -1 5
+7
+{the}
+[woman] man SUPP  -1 person SUPP  -1 lady SUPP  -1
+{is}
+[holding] carying SUPP  -1 playing SUPP  -1 breaking SUPP  -1
+{an}
+[instrument] a dog SUPP  -1 a harp SUPP  -1 something SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[this] [man] woman -1 silhouette -1 guy -1 [dressed] is -1 outside -1 inside -1 [in] [white] blue -1 dark -1 black -1 [pants] scarf -1 short -1 bikini -1 [and] [blue] white -1 dark -1 black -1 [shirt] scarf -1 short -1 bikini -1 [,] [is] [standing] sleeping -1 looking -1 dreaming about -1 [on] [a] [ledge] couch -1 bed -1 bench -1 [in] [the] [snow] summer -1 winter -1 ground -1 [.] -1 19
+10
+[two] some SUPP  -1 no SUPP  -1 three SUPP  -1
+[men] women SUPP  -1 scientists SUPP  -1 people SUPP  -1
+{are}
+[looking through] selling SUPP  -1 using SUPP  -1 watching SUPP  -1
+[microscopes] trashcans SUPP  -1 scientific instruments SUPP  -1 instruments SUPP  -1
+[in] outside SUPP  -1 by SUPP  -1 inside SUPP  -1
+{a}
+[room] laboratory SUPP  -1 restaurant SUPP  -1 bed SUPP  -1
+{.}
 hypothesis -2
-[a] [man] woman -1 silhouette -1 guy -1 [is] [outside] inside -1 here -1 tired -1 [in] [the] [snow] cold -1 summer -1 ledge -1 [.] -1 8
+7
+[there are] no SUPP  -1 some SUPP  -1 two SUPP  -1
+[men] women SUPP  -1 scientists SUPP  -1 people SUPP  -1
+[using] looking through SUPP  -1 selling SUPP  -1 enjoying SUPP  -1
+[scientific] some SUPP  -1 muscical SUPP  -1 expensive SUPP  -1
+[instruments] tools SUPP  -1 microscopes SUPP  -1 manuals SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [woman] dog -1 person -1 man -1 [with] [a] [stroller] child -1 dog -1 tv -1 [is] [passing] fighting -1 calling -1 insulting -1 [a] [man] dog -1 woman -1 an animal -1 [walking] fighting -1 cleaning -1 petting -1 [a] [dog] horse -1 pet -1 cat -1 [.] -1 13
+11
+{a}
+[group] family SUPP  -1 crowd SUPP  -1 band SUPP  -1
+{of}
+[people] dogs SUPP  -1 persons SUPP  -1 women SUPP  -1
+[cleaning] watching SUPP  -1 eating SUPP  -1 walking SUPP  -1
+[some] a lot of SUPP  -1 a SUPP  -1
+[kins of] deep SUPP  -1 tall SUPP  -1 red SUPP  -1
+[sea] ocean SUPP  -1 big SUPP  -1 tall SUPP  -1
+[animal] fish SUPP  -1 dog SUPP  -1 man SUPP  -1
+{.}
 hypothesis -2
-[there are] no -1 tall -1 some -1 [people] women -1 persons -1 dogs -1 [outside] inside -1 on the street -1 outdoors -1 [.] -1 5
--3
-
-
--3
-label: neutral
-premise -2
-[a] [woman] dog -1 person -1 man -1 [with] [a] [stroller] child -1 dog -1 tv -1 [is] [passing] fighting -1 calling -1 insulting -1 [a] [man] dog -1 woman -1 an animal -1 [walking] fighting -1 cleaning -1 petting -1 [a] [dog] horse -1 pet -1 cat -1 [.] -1 13
-hypothesis -2
-[there is] not -1 walking -1 with -1 [a] [black] tall -1 woman 's -1 walking -1 [dog] man -1 bike -1 animal -1 [outside] inside -1 here -1 at the park -1 [.] -1 7
--3
-
-
--3
-label: contradiction
-premise -2
-[two] no -1 some -1 three -1 [people] basketball players -1 dogs -1 women -1 [playing] watching -1 thinking about -1 supporting -1 [badminton] basketball -1 sport -1 baseball -1 [.] -1 5
-hypothesis -2
-[two] no -1 some -1 three -1 [people] badminton players -1 dogs -1 women -1 [playing] watching -1 thinking about -1 supporting -1 [basketball] badminton -1 sport -1 baseball -1 [outside] inside -1 together -1 and badminton -1 [.] -1 6
+7
+[there is] we can see SUPP  -1 maybe SUPP  -1
+[at least] here SUPP  -1 a tall SUPP  -1 at most SUPP  -1
+[one] two SUPP  -1 some SUPP  -1 three SUPP  -1
+[person] tv SUPP  -1 animal SUPP  -1 beer SUPP  -1
+{.}
 -3
 
 
 -3
 label: entailment
 premise -2
-[a] [woman] man -1 lady -1 silhouette -1 [in] wearing -1 selling -1 with -1 [a] [burgundy] an outside -1 long -1 black -1 [coat] cart -1 jacket -1 short -1 [exits] leaves -1 looking at -1 in -1 [trader joe 's] her house -1 her bed -1 the shop -1 [with] without -1 carying -1 [a] [cart] bag -1 pot -1 basket -1 [full] filled with -1 empty -1 lacking -1 [of] [groceries] dogs -1 couch -1 tv -1 [.] -1 17
+4
+{a}
+[biker] truck SUPP  -1 great SUPP  -1 vehicle SUPP  -1
+[races] sleeping SUPP  -1 competing SUPP  -1 playing SUPP  -1
+{.}
 hypothesis -2
-[a] [woman] man -1 lady -1 silhouette -1 [outside] inside -1 at trader joe 's -1 in a parking -1 -1 3
--3
-
-
--3
-label: contradiction
-premise -2
-[a] [boy] girl -1 child -1 dog -1 [plays] eats -1 is -1 runs -1 [with] by -1 without -1 [a] [motorized] street -1 red -1 toy -1 [car] bike -1 vehicle -1 toy -1 [next to] outside -1 beside -1 by -1 [a] [dirty] playing -1 long -1 red -1 [street] house -1 road -1 restaurant -1 [lined] playing -1 eating on -1 marked -1 [with] beside -1 without -1 by -1 [real] toy -1 fake -1 red -1 [cars] street -1 toys -1 bags -1 [.] -1 17
-hypothesis -2
-[no] a -1 not a -1 some -1 [boy] girl -1 child -1 dog -1 [is] [outside] sleeping -1 tired -1 eating -1 [in] [the] [streets] park -1 road -1 place -1 [playing] sleeping -1 happy -1 with toys -1 [.] -1 9
--3
-
-
--3
-label: entailment
-premise -2
-[a] [woman] man -1 person -1 lady -1 [is] [walking] watching -1 thinking about -1 playing with -1 [her] [dog] pet -1 cat -1 golden retriever -1 [along] on -1 outside -1 by -1 [a] [snowy] dirty -1 house -1 long -1 [ground] restaurant -1 floor -1 park -1 [.] -1 11
-hypothesis -2
-[a] [woman] man -1 person -1 lady -1 [is] [with] by -1 beside -1 without -1 [her] [dog] pet -1 cat -1 golden retriever -1 [outside] inside -1 somewhere -1 in the snow -1 [.] -1 8
--3
-
-
--3
-label: entailment
-premise -2
-[a] [crowd] group -1 wave -1 lot -1 [of] [people] dogs -1 women -1 persons -1 [fill] on -1 ouside -1 beside -1 [the] [street] road -1 restaurant -1 house -1 [in front of] beside -1 by -1 in -1 [a] [mcdonald 's] restaurant -1 park -1 house -1 [.] -1 14
-hypothesis -2
-[there is] not -1 with -1 by -1 [a] [crowd] girl -1 group -1 dog -1 [outside] inside -1 beside -1 in front of -1 [the] [restaurant] mcdonald 's -1 park -1 place -1 [.] -1 8
--3
-
-
--3
-label: entailment
-premise -2
-[a] [man] woman -1 person -1 guy -1 [in] [a] [white] women -1 dog -1 red -1 [shirt] hat -1 cap -1 pajamas -1 [and] [baseball] women -1 dog -1 red -1 [hat] shirt -1 cap -1 pajamas -1 [is] [pushing] walking -1 beside -1 with -1 [a] [cart] dog -1 woman -1 toy -1 [carrying] with -1 pushing -1 walking with -1 [several] some -1 a lot of -1 red -1 [bags] beds -1 dogs -1 women -1 [on] [a] [street] restaurant -1 road -1 place -1[.] -1 20
-hypothesis -2
-[a] [man] woman -1 person -1 guy -1 [is] [walking] sleeping -1 dressed -1 running -1 [outside] inside -1 a dog -1 on a street -1 [.] -1 6
--3
-
-
--3
-label: entailment
-premise -2
-[a] [woman] man -1 person -1 lady -1 [with] wearing -1 without -1 in -1 [red-hair] guitars -1 men -1 dogs -1 [and] [a] [leather] red -1 men -1 blue -1 [jacket] instrument -1 guitar -1 dress -1 [holds] plays -1 sells -1 looking at -1 [a] [harp] dog -1 an instrument -1 something -1 [in front of] beside -1 in -1 outside -1 [a] [snowy] grassy -1 green -1 big -1 [forest] ground -1 house -1 restaurant -1 [.] -1 18
-hypothesis -2
-[the] [woman] man -1 person -1 lady -1 [is] [holding] carying -1 playing -1 breaking -1 [an] [instrument] a dog -1 a harp -1 something -1 [.] -1 7
--3
-
-
--3
-label: entailment
-premise -2
-[two] some -1 no -1 three -1 [men] women -1 scientists -1 people -1 [are] [looking through] selling -1 using -1 watching -1 [microscopes] trashcans -1 scientific instruments -1 instruments -1 [in] [a] [room] laboratory -1 restaurant -1 bed -1 [.] -1 10
-hypothesis -2
-[there are] no -1 some -1 two -1 [men] women -1 scientists -1 people -1 [using] looking through -1 selling -1 enjoying -1 [scientific] some -1 muscical -1 expensive -1 [instruments] tools -1 microscopes -1 manuals -1 [.] -1 7
--3
-
-
--3
-label: entailment
-premise -2
-[a] [group] family -1 crowd -1 band -1 [of] [people] dogs -1 persons -1 women -1 [cleaning] watching -1 eating -1 walking -1 [some] a lot of -1 a -1 [kins of] deep -1 tall -1 red -1 [sea] ocean -1 big -1 tall -1 [animal] fish -1 dog -1 man -1 [.] -1 11
-hypothesis -2
-[there is] [at least] here -1 a tall -1 at most -1 [one] two -1 some -1 three -1 [person] tv -1 animal -1 beer -1 [.] -1 7
--3
-
-
--3
-label: entailment
-premise -2
-[a] [biker] truck -1 great -1 vehicle -1 [races] sleeping -1 competing -1 playing -1 [.] -1 4
-hypothesis -2
-[a] [person] biker -1 dog -1 person -1 [is] [riding] painting -1 selling -1 on -1 [a] [bike] horse -1 bicycle -1 vehicle -1 -1 6
+6
+{a}
+[person] biker SUPP  -1 dog SUPP  -1 person SUPP  -1
+{is}
+[riding] painting SUPP  -1 selling SUPP  -1 on SUPP  -1
+{a}
+[bike] horse SUPP  -1 bicycle SUPP  -1 vehicle SUPP  -1
 -3
 
 
