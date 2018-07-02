@@ -64,6 +64,8 @@ Expression BiLSTM::get_neg_log_softmax(DataSet& set, Embeddings& embedding, unsi
         * \param sentence_repr : matrix of size (number of words in the sentence, hidden dimension). 
         * sentence_repr[i] = representation of the i_th word
 */
+
+/* A CHANGER POUR DATASET */
 void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, unsigned sentence,
 	ComputationGraph& cg, unsigned num_sentence, vector<Expression>& sentence_repr)
 {

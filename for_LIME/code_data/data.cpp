@@ -33,6 +33,16 @@ BagOfWords::BagOfWords(string& word)
 	
 }
 
+unsigned BagOfWords::get_nb_words()
+{
+	return words.size();
+}
+
+unsigned BagOfWords::get_word_id(unsigned num_words)
+{
+	return words[num_words];
+	
+}
 
 Data::Data(ifstream& database)
 {
@@ -68,7 +78,32 @@ Data::Data(ifstream& database)
 	database >> word; //lit -3 de fin
 }
 
+unsigned Data::get_label()
+{
+	return label;
+}
 
+unsigned Data::get_nb_expr(unsigned sentence)
+{
+	if(sentence==1)
+		return premise.size();
+	return hypothesis.size();
+}
+
+
+unsigned Data::get_nb_words(unsigned sentence, unsigned num_expr)
+{
+	if(sentence==1)
+		return premise[num_expr].get_nb_words();
+	return hypothesis[num_expr].get_nb_words();
+}
+
+unsigned Data::get_word_id(unsigned sentence, unsigned num_expr, unsigned num_words)
+{
+	if(sentence==1)
+		return premise[num_expr].get_word_id(num_words);
+	return hypothesis[num_expr].get_word_id(num_words);
+}
 
 DataSet::DataSet(char* filename)
 {
@@ -79,12 +114,79 @@ DataSet::DataSet(char* filename)
 		exit(EXIT_FAILURE);
 	}
 	int word;
+	unsigned i=0, lab;
 	while(database >> word)
 	{
 		Data data(database);
 		dataset.push_back(data);
+		lab = dataset[i].get_label();
+		++i;
+		
+		switch(lab)
+		{
+			case 0:
+			{
+				++nb_neutral;
+				break;
+			}
+			case 1:
+			{
+				++nb_inf;
+				break;
+			}			
+			case 2:
+			{
+				++nb_contradiction;
+				break;
+			}			
+		}
 	}
 	
 	database.close();
 }
+
+unsigned DataSet::get_word_id(unsigned sentence, unsigned num_sample, unsigned num_expr, unsigned num_words)
+{
+	return dataset[num_sample].get_word_id(sentence, num_expr, num_words);
+}
+
+unsigned DataSet::get_nb_words(unsigned sentence, unsigned num_sample, unsigned num_expr)
+{
+	return dataset[num_sample].get_nb_words(sentence, num_expr);
+	
+}
+
+unsigned DataSet::get_nb_expr(unsigned sentence, unsigned num_sample)
+{
+	return dataset[num_sample].get_nb_expr(sentence);
+}
+
+
+unsigned DataSet::get_nb_inf(){return nb_inf;}
+unsigned DataSet::get_nb_neutral(){return nb_neutral;}
+unsigned DataSet::get_nb_contradiction(){return nb_contradiction;}
+
+unsigned DataSet::get_nb_sentences()
+{
+	return dataset.size();
+}
+
+unsigned DataSet::get_label(unsigned num_sample)
+{
+	return dataset[num_sample].get_label();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
