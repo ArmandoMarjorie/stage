@@ -76,7 +76,7 @@ premise -2
 {this}
 [church] 3 #great# ACTUAL -1 #chapel# ACTUAL -1 #baseball# ACTUAL -1
 [choir] 3 #player# ACTUAL -1 #dog# ACTUAL -1 #person# ACTUAL -1
-[sings] 3 #looks# ACTUAL #at# NEXT -1 #plays# ACTUAL with# NEXT -1 #chants# ACTUAL -1
+[sings] 3 #looks# ACTUAL #at# NEXT -1 #plays# ACTUAL #with# NEXT -1 #chants# ACTUAL -1
 {to}
 {the}
 [masses] 3 #supporters# ACTUAL -1 #people# ACTUAL -1 #dogs# ACTUAL -1
@@ -373,7 +373,7 @@ hypothesis -2
 [banjo] 3 #an electric guitar# ACTUAL -1 #guitar# ACTUAL -1 #an instrument# ACTUAL -1
 [on] 3 #from# ACTUAL -1 #up# ACTUAL -1 #in front of# ACTUAL -1
 {the}
-[floor] 3 #stage# ACTUAL -1 #scene# ACTUAL -1 #outside -1
+[floor] 3 #stage# ACTUAL -1 #scene# ACTUAL -1 #outside# ACTUAL -1
 {.}
 -3
 
@@ -440,7 +440,7 @@ premise -2
 [african american] 3 #tall# ACTUAL -1 #blind# ACTUAL -1 #reader# ACTUAL -1
 [assistant] 3 #reader# ACTUAL -1 #expert# ACTUAL -1 #wife# ACTUAL -1
 [looking threw] 3 #looking at# ACTUAL -1 #burning# ACTUAL -1 #reading# ACTUAL -1
-[new] 3 #old# ACTUAL -1 #unreading# ACTUAL -1 #red# ACTUAL -1
+[new] 3 #old# ACTUAL -1 #electronic# ACTUAL -1 #red# ACTUAL -1
 [medical] 3 #baseball# ACTUAL -1 #doctor# ACTUAL -1 #biology# ACTUAL -1
 [manuals] 3 #show# ACTUAL -1 #books# ACTUAL -1 #instruments# ACTUAL -1
 {.}
@@ -467,7 +467,7 @@ premise -2
 [african american] 3 #hungry# ACTUAL -1 #tall# ACTUAL -1 #female# ACTUAL -1
 [assistant] 3 #husband# ACTUAL -1 #wife# ACTUAL -1 #boss# ACTUAL -1
 [looking threw] 3 #eating# ACTUAL -1 #reading# ACTUAL -1 #looking at# ACTUAL -1
-[new] 3 #old# ACTUAL -1 #unreading# ACTUAL -1 #red# ACTUAL -1
+[new] 3 #old# ACTUAL -1 #electronic# ACTUAL -1 #red# ACTUAL -1
 [medical] 3 #cooking# ACTUAL -1 #men# ACTUAL -1 #biology# ACTUAL -1
 [manuals] 3 #food# ACTUAL -1 #books# ACTUAL -1 #instruments# ACTUAL -1
 {.}
@@ -493,7 +493,7 @@ premise -2
 [african american] 3 #studying# ACTUAL -1 #lazy# ACTUAL -1 #tall# ACTUAL -1
 [assistant] 3 #cook# ACTUAL -1 #teacher# ACTUAL -1 #expert# ACTUAL -1
 [looking threw] 3 #studying with# ACTUAL -1 #looking at# ACTUAL -1 #burning# ACTUAL -1
-[new] 3 #old# ACTUAL -1 #unreading# ACTUAL -1 #red# ACTUAL -1
+[new] 3 #old# ACTUAL -1 #electronic# ACTUAL -1 #red# ACTUAL -1
 [medical] 3 #learning# ACTUAL -1 #cooking# ACTUAL -1 #biology# ACTUAL -1
 [manuals] 3 #notebook# ACTUAL -1 #show# ACTUAL -1 #advertisements# ACTUAL -1
 {.}
@@ -1180,7 +1180,7 @@ hypothesis -2
 {is}
 [rolling on] 3 #laying in# ACTUAL -1 #staying on# ACTUAL -1 #sleeping on# ACTUAL -1
 {the}
-[grass] 3 #bed# ACTUAL -1 #floor# ACTUAL -1 #dirt# ACTUAL -1 #
+[grass] 3 #bed# ACTUAL -1 #floor# ACTUAL -1 #dirt# ACTUAL -1
 -3
 
 
@@ -1283,7 +1283,7 @@ hypothesis -2
 {a}
 [first time] 3 #tall# ACTUAL -1 #calf# ACTUAL -1 #horse# ACTUAL -1
 [roper] 3 #cowboy# ACTUAL -1 #cook# ACTUAL -1 #man# ACTUAL -1
-[falls off] 3 #calls off# ACTUAL -1 # washes# ACTUAL -1 #looks at# ACTUAL -1
+[falls off] 3 #calls off# ACTUAL -1 #washes# ACTUAL -1 #looks at# ACTUAL -1
 [his] 2 #her# ACTUAL -1 #the# ACTUAL -1
 [horse] 3 #pet# ACTUAL -1 #dog# ACTUAL -1 #animal# ACTUAL -1
 {.}
@@ -1366,7 +1366,7 @@ premise -2
 {also}
 [drinking] 3 #sleeping on# ACTUAL -1 #beside# ACTUAL -1 #playing with# ACTUAL -1
 [something] 3 #water# ACTUAL -1 #thing# ACTUAL -1 #sleeping pill# ACTUAL -1
-[out of] 2 #from# ACTUAL -1 #flowing of# ACTUAL -1 #
+[out of] 2 #from# ACTUAL -1 #flowing of# ACTUAL -1
 {a}
 [bottle] 3 #motel# ACTUAL -1 #glass# ACTUAL -1 #thing# ACTUAL -1
 {.}
@@ -1609,11 +1609,11 @@ hypothesis -2
 {a}
 [brown] 3 #black# ACTUAL -1 #tall# ACTUAL -1 #colorful# ACTUAL -1
 [dog] 3 #cat# ACTUAL -1 #human# ACTUAL -1 #animal# ACTUAL -1
-{is}
+[is] 3 #likes the# ACTUAL -1 #was# ACTUAL -1 #sleeps in the# ACTUAL -1
 [outside] 3 #inside# ACTUAL -1 #somewhere# ACTUAL -1 #in snow# ACTUAL -1
 {and}
 [it 's] 3 #it was# ACTUAL -1 #loves# ACTUAL -1 #it was not# ACTUAL -1
-[snowing] 3 #cold# ACTUAL -1 #hot# ACTUAL -1 #raining# ACTUAL -1 #
+[snowing] 3 #cold# ACTUAL -1 #hot# ACTUAL -1 #raining# ACTUAL -1
 -3
 
 
@@ -1701,8 +1701,8 @@ hypothesis -2
 
 -3
 label: contradiction
-5
 premise -2
+5
 [people] 3 #animals# ACTUAL -1 #persons# ACTUAL -1 #men# ACTUAL -1
 [trying] 3 #want# ACTUAL -1 #sleeping# ACTUAL -1 #laying# ACTUAL -1
 {to}
@@ -1823,7 +1823,7 @@ premise -2
 [silver] 3 #musical# ACTUAL -1 #big# ACTUAL -1 #red# ACTUAL -1
 [bike] 3 #instrument# ACTUAL -1 #costume# ACTUAL -1 #car# ACTUAL -1
 [behind] 3 #in front of# ACTUAL -1 #with# ACTUAL -1 #by# ACTUAL -1
-[him] 3 #her# ACTUAL -1 #the man# ACTUAL -1
+[him] 2 #her# ACTUAL -1 #the man# ACTUAL -1
 {.}
 hypothesis -2
 8
@@ -1951,7 +1951,7 @@ premise -2
 [it] 3 #the blanket# ACTUAL -1 #the floor# ACTUAL -1 #the road# ACTUAL -1
 {.}
 hypothesis -2
-7
+6
 [four] 3 #three# ACTUAL -1 #no# ACTUAL -1 #some# ACTUAL -1
 [sisters] 3 #girls# ACTUAL -1 #children# ACTUAL -1 #men# ACTUAL -1
 [play] 3 #fight# ACTUAL -1 #speak# ACTUAL -1 #work# ACTUAL -1
@@ -2000,7 +2000,7 @@ premise -2
 [getting] 3 #listening to the# ACTUAL -1 #understanding# ACTUAL -1 #yelling# ACTUAL -1
 [last] 3 #first# ACTUAL -1 #some# ACTUAL -1 #helpful# ACTUAL -1
 [minute] 3 #helpful# ACTUAL -1 #play# ACTUAL -1 #winning# ACTUAL -1
-[instruction] 3 #advices# ACTUAL -1 #tips# ACTUAL -1 #talks# ACTUAL -1
+[instruction] 3 #music# ACTUAL -1 #tips# ACTUAL -1 #talks# ACTUAL -1
 [from] 2 #by# ACTUAL -1 #for# ACTUAL -1
 {their}
 [coach] 3 #trainer# ACTUAL -1 #dog# ACTUAL -1 #son# ACTUAL -1
@@ -2054,7 +2054,7 @@ premise -2
 {a}
 [golfer] 3 #person# ACTUAL -1 #cook# ACTUAL -1 #dog# ACTUAL -1
 [shoots] 3 #looks at# ACTUAL -1 #takes# ACTUAL -1 #eats# ACTUAL -1
-[his] 3 #her# ACTUAL -1 #the# ACTUAL -1
+[his] 2 #her# ACTUAL -1 #the# ACTUAL -1
 [ball] 3 #tee# ACTUAL -1 #dog# ACTUAL -1 #golf# ACTUAL -1
 [out of] 3 #from# ACTUAL -1 #off# ACTUAL -1 #beside# ACTUAL -1
 {a}
@@ -2183,7 +2183,7 @@ premise -2
 {.}
 hypothesis -2
 7
-[there is] 3 #with# ACTUAL -1 #not# ACTUAL #one# NEXT -1
+[there is] 2 #with# ACTUAL -1 #not# ACTUAL #one# NEXT -1
 {a}
 [child] 3 #an# PREV #adult# ACTUAL -1 #baby# ACTUAL -1 #girl# ACTUAL -1
 {and}
@@ -2237,7 +2237,7 @@ premise -2
 [forest] 3 #restaurant# ACTUAL -1 #park# ACTUAL -1 #place# ACTUAL -1
 hypothesis -2
 6
-[there is] 3 #not# ACTUAL #one# NEXT -1 #with# ACTUAL -1
+[there is] 2 #not# ACTUAL #one# NEXT -1 #with# ACTUAL -1
 {an}
 [animal] 3 #a# PREV #dog# ACTUAL -1 #a# PREV #man# ACTUAL -1 #a# PREV #silhouette# ACTUAL -1
 [standing] 3 #sleeping# ACTUAL -1 #dead# ACTUAL -1 #playing# ACTUAL -1
@@ -2266,7 +2266,7 @@ premise -2
 {.}
 hypothesis -2
 5
-[there is] 3 #not# ACTUAL #one# NEXT -1 #with# ACTUAL -1
+[there is] 2 #not# ACTUAL #one# NEXT -1 #with# ACTUAL -1
 {an}
 [animal] 3 #a# PREV #dog# ACTUAL -1 #a# PREV #man# ACTUAL -1 #a# PREV #cat# ACTUAL -1
 [outdoors] 3 #in snow# ACTUAL -1 #inside# ACTUAL -1 #playing# ACTUAL -1
@@ -2294,7 +2294,7 @@ hypothesis -2
 [two] 3 #some# ACTUAL -1 #no# ACTUAL -1 #three# ACTUAL -1
 [men] 3 #women# ACTUAL -1 #people# ACTUAL -1 #animals# ACTUAL -1
 [taking] 3 #looking at# ACTUAL -1 #facing# ACTUAL -1 #enjoying# ACTUAL -1
-[pictures] 3 #photographies# ACTUAL -1 #statues# ACTUAL -1 #clothes# ACTUAL -1
+[pictures] 3 #some photography# ACTUAL -1 #statues# ACTUAL -1 #clothes# ACTUAL -1
 {of}
 [animals] 3 #statues# ACTUAL -1 #women# ACTUAL -1 #dogs# ACTUAL -1
 -3
@@ -2372,7 +2372,7 @@ hypothesis -2
 [no] 3 #some# ACTUAL -1 #a lot of# ACTUAL -1 #not one# ACTUAL -1
 [animal] 3 #milk# ACTUAL -1 #meat# ACTUAL -1 #food# ACTUAL -1
 [products] 3 #meat# ACTUAL -1 #alive# ACTUAL -1 #food# ACTUAL -1
-[can be] 2 #could be# ACTUAL -1 #cannot be# ACTUAL -1
+[can be] 2 #could be# ACTUAL -1 #can 't be# ACTUAL -1
 [seen] 3 #grilled# ACTUAL -1 #smelled# ACTUAL -1 #touched# ACTUAL -1
 [here] 3 #outside# ACTUAL -1 #there# ACTUAL -1 #inside# ACTUAL -1
 {.}
@@ -2395,7 +2395,7 @@ premise -2
 {and}
 [carrying] 3 #selling# ACTUAL -1 #eating# ACTUAL -1 #stealing# ACTUAL -1
 {a}
-[really] 3 #verry# ACTUAL -1 #long# ACTUAL -1 #huge# ACTUAL -1
+[really] 3 #very# ACTUAL -1 #long# ACTUAL -1 #huge# ACTUAL -1
 [big] 3 #small# ACTUAL -1 #red# ACTUAL -1 #long# ACTUAL -1
 [pot] 3 #shirt# ACTUAL -1 #top# ACTUAL -1 #jacket# ACTUAL -1
 [turns around] 3 #undresses# ACTUAL -1 #runs# ACTUAL -1 #walks# ACTUAL -1
@@ -2420,7 +2420,7 @@ label: contradiction
 premise -2
 9
 {a}
-[little] 3 #working# ACTUAL -1 #tall# ACTUAL -1 #studient# ACTUAL -1
+[little] 3 #working# ACTUAL -1 #tall# ACTUAL -1 #student# ACTUAL -1
 [boy] 3 #girl# ACTUAL -1 #child# ACTUAL -1 #guy# ACTUAL -1
 [playing] 3 #studying# ACTUAL -1 #sleeping# ACTUAL -1 #reading# ACTUAL -1
 [outside] 2 #inside# ACTUAL -1 #here# ACTUAL -1
@@ -2560,7 +2560,7 @@ premise -2
 13
 {a}
 [woman] 3 #dog# ACTUAL -1 #person# ACTUAL -1 #man# ACTUAL -1
-[with] 3 #beside# ACTUAL -1 #breaking# ACTUAL -1 #selling# ACTUAL -1 #
+[with] 3 #beside# ACTUAL -1 #breaking# ACTUAL -1 #selling# ACTUAL -1
 {a}
 [stroller] 3 #child# ACTUAL -1 #dog# ACTUAL -1 #tv# ACTUAL -1
 {is}
@@ -2586,7 +2586,7 @@ premise -2
 13
 {a}
 [woman] 3 #dog# ACTUAL -1 #person# ACTUAL -1 #man# ACTUAL -1
-[with] 3 #beside# ACTUAL -1 #breaking# ACTUAL -1 #selling# ACTUAL -1 #
+[with] 3 #beside# ACTUAL -1 #breaking# ACTUAL -1 #selling# ACTUAL -1
 {a}
 [stroller] 3 #child# ACTUAL -1 #dog# ACTUAL -1 #tv# ACTUAL -1
 {is}
@@ -2662,7 +2662,7 @@ premise -2
 {a}
 [boy] 3 #girl# ACTUAL -1 #child# ACTUAL -1 #dog# ACTUAL -1
 [plays] 3 #eats# ACTUAL -1 #is# ACTUAL -1 #runs# ACTUAL -1
-[with] 3 #by# ACTUAL -1 #without# ACTUAL -1
+[with] 2 #by# ACTUAL -1 #without# ACTUAL -1
 {a}
 [motorized] 3 #street# ACTUAL -1 #red# ACTUAL -1 #toy# ACTUAL -1
 [car] 3 #bike# ACTUAL -1 #vehicle# ACTUAL -1 #toy# ACTUAL -1
@@ -2829,7 +2829,7 @@ hypothesis -2
 [there are] 3 #no# ACTUAL -1 #some# ACTUAL -1 #two# ACTUAL -1
 [men] 3 #women# ACTUAL -1 #scientists# ACTUAL -1 #people# ACTUAL -1
 [using] 3 #looking through# ACTUAL -1 #selling# ACTUAL -1 #enjoying# ACTUAL -1
-[scientific] 3 #some# ACTUAL -1 #muscical# ACTUAL -1 #expensive# ACTUAL -1
+[scientific] 3 #some# ACTUAL -1 #musical# ACTUAL -1 #expensive# ACTUAL -1
 [instruments] 3 #tools# ACTUAL -1 #microscopes# ACTUAL -1 #manuals# ACTUAL -1
 {.}
 -3
@@ -2850,7 +2850,7 @@ premise -2
 [animal] 3 #fish# ACTUAL -1 #dog# ACTUAL -1 #man# ACTUAL -1
 {.}
 hypothesis -2
-7
+5
 [there is] 2 #we can see# ACTUAL -1 #maybe# ACTUAL -1
 [at least] 3 #here# ACTUAL -1 #a tall# ACTUAL -1 #at most# ACTUAL -1
 [one] 3 #two# ACTUAL -1 #some# ACTUAL -1 #three# ACTUAL -1
