@@ -10,10 +10,9 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string>
-#include "../modele/LSTM.hpp"
-#include "../modele/BILSTM.hpp"
+#include "modele/LSTM.hpp"
+#include "modele/BILSTM.hpp"
 
-#include "data.hpp"
 
 #define SERVER_PORT htons(50007)
 

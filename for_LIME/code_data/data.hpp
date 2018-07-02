@@ -17,7 +17,7 @@
 	#include <string>
 	#include <map>
 	#include <vector>
-	#include "../code_data/embedding.hpp"
+	#include "embedding.hpp"
 	//#include "switch_words.hpp"
 	
 	
