@@ -13,6 +13,8 @@
 #include "../modele/LSTM.hpp"
 #include "../modele/BILSTM.hpp"
 
+#include "data.hpp"
+
 #define SERVER_PORT htons(50007)
 
 using namespace std;
@@ -71,37 +73,35 @@ void init_lenght_tab(char* length_filename, vector<unsigned>& length_tab)
 	}
 }
 
-void init_important_words(char* impwordsfilename, vector<vector<unsigned>>& important_words)
-{
-	
-}
-
-void traitement_mots(Data data, char* sentence)
-{
-	
-	
-}
 
 int main(int argc, char** argv) 
 {	
 	
-	if(argc > 0 && !strcmp(argv[1], "-h"))
-		usage(argv[0]);
-	if( argc != 9 )
+	/*if(argc > 0 && !strcmp(argv[1], "-h"))
+		usage(argv[0]);*/
+	/*if( argc != 9 )
 	{
 		cerr << "Usage :\n " 
 		<< argv[0] << " length_file " << " lexique_file " << " embedding_file " 
 		<<" nb_layers " << " input_dim " << " hidden_dim " << " model_file " << " systeme \n"
 		<< argv[0] << " -h for more info\n";
 		exit(EXIT_FAILURE);
-	}
+	}*/
 	
 	
 	// Fetch dynet params 
 	auto dyparams = dynet::extract_dynet_params(argc, argv);
 	dynet::initialize(dyparams);
 	// Build model 
-	ParameterCollection model;			 
+	ParameterCollection model;		
+	
+	DataSet dataset(argv[1]);
+	exit(EXIT_SUCCESS);
+	
+	
+	
+	
+		 
 	// Load Dataset 
 	Embeddings embedding(argv[3], model, static_cast<unsigned>(atoi(argv[5])), true);
 	int systeme = atoi(argv[8]);
