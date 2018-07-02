@@ -47,7 +47,8 @@ Expression LSTM::get_neg_log_softmax(DataSet& set, Embeddings& embedding, unsign
 Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, unsigned sentence, unsigned num_sentence, 
         ComputationGraph& cg)
 {
-	const unsigned nb_words = set.get_nb_words(sentence, num_sentence);
+	const unsigned nb_expr = set.get_nb_expr(sentence, num_sentence);
+	unsigned nb_words; //nb de mots dans l'expression courante
 
 	if (apply_dropout) 
 		forward_lstm->set_dropout(dropout_rate);
@@ -58,11 +59,13 @@ Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, un
 	forward_lstm->start_new_sequence(); //to do before add_input() and after new_graph()
 	Expression repr;
 
-	for(unsigned i=0; i<nb_words; ++i)
+	for(unsigned i=0; i<nb_expr; ++i)
 	{
-		if(set.get_word_id(sentence, num_sentence, i) == 0) // 0 means "this is not a word, there is no word here !"
-			continue;
-		repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) );
+		//if(set.get_word_id(sentence, num_sentence, i) == 0) // 0 means "this is not a word, there is no word here !"
+		//	continue;
+		
+		for(unsigned j=0; j < nb_words; ++j)
+			repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i, j)) );
 	}
 
 	//Expression repr = sum(vect_sentence);
@@ -73,7 +76,9 @@ Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, un
 void LSTM::words_representation(DataSet& set, Embeddings& embedding, unsigned sentence, unsigned num_sentence, 
         ComputationGraph& cg, vector<Expression>& sentence_repr)
 {
-	const unsigned nb_words = set.get_nb_words(sentence, num_sentence);
+	const unsigned nb_expr = set.get_nb_expr(sentence, num_sentence);
+	unsigned nb_words; //nb de mots dans l'expression courante
+	
 	if (apply_dropout)
 		forward_lstm->set_dropout(dropout_rate);
 	else 
@@ -82,12 +87,14 @@ void LSTM::words_representation(DataSet& set, Embeddings& embedding, unsigned se
 	forward_lstm->start_new_sequence(); //to do before add_input() and after new_graph()
 
 	vector<Expression> tmp;
-	unsigned i;
-	int j;
+	unsigned i,j;
 
 	/* Run forward LSTM */
-	for(i=0; i<nb_words; ++i)
-		sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) ) );
+	for(i=0; i<nb_expr; ++i)
+	{
+		for(unsigned j=0; j < nb_words; ++j)
+			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i, j)) ) );
+	}
 }
 
 Expression LSTM::run(DataSet& set, Embeddings& embedding, unsigned num_sentence, 

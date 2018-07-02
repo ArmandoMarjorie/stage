@@ -161,7 +161,7 @@ vector<float> run_predict_for_server_lime(RNN& rnn, DataSet& test_set, Embedding
 }
 
 
-
+/*
 void write_sentences(ofstream& output, vector<unsigned>& premise, vector<unsigned>& hypothesis)
 {
 	unsigned i;
@@ -186,7 +186,7 @@ void save_sentences(DataSet& explication_set,vector<unsigned>& premise,vector<un
 		}	
 	}
 }
-
+*/
 
 
 
