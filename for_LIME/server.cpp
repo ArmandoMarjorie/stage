@@ -247,7 +247,7 @@ int main(int argc, char** argv)
 			}
 			
 			save_sentences(); //copy l'objet Data de la case num_sample
-			set.modif_LIME(); // a faire
+			set.modif_LIME(buffer_in); // a faire
 			vector<float> probas = run_predict_for_server_lime(rnn, set, embedding, true);
 			set.reset_sentences(); //a faire
 	

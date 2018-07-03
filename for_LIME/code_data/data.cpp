@@ -45,6 +45,12 @@ unsigned BagOfWords::get_word_id(unsigned num_words)
 	
 }
 
+bool BagOfWords::expr_is_important()
+{
+	return important_bag;
+	
+}
+
 Data::Data(ifstream& database)
 {
 	string word, word2;
@@ -104,6 +110,26 @@ unsigned Data::get_word_id(unsigned sentence, unsigned num_expr, unsigned num_wo
 	if(sentence==1)
 		return premise[num_expr].get_word_id(num_words);
 	return hypothesis[num_expr].get_word_id(num_words);
+}
+
+
+unsigned Data::get_nb_imp_words(bool is_premise)
+{
+	unsigned cpt=0;
+	if(is_premise)
+	{
+		for(unsigned i=0; i<premise.size(); ++i)
+			if(premise[i].expr_is_important())
+				++cpt;
+	}
+	else
+	{
+		for(unsigned i=0; i<hypothesis.size(); ++i)
+			if(hypothesis[i].expr_is_important())
+				++cpt;
+	}	
+	
+	return cpt;
 }
 
 DataSet::DataSet(char* filename)
@@ -182,8 +208,56 @@ unsigned DataSet::get_label(unsigned num_sample)
 
 
 
+void DataSet::modif_LIME(char* buffer_in, unsigned num_sample)
+{
+	unsigned cpt_crochet=0;
+	unsigned nbr_expr=0;
+	string word;
+	
+	unsigned nb_imp_words_prem = dataset[num_sample].get_nb_imp_words(true);
+	//unsigned nb_imp_words_hyp = dataset[num_sample].get_nb_imp_words(false);
+	
+	for(unsigned letter=0; letter < strlen(buffer_in); ++letter)
+	{
+		if(buffer_in[i] == '[')
+			continue;
+			
+		stringstream ss;
 
-
+		while(buffer_in[i] != ']')
+		{
+			ss << buffer_in[i];
+			++i;
+		}
+		++cpt_crochet;
+		++nbr_expr;
+		word = ss.str();
+		if(word == "UNKWORDZ")
+		{
+			if(nbr_expr > nb_imp_words_prem)
+			{
+				//modifier la prémisse
+				//ce qu'il faut faire ailleurs :
+				nb_imp=0;
+				i=-1;
+				while(nb_imp != cpt_crochet)
+				{
+					++i;
+					if( premise[i].expr_is_important() )
+						++nb_imp;
+					
+				}
+				premise[i] = UNK;
+				//====
+				cpt_crochet = 0;
+			}
+			else
+			{
+				//modifier l'hypothèse
+			}
+		}
+	}
+}
 
 
 
