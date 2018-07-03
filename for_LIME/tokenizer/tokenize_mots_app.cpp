@@ -285,6 +285,81 @@ void verif_nb_expressions(char* file)
 	
 }
 
+
+void fichier_pour_lime(char* file, char* output_f)
+{
+	ifstream f(file, ios::in);
+	if(!f)
+	{ 
+		cerr << "Impossible to open the file " << file << endl;
+		exit(EXIT_FAILURE);
+	}		
+	ofstream output(output_f, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file "<< output_f << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	
+	string word, word2;
+	unsigned nb_words;
+	std::string::size_type sz;
+	unsigned n_samp=0;
+	
+	while(getline(f,word)) //lit "-3"
+	{
+		cout << "SAMPLE " << n_samp << endl;
+		output << word << endl; //écrit "-3"
+		cout << word << endl;
+		getline(f,word); //lit le label
+		cout << word << endl;
+		output << word << endl; //écrit le label
+		
+		for(unsigned nb_phrase=0; nb_phrase<2; ++nb_phrase)
+		{
+			getline(f,word); output << word << endl; //lit "premise" et "-2"
+			cout << word << endl;
+			getline(f,word);
+			nb_words = std::stoi (word,&sz);
+			
+			cout << nb_words << endl;
+			output << nb_words << endl;
+			
+			for(unsigned i=0; i < nb_words; ++i) //pour toutes les expressions composant la phrase
+			{
+				// EXPRESSION DE LA PHRASE
+				f >> word;
+				
+				
+				//cout << "word = " << word << endl;
+				while(word[word.size()-1] != ']' && word[word.size()-1] != '}')
+				{
+					
+					f >> word2;
+					word = word + "_";
+					word = word + word2;
+				}
+				if(word[0] == '[')
+					output << word << " ";
+				getline(f,word);
+				cout << "mot = " << word << endl;
+			}
+			output << endl;
+		}
+		getline(f,word);getline(f,word);getline(f,word);
+		++n_samp;
+		output << "-3" << endl << endl << endl;
+
+	}
+	
+	f.close();	
+	output.close();
+}
+
+
+
+
 int main(int argc, char** argv)
 {
 	if(argc != 4)
@@ -296,7 +371,8 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 	
-	tokeniser_nouveau_remplacement(argv[1], argv[2], argv[3]);
+	fichier_pour_lime(argv[2], argv[3]);
+	//tokeniser_nouveau_remplacement(argv[1], argv[2], argv[3]);
 	//verif_nb_expressions(argv[2]);
 	return 0;
 }

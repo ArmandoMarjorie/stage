@@ -131,23 +131,16 @@ int main(int argc, char** argv)
 	// Build model 
 	ParameterCollection model;		
 	
-	DataSet dataset(argv[1]);
-	exit(EXIT_SUCCESS);
-	
-	
-	
-	
-		 
 	// Load Dataset 
 	Embeddings embedding(argv[3], model, static_cast<unsigned>(atoi(argv[5])), true);
 	int systeme = atoi(argv[8]);
 	
-	
+	/*
 	map<string, unsigned> word_to_id;
 	init_map(argv[2], word_to_id);
 	vector<unsigned> length_tab;
 	init_lenght_tab(argv[1], length_tab);
-
+	*/
 	
 	// Socket
 	string err;
@@ -197,16 +190,6 @@ int main(int argc, char** argv)
 	}
 	cout << "Connection OK\n";
 	
-	/*
-	char buffer_in[10000] = {0}; // what is received
-	char buffer_out[1000] = {0}; // what is sent
-	int n = recv(client_socket, buffer_in, 9999, 0);
-	cout << "Server received :\n" << buffer_in << endl;
-	*/
-	/*
-	strcpy(buffer_out, "je t'envoie un message !");
-	int n = write(client_socket, buffer_out, strlen(buffer_out));*/
-	//close(server_socket);
 	
 	string tmp;
 	bool print_label=true;
@@ -214,6 +197,7 @@ int main(int argc, char** argv)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 
 			static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
+		DataSet set(argv[1]);
 		
 		// Load preexisting weights
 		cerr << "Loading parameters ...\n";
@@ -222,52 +206,22 @@ int main(int argc, char** argv)
 		cerr << "Parameters loaded !\n";
 	
 		char buffer_in[5000] = {0}; // what is received (sentence)
-		char buffer_out[5000] = {0}; // what is sent	
-		char buffer_in_bis[5000] = {0}; // what is received (sentence)	
+		char buffer_out[5000] = {0}; // what is sent
 		unsigned num_sample=0, rcv_finish=0;
 		int n;
-		bool is_premise, recevoir_prem_or_not=true;
+		bool print_sample=true;
+		
+		
 		// The Code Here !! asking predict here !! 
 		while(strcmp(buffer_in, "quit"))
 		{
-			if(print_label)
+			if(print_sample)
 				cerr << "*** SAMPLE NUMERO " << num_sample << endl;
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);
-			bzero(buffer_in_bis, 5000);
+			print_sample = false;
 			
-			//recevoir si c'est prem ou hyp
-			
-			if(recevoir_prem_or_not)
-			{
-				n = recv(client_socket, buffer_in, 4999, 0);
-				if( n == -1 )
-				{
-					err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
-					error(err);		
-				}		
-				//cout << "prem ou hyp ? : " << buffer_in << endl;
-				if(!strcmp(buffer_in,"prem"))
-					is_premise = true;
-				else
-					is_premise = false;
-				n = write(client_socket, "ok", 3); //envoie "bien recu"
-				if(n == -1)
-				{
-					err = "Error sending message to the client : " + std::to_string(errno) + "\n";
-					error(err);					
-				}
-				//cout << "on envoit OK\n";			
-				bzero(buffer_in, 5000);
-				bzero(buffer_out, 5000);
-				recevoir_prem_or_not = false;
-			}
-			
-			/*if(!strcmp(tmp,"0"))
-				continue;*/
-			
-			//receive a premise from a client
-			n = recv(client_socket, buffer_in, 4999, 0); //recoit prem
+			n = recv(client_socket, buffer_in, 4999, 0); //recoit une instance
 			if( n == -1 )
 			{
 				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
@@ -276,40 +230,14 @@ int main(int argc, char** argv)
 			//cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
 			if( !strcmp(buffer_in, "-1") )
 			{
-				recevoir_prem_or_not=true;
-
 				n = write(client_socket, "-1", 3);
 				if( n == -1)
 				{
 					err = "Error sending message to the client : " + std::to_string(errno) + "\n";
 					error(err);					
 				}
-				//doit recevoir les mots ici et doit les traiter ...
-				/*if(is_premise)
-					imp_words_max = length_tab[num_sample*2];
-				else
-					imp_words_max = length_tab[num_sample*2+1];
-					
-				for(unsigned nb_imp_words=0; nb_imp_words < imp_words_max; ++nb_imp_words)
-				{
-					bzero(buffer_in, 5000);
-					cout << "mot important = " << buffer_in << endl;
-					traitement_mots(data, buffer_in); //il faut les mots importants dans data !
-					
-					n = write(client_socket, "ok", 3);
-					if( n == -1)
-					{
-						err = "Error sending message to the client : " + std::to_string(errno) + "\n";
-						error(err);					
-					}	
-				}		*/
-				// .....	
-				++rcv_finish; 
-				if(rcv_finish==2)
-				{
-					rcv_finish=0;
-					++num_sample;
-				}
+				++num_sample;
+				print_sample = true;
 				continue;
 			}
 			else if( !strcmp(buffer_in, "quit") )
@@ -318,41 +246,13 @@ int main(int argc, char** argv)
 				exit(EXIT_SUCCESS);
 			}
 			
-			
-			n = write(client_socket, "ok", 3); //envoie "bien recu"
-			if(n == -1)
-			{
-				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
-				error(err);					
-			}
-			//cout << "on envoit OK\n";
-			
-			n = recv(client_socket, buffer_in_bis, 4999, 0); //recoit hyp
-			if( n == -1 )
-			{
-				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
-				error(err);		
-			}
-			//cout << "on a recu dans buffer_in_bis : \n\t" << buffer_in_bis << endl;
-			n = write(client_socket, "ok", 3); //envoie "bien recu"
-			if(n == -1)
-			{
-				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
-				error(err);					
-			}
-			//cout << "on envoit OK\n";			
-			
-
-			Data data(buffer_in, word_to_id, buffer_in_bis, num_sample, is_premise); //nouveau data
+			save_sentences(); //copy l'objet Data de la case num_sample
+			set.modif_LIME(); // a faire
+			vector<float> probas = run_predict_for_server_lime(rnn, set, embedding, true);
+			set.reset_sentences(); //a faire
+	
 			bzero(buffer_in, 5000);
-			bzero(buffer_out, 5000);
-			bzero(buffer_in_bis, 5000);	
-			//cout << "data OK\n";		
-			data.print_sentences_of_a_sample(0);
-			
-			//data.print_sentences_of_a_sample(0);
-			vector<float> probas = run_predict_for_server_lime(rnn, data, embedding, print_label);
-			//cout << "prediction \n";
+			bzero(buffer_out, 5000);		
 			tmp = to_string(probas[0]);
 			strcpy(buffer_out,tmp.c_str());
 			for(unsigned i=1; i<probas.size(); ++i)
@@ -367,11 +267,13 @@ int main(int argc, char** argv)
 			{
 				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
 				error(err);					
-			}
-			//cout << "envoyer !" << endl;
+			}			
+
 		}
 		
 	}
+	
+	/*
 	else
 	{
 		BiLSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
@@ -425,8 +327,6 @@ int main(int argc, char** argv)
 				recevoir_prem_or_not = false;
 			}
 			
-			/*if(!strcmp(tmp,"0"))
-				continue;*/
 			
 			//receive a premise from a client
 			n = recv(client_socket, buffer_in, 4999, 0); //recoit prem
@@ -446,26 +346,7 @@ int main(int argc, char** argv)
 					err = "Error sending message to the client : " + std::to_string(errno) + "\n";
 					error(err);					
 				}
-				//doit recevoir les mots ici et doit les traiter ...
-				/*if(is_premise)
-					imp_words_max = length_tab[num_sample*2];
-				else
-					imp_words_max = length_tab[num_sample*2+1];
-					
-				for(unsigned nb_imp_words=0; nb_imp_words < imp_words_max; ++nb_imp_words)
-				{
-					bzero(buffer_in, 5000);
-					cout << "mot important = " << buffer_in << endl;
-					traitement_mots(data, buffer_in); //il faut les mots importants dans data !
-					
-					n = write(client_socket, "ok", 3);
-					if( n == -1)
-					{
-						err = "Error sending message to the client : " + std::to_string(errno) + "\n";
-						error(err);					
-					}	
-				}		*/
-				// .....	
+
 				++rcv_finish; 
 				if(rcv_finish==2)
 				{
@@ -532,7 +413,7 @@ int main(int argc, char** argv)
 			}
 			//cout << "envoyer !" << endl;
 		}
-	}
+	}*/
 
 
 	return 0;

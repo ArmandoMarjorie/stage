@@ -1,0 +1,1100 @@
+-3
+contradiction
+premise -2
+11
+[old] [man] [with] [package] [poses] [in_front_of] [advertisement] 
+hypothesis -2
+7
+[man] [walks] [by] [ad] 
+-3
+
+
+-3
+neutral
+premise -2
+19
+[church] [choir] [sings] [masses] [sing] [joyous] [songs] [from] [book] [at] [church] 
+hypothesis -2
+8
+[church] [cracks] [in] [ceiling] 
+-3
+
+
+-3
+entailment
+premise -2
+19
+[church] [choir] [sings] [masses] [sing] [joyous] [songs] [from] [book] [at] [church] 
+hypothesis -2
+7
+[church] [filled] [with] [song] 
+-3
+
+
+-3
+contradiction
+premise -2
+19
+[church] [choir] [sings] [masses] [sing] [joyous] [songs] [from] [book] [at] [church] 
+hypothesis -2
+7
+[choir] [singing] [at] [baseball_game] 
+-3
+
+
+-3
+neutral
+premise -2
+15
+[woman] [with] [green] [headscarf] [blue] [shirt] [and] [very] [big] [grin] 
+hypothesis -2
+5
+[woman] [is] [young] 
+-3
+
+
+-3
+entailment
+premise -2
+15
+[woman] [with] [green] [headscarf] [blue] [shirt] [and] [very] [big] [grin] 
+hypothesis -2
+6
+[woman] [is] [very] [happy] 
+-3
+
+
+-3
+contradiction
+premise -2
+15
+[woman] [with] [green] [headscarf] [blue] [shirt] [and] [very] [big] [grin] 
+hypothesis -2
+5
+[woman] [has_been] [shot] 
+-3
+
+
+-3
+entailment
+premise -2
+11
+[old] [man] [with] [package] [poses] [in_front_of] [advertisement] 
+hypothesis -2
+7
+[man] [poses] [in_front_of] [ad] 
+-3
+
+
+-3
+neutral
+premise -2
+11
+[old] [man] [with] [package] [poses] [in_front_of] [advertisement] 
+hypothesis -2
+9
+[man] [poses] [in_front_of] [ad] [for] [beer] 
+-3
+
+
+-3
+entailment
+premise -2
+8
+[land_rover] [is_being] [driven] [across] [river] 
+hypothesis -2
+11
+[land_rover] [splashing] [water] [as] [crosses] [river] 
+-3
+
+
+-3
+entailment
+premise -2
+8
+[land_rover] [is_being] [driven] [across] [river] 
+hypothesis -2
+7
+[vehicle] [is] [crossing] [river] 
+-3
+
+
+-3
+contradiction
+premise -2
+8
+[land_rover] [is_being] [driven] [across] [river] 
+hypothesis -2
+8
+[sedan] [stuck] [in_the_middle_of] [river] 
+-3
+
+
+-3
+contradiction
+premise -2
+9
+[man] [playing] [electric] [guitar] [on] [stage] 
+hypothesis -2
+8
+[man] [playing] [banjo] [on] [floor] 
+-3
+
+
+-3
+entailment
+premise -2
+9
+[man] [playing] [electric] [guitar] [on] [stage] 
+hypothesis -2
+7
+[man] [playing] [guitar] [on] [stage] 
+-3
+
+
+-3
+neutral
+premise -2
+9
+[man] [playing] [electric] [guitar] [on] [stage] 
+hypothesis -2
+7
+[man] [performing] [for] [cash] 
+-3
+
+
+-3
+entailment
+premise -2
+12
+[blond-haired] [doctor] [her] [african_american] [assistant] [looking_threw] [new] [medical] [manuals] 
+hypothesis -2
+6
+[doctor] [looking_at] [book] 
+-3
+
+
+-3
+contradiction
+premise -2
+12
+[blond-haired] [doctor] [her] [african_american] [assistant] [looking_threw] [new] [medical] [manuals] 
+hypothesis -2
+5
+[man] [eating] [pb_and_j] 
+-3
+
+
+-3
+neutral
+premise -2
+12
+[blond-haired] [doctor] [her] [african_american] [assistant] [looking_threw] [new] [medical] [manuals] 
+hypothesis -2
+4
+[doctor] [is] [studying] 
+-3
+
+
+-3
+contradiction
+premise -2
+28
+[one] [tan] [girl] [with] [wool] [hat] [running] [leaning] [over] [object] [while] [another] [person] [in] [wool] [hat] [sitting] [on] [ground] 
+hypothesis -2
+6
+[boy] [runs] [into] [wall] 
+-3
+
+
+-3
+entailment
+premise -2
+28
+[one] [tan] [girl] [with] [wool] [hat] [running] [leaning] [over] [object] [while] [another] [person] [in] [wool] [hat] [sitting] [on] [ground] 
+hypothesis -2
+8
+[tan] [girl] [runs] [leans] [over] [object] 
+-3
+
+
+-3
+neutral
+premise -2
+28
+[one] [tan] [girl] [with] [wool] [hat] [running] [leaning] [over] [object] [while] [another] [person] [in] [wool] [hat] [sitting] [ground] 
+hypothesis -2
+6
+[man] [watches] [daughter] [leap] 
+-3
+
+
+-3
+neutral
+premise -2
+10
+[young] [family] [enjoys] [feeling] [ocean_waves] [lap_at] [feet] 
+hypothesis -2
+15
+[young] [man] [woman] [take] [child] [to] [beach] [for] [first_time] 
+-3
+
+
+-3
+contradiction
+premise -2
+10
+[young] [family] [enjoys] [feeling] [ocean_waves] [lap_at] [feet] 
+hypothesis -2
+8
+[family] [out] [at] [restaurant] 
+-3
+
+
+-3
+entailment
+premise -2
+10
+[young] [family] [enjoys] [feeling] [ocean_waves] [lap_at] [feet] 
+hypothesis -2
+7
+[family] [at] [beach] 
+-3
+
+
+-3
+entailment
+premise -2
+8
+[couple] [walk] [hand_in_hand] [down] [street] 
+hypothesis -2
+6
+[couple] [walking] [together] 
+-3
+
+
+-3
+neutral
+premise -2
+8
+[couple] [walk] [hand_in_hand] [down] [street] 
+hypothesis -2
+5
+[couple] [married] 
+-3
+
+
+-3
+contradiction
+premise -2
+8
+[couple] [walk] [hand_in_hand] [down] [street] 
+hypothesis -2
+7
+[couple] [sitting_on] [bench] 
+-3
+
+
+-3
+contradiction
+premise -2
+14
+[3] [young] [man] [in] [hoods] [standing] [in_the_middle_of] [quiet] [street] [facing] [camera] 
+hypothesis -2
+9
+[three] [people] [sit] [by] [busy] [street] [bareheaded] 
+-3
+
+
+-3
+entailment
+premise -2
+14
+[3] [young] [man] [in] [hoods] [standing] [in_the_middle_of] [quiet] [street] [facing] [camera] 
+hypothesis -2
+8
+[three] [hood_wearing] [people] [pose] [for] [picture] 
+-3
+
+
+-3
+entailment
+premise -2
+14
+[3] [young] [man] [in] [hoods] [standing] [in_the_middle_of] [quiet] [street] [facing] [camera] 
+hypothesis -2
+8
+[three] [hood_wearing] [people] [stand] [in] [street] 
+-3
+
+
+-3
+entailment
+premise -2
+12
+[man] [reads] [paper] [in] [bar] [with] [green] [lighting] 
+hypothesis -2
+5
+[man] [is] [inside] 
+-3
+
+
+-3
+neutral
+premise -2
+12
+[man] [reads] [paper] [in] [bar] [with] [green] [lighting] 
+hypothesis -2
+7
+[man] [reading] [sportspage] 
+-3
+
+
+-3
+contradiction
+premise -2
+12
+[man] [reads] [paper] [in] [bar] [with] [green] [lighting] 
+hypothesis -2
+7
+[man] [climbing] [mountain] 
+-3
+
+
+-3
+neutral
+premise -2
+6
+[three] [firefighter] [come_out_of] [subway] [station] 
+hypothesis -2
+10
+[three] [firefighters] [putting_out] [fire] [inside_of] [subway] [station] 
+-3
+
+
+-3
+entailment
+premise -2
+6
+[three] [firefighter] [come_out_of] [subway] [station] 
+hypothesis -2
+7
+[three] [firefighters] [coming_up_from] [subway] [station] 
+-3
+
+
+-3
+contradiction
+premise -2
+6
+[three] [firefighter] [come_out_of] [subway] [station] 
+hypothesis -2
+9
+[three] [firefighters] [playing] [cards] [inside] [fire] [station] 
+-3
+
+
+-3
+entailment
+premise -2
+22
+[person] [wearing] [straw] [hat] [standing] [outside] [working] [steel] [apparatus] [with] [pile] [coconuts] [ground] 
+hypothesis -2
+9
+[person] [is] [near] [pile] [coconuts] 
+-3
+
+
+-3
+neutral
+premise -2
+22
+[person] [wearing] [straw] [hat] [standing] [outside] [working] [steel] [apparatus] [with] [pile] [coconuts] [ground] 
+hypothesis -2
+6
+[person] [selling] [coconuts] 
+-3
+
+
+-3
+contradiction
+premise -2
+22
+[person] [wearing] [straw] [hat] [standing] [outside] [working] [steel] [apparatus] [with] [pile] [coconuts] [ground] 
+hypothesis -2
+8
+[person] [burning] [straw] [hat] 
+-3
+
+
+-3
+contradiction
+premise -2
+11
+[male] [in] [blue] [jacket] [decides] [lay_in] [grass] 
+hypothesis -2
+8
+[guy] [in] [yellow] [rolling_on] [grass] 
+-3
+
+
+-3
+entailment
+premise -2
+11
+[male] [in] [blue] [jacket] [decides] [lay_in] [grass] 
+hypothesis -2
+11
+[guy] [wearing] [blue] [jacket] [laying_on] [green] [grass] 
+-3
+
+
+-3
+neutral
+premise -2
+11
+[male] [in] [blue] [jacket] [decides] [lay_in] [grass] 
+hypothesis -2
+13
+[guy] [wearing] [blue] [jacket] [laying_on] [green] [grass] [taking_a_nap] 
+-3
+
+
+-3
+contradiction
+premise -2
+5
+[golden_retriever] [nurses] [puppies] 
+hypothesis -2
+4
+[cat] [nurses] [puppies] 
+-3
+
+
+-3
+neutral
+premise -2
+8
+[during] [calf_roping] [cowboy] [calls_off] [his] [horse] 
+hypothesis -2
+7
+[first_time] [roper] [falls_off] [his] [horse] 
+-3
+
+
+-3
+neutral
+premise -2
+15
+[cheerleaders] [in] [blue] [performing] [on] [football] [field] [underneath] [yellow] [football] [goal] [post] 
+hypothesis -2
+7
+[group] [girls] [shake] [pom_poms] 
+-3
+
+
+-3
+neutral
+premise -2
+6
+[two] [women] [on] [beach] 
+hypothesis -2
+12
+[two] [mothers] [enjoy] [day] [at] [beach] [with] [husbands] 
+-3
+
+
+-3
+contradiction
+premise -2
+18
+[four] [men] [playing] [drums] [in] [very] [orange] [lighting] [while] [one_of_them] [drinking] [something] [out_of] [bottle] 
+hypothesis -2
+7
+[men] [asleep] [in] [motel] 
+-3
+
+
+-3
+contradiction
+premise -2
+11
+[two] [men] [have] [after_dinner] [discussion] [at] [dinner] [table] 
+hypothesis -2
+7
+[men] [are] [asleep] [in] [motel] 
+-3
+
+
+-3
+entailment
+premise -2
+12
+[man] [on] [phone] [in] [business] [suit] [walking] [down] [busy] [street] 
+hypothesis -2
+7
+[person] [on] [phone] [is] [outdoors] 
+-3
+
+
+-3
+contradiction
+premise -2
+15
+[woman] [in] [jeans] [woman] [in] [shorts] [are] [petting] [baby] [kangaroo] 
+hypothesis -2
+10
+[woman] [wearing] [bikinis] [petting] [elephant] 
+-3
+
+
+-3
+neutral
+premise -2
+21
+[teenager] [blows] [whistle] [wears] [white] [face_paint] [earmuffs] [yellow] [hat] [teen] [watches] 
+hypothesis -2
+5
+[tall] [person] [in] [face_paint] 
+-3
+
+
+-3
+neutral
+premise -2
+15
+[four] [men] [wearing] [orange] [vests] [are] [putting] [in] [steel] [beam] [ground] 
+hypothesis -2
+4
+[tall] [humans] [in] [orange] 
+-3
+
+
+-3
+neutral
+premise -2
+19
+[women] [in] [red] [hat] [beige] [shoes] [standing] [with] [hands] [behind] [her] [back] [in_front_of] [cement] [wall] 
+hypothesis -2
+6
+[tall] [person] [in] [hat] 
+-3
+
+
+-3
+entailment
+premise -2
+8
+[person] [sweeping] [stairs] [in] [park] 
+hypothesis -2
+4
+[person] [outside] 
+-3
+
+
+-3
+neutral
+premise -2
+11
+[brown] [dog] [plays] [in] [deep] [pile] [snow] 
+hypothesis -2
+8
+[brown] [dog] [is] [outside] [it_'s] [snowing] 
+-3
+
+
+-3
+entailment
+premise -2
+13
+[girl] [making] [snow_angel] [wearing] [black] [hat] [glasses] 
+hypothesis -2
+8
+[girl] [is] [outside] [in] [snow] 
+-3
+
+
+-3
+contradiction
+premise -2
+16
+[two] [men] [in] [hard] [hats] [look_at] [building] [side] [street] 
+hypothesis -2
+6
+[2] [male] [humans] [sleeping] 
+-3
+
+
+-3
+contradiction
+premise -2
+7
+[silhouette] [man] [fishing] 
+hypothesis -2
+5
+[man] [sleeping] 
+-3
+
+
+-3
+contradiction
+premise -2
+5
+[people] [trying] [get_warm] 
+hypothesis -2
+4
+[people] [are] [sleeping] 
+-3
+
+
+-3
+neutral
+premise -2
+18
+[woman] [cook] [in] [apron] [smiling_at] [camera] [two] [cooks] [background] 
+hypothesis -2
+7
+[woman] [in] [cooking] [competition] 
+-3
+
+
+-3
+neutral
+premise -2
+10
+[woman] [in] [striped] [shirt] [holds] [infant] 
+hypothesis -2
+6
+[person] [watching] [tv] 
+-3
+
+
+-3
+neutral
+premise -2
+12
+[women_'s] [volleyball] [team] [plays] [in] [brown] [green] [gymnasium] 
+hypothesis -2
+10
+[volleyball] [team] [performing] [in] [national] [competition] 
+-3
+
+
+-3
+entailment
+premise -2
+14
+[man] [in] [traditional] [costume] [holding] [small] [guitar] [with] [silver] [bike] [behind] [him] 
+hypothesis -2
+8
+[man] [holding] [musical] [instrument] 
+-3
+
+
+-3
+neutral
+premise -2
+13
+[woman] [in] [long] [dark] [coat] [looks_through] [trashcans] [winter] 
+hypothesis -2
+10
+[woman] [older] [thirty] [is] [outside] [winter] 
+-3
+
+
+-3
+contradiction
+premise -2
+15
+[two] [young] [boys] [playing] [with] [toy] [train] [set] [wood] [floor] 
+hypothesis -2
+7
+[two] [girls] [playing] [with] [dolls] 
+-3
+
+
+-3
+neutral
+premise -2
+10
+[two] [little] [girls] [reading] [book] [at] [library] 
+hypothesis -2
+5
+[girls] [are] [sisters] 
+-3
+
+
+-3
+neutral
+premise -2
+21
+[three] [young] [girls] [baby] [sitting_in] [grass] [blue] [blanket] [with] [baby] [toys] [scattered] [it] 
+hypothesis -2
+6
+[four] [sisters] [play] [each_other] 
+-3
+
+
+-3
+neutral
+premise -2
+12
+[two] [smiling] [young] [girls] [wearing] [plastic] [sunglasses] [lying_on] [grass] 
+hypothesis -2
+6
+[two] [girls] [are] [sisters] 
+-3
+
+
+-3
+neutral
+premise -2
+13
+[female] [soccer] [team] [getting] [last] [minute] [instruction] [from] [coach] 
+hypothesis -2
+16
+[soccer] [team] [listening_to] [coach] [for] [last] [play] [win] [soccer_game] 
+-3
+
+
+-3
+neutral
+premise -2
+6
+[dog] [biting] [man_'s] [rear] 
+hypothesis -2
+6
+[animal] [bit] [its] [owner] 
+-3
+
+
+-3
+contradiction
+premise -2
+9
+[golfer] [shoots] [his] [ball] [out_of] [sand_trap] 
+hypothesis -2
+7
+[drive_off] [first] [tee] 
+-3
+
+
+-3
+neutral
+premise -2
+13
+[surfer] [riding] [wave] [in] [large] [body] [water] 
+hypothesis -2
+8
+[this_is] [his] [first] [wave] [day] 
+-3
+
+
+-3
+neutral
+premise -2
+7
+[woman] [finishing] [marathon] [race] 
+hypothesis -2
+7
+[woman] [is] [first] [place] 
+-3
+
+
+-3
+neutral
+premise -2
+9
+[man] [with] [blue] [yellow] [shirt] [rides] [bike] 
+hypothesis -2
+8
+[man] [rides] [bike] [for] [first_time] 
+-3
+
+
+-3
+entailment
+premise -2
+26
+[baby] [with] [green] [bottom] [red] [top] [lying] [in] [bed] [with] [brown] [white] [cat] [also] [black] [white] [cat] 
+hypothesis -2
+7
+[there_is] [child] [two] [animals] 
+-3
+
+
+-3
+contradiction
+premise -2
+15
+[brown] [dog] [wearing] [collar] [chasing] [biting] [red] [broom] 
+hypothesis -2
+6
+[animal] [sleeping] [outside] 
+-3
+
+
+-3
+entailment
+premise -2
+9
+[brown] [cream] [dog] [with] [tongue_out] [in_front_of] [grassy] [forest] 
+hypothesis -2
+6
+[there_is] [animal] [standing] [outdoors] 
+-3
+
+
+-3
+entailment
+premise -2
+14
+[dog] [is] [in] [snow] [has] [stick] [its] [mouth] 
+hypothesis -2
+5
+[there_is] [animal] [outdoors] 
+-3
+
+
+-3
+contradiction
+premise -2
+11
+[women] [photographing] [statues] [outdoors] [sunny] [day] 
+hypothesis -2
+6
+[two] [men] [taking] [pictures] [animals] 
+-3
+
+
+-3
+entailment
+premise -2
+14
+[woman] [in] [striped] [shirt] [walking] [horse] [across] [street] 
+hypothesis -2
+8
+[human] [animal] [are] [outdoors] 
+-3
+
+
+-3
+entailment
+premise -2
+9
+[four] [dogs] [varying] [breeds] [running_through] [field] 
+hypothesis -2
+4
+[some] [animals] [outdoors] 
+-3
+
+
+-3
+contradiction
+premise -2
+10
+[army] [men] [grilling] [a_lot_of] [meat] [his] [troop] [looks_on] 
+hypothesis -2
+7
+[no] [animal] [products] [can_be] [seen] [here] 
+-3
+
+
+-3
+contradiction
+premise -2
+22
+[man] [in] [green] [shirt] [dark] [pants] [carrying] [really] [big] [pot] [turns_around] [talk_to] [3] [other] [people] 
+hypothesis -2
+5
+[nobody] [has] [shirt] [on] 
+-3
+
+
+-3
+contradiction
+premise -2
+9
+[little] [boy] [playing] [outside] [cement] 
+hypothesis -2
+6
+[boy] [doing] [homework] 
+-3
+
+
+-3
+neutral
+premise -2
+5
+[two] [men] [talk] [outdoors] 
+hypothesis -2
+7
+[men] [talking] [about] [wives] 
+-3
+
+
+-3
+contradiction
+premise -2
+17
+[dark-haired] [man] [wearing] [watch] [oven] [mitt] [about] [cook] [some] [meat] [in] [kitchen] 
+hypothesis -2
+7
+[man] [sitting] [watching] [tv] 
+-3
+
+
+-3
+contradiction
+premise -2
+12
+[little] [boy] [punching_out] [flashcards] [cardboard] [came] 
+hypothesis -2
+5
+[boy] [watches] [tv] 
+-3
+
+
+-3
+entailment
+premise -2
+18
+[man] [dressed] [in] [white] [pants] [blue] [shirt] [standing_on] [ledge] [in] [snow] 
+hypothesis -2
+8
+[man] [is] [outside] [in] [snow] 
+-3
+
+
+-3
+entailment
+premise -2
+13
+[woman] [with] [stroller] [passing] [man] [walking] [dog] 
+hypothesis -2
+4
+[there_are] [people] [outside] 
+-3
+
+
+-3
+neutral
+premise -2
+13
+[woman] [with] [stroller] [passing] [man] [walking] [dog] 
+hypothesis -2
+6
+[there_is] [black] [dog] [outside] 
+-3
+
+
+-3
+contradiction
+premise -2
+5
+[two] [people] [playing] [badminton] 
+hypothesis -2
+6
+[two] [people] [playing] [basketball] [outside] 
+-3
+
+
+-3
+entailment
+premise -2
+15
+[woman] [in] [burgundy] [coat] [exits] [trader_joe_'s] [with] [cart] [full] [groceries] 
+hypothesis -2
+3
+[woman] [outside] 
+-3
+
+
+-3
+contradiction
+premise -2
+16
+[boy] [plays] [with] [motorized] [car] [next_to] [dirty] [street] [lined] [with] [real] [cars] 
+hypothesis -2
+9
+[no] [boy] [is] [outside] [in] [streets] [playing] 
+-3
+
+
+-3
+entailment
+premise -2
+11
+[woman] [walking] [her] [dog] [along] [snowy] [ground] 
+hypothesis -2
+8
+[woman] [is] [with] [her] [dog] [outside] 
+-3
+
+
+-3
+entailment
+premise -2
+11
+[crowd] [people] [fill] [street] [in_front_of] [mcdonald_'s] 
+hypothesis -2
+7
+[there_is] [crowd] [outside] [restaurant] 
+-3
+
+
+-3
+entailment
+premise -2
+20
+[man] [in] [white] [shirt] [baseball] [hat] [pushing] [cart] [carrying] [several] [bags] [on] [street] 
+hypothesis -2
+6
+[man] [walking] [outside] 
+-3
+
+
+-3
+entailment
+premise -2
+16
+[woman] [with] [red-hair] [leather] [jacket] [holds] [harp] [in_front_of] [snowy] [forest] 
+hypothesis -2
+7
+[woman] [holding] [instrument] 
+-3
+
+
+-3
+entailment
+premise -2
+9
+[two] [men] [looking_through] [microscopes] [in] [room] 
+hypothesis -2
+6
+[there_are] [men] [using] [scientific] [instruments] 
+-3
+
+
+-3
+entailment
+premise -2
+10
+[group] [people] [cleaning] [some] [kins_of] [sea] [animal] 
+hypothesis -2
+5
+[there_is] [at_least] [one] [person] 
+-3
+
+
+-3
+entailment
+premise -2
+4
+[biker] [races] 
+hypothesis -2
+6
+[person] [riding] [bike] 
+-3
+
+

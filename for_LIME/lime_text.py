@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import itertools
 import json
 import re
+import sys
 
 import numpy as np
 import scipy as sp
@@ -85,7 +86,7 @@ class TextDomainMapper(explanation.DomainMapper):
 class IndexedString(object):
     """String with various indexes."""
 
-    def __init__(self, raw_string, split_expression='\[[^a-zA-Z0-9_.,?!:;-]\]', bow=False):
+    def __init__(self, raw_string, split_expression='[^a-zA-Z0-9_.,?!:;-]', bow=False):
         """Initializer.
 
         Args:
@@ -185,7 +186,7 @@ class LimeTextExplainer(object):
                  verbose=False,
                  class_names=None,
                  feature_selection='auto',
-                 split_expression='\[[^a-zA-Z0-9_.,?!:;-]\]',
+                 split_expression='[^a-zA-Z0-9_.,?!:;-]',
                  bow=False,
                  random_state=None):
         """Init function.
@@ -226,10 +227,8 @@ class LimeTextExplainer(object):
 
     def explain_instance(self,
                          text_instance,
-                         text_ajoute, #ajouté
                          # retiré : classifier_fn,
                          socket, # ajouté
-                         n_samp, #ajouté = numero du sample
                          #array_lenght, #ajouté
                          labels,
                          num_features,
@@ -269,7 +268,7 @@ class LimeTextExplainer(object):
                                        split_expression=self.split_expression)
         domain_mapper = TextDomainMapper(indexed_string) 
         data, yss, distances = self.__data_labels_distances(
-            indexed_string, text_ajoute, socket, n_samp, num_samples, #remplacé classifier_fn de l'appel (entre indexed_string et num_samples) par socket
+            indexed_string, socket, num_samples, #remplacé classifier_fn de l'appel (entre indexed_string et num_samples) par socket
             distance_metric=distance_metric)
         if self.class_names is None:
             self.class_names = [str(x) for x in range(yss[0].shape[0])]
@@ -294,9 +293,7 @@ class LimeTextExplainer(object):
     def __data_labels_distances(self,
                                 indexed_string,
                                 # retiré : classifier_fn,
-                                text_ajoute, #ajouté
                                 socket, # ajouté
-                                n_samp, #ajouté
                                 num_samples,
                                 distance_metric='cosine'):
         """Generates a neighborhood around a prediction.
@@ -330,7 +327,7 @@ class LimeTextExplainer(object):
             return sklearn.metrics.pairwise.pairwise_distances(
                 x, x[0], metric=distance_metric).ravel() * 100       
             
-        def asking_probas(inverse_data, socket, text_ajoute):
+        def asking_probas(inverse_data, socket):
             #1 : Envoyer inverse_data au serveur c++ ligne par ligne !!
                 #1.1 : recevoir les probas par le serveur c++ pour chaque ligne
             #tokeniser inverse_data dans le prog c++ !
@@ -338,28 +335,14 @@ class LimeTextExplainer(object):
             for i in range(len(inverse_data)):
                 label = []
                 signal(SIGPIPE, SIG_DFL)
-                socket.send(inverse_data[i].encode()) #envoie la phrase (prem ou hyp) en string
+                socket.send(inverse_data[i].encode()) #envoit les phrases (prem + hyp) en string
                 #print("on a envoye " + inverse_data[i])
-                confirm = socket.recv(20)
-                #print("recu : " + confirm.decode())
-                
-                socket.send(text_ajoute.encode()) #envoie la phrase pas modifiée (prem ou hyp) en string
-                #print("on a envoye " + text_ajoute)
-                confirm = socket.recv(20)
-                #print("recu : " + confirm.decode())                
-                
-                proba = socket.recv(200)
+                             
+                proba = socket.recv(200) # recoit les probas pour chaque label
                 proba = proba.decode()
                 #print("recu : " + proba)
-                if proba=="close":
-                    for i in range(len(labels)):
-                        for j in range(len(labels[i])):
-                            labels[i][j] = float(labels[i][j])
-                    lab = np.array(labels)
-                    print(lab)
-                    return lab
-                label = proba.split()
-                labels.append(label)
+            
+            sys.exit(0)
             
             msg = "-1"
             socket.send(msg.encode()) #send "sample finished"
@@ -374,7 +357,9 @@ class LimeTextExplainer(object):
             
         
         doc_size = indexed_string.num_words()
+        print("nb de mots = ", doc_size)
         #tmp = indexed_string.raw_string()
+        #print(tmp)
         sample = self.random_state.randint(1, doc_size + 1, num_samples - 1)
         data = np.ones((num_samples, doc_size))
         data[0] = np.ones(doc_size)
@@ -388,7 +373,7 @@ class LimeTextExplainer(object):
         
         
         #labels = classifier_fn(inverse_data) 
-        labels = asking_probas(inverse_data, socket, text_ajoute)
+        labels = asking_probas(inverse_data, socket)
         
         distances = distance_fn(sp.sparse.csr_matrix(data))
         return data, labels, distances
