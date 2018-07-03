@@ -64,12 +64,11 @@ Expression BiLSTM::get_neg_log_softmax(DataSet& set, Embeddings& embedding, unsi
         * \param sentence_repr : matrix of size (number of words in the sentence, hidden dimension). 
         * sentence_repr[i] = representation of the i_th word
 */
-
-/* A CHANGER POUR DATASET */
 void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, unsigned sentence,
 	ComputationGraph& cg, unsigned num_sentence, vector<Expression>& sentence_repr)
 {
-	const unsigned nb_words = set.get_nb_words(sentence, num_sentence);
+	const unsigned nb_expr = set.get_nb_expr(sentence, num_sentence);
+	unsigned nb_words;
 	if (apply_dropout)
 	{ 
 		forward_lstm->set_dropout(dropout_rate);
@@ -90,19 +89,23 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, unsigned 
 	int j;
 
 	/* Run forward LSTM */
-	for(i=0; i<nb_words; ++i)
+	for(i=0; i<nb_expr; ++i)
 	{
-		if(set.get_word_id(sentence, num_sentence, i) == 0)
-			continue;
-		sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i)) ) );
+		//if(set.get_word_id(sentence, num_sentence, i) == 0)
+		//	continue;
+		nb_words = set.get_nb_words(sentence, num_sentence, i);
+		for(unsigned k=0; k < nb_words; ++k)
+			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i, k)) ) );
 	}
 	/* Run backward LSTM */
-	for(j=nb_words-1; j>=0; --j)
+	for(j=nb_expr-1; j>=0; --j)
 	{
-		if(set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j)) == 0)
-			continue;
-		tmp.push_back(backward_lstm->add_input( 
-				embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j))) ) );
+		//if(set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j)) == 0)
+		//	continue;
+		nb_words = set.get_nb_words(sentence, num_sentence, static_cast<unsigned>(j));
+		for(unsigned k=0; k < nb_words; ++k)
+			tmp.push_back(backward_lstm->add_input( 
+					embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j), k)) ) );
 	}
 	/* Concat */
 	for(i=0; i<sentence_repr.size(); ++i)

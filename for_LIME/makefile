@@ -16,7 +16,7 @@ Exe_Serveur: server.o rnn.o LSTM.o BILSTM.o data.o embedding.o
 server.o: server.cpp modele/LSTM.hpp modele/BILSTM.hpp code_data/data.hpp 
 	$(CC) -c server.cpp $(CFLAGS)
 	
-rnn.o: modele/rnn.cpp modele/rnn.hpp tokenizer/detoken_explication.hpp
+rnn.o: modele/rnn.cpp modele/rnn.hpp
 	$(CC) -c modele/rnn.cpp $(CFLAGS)
 	
 LSTM.o: modele/LSTM.cpp modele/LSTM.hpp
@@ -28,7 +28,7 @@ BILSTM.o: modele/BILSTM.cpp modele/BILSTM.hpp
 data.o: code_data/data.cpp code_data/data.hpp 
 	$(CC) -c code_data/data.cpp $(CFLAGS)
 	
-embedding.o: .code_data/embedding.cpp code_data/embedding.hpp
+embedding.o: code_data/embedding.cpp code_data/embedding.hpp
 	$(CC) -c code_data/embedding.cpp $(CFLAGS)
 	
 #sw.o: ../code_data/switch_words.cpp ../code_data/switch_words.hpp

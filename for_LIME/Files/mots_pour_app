@@ -1,5 +1,5 @@
 -3
-label: neutral
+neutral
 premise -2
 19
 {this}
@@ -35,7 +35,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 19
 {this}
@@ -70,7 +70,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 19
 {this}
@@ -105,7 +105,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 15
 {a}
@@ -134,7 +134,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 15
 {a}
@@ -164,7 +164,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 15
 {a}
@@ -193,7 +193,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 11
 {an}
@@ -220,7 +220,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 11
 {an}
@@ -249,7 +249,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 11
 {an}
@@ -276,7 +276,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 8
 {a}
@@ -304,7 +304,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 8
 {a}
@@ -328,7 +328,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 8
 {a}
@@ -353,7 +353,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 9
 {a}
@@ -379,7 +379,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 9
 {a}
@@ -404,7 +404,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 9
 {a}
@@ -429,7 +429,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 12
 {a}
@@ -456,7 +456,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 12
 {a}
@@ -482,7 +482,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 12
 {a}
@@ -507,7 +507,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 28
 [one] 3 #two# ACTUAL -1 #a# ACTUAL -1 #no# ACTUAL -1
@@ -550,7 +550,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 28
 [one] 3 #two# ACTUAL -1 #a# ACTUAL -1 #no# ACTUAL -1
@@ -595,7 +595,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 28
 [one] 3 #two# ACTUAL -1 #a# ACTUAL -1 #no# ACTUAL -1
@@ -638,7 +638,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 10
 {a}
@@ -672,7 +672,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 10
 {a}
@@ -699,7 +699,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 10
 {a}
@@ -725,7 +725,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 8
 {a}
@@ -748,7 +748,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 8
 {a}
@@ -770,7 +770,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 8
 {a}
@@ -794,7 +794,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 14
 [3] 3 #2# ACTUAL -1 #no# ACTUAL -1 #some# ACTUAL -1
@@ -826,7 +826,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 14
 [3] 3 #2# ACTUAL -1 #no# ACTUAL -1 #some# ACTUAL -1
@@ -857,7 +857,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 14
 [3] 3 #2# ACTUAL -1 #no# ACTUAL -1 #some# ACTUAL -1
@@ -888,7 +888,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 12
 {a}
@@ -914,7 +914,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 12
 {a}
@@ -942,7 +942,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 12
 {a}
@@ -970,7 +970,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 6
 [three] 3 #two# ACTUAL -1 #some# ACTUAL -1 #young# ACTUAL -1
@@ -995,7 +995,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 6
 [three] 3 #two# ACTUAL -1 #some# ACTUAL -1 #young# ACTUAL -1
@@ -1017,7 +1017,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 6
 [three] 3 #two# ACTUAL -1 #some# ACTUAL -1 #young# ACTUAL -1
@@ -1041,7 +1041,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 22
 {a}
@@ -1081,7 +1081,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 22
 {a}
@@ -1118,7 +1118,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 22
 {a}
@@ -1157,7 +1157,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 11
 [male] 3 #woman# ACTUAL -1 #guy# ACTUAL -1 #person# ACTUAL -1
@@ -1185,7 +1185,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 11
 [male] 3 #woman# ACTUAL -1 #guy# ACTUAL -1 #person# ACTUAL -1
@@ -1216,7 +1216,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 11
 [male] 3 #woman# ACTUAL -1 #guy# ACTUAL -1 #person# ACTUAL -1
@@ -1249,7 +1249,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 5
 {a}
@@ -1267,7 +1267,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 8
 [during] 3 #first# ACTUAL -1 #in# ACTUAL -1 #with# ACTUAL -1
@@ -1291,7 +1291,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 15
 [cheerleaders] 3 #girls# ACTUAL -1 #people# ACTUAL -1 #boys# ACTUAL -1
@@ -1322,7 +1322,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 6
 [two] 3 #group of# ACTUAL -1 #some# ACTUAL -1 #no# ACTUAL -1
@@ -1349,7 +1349,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 18
 [four] 3 #no# ACTUAL -1 #some# ACTUAL -1 #group of# ACTUAL -1
@@ -1383,7 +1383,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 11
 [two] 3 #some# ACTUAL -1 #no# ACTUAL -1 #three# ACTUAL -1
@@ -1410,7 +1410,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 12
 [man] 3 #person# ACTUAL -1 #woman# ACTUAL -1 #dog# ACTUAL -1
@@ -1438,7 +1438,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 15
 {a}
@@ -1472,7 +1472,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 21
 {a}
@@ -1507,7 +1507,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 15
 [four] 3 #tall# ACTUAL -1 #no# ACTUAL -1 #some# ACTUAL -1
@@ -1535,7 +1535,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 19
 [women] 3 #person# ACTUAL -1 #men# ACTUAL -1 #dogs# ACTUAL -1
@@ -1569,7 +1569,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 8
 {a}
@@ -1590,7 +1590,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 11
 {a}
@@ -1618,7 +1618,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 13
 {a}
@@ -1648,7 +1648,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 16
 [two] 3 #2# ACTUAL -1 #no# ACTUAL -1 #some# ACTUAL -1
@@ -1679,7 +1679,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 7
 {a}
@@ -1700,7 +1700,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 5
 [people] 3 #animals# ACTUAL -1 #persons# ACTUAL -1 #men# ACTUAL -1
@@ -1718,7 +1718,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 18
 {a}
@@ -1752,7 +1752,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 10
 {a}
@@ -1777,7 +1777,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 12
 {a}
@@ -1808,7 +1808,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 14
 [man] 3 #woman# ACTUAL -1 #guy# ACTUAL -1 #person# ACTUAL -1
@@ -1839,7 +1839,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 13
 {a}
@@ -1871,7 +1871,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 15
 [two] 3 #some# ACTUAL -1 #no# ACTUAL -1 #three# ACTUAL -1
@@ -1902,7 +1902,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 10
 [two] 3 #no# ACTUAL -1 #some# ACTUAL -1 #three# ACTUAL -1
@@ -1926,7 +1926,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 21
 [three] 3 #four# ACTUAL -1 #no# ACTUAL -1 #some# ACTUAL -1
@@ -1962,7 +1962,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 12
 [two] 3 #no# ACTUAL -1 #some# ACTUAL -1 #three# ACTUAL -1
@@ -1989,7 +1989,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 13
 {the}
@@ -2027,7 +2027,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 6
 {a}
@@ -2048,7 +2048,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 9
 {a}
@@ -2073,7 +2073,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 13
 {a}
@@ -2103,7 +2103,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 7
 {a}
@@ -2126,7 +2126,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 9
 [man] 3 #woman# ACTUAL -1 #guy# ACTUAL -1 #person# ACTUAL -1
@@ -2152,7 +2152,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 26
 {a}
@@ -2194,7 +2194,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 15
 {a}
@@ -2224,7 +2224,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 9
 [brown] 3 #sitting# ACTUAL -1 #sleepy# ACTUAL -1 #standing# ACTUAL -1
@@ -2248,7 +2248,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 14
 {the}
@@ -2276,7 +2276,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 11
 {the}
@@ -2302,7 +2302,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 14
 {a}
@@ -2333,7 +2333,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 9
 [four] 3 #some# ACTUAL -1 #no# ACTUAL -1 #severals# ACTUAL -1
@@ -2355,7 +2355,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 10
 [army] 3 #no# ACTUAL -1 #some# ACTUAL -1 #tall# ACTUAL -1
@@ -2381,7 +2381,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 22
 {a}
@@ -2417,7 +2417,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 9
 {a}
@@ -2441,7 +2441,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 5
 [two] 3 #no# ACTUAL -1 #some# ACTUAL -1 #three# ACTUAL -1
@@ -2462,7 +2462,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 17
 [dark-haired] 3 #tall# ACTUAL -1 #sitting# ACTUAL -1 #lazy# ACTUAL -1
@@ -2495,7 +2495,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 12
 {a}
@@ -2521,7 +2521,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 18
 {this}
@@ -2556,7 +2556,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 13
 {a}
@@ -2582,7 +2582,7 @@ hypothesis -2
 
 
 -3
-label: neutral
+neutral
 premise -2
 13
 {a}
@@ -2610,7 +2610,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 5
 [two] 3 #no# ACTUAL -1 #some# ACTUAL -1 #three# ACTUAL -1
@@ -2630,7 +2630,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 15
 {a}
@@ -2657,7 +2657,7 @@ hypothesis -2
 
 
 -3
-label: contradiction
+contradiction
 premise -2
 16
 {a}
@@ -2691,7 +2691,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 11
 {a}
@@ -2719,7 +2719,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 11
 {a}
@@ -2746,7 +2746,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 20
 {a}
@@ -2781,7 +2781,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 16
 {a}
@@ -2813,7 +2813,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 9
 [two] 3 #some# ACTUAL -1 #no# ACTUAL -1 #three# ACTUAL -1
@@ -2837,7 +2837,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 10
 {a}
@@ -2861,7 +2861,7 @@ hypothesis -2
 
 
 -3
-label: entailment
+entailment
 premise -2
 4
 {a}

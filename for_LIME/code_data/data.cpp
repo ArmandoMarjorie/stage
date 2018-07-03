@@ -16,6 +16,7 @@ BagOfWords::BagOfWords(string& word)
 		important_bag = false;
 	std::string::size_type sz;
 	int wordID;
+	string w;
 	for(unsigned i=1; i < word.size()-1; ++i)
 	{
 		stringstream ss;
@@ -28,7 +29,7 @@ BagOfWords::BagOfWords(string& word)
 		wordID = std::stoi(w,&sz);
 		
 		words.push_back(static_cast<unsigned>(wordID));
-		cout << "ID = " << wordID << " , mot = " << word << endl;
+		//cout << "\tID = " << wordID << " , mot = " << word << " (" <<  important_bag << ") "<< endl;
 	}
 	
 }
@@ -117,7 +118,9 @@ DataSet::DataSet(char* filename)
 	unsigned i=0, lab;
 	while(database >> word)
 	{
+		//cout << "SAMPLE " << i << endl;
 		Data data(database);
+		//cout << endl << endl;
 		dataset.push_back(data);
 		lab = dataset[i].get_label();
 		++i;

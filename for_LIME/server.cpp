@@ -72,6 +72,43 @@ void init_lenght_tab(char* length_filename, vector<unsigned>& length_tab)
 	}
 }
 
+// Appel = 
+// predict(argv[2], static_cast<unsigned>(atoi(argv[4])), atoi(argv[7]), static_cast<unsigned>(atoi(argv[3])), 
+//	static_cast<unsigned>(atoi(argv[5])), argv[1], argv[6]);
+
+void predict(char* emb_file, unsigned dim, int systeme, unsigned nb_layer, unsigned hidden, char* file, 
+	char* param_file)
+{
+	
+	ParameterCollection model;		
+							 
+	// Load Dataset 
+	Embeddings embedding(emb_file, model, dim, true);
+	
+	// Create model
+	if(systeme < 3 || systeme == 5)
+	{
+		LSTM rnn(nb_layer, dim,	hidden, 0, systeme, model);
+		DataSet set(file);
+		cout << "DATA SET OK \n";
+		run_predict(rnn, model, set, embedding, param_file);
+		cout << endl << "Nb Contradiction = " << set.get_nb_contradiction() << endl << "Nb inf = " << set.get_nb_inf()
+		<< endl << "Nb neutral = " << set.get_nb_neutral() << endl;		
+	}
+	else
+	{
+		BiLSTM rnn(nb_layer, dim, hidden, 0, systeme, model);
+		DataSet set(file);
+		cout << "DATA SET OK \n";
+		run_predict(rnn, model, set, embedding, param_file);
+		cout << endl << "Nb Contradiction = " << set.get_nb_contradiction() << endl << "Nb inf = " << set.get_nb_inf()
+		<< endl << "Nb neutral = " << set.get_nb_neutral() << endl;			
+		
+	}
+}
+
+
+
 
 int main(int argc, char** argv) 
 {	

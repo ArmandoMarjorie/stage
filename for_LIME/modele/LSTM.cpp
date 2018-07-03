@@ -63,7 +63,7 @@ Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, un
 	{
 		//if(set.get_word_id(sentence, num_sentence, i) == 0) // 0 means "this is not a word, there is no word here !"
 		//	continue;
-		
+		nb_words = set.get_nb_words(sentence, num_sentence, i);
 		for(unsigned j=0; j < nb_words; ++j)
 			repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i, j)) );
 	}
@@ -92,7 +92,8 @@ void LSTM::words_representation(DataSet& set, Embeddings& embedding, unsigned se
 	/* Run forward LSTM */
 	for(i=0; i<nb_expr; ++i)
 	{
-		for(unsigned j=0; j < nb_words; ++j)
+		nb_words = set.get_nb_words(sentence, num_sentence, i);
+		for(j=0; j < nb_words; ++j)
 			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i, j)) ) );
 	}
 }
