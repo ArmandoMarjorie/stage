@@ -213,6 +213,7 @@ int main(int argc, char** argv)
 		LSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 
 			static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
 		DataSet set(argv[1]);
+		
 		map<vector<unsigned>, unsigned> save_expr_premise; map<vector<unsigned>, unsigned> save_expr_hyp;
 		
 		// Load preexisting weights
@@ -231,8 +232,12 @@ int main(int argc, char** argv)
 		// The Code Here !! asking predict here !! 
 		while(strcmp(buffer_in, "quit"))
 		{
+			set.print_a_sample(3);
+			
+			if(set.expr_is_important(3,true,0))
+				exit(EXIT_FAILURE);
 			if(print_sample)
-				cerr << "*** SAMPLE NUMERO " << num_sample << endl;
+				cerr << "\n*** SAMPLE NUMERO " << num_sample << endl;
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);
 			
@@ -246,6 +251,7 @@ int main(int argc, char** argv)
 			cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
 			if( !strcmp(buffer_in, "-1") )
 			{
+				cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
 				n = write(client_socket, "-1", 3);
 				if( n == -1)
 				{
@@ -267,19 +273,20 @@ int main(int argc, char** argv)
 			if(!print_sample)
 				set.modif_LIME(buffer_in, num_sample, save_expr_premise, save_expr_hyp);
 				
-			cout << "APRES MODIF:\n";
+			cout << "\nAPRES MODIF:\n";
 			set.print_a_sample(num_sample);
+			
 			vector<float> probas = run_predict_for_server_lime(rnn, set, embedding, true); 
-			if(!print_sample)
+			/*if(!print_sample)
 			{
 				cout << "RESET:\n";
 				set.reset_sentences(num_sample, save_expr_premise, true);
 				set.reset_sentences(num_sample, save_expr_hyp, false);
 				set.print_a_sample(num_sample);
-			}
+			}*/
 			
-			save_expr_premise.clear();
-			save_expr_hyp.clear();
+			//save_expr_premise.clear();
+			//save_expr_hyp.clear();
 	
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);		
@@ -291,7 +298,7 @@ int main(int argc, char** argv)
 				strcat(buffer_out," ");
 				strcat(buffer_out,tmp.c_str());
 			}
-			cout << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
+			cout << "on va envoyer = \"" <<buffer_out<<"\"\n\n"<<endl;
 			n = write(client_socket, buffer_out, strlen(buffer_out));
 			if( n == -1)
 			{

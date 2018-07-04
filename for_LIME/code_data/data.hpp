@@ -55,10 +55,11 @@
 			unsigned get_word_id(unsigned sentence, unsigned num_expr, unsigned num_words);	
 			unsigned get_nb_imp_words(bool is_premise);		
 			
-			void modif_LIME(bool is_premise, unsigned num_buffer_in);
+			void modif_LIME(bool is_premise, unsigned num_buffer_in, unsigned position);
 			unsigned search_position(bool is_premise, unsigned num_buffer_in);
 			
 			void print_a_sample();
+			bool expr_is_important(bool is_premise, unsigned num_expr);
 			
 			void reset_sentences(std::map<std::vector<unsigned>, unsigned>& save_expr, bool is_premise);
 	};
@@ -88,6 +89,9 @@
 			void reset_sentences(unsigned num_sample, std::map<std::vector<unsigned>, unsigned>& save_expr, bool is_premise);
 			void save_bow(std::map<std::vector<unsigned>, unsigned>& save_expr, unsigned num_sentence, unsigned num_sample, unsigned pos);
 			void modif_LIME(char* buffer_in, unsigned num_sample, std::map<std::vector<unsigned>, unsigned>& save_expr_premise, std::map<std::vector<unsigned>, unsigned>& save_expr_hyp);
+	
+			void print_everything();
+			bool expr_is_important(unsigned num_sample, bool is_premise, unsigned num_expr);
 	};
 	
 

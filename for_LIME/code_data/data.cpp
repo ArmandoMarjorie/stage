@@ -14,6 +14,13 @@ BagOfWords::BagOfWords(string& word)
 {
 	if(word[0] == '{')
 		important_bag = false;
+	else if(word[0] == '[')
+		important_bag = true;
+	else
+	{
+		cout << "IMPORTANCE INCONNUE\n";
+		exit(EXIT_FAILURE);
+	}
 	std::string::size_type sz;
 	int wordID;
 	string w;
@@ -60,6 +67,7 @@ bool BagOfWords::expr_is_important()
 
 void BagOfWords::modif_BoW(unsigned mot_inconnu_ID, bool imp)
 {
+	cout << "COUCOU\n";
 	words.clear();
 	words.push_back(mot_inconnu_ID);
 	important_bag = imp;
@@ -161,9 +169,13 @@ unsigned Data::search_position(bool is_premise, unsigned num_buffer_in)
 		while(nb_imp != num_buffer_in)
 		{
 			if( premise[position].expr_is_important() )
+			{
+				cout << "(POS " << position << " est imp) ";  
 				++nb_imp;
+			}
 			++position;
 		}
+		cout << "[PREM] ";
 	}
 	else
 	{
@@ -173,18 +185,22 @@ unsigned Data::search_position(bool is_premise, unsigned num_buffer_in)
 				++nb_imp;
 			++position;
 		}
+		cout << "[HYP] ";
 	}
+	
+	cout << "(POS) " << static_cast<int>(position-1) << " "; 
 	return position-1;
 	
 }
 
-void Data::modif_LIME(bool is_premise, unsigned num_buffer_in)
+void Data::modif_LIME(bool is_premise, unsigned num_buffer_in, unsigned position)
 {
-	unsigned position = search_position(is_premise, num_buffer_in);
 	
 	if(is_premise)
+	{
+		cout << "MODIF DE " << premise[position].get_word_id(0) << " EN 0\n";
 		premise[position].modif_BoW(0, premise[position].expr_is_important());
-	
+	}
 	else
 		hypothesis[position].modif_BoW(0, hypothesis[position].expr_is_important());
 }
@@ -201,10 +217,17 @@ void Data::reset_sentences(map<vector<unsigned>, unsigned>& save_expr, bool is_p
 	}
 }
 
+bool Data::expr_is_important(bool is_premise, unsigned num_expr)
+{
+	if(is_premise)
+		return premise[num_expr].expr_is_important();
+	return hypothesis[num_expr].expr_is_important();
+}
+
 void Data::print_a_sample()
 {
 	char c_o, c_f;
-	cout << "PREMISE : \n";
+	cout << "\tPREMISE : \n\t";
 	for(unsigned i=0; i<premise.size(); ++i)
 	{
 		if(premise[i].expr_is_important())
@@ -220,10 +243,10 @@ void Data::print_a_sample()
 		cout << c_f;
 	}
 		
-	cout << "\nHYPOTHESIS : \n";
+	cout << "\n\tHYPOTHESIS : \n\t";
 	for(unsigned i=0; i<hypothesis.size(); ++i)
 	{
-		if(premise[i].expr_is_important())
+		if(hypothesis[i].expr_is_important())
 		{
 			c_o = '['; c_f = ']';
 		}
@@ -235,6 +258,7 @@ void Data::print_a_sample()
 		hypothesis[i].print_a_sample();
 		cout << c_f;
 	}
+	cout << endl;
 }
 
 
@@ -279,6 +303,12 @@ DataSet::DataSet(char* filename)
 	
 	database.close();
 }
+
+bool DataSet::expr_is_important(unsigned num_sample, bool is_premise, unsigned num_expr)
+{
+	return dataset[num_sample].expr_is_important(is_premise, num_expr);
+}
+
 
 unsigned DataSet::get_word_id(unsigned sentence, unsigned num_sample, unsigned num_expr, unsigned num_words)
 {
@@ -337,6 +367,15 @@ void DataSet::print_a_sample(unsigned num_sample)
 	dataset[num_sample].print_a_sample();
 }
 
+void DataSet::print_everything()
+{
+	for(unsigned i=0; i<dataset.size(); ++i)
+	{
+		cout << "SAMPLE " << i << endl;
+		dataset[i].print_a_sample();
+		cout << endl << endl;
+	}
+}
 
 void DataSet::modif_LIME(char* buffer_in, unsigned num_sample, map<vector<unsigned>, unsigned>& save_expr_premise, map<vector<unsigned>, unsigned>& save_expr_hyp)
 {
@@ -344,97 +383,61 @@ void DataSet::modif_LIME(char* buffer_in, unsigned num_sample, map<vector<unsign
 	unsigned nbr_expr=0;
 	unsigned nb_word;
 	unsigned pos;
-	char first_letter;
-	//string word;
+	string word;
 	
 	
 	unsigned nb_imp_words_prem = dataset[num_sample].get_nb_imp_words(true);
-	cout << "ON COMMENCE\n";
-	//unsigned nb_imp_words_hyp = dataset[num_sample].get_nb_imp_words(false);
+	//cout << "IL Y A "<< nb_imp_words_prem << " MOTS IMP DANS LA PREMISE\n";
+	//cout << "ON COMMENCE\n";
 	
 	for(unsigned i=0; i < strlen(buffer_in)-1; ++i)
 	{
 		//cout << "size buff in = " << strlen(buffer_in) << endl;
-		cout << buffer_in[i] << " ";
+		//cout << buffer_in[i] << " ";
 		
 		if(buffer_in[i] == '[' || buffer_in[i] == ' ')
 		{
-			cout << "(SAUT) ";
+			//cout << "(SAUT) ";
 			continue;
 		}
 		
-		first_letter = buffer_in[i];
-		cout << "(FIRST) ";
-		while(i < strlen(buffer_in) && buffer_in[i] != ']') //lit le reste du mot
+		stringstream ss;
+		while(i < strlen(buffer_in)-1 && buffer_in[i] != ']')
 		{
+			ss << buffer_in[i];
 			++i;
-			cout << buffer_in[i] << " ";
 		}		
-		++nbr_expr;
 		++cpt_crochet;
+		++nbr_expr;
+		word = ss.str();
 		
-		if(first_letter == 'U')
-		{
+		//cout << "WORD : " << word << "\n";
+		if(word == "UNKWORDZ")
+		{		
 			if(nbr_expr <= nb_imp_words_prem)
 			{
 				pos = dataset[num_sample].search_position(true, cpt_crochet);
 				
 				//save
-				save_bow(save_expr_premise, 1, num_sample, pos);
+				//save_bow(save_expr_premise, 1, num_sample, pos);
 					
 				//modif
-				dataset[num_sample].modif_LIME(true, cpt_crochet);	
-				cpt_crochet = 0;
+				dataset[num_sample].modif_LIME(true, cpt_crochet, pos); //a modifier
+				if(nbr_expr == nb_imp_words_prem)
+					cpt_crochet = 0;
 			}
 			else
 			{
-				pos = dataset[num_sample].search_position(true, cpt_crochet);
+				pos = dataset[num_sample].search_position(false, cpt_crochet);
 				
 				//save
-				save_bow(save_expr_hyp, 2, num_sample, pos);
+				//save_bow(save_expr_hyp, 2, num_sample, pos);
 				
 				//modif
-				dataset[num_sample].modif_LIME(false, cpt_crochet); //à corriger !!!
-			}		
-			
-		}
+				dataset[num_sample].modif_LIME(false, cpt_crochet, pos); 
+			}			
 		
-		/*
-		stringstream ss;
-
-		while(buffer_in[i] != ']')
-		{
-			ss << buffer_in[i];
-			++i;
 		}
-		++cpt_crochet;
-		++nbr_expr;
-		word = ss.str();
-		if(word == "UNKWORDZ")
-		{
-			if(nbr_expr > nb_imp_words_prem)
-			{
-				//modifier la prémisse
-				//ce qu'il faut faire ailleurs :
-				nb_imp=0;
-				i=-1;
-				while(nb_imp != cpt_crochet)
-				{
-					++i;
-					if( premise[i].expr_is_important() )
-						++nb_imp;
-					
-				}
-				premise[i] = UNK;
-				//====
-				cpt_crochet = 0;
-			}
-			else
-			{
-				//modifier l'hypothèse
-			}
-		}
-		*/ 
 	}
 }
 
