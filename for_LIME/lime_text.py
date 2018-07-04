@@ -342,12 +342,12 @@ class LimeTextExplainer(object):
                 proba = proba.decode()
                 #print("recu : " + proba)
             
-            sys.exit(0)
+            #sys.exit(0)
             
             msg = "-1"
             socket.send(msg.encode()) #send "sample finished"
             msg = socket.recv(20)
-            #print("recu : " + msg.decode())
+            print("recu : " + msg.decode())
             for i in range(len(labels)):
                 for j in range(len(labels[i])):
                     labels[i][j] = float(labels[i][j])

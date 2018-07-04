@@ -4,7 +4,7 @@ CC=g++
 #CFLAGS=-W -Wall -std=c++11 -pedantic -O3 -I/home/marjorie/Documents/LIB/dynet -I/home/marjorie/Documents/LIB/eigen `pkg-config --cflags gtkmm-3.0`
 #LDFLAGS=-L/home/marjorie/Documents/LIB/dynet/build/dynet -ldynet `pkg-config --libs gtkmm-3.0`
 
-CFLAGS=-W -Wall -std=c++11 -pedantic -O3 -I/home/marjorie/Documents/LIB/dynet -I/home/marjorie/Documents/LIB/eigen
+CFLAGS= -g -W -Wall -std=c++11 -pedantic -O3 -I/home/marjorie/Documents/LIB/dynet -I/home/marjorie/Documents/LIB/eigen
 LDFLAGS=-L/home/marjorie/Documents/LIB/dynet/build/dynet -ldynet
 EXEC= Exe_Serveur
 

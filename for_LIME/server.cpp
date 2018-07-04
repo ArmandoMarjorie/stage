@@ -19,13 +19,27 @@
 using namespace std;
 using namespace dynet;
 
-
-void usage(char* exe_name) 
+/*
+void ancien_usage(char* exe_name) 
 {
 	cerr << "\n**USAGE**\n\t" << exe_name << " test_file embedding_file nb_layers input_dim hidden_dim parameters_file system\n\n"
 		 << "length_file <string> : file containing the number of words for each sentences from each test sample\n"
 		 << "lexique_file : file containing the IDs of each word of the vocabulary\n"
 		 << "embedding_file <string> : file containing word embeddings used in the training step\n"
+		 << "nb_layers <int> : number of layers\n"
+		 << "input_dim <int> : dimension of the word embedding\n"
+		 << "hidden_dim <int> : dimension  of the hidden states ht and ct\n"
+		 << "parameters_file <string> : file containing the parameters (weight and bias) updated in the training step\n"
+		 << "system <int> : which system you want to use (1 (LSTM), 2(LSTM), 3=KIM(BILSTM), or 4(BILSTM))\n";
+	exit(EXIT_SUCCESS);
+}*/
+
+void usage(char* exe_name) 
+{
+	cerr << "\n**USAGE**\n\t" << exe_name << " test_file embedding_file nb_layers input_dim hidden_dim parameters_file system\n\n"
+	/*1*/	 << "test_file <string> : file containing the number of words for each sentences from each test sample\n"
+		 //<< "lexique_file : file containing the IDs of each word of the vocabulary\n"
+	/*2*/	 << "embedding_file <string> : file containing word embeddings used in the training step\n"
 		 << "nb_layers <int> : number of layers\n"
 		 << "input_dim <int> : dimension of the word embedding\n"
 		 << "hidden_dim <int> : dimension  of the hidden states ht and ct\n"
@@ -39,7 +53,7 @@ void error(string message)
 	cerr << message;
 	exit(EXIT_FAILURE);
 }
-
+/*
 void init_map(char* lexique_filename, map<string, unsigned>& word_to_id)
 {
 	ifstream lexique_file(lexique_filename, ios::in);
@@ -70,12 +84,13 @@ void init_lenght_tab(char* length_filename, vector<unsigned>& length_tab)
 	{
 		length_tab.push_back(val);
 	}
-}
+}*/
 
 // Appel = 
 // predict(argv[2], static_cast<unsigned>(atoi(argv[4])), atoi(argv[7]), static_cast<unsigned>(atoi(argv[3])), 
 //	static_cast<unsigned>(atoi(argv[5])), argv[1], argv[6]);
 
+/*
 void predict(char* emb_file, unsigned dim, int systeme, unsigned nb_layer, unsigned hidden, char* file, 
 	char* param_file)
 {
@@ -106,7 +121,7 @@ void predict(char* emb_file, unsigned dim, int systeme, unsigned nb_layer, unsig
 		
 	}
 }
-
+*/
 
 
 
@@ -198,6 +213,7 @@ int main(int argc, char** argv)
 		LSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 
 			static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
 		DataSet set(argv[1]);
+		map<vector<unsigned>, unsigned> save_expr_premise; map<vector<unsigned>, unsigned> save_expr_hyp;
 		
 		// Load preexisting weights
 		cerr << "Loading parameters ...\n";
@@ -219,7 +235,7 @@ int main(int argc, char** argv)
 				cerr << "*** SAMPLE NUMERO " << num_sample << endl;
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);
-			print_sample = false;
+			
 			
 			n = recv(client_socket, buffer_in, 4999, 0); //recoit une instance
 			if( n == -1 )
@@ -227,7 +243,7 @@ int main(int argc, char** argv)
 				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
 				error(err);		
 			}
-			//cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
+			cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
 			if( !strcmp(buffer_in, "-1") )
 			{
 				n = write(client_socket, "-1", 3);
@@ -246,10 +262,24 @@ int main(int argc, char** argv)
 				exit(EXIT_SUCCESS);
 			}
 			
-			save_sentences(); //copy l'objet Data de la case num_sample
-			set.modif_LIME(buffer_in); // a faire
-			vector<float> probas = run_predict_for_server_lime(rnn, set, embedding, true);
-			set.reset_sentences(); //a faire
+			
+			
+			if(!print_sample)
+				set.modif_LIME(buffer_in, num_sample, save_expr_premise, save_expr_hyp);
+				
+			cout << "APRES MODIF:\n";
+			set.print_a_sample(num_sample);
+			vector<float> probas = run_predict_for_server_lime(rnn, set, embedding, true); 
+			if(!print_sample)
+			{
+				cout << "RESET:\n";
+				set.reset_sentences(num_sample, save_expr_premise, true);
+				set.reset_sentences(num_sample, save_expr_hyp, false);
+				set.print_a_sample(num_sample);
+			}
+			
+			save_expr_premise.clear();
+			save_expr_hyp.clear();
 	
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);		
@@ -261,14 +291,14 @@ int main(int argc, char** argv)
 				strcat(buffer_out," ");
 				strcat(buffer_out,tmp.c_str());
 			}
-			//cout << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
+			cout << "on va envoyer = \"" <<buffer_out<<"\""<<endl;
 			n = write(client_socket, buffer_out, strlen(buffer_out));
 			if( n == -1)
 			{
 				err = "Error sending message to the client : " + std::to_string(errno) + "\n";
 				error(err);					
 			}			
-
+			print_sample = false;
 		}
 		
 	}

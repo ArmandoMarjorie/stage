@@ -29,8 +29,13 @@
 			bool important_bag = true;
 		public:
 			BagOfWords(std::string& word);
+			BagOfWords(const std::vector<unsigned>& wordsID, bool imp);
 			unsigned get_nb_words();
 			unsigned get_word_id(unsigned num_words);
+			bool expr_is_important();
+			void print_a_sample();
+			
+			void modif_BoW(unsigned mot_inconnu_ID, bool imp);
 	};
 	
 	
@@ -47,7 +52,15 @@
 			
 			unsigned get_nb_words(unsigned sentence, unsigned num_expr);
 			unsigned get_nb_expr(unsigned sentence);
-			unsigned get_word_id(unsigned sentence, unsigned num_expr, unsigned num_words);			
+			unsigned get_word_id(unsigned sentence, unsigned num_expr, unsigned num_words);	
+			unsigned get_nb_imp_words(bool is_premise);		
+			
+			void modif_LIME(bool is_premise, unsigned num_buffer_in);
+			unsigned search_position(bool is_premise, unsigned num_buffer_in);
+			
+			void print_a_sample();
+			
+			void reset_sentences(std::map<std::vector<unsigned>, unsigned>& save_expr, bool is_premise);
 	};
 	
 	class DataSet
@@ -70,6 +83,11 @@
 			unsigned get_nb_sentences();
 			
 			unsigned get_label(unsigned num_sample);
+			void print_a_sample(unsigned num_sample);
+			
+			void reset_sentences(unsigned num_sample, std::map<std::vector<unsigned>, unsigned>& save_expr, bool is_premise);
+			void save_bow(std::map<std::vector<unsigned>, unsigned>& save_expr, unsigned num_sentence, unsigned num_sample, unsigned pos);
+			void modif_LIME(char* buffer_in, unsigned num_sample, std::map<std::vector<unsigned>, unsigned>& save_expr_premise, std::map<std::vector<unsigned>, unsigned>& save_expr_hyp);
 	};
 	
 

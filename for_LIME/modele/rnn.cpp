@@ -78,6 +78,10 @@ vector<float> RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_
 {
 	//vector<float> probs = as_vector(cg.forward(x));
 	vector<float> probs = as_vector(cg.forward(x));
+	cerr << "before softmax = " << endl;
+	for (unsigned k = 0; k < probs.size(); ++k) 
+		cerr << "proba[" << k << "] = " << probs[k] << endl;
+	
 	softmax_vect(probs);
 	argmax=0;
 

@@ -1,15 +1,4 @@
 -3
-contradiction
-premise -2
-11
-[old] [man] [with] [package] [poses] [in_front_of] [advertisement] 
-hypothesis -2
-7
-[man] [walks] [by] [ad] 
--3
-
-
--3
 neutral
 premise -2
 19
@@ -94,6 +83,17 @@ premise -2
 hypothesis -2
 9
 [man] [poses] [in_front_of] [ad] [for] [beer] 
+-3
+
+
+-3
+contradiction
+premise -2
+11
+[old] [man] [with] [package] [poses] [in_front_of] [advertisement] 
+hypothesis -2
+7
+[man] [walks] [by] [ad] 
 -3
 
 
