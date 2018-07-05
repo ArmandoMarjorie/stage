@@ -71,23 +71,33 @@ print ("Connection on {}".format(port))
 from lime.lime_text import LimeTextExplainer
 import operator
 explainer = LimeTextExplainer(class_names=class_names)
-n_samp = 0
+imp_file = open(sys.argv[2], "w")
 for i in range(len(instance)) :
 	#num_features = array_len[n_samp] pas encore fait
 	num_features = 3
 	exp = explainer.explain_instance(instance[i], socket, labels=[0, 1, 2], num_features=num_features)
 	
-	print('Sample numero ', n_samp)
-	print ('Explanation for class %s' % class_names[0]) # Les mots en faveur de la classe neutral
-	print ('\n'.join(map(str, exp.as_list(label=0))))
-	print ()
-	print ('Explanation for class %s' % class_names[1]) # Les mots en faveur de la classe entailment
-	print ('\n'.join(map(str, exp.as_list(label=1))))
-	print ()
-	print ('Explanation for class %s' % class_names[2]) # Les mots en faveur de la classe contradiction
-	print ('\n'.join(map(str, exp.as_list(label=2))))
-	str_name = "sample_" + str(n_samp) + ".html"
+	str_samp = 'Sample numero '+ str(i)
+	imp_file.write(str_samp)
+	
+	imp_file.write( 'Explanation for class neutral') # Les mots en faveur de la classe neutral
+	str_weight = '\n'.join(map(str, exp.as_list(label=0)))
+	imp_file.write(str_weight)
+	imp_file.write('\n')
+	
+	imp_file.write('Explanation for class entailment') # Les mots en faveur de la classe entailment
+	str_weight = '\n'.join(map(str, exp.as_list(label=1)))
+	imp_file.write(str_weight)
+	imp_file.write('\n')
+	
+	imp_file.write('Explanation for class contradiction') # Les mots en faveur de la classe contradiction
+	str_weight = '\n'.join(map(str, exp.as_list(label=2)))
+	imp_file.write(str_weight)
+	imp_file.write('\n')
+	
+	str_name = "sample_" + str(i) + ".html"
 	exp.save_to_file(str_name)
+
  
 
 msg = "quit"

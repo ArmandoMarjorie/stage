@@ -63,7 +63,7 @@
 		unsigned& best, char* output_emb_filename);
 		
 	
-	std::vector<float> run_predict_for_server_lime(RNN& rnn, DataSet& test_set, Embeddings& embedding, bool print_label);
+	std::vector<float> run_predict_for_server_lime(RNN& rnn, DataSet& test_set, Embeddings& embedding, bool print_label, unsigned num_sample);
 	//void run_prediction_expl_for_sys_4(RNN& rnn, dynet::ParameterCollection& model, DataSet& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
 	//void change_words_for_mesure(RNN& rnn, dynet::ParameterCollection& model, DataSet& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
 	//	std::vector<Switch_Words*>& sw_vect);

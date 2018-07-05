@@ -341,7 +341,8 @@ class LimeTextExplainer(object):
                 proba = socket.recv(200) # recoit les probas pour chaque label
                 proba = proba.decode()
                 #print("recu : " + proba)
-            
+                label = proba.split()
+                labels.append(label)          
             #sys.exit(0)
             
             msg = "-1"

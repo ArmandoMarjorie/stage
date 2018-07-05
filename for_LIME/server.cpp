@@ -207,14 +207,14 @@ int main(int argc, char** argv)
 	
 	
 	string tmp;
-	bool print_label=true;
 	if(systeme < 3)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 
 			static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
 		DataSet set(argv[1]);
+		//set.print_a_sample(3);
 		
-		map<vector<unsigned>, unsigned> save_expr_premise; map<vector<unsigned>, unsigned> save_expr_hyp;
+		//exit(EXIT_FAILURE);
 		
 		// Load preexisting weights
 		cerr << "Loading parameters ...\n";
@@ -227,15 +227,11 @@ int main(int argc, char** argv)
 		unsigned num_sample=0, rcv_finish=0;
 		int n;
 		bool print_sample=true;
-		
+		Data* data_copy = NULL;
 		
 		// The Code Here !! asking predict here !! 
 		while(strcmp(buffer_in, "quit"))
 		{
-			set.print_a_sample(3);
-			
-			if(set.expr_is_important(3,true,0))
-				exit(EXIT_FAILURE);
 			if(print_sample)
 				cerr << "\n*** SAMPLE NUMERO " << num_sample << endl;
 			bzero(buffer_in, 5000);
@@ -248,7 +244,8 @@ int main(int argc, char** argv)
 				err = "Error receiving message from the client : " + std::to_string(errno) + "\n";
 				error(err);		
 			}
-			cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
+			cout << "on a recu dans buffer_in: \n\t\"" << buffer_in << "\"" << endl;
+			
 			if( !strcmp(buffer_in, "-1") )
 			{
 				cout << "on a recu dans buffer_in: \n\t" << buffer_in << endl;
@@ -260,33 +257,39 @@ int main(int argc, char** argv)
 				}
 				++num_sample;
 				print_sample = true;
+				data_copy->~Data();
+				data_copy = NULL;
 				continue;
 			}
 			else if( !strcmp(buffer_in, "quit") )
 			{
 				close(server_socket);
-				exit(EXIT_SUCCESS);
+				set.~DataSet();
+				continue;
 			}
 			
-			
-			
-			if(!print_sample)
-				set.modif_LIME(buffer_in, num_sample, save_expr_premise, save_expr_hyp);
+			if(print_sample)
+			{
+				//cout << "\t\tCOPY : \n";
+				data_copy = new Data( *(set.get_data_object(num_sample)) ); //marche bien
+				cout << "copy data...\n";
+				//data_copy->print_a_sample();
+			}
+			 else
+				set.modif_LIME(buffer_in, num_sample);
 				
 			cout << "\nAPRES MODIF:\n";
 			set.print_a_sample(num_sample);
 			
-			vector<float> probas = run_predict_for_server_lime(rnn, set, embedding, true); 
-			/*if(!print_sample)
+			vector<float> probas = run_predict_for_server_lime(rnn, set, embedding, true, num_sample); 
+			if(!print_sample)
 			{
 				cout << "RESET:\n";
-				set.reset_sentences(num_sample, save_expr_premise, true);
-				set.reset_sentences(num_sample, save_expr_hyp, false);
+				set.reset_data(*data_copy, num_sample);
 				set.print_a_sample(num_sample);
-			}*/
+				//exit(EXIT_SUCCESS);
+			}
 			
-			//save_expr_premise.clear();
-			//save_expr_hyp.clear();
 	
 			bzero(buffer_in, 5000);
 			bzero(buffer_out, 5000);		
@@ -299,6 +302,7 @@ int main(int argc, char** argv)
 				strcat(buffer_out,tmp.c_str());
 			}
 			cout << "on va envoyer = \"" <<buffer_out<<"\"\n\n"<<endl;
+			
 			n = write(client_socket, buffer_out, strlen(buffer_out));
 			if( n == -1)
 			{
