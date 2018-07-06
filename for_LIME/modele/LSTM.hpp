@@ -1,7 +1,7 @@
 #ifndef LSTM_HPP
 #define LSTM_HPP
 
-	#include "../code_data/data.hpp"
+	#include "../code_data/dataset.hpp"
 	#include "rnn.hpp"
 
 	/**

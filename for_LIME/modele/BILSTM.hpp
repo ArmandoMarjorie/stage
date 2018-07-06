@@ -1,7 +1,7 @@
 #ifndef BILSTM_HPP
 #define BILSTM_HPP
 
-	#include "../code_data/data.hpp"
+	#include "../code_data/dataset.hpp"
 	#include "rnn.hpp"
 
 	/**

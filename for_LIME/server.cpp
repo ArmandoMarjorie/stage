@@ -211,10 +211,8 @@ int main(int argc, char** argv)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 
 			static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
-		DataSet set(argv[1]);
-		//set.print_a_sample(3);
 		
-		//exit(EXIT_FAILURE);
+		DataSet set(argv[1]);
 		
 		// Load preexisting weights
 		cerr << "Loading parameters ...\n";

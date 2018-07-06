@@ -14,7 +14,7 @@
 	#include "dynet/hsm-builder.h"
 	#include "dynet/globals.h"
 	#include "dynet/io.h"
-	#include "../code_data/data.hpp"
+	#include "../code_data/dataset.hpp"
 	//#include "../tokenizer/detoken_explication.hpp"
 
 	/**
