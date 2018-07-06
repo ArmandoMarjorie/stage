@@ -20,13 +20,34 @@
 	#include "embedding.hpp"
 	//#include "switch_words.hpp"
 	
-	
+	#define PREV 0
+	#define ACTUAL 1
+	#define NEXT 2
+
+	class SW
+	{
+		private:
+			std::vector<unsigned> sw;
+			unsigned type; //ACTUAL, NEXT ou PREV
+		public:
+			SW();
+	};
+		
+	class SwitchWords
+	{
+		private:
+			std::vector<SW*> switch_w;	
+		public:
+			SwitchWords();
+	};
 	
 	class BagOfWords
 	{
 		private:
 			std::vector<unsigned> words;
 			bool important_bag = true;
+			std::vector<SwitchWords*> switch_words;
+			
 		public:
 			BagOfWords(std::string& word);
 			BagOfWords(const std::vector<unsigned>& wordsID, bool imp);
@@ -49,6 +70,7 @@
 			unsigned label;
 			std::vector<BagOfWords*> premise;
 			std::vector<BagOfWords*> hypothesis;
+			
 			
 		public:
 			Data(std::ifstream& database);

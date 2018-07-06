@@ -8,12 +8,74 @@ using namespace dynet;
  * \file data.cpp
 */
 
+SW::SW(stringstream& fluxstring)
+{
+	std::string::size_type sz;
+	int wordID;	
+	string word, word2;
+	
+	fluxstring >> word;
+	while(word[word.size()-1] != '#')
+	{
+		fluxstring >> word2;
+		word = word + " ";
+		word = word + word2;
+	}
+	for(unsigned i=1; i < word.size()-1; ++i)
+	{
+		stringstream ss;
+		while(i < word.size()-1 && word[i] != ' ')
+		{
+			ss << word[i];
+			++i;
+		}
+		word2 = ss.str();
+		wordID = std::stoi(word2,&sz);
+		
+		sw.push_back(static_cast<unsigned>(wordID));
+		//cout << "\tID = " << wordID << " , mot = " << word << " (" <<  important_bag << ") "<< endl;
+	}	
+	float t;
+	fluxstring >> t;
+	switch(t)
+	{
+		case -6:
+		{
+			type = PREV;
+			break;
+		}
+		case -4:
+		{
+			type = ACTUAL;
+			break;
+		}
+		case -5:
+		{
+			type = NEXT;
+			break;
+		}
+		default:
+		{
+			cerr << "ACTUAL, PREV ou NEXT indefini\n ligne = " << fluxstring.str();
+			break;
+		}
+	}
+}
+
+SwitchWords::SwitchWords(stringstream& fluxstring, unsigned nb_expr)
+{
+	for(unsigned nb=0; nb < nb_expr; ++nb)
+	{
+		switch_w.push_back(new SW(fluxstring));
+	}
+}
+
 BagOfWords::~BagOfWords()
 {
 	words.clear();
 }
 
-BagOfWords::BagOfWords(string& word)
+BagOfWords::BagOfWords(string& line)
 {
 	if(word[0] == '{')
 		important_bag = false;
@@ -24,9 +86,20 @@ BagOfWords::BagOfWords(string& word)
 		cout << "IMPORTANCE INCONNUE\n";
 		exit(EXIT_FAILURE);
 	}
+	
 	std::string::size_type sz;
-	int wordID;
-	string w;
+	int wordID;	
+	string word, word2;
+	stringstream fluxstring(line);
+	
+	// Gère les expressions de la phrase
+	fluxstring >> word;
+	while(word[word.size()-1] != ']' && word[word.size()-1] != '}')
+	{
+		fluxstring >> word2;
+		word = word + " ";
+		word = word + word2;
+	}
 	for(unsigned i=1; i < word.size()-1; ++i)
 	{
 		stringstream ss;
@@ -35,11 +108,20 @@ BagOfWords::BagOfWords(string& word)
 			ss << word[i];
 			++i;
 		}
-		w = ss.str();
-		wordID = std::stoi(w,&sz);
+		word2 = ss.str();
+		wordID = std::stoi(word2,&sz);
 		
 		words.push_back(static_cast<unsigned>(wordID));
 		//cout << "\tID = " << wordID << " , mot = " << word << " (" <<  important_bag << ") "<< endl;
+	}	
+	
+	// Gère les mots de remplacements
+	unsigned nb_expr;
+	fluxstring >> nb_expr;
+	for(int nb=0 ; nb < nb_expr; ++nb)
+	{
+		switch_words.push_back(new SwitchWords(fluxstring));
+	
 	}
 	
 }
@@ -124,13 +206,14 @@ Data::Data(ifstream& database)
 		
 		for(unsigned nb=0; nb < nb_bow; ++nb)
 		{
-			database >> word;
-			while(word[word.size()-1] != ']' && word[word.size()-1] != '}')
+			//database >> word;
+			getline(database, word);
+			/*while(word[word.size()-1] != ']' && word[word.size()-1] != '}')
 			{
 				database >> word2;
 				word = word + " ";
 				word = word + word2;
-			}
+			}*/
 			
 			//BagOfWords bow = new BagOfWords(word);
 			if(nb_sentences==0)
@@ -138,7 +221,7 @@ Data::Data(ifstream& database)
 			else
 				hypothesis.push_back(new BagOfWords(word));
 				
-			getline(database, word); //ignore mot de remplacement
+
 		}	
 	}
 	
