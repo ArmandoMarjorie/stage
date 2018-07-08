@@ -45,6 +45,65 @@ SW::SW(stringstream& fluxstring, string& word)
 	
 }
 
+unsigned SW::get_type_sw()
+{
+	return type;
+}
+
+unsigned SW::get_nb_expr_sw()
+{
+	return sw.size();
+}
+
+void SW::print()
+{
+	for(unsigned i=0; i<sw.size(); ++i)
+		cout << sw[i] << " ";
+	if(type == ACTUAL)
+		cout << "ACTUAL \n";
+	else if(type == PREV)
+		cout << "PREV \n";
+	else if(type == NEXT)
+		cout << "NEXT \n";
+	else
+		cout << "ERROR\n";
+}
+
+void SwitchWords::print()
+{
+	for(unsigned i=0; i<switch_w.size(); ++i)
+	{
+		cout << "SW " << i << endl;
+		switch_w[i]->print();
+	}
+}
+
+unsigned SwitchWords::get_word_id_sw(unsigned num_sw, unsigned num_word_in_sw)
+{
+	cout << "ok SwitchWords::get_word_id_sw = \n";
+	return switch_w[num_sw]->get_word_id_sw(num_word_in_sw);
+}
+unsigned SW::get_word_id_sw(unsigned num_word_in_sw)
+{
+	cout << sw[num_word_in_sw] << endl;
+	return sw[num_word_in_sw];
+}
+
+unsigned SwitchWords::get_nb_expr_sw(unsigned num_sw)
+{
+	cout << "SwitchWords::get_nb_expr_sw = " << switch_w[num_sw]->get_nb_expr_sw() << endl;
+	return switch_w[num_sw]->get_nb_expr_sw();
+}
+
+unsigned SwitchWords::get_type_sw(unsigned num_sw)
+{
+	return switch_w[num_sw]->get_type_sw();
+}
+unsigned SwitchWords::get_nb_of_sw()
+{
+	return switch_w.size();
+}
+
 SwitchWords::SwitchWords(stringstream& fluxstring)
 {
 	string word;

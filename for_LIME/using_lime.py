@@ -74,26 +74,26 @@ explainer = LimeTextExplainer(class_names=class_names)
 imp_file = open(sys.argv[2], "w")
 for i in range(len(instance)) :
 	#num_features = array_len[n_samp] pas encore fait
-	num_features = 3
-	exp = explainer.explain_instance(instance[i], socket, labels=[0, 1, 2], num_features=num_features)
+	#num_features = 3
+	exp = explainer.explain_instance(instance[i], socket, labels=[0, 1, 2], num_features=len(instance[i]))
 	
-	str_samp = 'Sample numero '+ str(i)
+	str_samp = 'Sample numero '+ str(i) + '\n'
 	imp_file.write(str_samp)
 	
-	imp_file.write( 'Explanation for class neutral') # Les mots en faveur de la classe neutral
+	imp_file.write( 'Explanation for class neutral \n') # Les mots en faveur de la classe neutral
 	str_weight = '\n'.join(map(str, exp.as_list(label=0)))
 	imp_file.write(str_weight)
 	imp_file.write('\n')
 	
-	imp_file.write('Explanation for class entailment') # Les mots en faveur de la classe entailment
+	imp_file.write('Explanation for class entailment \n') # Les mots en faveur de la classe entailment
 	str_weight = '\n'.join(map(str, exp.as_list(label=1)))
 	imp_file.write(str_weight)
 	imp_file.write('\n')
 	
-	imp_file.write('Explanation for class contradiction') # Les mots en faveur de la classe contradiction
+	imp_file.write('Explanation for class contradiction \n') # Les mots en faveur de la classe contradiction
 	str_weight = '\n'.join(map(str, exp.as_list(label=2)))
 	imp_file.write(str_weight)
-	imp_file.write('\n')
+	imp_file.write('\n\n')
 	
 	str_name = "sample_" + str(i) + ".html"
 	exp.save_to_file(str_name)

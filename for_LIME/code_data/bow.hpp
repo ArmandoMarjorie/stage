@@ -21,8 +21,16 @@
 			bool expr_is_important();
 			void print_a_sample();
 			
-			void modif_BoW(unsigned mot_inconnu_ID, bool imp);
+			void modif_BoW(unsigned num_switch_words, unsigned num_sw, bool imp);
 			void modif_BoW(BagOfWords& bow);
+			void modif_BoW(BagOfWords const& current_bow, unsigned num_switch_words, unsigned num_sw, bool imp);
+			
+			unsigned get_nb_switch_words();
+			
+			unsigned get_type_sw(unsigned num_switch_word, unsigned num_sw);
+			unsigned get_nb_of_sw(unsigned num_switch_word);
+			
+			void print();
 	};
 
 #endif

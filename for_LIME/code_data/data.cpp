@@ -1,5 +1,7 @@
 #include "data.hpp"
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -63,6 +65,12 @@ Data::Data(Data const& copy)
 	
 }
 
+unsigned Data::get_nb_switch_words(bool is_premise, unsigned num_expr)
+{
+	if(is_premise)
+		return premise[num_expr]->get_nb_switch_words();
+	return hypothesis[num_expr]->get_nb_switch_words();
+}
 
 
 unsigned Data::get_label()
@@ -148,18 +156,92 @@ unsigned Data::search_position(bool is_premise, unsigned num_buffer_in)
 	
 }
 
-void Data::modif_LIME(bool is_premise, unsigned num_buffer_in, unsigned position)
+void Data::modif_LIME(bool is_premise, unsigned position)
 {
+	cout << "MODIF LIME\n";
+	unsigned nb_switch_words = get_nb_switch_words(is_premise, position); //nb d'expr (de switch words) pouvant remplacer le bow courant
+	cout << "nb d'expr (de switch words) pouvant remplacer le bow courant = " <<nb_switch_words << endl;
 	
+	unsigned alea = rand() % (nb_switch_words); // le numéro du switch words choisi
+	cout << "switch choisi = " << alea << endl;
+	
+	unsigned replacing_word;
+	unsigned nb_word_in_sw;
 	if(is_premise)
-	{
-		//cout << "MODIF DE " << premise[position]->get_word_id(0) << " EN 0\n";
-		premise[position]->modif_BoW(0, premise[position]->expr_is_important());
-	}
+		nb_word_in_sw = premise[position]->get_nb_of_sw(alea); //nb de bloc "SW" dans l'expression qui va remplacer 
 	else
+		nb_word_in_sw = hypothesis[position]->get_nb_of_sw(alea);
+	
+	cout << "nb_word_in_sw = " <<nb_word_in_sw << endl;
+
+	unsigned type;
+	//replacing_word = switch_words[alea]->get_switch_word();	
+
+	for(unsigned i=0; i < nb_word_in_sw; ++i)
 	{
-		//cout << "MODIF DE " << hypothesis[position]->get_word_id(0) << " EN 0\n";
-		hypothesis[position]->modif_BoW(0, hypothesis[position]->expr_is_important());
+		if(is_premise)
+		{
+			type = premise[position]->get_type_sw(alea, i); //le bloc numéro i du numéro 'alea' du switch word choisi
+			if(type == PREV) 
+			{
+				cout << " PREV \n";
+				if(position-1 >= 0)
+					premise[position-1]->modif_BoW(*(premise[position]), alea, i, premise[position-1]->expr_is_important());
+				else
+				{
+					cout << "le prev a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}				
+			}				
+			else if(type == ACTUAL)
+			{
+				cout << " ACTUAL \n";
+				premise[position]->modif_BoW(alea, i, premise[position]->expr_is_important());
+			}
+			else if(type == NEXT)
+			{
+				
+				if(position+1 < premise.size())
+				{
+					cout << " NEXT (position = " << position+1 << " )\n";
+					premise[position+1]->modif_BoW(*(premise[position]), alea, i, premise[position+1]->expr_is_important());
+					cout << "OK \n";
+				}
+				else
+				{
+					cout << "le next a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}
+				
+			}
+		}
+		else
+		{
+			type = hypothesis[position]->get_type_sw(alea, i); //le bloc numéro i du numéro 'alea' du switch word choisi
+			if(type == PREV)
+			{ 
+				if(position-1 >= 0)
+					hypothesis[position-1]->modif_BoW(*(hypothesis[position]), alea, i, hypothesis[position-1]->expr_is_important());
+				else
+				{
+					cout << "le prev a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}				
+			}
+			else if(type == ACTUAL)
+				hypothesis[position]->modif_BoW(alea, i, hypothesis[position]->expr_is_important());
+			else if(type == NEXT)
+			{
+				if(position+1 < hypothesis.size())
+					hypothesis[position+1]->modif_BoW( *(hypothesis[position]), alea, i, hypothesis[position+1]->expr_is_important());	
+				else
+				{
+					cout << "le next a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}
+			}	
+			
+		}
 	}
 }
 
@@ -199,6 +281,8 @@ void Data::print_a_sample()
 		cout << c_o;
 		premise[i]->print_a_sample();
 		cout << c_f;
+		premise[i]->print();
+		cout << endl;
 	}
 		
 	cout << "\n\tHYPOTHESIS : \n\t";
@@ -215,8 +299,11 @@ void Data::print_a_sample()
 		cout << c_o;
 		hypothesis[i]->print_a_sample();
 		cout << c_f;
+		hypothesis[i]->print();
+		cout << endl;
 	}
 	cout << endl;
+	
 }
 
 Data* Data::get_data_object()

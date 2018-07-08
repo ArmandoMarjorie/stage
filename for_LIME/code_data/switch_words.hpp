@@ -19,6 +19,10 @@
 		public:
 			SW(std::stringstream& fluxstring, std::string& word);
 			SW(SW const& copy);
+			unsigned get_type_sw();
+			unsigned get_nb_expr_sw();
+			unsigned get_word_id_sw(unsigned num_word_in_sw);
+			void print();
 	};
 		
 	class SwitchWords
@@ -29,6 +33,12 @@
 			SwitchWords(std::stringstream& fluxstring);
 			SwitchWords(SwitchWords const& copy);
 			~SwitchWords();
+			
+			unsigned get_type_sw(unsigned num_sw);
+			unsigned get_nb_of_sw();
+			unsigned get_nb_expr_sw(unsigned num_sw);
+			unsigned get_word_id_sw(unsigned num_sw, unsigned num_word_in_sw);
+			void print();
 	};
 	
 #endif

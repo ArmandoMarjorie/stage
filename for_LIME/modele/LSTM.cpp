@@ -58,14 +58,17 @@ Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, un
 	forward_lstm->new_graph(cg);  // reset LSTM builder for new graph
 	forward_lstm->start_new_sequence(); //to do before add_input() and after new_graph()
 	Expression repr;
+	unsigned wordID;
 
 	for(unsigned i=0; i<nb_expr; ++i)
 	{
-		//if(set.get_word_id(sentence, num_sentence, i) == 0) // 0 means "this is not a word, there is no word here !"
-		//	continue;
 		nb_words = set.get_nb_words(sentence, num_sentence, i);
 		for(unsigned j=0; j < nb_words; ++j)
-			repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i, j)) );
+		{
+			if( (wordID = set.get_word_id(sentence, num_sentence, i, j) ) == 0) // 0 means "this is not a word, there is no word here !"
+				continue;
+			repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, wordID) );
+		}
 	}
 
 	//Expression repr = sum(vect_sentence);

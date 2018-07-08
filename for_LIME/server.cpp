@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 #include "modele/LSTM.hpp"
 #include "modele/BILSTM.hpp"
 
@@ -147,8 +149,9 @@ int main(int argc, char** argv)
 	ParameterCollection model;		
 	
 	// Load Dataset 
-	Embeddings embedding(argv[3], model, static_cast<unsigned>(atoi(argv[5])), true);
-	int systeme = atoi(argv[8]);
+	Embeddings embedding(argv[2], model, static_cast<unsigned>(atoi(argv[4])), true);
+	int systeme = atoi(argv[7]);
+	srand(time(NULL));
 	
 	/*
 	map<string, unsigned> word_to_id;
@@ -209,14 +212,14 @@ int main(int argc, char** argv)
 	string tmp;
 	if(systeme < 3)
 	{
-		LSTM rnn(static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), 
-			static_cast<unsigned>(atoi(argv[6])), 0, static_cast<unsigned>(systeme), model);
+		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), 
+			static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model);
 		
 		DataSet set(argv[1]);
 		
 		// Load preexisting weights
 		cerr << "Loading parameters ...\n";
-		TextFileLoader loader(argv[7]);
+		TextFileLoader loader(argv[6]);
 		loader.populate(model);
 		cerr << "Parameters loaded !\n";
 	

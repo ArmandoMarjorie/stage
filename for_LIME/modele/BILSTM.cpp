@@ -87,25 +87,31 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, unsigned 
 	vector<Expression> tmp;
 	unsigned i;
 	int j;
-
+	unsigned wordID;
 	/* Run forward LSTM */
 	for(i=0; i<nb_expr; ++i)
 	{
-		//if(set.get_word_id(sentence, num_sentence, i) == 0)
-		//	continue;
+
 		nb_words = set.get_nb_words(sentence, num_sentence, i);
 		for(unsigned k=0; k < nb_words; ++k)
-			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i, k)) ) );
+		{
+			if( (wordID = set.get_word_id(sentence, num_sentence, i, k) ) == 0)
+				continue;
+			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, wordID) ) );
+		}
 	}
 	/* Run backward LSTM */
 	for(j=nb_expr-1; j>=0; --j)
 	{
-		//if(set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j)) == 0)
-		//	continue;
+		
 		nb_words = set.get_nb_words(sentence, num_sentence, static_cast<unsigned>(j));
 		for(unsigned k=0; k < nb_words; ++k)
+		{
+			if( (wordID = set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j), k) ) == 0)
+				continue;
 			tmp.push_back(backward_lstm->add_input( 
-					embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j), k)) ) );
+					embedding.get_embedding_expr(cg, wordID) ) );
+		}
 	}
 	/* Concat */
 	for(i=0; i<sentence_repr.size(); ++i)

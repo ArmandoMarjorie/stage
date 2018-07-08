@@ -19,6 +19,7 @@
 			~Data();
 			
 			Data* get_data_object();
+			unsigned get_nb_switch_words(bool is_premise, unsigned num_expr);
 			unsigned get_label();
 			
 			unsigned get_nb_words(unsigned sentence, unsigned num_expr);
@@ -26,7 +27,7 @@
 			unsigned get_word_id(unsigned sentence, unsigned num_expr, unsigned num_words);	
 			unsigned get_nb_imp_words(bool is_premise);		
 			
-			void modif_LIME(bool is_premise, unsigned num_buffer_in, unsigned position);
+			void modif_LIME(bool is_premise, unsigned position);
 			unsigned search_position(bool is_premise, unsigned num_buffer_in);
 			
 			void print_a_sample();

@@ -100,18 +100,33 @@ bool BagOfWords::expr_is_important()
 	
 }
 
-void BagOfWords::modif_BoW(unsigned mot_inconnu_ID, bool imp)
+void BagOfWords::modif_BoW(unsigned num_switch_words, unsigned num_sw, bool imp)
 {
-	//cout << "COUCOU\n";
+	cout << "\tmodif bow...\n";
 	words.clear();
-	//cout << "CLEAR LE VECTEUR\n";
-	words.push_back(mot_inconnu_ID);
-	//cout << "MIS 0 DEDANS\n";
+	unsigned nb_expr_in_sw = switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
+	cout << "nb de mot dans la sw = " << nb_expr_in_sw << endl;
+	
+	for(unsigned i=0; i < nb_expr_in_sw; ++i)
+		words.push_back(switch_words[num_switch_words]->get_word_id_sw(num_sw, i));
+		
 	important_bag = imp;
-	//cout << "FINI !\n";
 }
 
-void BagOfWords::modif_BoW(BagOfWords& bow)
+void BagOfWords::modif_BoW(BagOfWords const& current_bow, unsigned num_switch_words, unsigned num_sw, bool imp)
+{
+	cout << "\tmodif bow...\n";
+	words.clear();
+	unsigned nb_expr_in_sw = current_bow.switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
+	cout << "nb de mot dans la sw = " << nb_expr_in_sw << endl;
+	
+	for(unsigned i=0; i < nb_expr_in_sw; ++i)
+		words.push_back(current_bow.switch_words[num_switch_words]->get_word_id_sw(num_sw, i));
+		
+	important_bag = imp;
+}
+
+void BagOfWords::modif_BoW(BagOfWords& bow) //appelé quand on reset l'instance
 {
 	this->words.clear();
 	for(unsigned i=0; i < bow.words.size(); ++i)
@@ -124,3 +139,30 @@ void BagOfWords::print_a_sample()
 	for(unsigned i=0; i<words.size(); ++i)
 		cout << words[i] << " ";
 }
+
+unsigned BagOfWords::get_nb_switch_words()
+{
+	return switch_words.size();
+}
+
+unsigned BagOfWords::get_type_sw(unsigned num_switch_word, unsigned num_sw)
+{
+	return switch_words[num_switch_word]->get_type_sw(num_sw);
+}
+
+unsigned BagOfWords::get_nb_of_sw(unsigned num_switch_word)
+{
+	return switch_words[num_switch_word]->get_nb_of_sw();
+}
+
+void BagOfWords::print()
+{
+	for(unsigned i=0; i<switch_words.size(); ++i)
+	{
+		switch_words[i]->print();
+	}
+}
+
+
+
+

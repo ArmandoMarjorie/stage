@@ -147,6 +147,7 @@ void DataSet::modif_LIME(char* buffer_in, unsigned num_sample)
 			++i;
 			cout << buffer_in[i];
 		}		
+		cout << endl;
 		++cpt_crochet;
 		++nbr_expr;
 		word = ss.str();
@@ -157,13 +158,13 @@ void DataSet::modif_LIME(char* buffer_in, unsigned num_sample)
 			{
 				pos = dataset[num_sample]->search_position(true, cpt_crochet);
 				//modif
-				dataset[num_sample]->modif_LIME(true, cpt_crochet, pos);
+				dataset[num_sample]->modif_LIME(true, pos);
 			}
 			else
 			{
 				pos = dataset[num_sample]->search_position(false, cpt_crochet);
 				//modif
-				dataset[num_sample]->modif_LIME(false, cpt_crochet, pos); 
+				dataset[num_sample]->modif_LIME(false, pos); 
 			}			
 		
 		}
