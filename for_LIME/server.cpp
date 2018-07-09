@@ -46,7 +46,8 @@ void usage(char* exe_name)
 		 << "input_dim <int> : dimension of the word embedding\n"
 		 << "hidden_dim <int> : dimension  of the hidden states ht and ct\n"
 		 << "parameters_file <string> : file containing the parameters (weight and bias) updated in the training step\n"
-		 << "system <int> : which system you want to use (1 (LSTM), 2(LSTM), 3=KIM(BILSTM), or 4(BILSTM))\n";
+		 << "system <int> : which system you want to use (1 (LSTM), 2(LSTM), 3=KIM(BILSTM), or 4(BILSTM))\n"
+		 << "mot random (1) ou pas (0)";
 	exit(EXIT_SUCCESS);
 }
 
@@ -152,6 +153,12 @@ int main(int argc, char** argv)
 	Embeddings embedding(argv[2], model, static_cast<unsigned>(atoi(argv[4])), true);
 	int systeme = atoi(argv[7]);
 	srand(time(NULL));
+	
+	bool random_words = (atoi(argv[8])==1);
+	if(random_words)
+		cout << "MODE RANDOM WORDS\n";
+	else
+		cout << "MODE ANNOTATED WORDS\n";
 	
 	/*
 	map<string, unsigned> word_to_id;
@@ -276,8 +283,13 @@ int main(int argc, char** argv)
 				cout << "copy data...\n";
 				//data_copy->print_a_sample();
 			}
-			 else
-				set.modif_LIME(buffer_in, num_sample);
+			else
+			{
+				if(random_words)
+					set.modif_LIME_random(buffer_in, num_sample);
+				else
+					set.modif_LIME(buffer_in, num_sample);
+			}
 				
 			cout << "\nAPRES MODIF:\n";
 			set.print_a_sample(num_sample);

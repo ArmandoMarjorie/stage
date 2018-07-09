@@ -244,6 +244,17 @@ void Data::modif_LIME(bool is_premise, unsigned position)
 		}
 	}
 }
+void Data::modif_LIME_random(bool is_premise, unsigned position)
+{
+	cout << "MODIF LIME\n";
+
+	
+	if(is_premise)
+		premise[position]->modif_BoW_random(premise[position]->expr_is_important());
+	else
+		hypothesis[position]->modif_BoW_random(hypothesis[position]->expr_is_important());	
+
+}
 
 void Data::reset_data(Data const& data_copy)
 {

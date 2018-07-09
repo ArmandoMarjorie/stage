@@ -21,6 +21,7 @@
 			bool expr_is_important();
 			void print_a_sample();
 			
+			void modif_BoW_random(bool imp);
 			void modif_BoW(unsigned num_switch_words, unsigned num_sw, bool imp);
 			void modif_BoW(BagOfWords& bow);
 			void modif_BoW(BagOfWords const& current_bow, unsigned num_switch_words, unsigned num_sw, bool imp);

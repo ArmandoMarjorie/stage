@@ -176,6 +176,60 @@ void DataSet::modif_LIME(char* buffer_in, unsigned num_sample)
 	}
 }
 
+void DataSet::modif_LIME_random(char* buffer_in, unsigned num_sample)
+{
+	unsigned cpt_crochet=0;
+	unsigned nbr_expr=0;
+	unsigned nb_word;
+	unsigned pos;
+	string word;
+	
+	
+	unsigned nb_imp_words_prem = dataset[num_sample]->get_nb_imp_words(true);
+	
+	for(unsigned i=0; i < strlen(buffer_in)-1; ++i)
+	{
+		
+		if(buffer_in[i] == '[' || buffer_in[i] == ' ')
+			continue;
+		
+		
+		stringstream ss;
+		while(i < strlen(buffer_in)-1 && buffer_in[i] != ']')
+		{
+			ss << buffer_in[i];
+			++i;
+			cout << buffer_in[i];
+		}		
+		cout << endl;
+		++cpt_crochet;
+		++nbr_expr;
+		word = ss.str();
+		
+		if(word == "UNKWORDZ")
+		{		
+			if(nbr_expr <= nb_imp_words_prem)
+			{
+				pos = dataset[num_sample]->search_position(true, cpt_crochet);
+				//modif
+				dataset[num_sample]->modif_LIME_random(true, pos);
+			}
+			else
+			{
+				pos = dataset[num_sample]->search_position(false, cpt_crochet);
+				//modif
+				dataset[num_sample]->modif_LIME_random(false, pos); 
+			}			
+		
+		}
+		if(nbr_expr == nb_imp_words_prem)
+		{
+			cout << "\"HYPOTHESE\"";
+			cpt_crochet = 0;
+		}
+	}
+}
+
 void DataSet::reset_data(Data const& data_copy, unsigned num_sample)
 {
 	dataset[num_sample]->reset_data(data_copy);

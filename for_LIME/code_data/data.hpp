@@ -28,6 +28,7 @@
 			unsigned get_nb_imp_words(bool is_premise);		
 			
 			void modif_LIME(bool is_premise, unsigned position);
+			void modif_LIME_random(bool is_premise, unsigned position);
 			unsigned search_position(bool is_premise, unsigned num_buffer_in);
 			
 			void print_a_sample();

@@ -112,7 +112,17 @@ void BagOfWords::modif_BoW(unsigned num_switch_words, unsigned num_sw, bool imp)
 		
 	important_bag = imp;
 }
-
+void BagOfWords::modif_BoW_random(bool imp)
+{
+	cout << "\tmodif bow...\n";
+	words.clear();
+	
+	// (rand() % (MAX - MIN + 1)) + MIN;
+	unsigned alea = (rand() % (36988)) + 1;
+	words.push_back(alea);
+		
+	important_bag = imp;
+}
 void BagOfWords::modif_BoW(BagOfWords const& current_bow, unsigned num_switch_words, unsigned num_sw, bool imp)
 {
 	cout << "\tmodif bow...\n";

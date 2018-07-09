@@ -43,6 +43,7 @@
 			void print_a_sample(unsigned num_sample);
 			
 			void modif_LIME(char* buffer_in, unsigned num_sample);
+			void modif_LIME_random(char* buffer_in, unsigned num_sample);
 	
 			void print_everything();
 			bool expr_is_important(unsigned num_sample, bool is_premise, unsigned num_expr);
