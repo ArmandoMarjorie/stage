@@ -192,7 +192,7 @@ premise -2
 [blond-haired] [doctor] [her] [african_american] [assistant] [looking_threw] [new] [medical] [manuals] 
 hypothesis -2
 4
-[doctor] [is] [studying] 
+[doctor] [studying] 
 -3
 
 

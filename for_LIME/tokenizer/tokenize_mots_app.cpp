@@ -104,7 +104,7 @@ void tokeniser_nouveau_remplacement(char* lexique, char* file, char* output_f)
 	{
 		output << word_to_id[word] << endl; //écrit "-3"
 		++nb_line;
-		f >> word; f >> word; //lit "label:" et le label
+		f >> word; //lit le label
 		++nb_line;
 		output << write_label(word) << endl; //écrit le label
 		
@@ -371,8 +371,8 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 	
-	fichier_pour_lime(argv[2], argv[3]);
-	//tokeniser_nouveau_remplacement(argv[1], argv[2], argv[3]);
+	//fichier_pour_lime(argv[2], argv[3]);
+	tokeniser_nouveau_remplacement(argv[1], argv[2], argv[3]);
 	//verif_nb_expressions(argv[2]);
 	return 0;
 }

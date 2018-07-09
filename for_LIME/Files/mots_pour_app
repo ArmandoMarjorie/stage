@@ -48,7 +48,7 @@ premise -2
 {as}
 {they}
 [sing] 3 #write# ACTUAL -1 #look at# ACTUAL -1 #chant# ACTUAL -1
-[joyous] 3 #sad# ACTUAL -1 #empty# ACTUAL -1 #full# ACTUAL -1
+[joyous] 3 #sad# ACTUAL -1 #good# ACTUAL -1 #full# ACTUAL -1
 [songs] 3 #things# ACTUAL -1 #chants# ACTUAL -1 #yells# ACTUAL -1
 [from] 3 #by# ACTUAL -1 #with# ACTUAL -1 #at# ACTUAL -1
 {the}
@@ -87,7 +87,7 @@ premise -2
 [songs] 3 #chants# ACTUAL -1 #things# ACTUAL -1 #yells# ACTUAL -1
 [from] 3 #by# ACTUAL -1 #with# ACTUAL -1 #at# ACTUAL -1
 {the}
-[book] 3 #baseball stadium# ACTUAL -1 #manual# ACTUAL -1 #chapel# ACTUAL -1
+[book] 3 #ball# ACTUAL -1 #manual# ACTUAL -1 #chapel# ACTUAL -1
 [at] 3 #from# ACTUAL -1 #in front of# ACTUAL -1 #in# ACTUAL -1
 {a}
 [church] 3 #baseball stadium# ACTUAL -1 #chapel# ACTUAL -1 #place# ACTUAL -1
@@ -257,7 +257,7 @@ premise -2
 [man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
 [with] 3 #without# ACTUAL -1 #breaking# ACTUAL -1 #posing# ACTUAL -1
 {a}
-[package] 3 #woman# ACTUAL -1 #beer# ACTUAL -1 #an# PREV #ad# ACTUAL -1
+[package] 3 #bag# ACTUAL -1 #beer# ACTUAL -1 #an# PREV #ad# ACTUAL -1
 [poses] 3 #walks# ACTUAL -1 #eats# ACTUAL -1 #is still# ACTUAL -1
 [in front of] 3 #outside# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
 {an}
@@ -464,7 +464,7 @@ premise -2
 [doctor] 3 #man# ACTUAL -1 #woman# ACTUAL -1 #person# ACTUAL -1
 {and}
 [her] 2 #his# ACTUAL -1 #the# ACTUAL -1
-[african american] 3 #hungry# ACTUAL -1 #tall# ACTUAL -1 #female# ACTUAL -1
+[african american] 3 #male# ACTUAL -1 #tall# ACTUAL -1 #female# ACTUAL -1
 [assistant] 3 #husband# ACTUAL -1 #wife# ACTUAL -1 #boss# ACTUAL -1
 [looking threw] 3 #eating# ACTUAL -1 #reading# ACTUAL -1 #looking at# ACTUAL -1
 [new] 3 #old# ACTUAL -1 #electronic# ACTUAL -1 #red# ACTUAL -1
@@ -476,7 +476,7 @@ hypothesis -2
 {a}
 [man] 3 #doctor# ACTUAL -1 #person# ACTUAL -1 #woman# ACTUAL -1
 {is}
-[eating] 3 #looking threw# ACTUAL -1 #watching# ACTUAL -1 #throwing# ACTUAL -1
+[eating] 3 #looking threw# ACTUAL -1 #watching# ACTUAL -1 #reading# ACTUAL -1
 [pb and j] 3 #medical manuals# ACTUAL -1 #books# ACTUAL -1 #food# ACTUAL -1
 -3
 
@@ -501,7 +501,7 @@ hypothesis -2
 4
 {a}
 [doctor] 3 #cook# ACTUAL -1 #person# ACTUAL -1 #an# PREV #assistant# ACTUAL -1
-[is] 3 #loves# ACTUAL -1 #was# ACTUAL -1 #hates# ACTUAL -1
+{is}
 [studying] 3 #reading# ACTUAL -1 #learning# ACTUAL -1 #sleeping# ACTUAL -1
 -3
 
@@ -683,7 +683,7 @@ premise -2
 [ocean waves] 3 #beach waves# ACTUAL -1 #water# ACTUAL -1 #something# ACTUAL -1
 [lap at] 2 #touching# ACTUAL -1 #avoiding# ACTUAL -1
 {their}
-[feet] 3 #food# ACTUAL -1 #restaurant# ACTUAL -1 #dog# ACTUAL -1
+[feet] 3 #food# ACTUAL -1 #arms# ACTUAL -1 #dog# ACTUAL -1
 {.} 
 hypothesis -2
 8
@@ -706,7 +706,7 @@ premise -2
 [young] 3 #big# ACTUAL -1 #hungry# ACTUAL -1 #swimmer# ACTUAL -1
 [family] 3 #group# ACTUAL -1 #person# ACTUAL -1 #dog# ACTUAL -1
 [enjoys] 3 #hates# ACTUAL -1 #likes# ACTUAL -1 #discovers# ACTUAL -1
-[feeling] 3 #touching# ACTUAL -1 #drinking# ACTUAL -1 #looking at# ACTUAL -1
+[feeling] 3 #touching# ACTUAL -1 #thinking about# ACTUAL -1 #looking at# ACTUAL -1
 [ocean waves] 3 #beach waves# ACTUAL -1 #water# ACTUAL -1 #something# ACTUAL -1
 [lap at] 2 #touching# ACTUAL -1 #avoiding# ACTUAL -1
 {their}
@@ -716,10 +716,10 @@ hypothesis -2
 7
 {a}
 [family] 3 #group# ACTUAL -1 #person# ACTUAL -1 #dog# ACTUAL -1
-{is}
+[is] 3 #enjoys# ACTUAL -1 #sleeping# ACTUAL -1 #eating# ACTUAL -1
 [at] 3 #far from# ACTUAL -1 #in front of# ACTUAL -1 #in# ACTUAL -1
 {the}
-[beach] 3 #restaurant# ACTUAL -1 #ocean# ACTUAL -1 #a# PREV #place# ACTUAL -1
+[beach] 3 #restaurant# ACTUAL -1 #sea# ACTUAL -1 #a# PREV #place# ACTUAL -1
 {.}
 -3
 
@@ -752,7 +752,7 @@ neutral
 premise -2
 8
 {a}
-[couple] 3 #group# ACTUAL -1 #two# PREV #dogs# ACTUAL -1 #two# PREV #persons# ACTUAL -1
+[couple] 3 #group# ACTUAL -1 #two# PREV #dogs# ACTUAL -1 #three# PREV #persons# ACTUAL -1
 [walk] 3 #sleep# ACTUAL -1 #eat# ACTUAL -1 #run# ACTUAL -1
 [hand in hand] 3 #together# ACTUAL -1 #separately# ACTUAL -1 #fast# ACTUAL -1
 [down] 3 #at# ACTUAL -1 #beside# ACTUAL -1 #in front of# ACTUAL -1
@@ -762,9 +762,9 @@ premise -2
 hypothesis -2
 5
 {the}
-[couple] 3 #group# ACTUAL -1 #two# PREV #dogs# ACTUAL #are# NEXT -1 #two# PREV #persons# ACTUAL #are# NEXT -1
+[couple] 3 #group# ACTUAL -1 #two# PREV #dogs# ACTUAL #are# NEXT -1 #three# PREV #persons# ACTUAL #are# NEXT -1
 {is}
-[married] 3 #walking# ACTUAL -1 #cute# ACTUAL -1 #sleeping# ACTUAL -1
+[married] 3 #walking# ACTUAL -1 #tall# ACTUAL -1 #sleeping# ACTUAL -1
 {.}
 -3
 
