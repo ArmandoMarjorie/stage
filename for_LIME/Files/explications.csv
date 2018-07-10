@@ -1,101 +1,101 @@
-pair ID,label,premise,hypothesis,important words in the premise (counts 1),"important words in the premise (counts 0,6)","important words in the premise (counts 0,3)",important words in the hypothesis,"important words in the hypothesis (counts 0,6)","important words in the hypothesis (counts 0,3)"
-2677109430.jpg#1r1n,neutral,This church choir sings to the masses as they sing joyous songs from the book at a church .,The church has cracks in the ceiling .,-1,,,cracks 3 ceiling 6,,
-2677109430.jpg#1r1e,entailment,This church choir sings to the masses as they sing joyous songs from the book at a church .,The church is filled with song .,sings 3 songs 11 church 17,,,filled 3 song 5 church 1,,
-2677109430.jpg#1r1c,contradiction,This church choir sings to the masses as they sing joyous songs from the book at a church .,A choir singing at a baseball game .,sings 3 at 15 church 17,,,baseball 5 singing 2,,
-6160193920.jpg#4r1n,neutral,"A woman with a green headscarf , blue shirt and a very big grin .",The woman is young .,woman 1,,,woman 1 young 3,,
-6160193920.jpg#4r1e,entailment,"A woman with a green headscarf , blue shirt and a very big grin .",The woman is very happy .,woman 1 grin 13,,,woman 1 happy 4,,
-6160193920.jpg#4r1c,contradiction,"A woman with a green headscarf , blue shirt and a very big grin .",The woman has been shot .,woman 1 grin 13,,,woman 1 shot 4,,
-4791890474.jpg#3r1e,entailment,An old man with a package poses in front of an advertisement .,A man poses in front of an ad .,man 2 poses 6 front 8 advertisement 11,,,man 1 poses 2 front 4 ad 7,,
-4791890474.jpg#3r1n,neutral,An old man with a package poses in front of an advertisement .,A man poses in front of an ad for beer .,-1,,,for 8 beer 9,,
-4791890474.jpg#3r1c,contradiction,An old man with a package poses in front of an advertisement .,A man walks by an ad .,man 2 poses 6,,,man 1 walks 2,,
-2832076014.jpg#2r1n,entailment,A land rover is being driven across a river .,A Land Rover is splashing water as it crosses a river .,rover 2 across 6 river 8,,,rover 2 splashing 4 crosses 8 river 10,,
-2832076014.jpg#2r1e,entailment,A land rover is being driven across a river .,A vehicle is crossing a river .,land 1 rover 2 driven 5 across 6 river 8,,,vehicule 1 crossing 3 river 5,,
-2832076014.jpg#2r1c,contradiction,A land rover is being driven across a river .,A sedan is stuck in the middle of a river .,land 1 rover 2 driven 5,,,sedan 1 stuck 3,,
-1034985636.jpg#3r1c,contradiction,A man playing an electric guitar on stage .,A man playing banjo on the floor .,man 1 guitar 5 stage 7,,,man 1 banjo 3 floor 6,,
-1034985636.jpg#3r1e,entailment,A man playing an electric guitar on stage .,A man playing guitar on stage .,man 1 playing 2 guitar 5 stage 7,,,man 1 playing 2 guitar 3 stage 5,,
-1034985636.jpg#3r1n,neutral,A man playing an electric guitar on stage .,A man is performing for cash .,man 1 playing 2,,,man 1 performing 3 for 4 cash 5,,
-3856149623.jpg#1r1e,entailment,A blond-haired doctor and her African american assistant looking threw new medical manuals .,A doctor is looking at a book,doctor 2 looking 8 manuals 12,,,doctor 1 looking 3 book 6,,
-3856149623.jpg#1r1c,contradiction,A blond-haired doctor and her African american assistant looking threw new medical manuals .,A man is eating pb and j,looking 8,,,eating 3,,
-3856149623.jpg#1r1n,neutral,A blond-haired doctor and her African american assistant looking threw new medical manuals .,A doctor is studying,-1,,,studying 3,,
-3827316480.jpg#0r1c,contradiction,"One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground .",A boy runs into a wall,girl 2 running 8 sitting 23,,,boy 1 runs 2,,
-3827316480.jpg#0r1e,entailment,"One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground .",A tan girl runs leans over an object,tan 1 girl 2 running 8 leaning 10 over 11 object 13,,,tan 1 girl 2 runs 3 leans 4 over 5 object 7,,
-3827316480.jpg#0r1n,neutral,"One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground .",A man watches his daughter leap,girl 2,,,watches 2 daughter 4 leap 5,,
-2946464027.jpg#0r1n,neutral,A young family enjoys feeling ocean waves lap at their feet .,A young man and woman take their child to the beach for the first time .,family 2 ocean 5,,,man 2 woman 4 beach 10 for 11 first 13 time 14,,
-2946464027.jpg#0r1c,contradiction,A young family enjoys feeling ocean waves lap at their feet .,A family is out at a restaurant .,family 2 ocean 5 waves 6,,,family 1 restaurant 6,,
-2946464027.jpg#0r1e,entailment,A young family enjoys feeling ocean waves lap at their feet .,A family is at the beach .,family 2 ocean 5 waves 6,,,family 1 beach 5,,
-3572548523.jpg#4r1e,entailment,A couple walk hand in hand down a street .,A couple is walking together .,couple 1 walk 2 hand 3 in 4 hand 5,,,couple 1 walking 3 together 4,,
-3572548523.jpg#4r1n,neutral,A couple walk hand in hand down a street .,The couple is married .,-1,,,couple 1 married 3,,
-3572548523.jpg#4r1c,contradiction,A couple walk hand in hand down a street .,A couple is sitting on a bench .,couple 1 walk 2 ,,,couple 1 sitting 3,,
-4460943467.jpg#0r1c,contradiction,3 young man in hoods standing in the middle of a quiet street facing the camera .,Three people sit by a busy street bareheaded .,3 0 man 2 standing 5 quiet 11 street 12,,,Three 0 people 1 sit 2 busy 5 street 6 ,,
-4460943467.jpg#0r1n,entailment,3 young man in hoods standing in the middle of a quiet street facing the camera .,Three hood wearing people pose for a picture .,3 0 man 2 hoods 4 facing 13 camera 15,,,Three 0 hood 1 people 3 pose 4 for 5 picture 7,,
-4460943467.jpg#0r1e,entailment,3 young man in hoods standing in the middle of a quiet street facing the camera .,Three hood wearing people stand in a street .,3 0 man 2 hoods 4 standing 5 street 12,,,Three 0 hood 1 people 3 stand 4 street 7,,
-2096485764.jpg#0r1e,entailment,A man reads the paper in a bar with green lighting .,The man is inside .,man 1 in 5 bar 7,,,man 1 inside 3,,
-2096485764.jpg#0r1n,neutral,A man reads the paper in a bar with green lighting .,The man is reading the sportspage .,man 1 paper 4,,,man 1 sportspage 5,,
-2096485764.jpg#0r1c,contradiction,A man reads the paper in a bar with green lighting .,The man is climbing a mountain .,man 1 reads 2 bar 7,,,man 1 climbing 3 mountain 5,,
-4679111230.jpg#2r1n,neutral,Three firefighter come out of subway station .,Three firefighters putting out a fire inside of a subway station .,Three 0 firefighter 1,,,putting 2 out 3 fire 5,,
-4679111230.jpg#2r1e,entailment,Three firefighter come out of subway station .,Three firefighters coming up from a subway station .,Three 0 firefighter 1 come 2 out 3 subway 5 station 6,,,Three 0 firefighters 1 coming 2 up 3 subway 6 station 7,,
-4679111230.jpg#2r1c,contradiction,Three firefighter come out of subway station .,Three firefighters playing cards inside a fire station .,Three 0 firefighter 1 come 2 out 3 subway 5 station 6,,,Three 0 firefighters 1 playing 2 inside 4 fire 6 station 7,,
-2892843393.jpg#1r1e,entailment,"A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground .",A person is near a pile of coconuts .,person 1 with 13 pile 15 oconuts 17,,,person 1 near 3 pile 5 coconuts 7,,
-2892843393.jpg#1r1n,neutral,"A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground .",A person is selling coconuts .,-1,,,selling 3,,
-2892843393.jpg#1r1c,contradiction,"A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground .",A person is burning a straw hat .,person 1 wearing 2 straw 4 hat 5,,,person 1 burning 3 straw 5 hat 6,,
-4923271886.jpg#2r1c,contradiction,Male in a blue jacket decides to lay in the grass .,The guy in yellow is rolling on the grass,Male 0 blue 3 jacket 4 lay 7,,,yellow 3 rolling 5,,
-4923271886.jpg#2r1e,entailment,Male in a blue jacket decides to lay in the grass .,The guy wearing a blue jacket is laying on the green grass,Male 0 blue 3 jacket 4 lay 7 grass 10,,,guy 1 blue 4 jacket 5 laying 7 grass 11,,
-4923271886.jpg#2r1n,neutral,Male in a blue jacket decides to lay in the grass .,The guy wearing a blue jacket is laying on the green grass taking a nap .,-1,,,taking 12 nap 14,,
-3551170666.jpg#3r1c,contradiction,A golden retriever nurses puppies .,A cat nurses puppies,golden 1 retriever 2 nurses 3 puppies 4,,,cat 1 nurses 2 puppies 3,,
-2972268289.jpg#4r1n,neutral,During calf roping a cowboy calls off his horse .,A first time roper falls off his horse .,-1,roping,during cowboy calls off horse,falls off horse,roper,first time
-2871984109.jpg#1r1n,neutral,Cheerleaders in blue performing on a football field underneath a yellow football goal post .,A group of girls shake pom poms .,-1,cheeleaders performing,-1,Shake,girls pom poms,group
-3364715316.jpg#4r1n,neutral,Two women on a beach .,Two mothers enjoy a day at the beach with their husbands .,women,-1,two beach,mothers husbands,-1,with two beach
-7113652429.jpg#0r1c,contradiction,Four men playing drums in very orange lighting while one of them is also drinking something out of a bottle .,the men are asleep in the motel,men playing,-1,drums drinking,men asleep,-1,-1
-4413167760.jpg#2r1c,contradiction,Two men have an after dinner discussion at the dinner table .,the men are asleep in the motel,men discussion,-1,have table at dinner,men asleep motel,-1,are
-4443087970.jpg#3r1e,entailment,Man on phone in business suit walking down a busy street .,A person on a phone is outdoors,man 0 phone 2 street 10,,,person 1 phone 4 outdoors 6,-1,-1
-3358682439.jpg#0r1c,contradiction,a woman in jeans and a woman in shorts are petting a baby kangaroo .,The woman are wearing bikinis and petting an elephant .,-1,woman jeans kangaroo,shorts petting,petting ,woman bikinis elephant,-1
-2221818690.jpg#0r1n,neutral,"A teenager blows a whistle and wears white face paint , earmuffs , and a yellow hat while another teen watches .",A tall person in face paint,-1,teenager face paint,-1,Tall,person face paint,-1
-2537611154.jpg#2r1n,neutral,Four men wearing orange vests are putting in a steel beam on the ground .,Tall humans in orange,-1,men orange,-1,Tall,humans orange,-1
-4783263491.jpg#0r1n,neutral,Women in a red hat and beige shoes standing with hands behind her back in front of a cement wall .,A tall person in a hat,-1,women hat,-1,Tall,person hat,-1
-4580613274.jpg#4r1e,entailment,A person sweeping stairs in a park .,A person outside .,person park,-1,in,person outside,-1,-1
-1094462889.jpg#0r1n,neutral,A brown dog plays in a deep pile of snow .,A brown dog is outside and it 's snowing,-1,-1,brown dog pile snow,snowing,it 's,brown dog
-3324049172.jpg#0r1e,entailment,"A girl making a snow angel , wearing a black hat and glasses .",A girl is outside in the snow .,girl snow,making angel,-1,girl snow,-1,outside in
-3763959012.jpg#1r1c,contradiction,Two men in hard hats look at a building while on the side of a street .,2 male humans are sleeping .,men look at,two,-1,male sleeping,2,humans
-3338210819.jpg#4r1c,contradiction,A silhouette of a man fishing .,A man is sleeping .,man fishing,-1,-1,man sleeping,-1,-1
-6936180661.jpg#4r1c,contradiction,People trying to get warm .,People are sleeping .,people trying,get warm,-1,people sleeping,-1,-1
-4287405602.jpg#1r1n,neutral,A woman cook in an apron is smiling at the camera with two other cooks in the background .,A woman is in a cooking competition,-1,woman cook,-1,competition,woman cooking,-1
-2944675019.jpg#4r1c,neutral,A woman in a striped shirt holds an infant .,A person is watching TV .,-1,woman,holds infant,tv,person watching,-1
-2468921460.jpg#1r1n,neutral,A women 's volleyball team plays in a brown and green gymnasium .,A volleyball team is performing in a national competition .,-1,volleyball team,plays gymnasium,competition,volleyball team,performing
-2537030709.jpg#0r1e,entailment,Man in traditional costume holding small guitar with a silver bike behind him .,A man is holding a musical instrument .,man holding guitar,-1,-1,man holding instrument,musical,-1
-4436200118.jpg#1r1n,neutral,"A woman in a long , dark coat looks through trashcans in Winter .",A woman older than thirty is outside in winter .,,woman,looks through in winter,Thirty,woman older than,in winter
-5310484815.jpg#1r1c,contradiction,Two young boys are playing with a toy train set on a wood floor .,Two girls are playing with dolls .,Boys,two,train,girls,two,dolls
-3624771682.jpg#1r1n,neutral,Two little girls reading a book at the library .,The girls are sisters .,-1,girls,-1,Sisters,girls,-1
-2434710077.jpg#2r1n,neutral,Three young girls and a baby are sitting in the grass on a blue blanket with baby toys scattered on it .,Four sisters play with each other .,-1,girls,three baby,Sisters,-1,four
-2786996501.jpg#1r1n,neutral,Two smiling young girls wearing plastic sunglasses are lying on the grass .,The two girls are sisters .,-1,two girls,-1,Sisters,two girls,-1
-2904104770.jpg#1r1n,neutral,The female soccer team is getting last minute instruction from their coach .,The soccer team is listening to their coach for their last play to win the soccer game .,-1,soccer team getting instruction coach,-1,-1,soccer team listening coach,to win last play soccer game
-3436074878.jpg#4r1n,neutral,A dog biting a man 's rear,An animal bit its owner .,-1,dog biting man,-1,Owner,animal bit,-1
-2748929011.jpg#4r1c,contradiction,A golfer shoots his ball out of a sand trap .,A drive off of the first tee .,sand trap,out of,shoots,First,tee,drive off
-3403797144.jpg#2r1n,neutral,A surfer is riding a wave in a large body of water .,This is his first wave of the day .,,,,,,
-6899247616.jpg#4r1n,neutral,A woman finishing a marathon race .,The woman is in first place .,,,,,,
-2919459517.jpg#4r1n,neutral,Man with blue and yellow shirt rides bike .,a man rides a bike for the first time,,,,,,
-4799726314.jpg#0r1e,entailment,A baby with a green bottom and red top lying in bed with a brown and white cat and also a black and white cat .,There is a child and two animals .,,,,,,
-487894806.jpg#0r1c,contradiction,A brown dog wearing a collar is chasing and biting on a red broom .,An animal is sleeping outside .,,,,,,
-2402462857.jpg#1r1e,entailment,Brown and cream dog with tongue out in front of grassy forest,There is an animal standing outdoors .,,,,,,
-3354063643.jpg#2r1e,entailment,"The dog is in snow , and has a stick in its mouth .",There is an animal outdoors .,,,,,,
-4871326552.jpg#1r1c,contradiction,The women is photographing statues outdoors on a sunny day .,Two men taking pictures of animals,,,,,,
-5637347272.jpg#1r1e,entailment,A woman in a striped shirt is walking a horse across a street .,A human and an animal are outdoors .,,,,,,
-1801188148.jpg#1r1e,entailment,Four dogs of varying breeds running through a field .,Some animals outdoors .,,,,,,
-200797624.jpg#4r1c,contradiction,Army men grilling a lot of meat while his troop looks on .,No animal products can be seen here .,,,,,,
-5745422329.jpg#2r1c,contradiction,A man in a green shirt and dark pants and carrying a really big pot turns around to talk to 3 other people .,Nobody has a shirt on,,,,,,
-2493825916.jpg#4r1c,contradiction,A little boy playing outside on the cement .,A boy is doing homework .,,,,,,
-3225880532.jpg#4r1n,neutral,Two men talk outdoors .,The men are talking about their wives,,,,,,
-2311616095.jpg#1r1c,contradiction,Dark-haired man wearing a watch and oven mitt about to cook some meat in the kitchen .,A man is sitting watching TV .,,,,,,
-3169168282.jpg#2r1c,contradiction,A little boy punching out flashcards from the cardboard they came in .,A boy watches TV .,,,,,,
-3191805046.jpg#1r1e,entailment,"This man dressed in white pants and blue shirt , is standing on a ledge in the snow .",A man is outside in the snow .,,,,,,
-3465396606.jpg#4r1e,entailment,A woman with a stroller is passing a man walking a dog .,There are people outside .,,,,,,
-3465396606.jpg#4r1n,neutral,A woman with a stroller is passing a man walking a dog .,There is a black dog outside .,,,,,,
-3580277210.jpg#4r1c,contradiction,Two people playing badminton .,Two people playing basketball outside .,,,,,,
-345852737.jpg#1r1e,entailment,A woman in a burgundy coat exits Trader Joe 's with a cart full of groceries .,a woman outside,,,,,,
-4446142718.jpg#2r1c,contradiction,A boy plays with a motorized car next to a dirty street lined with real cars .,no boy is outside in the streets playing .,,,,,,
-4274214534.jpg#4r1e,entailment,A woman is walking her dog along a snowy ground .,A woman is with her dog outside .,,,,,,
-4570069538.jpg#1r1e,entailment,A crowd of people fill the street in front of a McDonald 's .,There is a crowd outside the restaurant .,,,,,,
-3949924354.jpg#1r1e,entailment,A man in a white shirt and baseball hat is pushing a cart carrying several bags on a street .,A man is walking outside .,,,,,,
-3205887140.jpg#0r1e,entailment,A woman with red-hair and a leather jacket holds a harp in front of a snowy forest .,The woman is holding an instrument .,,,,,,
-2325436612.jpg#4r1e,entailment,Two men are looking through microscopes in a room .,There are men using scientific instruments .,,,,,,
-7582869910.jpg#3r1e,entailment,A group of people cleaning some kins of sea animal .,There is at least one person .,,,,,,
-3316725440.jpg#4r1e,entailment,A biker races .,A person is riding a bike,,,,,,
+"pair ID","label","premise","hypothesis","important words in the premise (counts 1)","important words in the premise (counts 0,6)","important words in the premise (counts 0,3)","important words in the hypothesis","important words in the hypothesis (counts 0,6)","important words in the hypothesis (counts 0,3)"
+"2677109430.jpg#1r1n","neutral","This church choir sings to the masses as they sing joyous songs from the book at a church .","The church has cracks in the ceiling .",-1,,,"cracks 3 ceiling 6",,
+"2677109430.jpg#1r1e","entailment","This church choir sings to the masses as they sing joyous songs from the book at a church .","The church is filled with song .","sings 3 songs 11 church 17",,,"filled 3 song 5 church 1",,
+"2677109430.jpg#1r1c","contradiction","This church choir sings to the masses as they sing joyous songs from the book at a church .","A choir singing at a baseball game .","sings 3 at 15 church 17",,,"baseball 5 singing 2",,
+"6160193920.jpg#4r1n","neutral","A woman with a green headscarf , blue shirt and a very big grin .","The woman is young .","woman 1",,,"woman 1 young 3",,
+"6160193920.jpg#4r1e","entailment","A woman with a green headscarf , blue shirt and a very big grin .","The woman is very happy .","woman 1 grin 13",,,"woman 1 happy 4",,
+"6160193920.jpg#4r1c","contradiction","A woman with a green headscarf , blue shirt and a very big grin .","The woman has been shot .","woman 1 grin 13",,,"woman 1 shot 4",,
+"4791890474.jpg#3r1e","entailment","An old man with a package poses in front of an advertisement .","A man poses in front of an ad .","man 2 poses 6 front 8 advertisement 11",,,"man 1 poses 2 front 4 ad 7",,
+"4791890474.jpg#3r1n","neutral","An old man with a package poses in front of an advertisement .","A man poses in front of an ad for beer .",-1,,,"for 8 beer 9",,
+"4791890474.jpg#3r1c","contradiction","An old man with a package poses in front of an advertisement .","A man walks by an ad .","man 2 poses 6",,,"man 1 walks 2",,
+"2832076014.jpg#2r1n","entailment","A land rover is being driven across a river .","A Land Rover is splashing water as it crosses a river .","rover 2 across 6 river 8",,,"rover 2 splashing 4 crosses 8 river 10",,
+"2832076014.jpg#2r1e","entailment","A land rover is being driven across a river .","A vehicle is crossing a river .","land 1 rover 2 driven 5 across 6 river 8",,,"vehicule 1 crossing 3 river 5",,
+"2832076014.jpg#2r1c","contradiction","A land rover is being driven across a river .","A sedan is stuck in the middle of a river .","land 1 rover 2 driven 5",,,"sedan 1 stuck 3",,
+"1034985636.jpg#3r1c","contradiction","A man playing an electric guitar on stage .","A man playing banjo on the floor .","man 1 guitar 5 stage 7",,,"man 1 banjo 3 floor 6",,
+"1034985636.jpg#3r1e","entailment","A man playing an electric guitar on stage .","A man playing guitar on stage .","man 1 playing 2 guitar 5 stage 7",,,"man 1 playing 2 guitar 3 stage 5",,
+"1034985636.jpg#3r1n","neutral","A man playing an electric guitar on stage .","A man is performing for cash .","man 1 playing 2",,,"man 1 performing 3 for 4 cash 5",,
+"3856149623.jpg#1r1e","entailment","A blond-haired doctor and her African american assistant looking threw new medical manuals .","A doctor is looking at a book","doctor 2 looking 8 manuals 12",,,"doctor 1 looking 3 book 6",,
+"3856149623.jpg#1r1c","contradiction","A blond-haired doctor and her African american assistant looking threw new medical manuals .","A man is eating pb and j","looking 8",,,"eating 3",,
+"3856149623.jpg#1r1n","neutral","A blond-haired doctor and her African american assistant looking threw new medical manuals .","A doctor is studying",-1,,,"studying 3",,
+"3827316480.jpg#0r1c","contradiction","One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground .","A boy runs into a wall","girl 2 running 8 sitting 23",,,"boy 1 runs 2",,
+"3827316480.jpg#0r1e","entailment","One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground .","A tan girl runs leans over an object","tan 1 girl 2 running 8 leaning 10 over 11 object 13",,,"tan 1 girl 2 runs 3 leans 4 over 5 object 7",,
+"3827316480.jpg#0r1n","neutral","One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground .","A man watches his daughter leap","girl 2",,,"watches 2 daughter 4 leap 5",,
+"2946464027.jpg#0r1n","neutral","A young family enjoys feeling ocean waves lap at their feet .","A young man and woman take their child to the beach for the first time .","family 2 ocean 5",,,"man 2 woman 4 beach 10 for 11 first 13 time 14",,
+"2946464027.jpg#0r1c","contradiction","A young family enjoys feeling ocean waves lap at their feet .","A family is out at a restaurant .","family 2 ocean 5 waves 6",,,"family 1 restaurant 6",,
+"2946464027.jpg#0r1e","entailment","A young family enjoys feeling ocean waves lap at their feet .","A family is at the beach .","family 2 ocean 5 waves 6",,,"family 1 beach 5",,
+"3572548523.jpg#4r1e","entailment","A couple walk hand in hand down a street .","A couple is walking together .","couple 1 walk 2 hand 3 in 4 hand 5",,,"couple 1 walking 3 together 4",,
+"3572548523.jpg#4r1n","neutral","A couple walk hand in hand down a street .","The couple is married .",-1,,,"couple 1 married 3",,
+"3572548523.jpg#4r1c","contradiction","A couple walk hand in hand down a street .","A couple is sitting on a bench .","couple 1 walk 2 ",,,"couple 1 sitting 3",,
+"4460943467.jpg#0r1c","contradiction","3 young man in hoods standing in the middle of a quiet street facing the camera .","Three people sit by a busy street bareheaded .","3 0 man 2 standing 5 quiet 11 street 12",,,"Three 0 people 1 sit 2 busy 5 street 6 ",,
+"4460943467.jpg#0r1n","entailment","3 young man in hoods standing in the middle of a quiet street facing the camera .","Three hood wearing people pose for a picture .","3 0 man 2 hoods 4 facing 13 camera 15",,,"Three 0 hood 1 people 3 pose 4 for 5 picture 7",,
+"4460943467.jpg#0r1e","entailment","3 young man in hoods standing in the middle of a quiet street facing the camera .","Three hood wearing people stand in a street .","3 0 man 2 hoods 4 standing 5 street 12",,,"Three 0 hood 1 people 3 stand 4 street 7",,
+"2096485764.jpg#0r1e","entailment","A man reads the paper in a bar with green lighting .","The man is inside .","man 1 in 5 bar 7",,,"man 1 inside 3",,
+"2096485764.jpg#0r1n","neutral","A man reads the paper in a bar with green lighting .","The man is reading the sportspage .","man 1 paper 4",,,"man 1 sportspage 5",,
+"2096485764.jpg#0r1c","contradiction","A man reads the paper in a bar with green lighting .","The man is climbing a mountain .","man 1 reads 2 bar 7",,,"man 1 climbing 3 mountain 5",,
+"4679111230.jpg#2r1n","neutral","Three firefighter come out of subway station .","Three firefighters putting out a fire inside of a subway station .","Three 0 firefighter 1",,,"putting 2 out 3 fire 5",,
+"4679111230.jpg#2r1e","entailment","Three firefighter come out of subway station .","Three firefighters coming up from a subway station .","Three 0 firefighter 1 come 2 out 3 subway 5 station 6",,,"Three 0 firefighters 1 coming 2 up 3 subway 6 station 7",,
+"4679111230.jpg#2r1c","contradiction","Three firefighter come out of subway station .","Three firefighters playing cards inside a fire station .","Three 0 firefighter 1 come 2 out 3 subway 5 station 6",,,"Three 0 firefighters 1 playing 2 inside 4 fire 6 station 7",,
+"2892843393.jpg#1r1e","entailment","A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground .","A person is near a pile of coconuts .","person 1 with 13 pile 15 oconuts 17",,,"person 1 near 3 pile 5 coconuts 7",,
+"2892843393.jpg#1r1n","neutral","A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground .","A person is selling coconuts .",-1,,,"selling 3",,
+"2892843393.jpg#1r1c","contradiction","A person wearing a straw hat , standing outside working a steel apparatus with a pile of coconuts on the ground .","A person is burning a straw hat .","person 1 wearing 2 straw 4 hat 5",,,"person 1 burning 3 straw 5 hat 6",,
+"4923271886.jpg#2r1c","contradiction","Male in a blue jacket decides to lay in the grass .","The guy in yellow is rolling on the grass","Male 0 blue 3 jacket 4 lay 7",,,"yellow 3 rolling 5",,
+"4923271886.jpg#2r1e","entailment","Male in a blue jacket decides to lay in the grass .","The guy wearing a blue jacket is laying on the green grass","Male 0 blue 3 jacket 4 lay 7 grass 10",,,"guy 1 blue 4 jacket 5 laying 7 grass 11",,
+"4923271886.jpg#2r1n","neutral","Male in a blue jacket decides to lay in the grass .","The guy wearing a blue jacket is laying on the green grass taking a nap .",-1,,,"taking 12 nap 14",,
+"3551170666.jpg#3r1c","contradiction","A golden retriever nurses puppies .","A cat nurses puppies","golden 1 retriever 2 nurses 3 puppies 4",,,"cat 1 nurses 2 puppies 3",,
+"2972268289.jpg#4r1n","neutral","During calf roping a cowboy calls off his horse .","A first time roper falls off his horse .",-1,"roping","during cowboy calls off horse","falls off horse","roper","first time"
+"2871984109.jpg#1r1n","neutral","Cheerleaders in blue performing on a football field underneath a yellow football goal post .","A group of girls shake pom poms .",-1,"cheeleaders performing",-1,"Shake","girls pom poms","group"
+"3364715316.jpg#4r1n","neutral","Two women on a beach .","Two mothers enjoy a day at the beach with their husbands .","women",-1,"two beach","mothers husbands",-1,"with two beach"
+"7113652429.jpg#0r1c","contradiction","Four men playing drums in very orange lighting while one of them is also drinking something out of a bottle .","the men are asleep in the motel","men playing",-1,"drums drinking","men asleep",-1,-1
+"4413167760.jpg#2r1c","contradiction","Two men have an after dinner discussion at the dinner table .","the men are asleep in the motel","men discussion",-1,"have table at dinner","men asleep motel",-1,"are"
+"4443087970.jpg#3r1e","entailment","Man on phone in business suit walking down a busy street .","A person on a phone is outdoors","man 0 phone 2 street 10",,,"person 1 phone 4 outdoors 6",-1,-1
+"3358682439.jpg#0r1c","contradiction","a woman in jeans and a woman in shorts are petting a baby kangaroo .","The woman are wearing bikinis and petting an elephant .",-1,"woman jeans kangaroo","shorts petting","petting ","woman bikinis elephant",-1
+"2221818690.jpg#0r1n","neutral","A teenager blows a whistle and wears white face paint , earmuffs , and a yellow hat while another teen watches .","A tall person in face paint",-1,"teenager face paint",-1,"Tall","person face paint",-1
+"2537611154.jpg#2r1n","neutral","Four men wearing orange vests are putting in a steel beam on the ground .","Tall humans in orange",-1,"men orange",-1,"Tall","humans orange",-1
+"4783263491.jpg#0r1n","neutral","Women in a red hat and beige shoes standing with hands behind her back in front of a cement wall .","A tall person in a hat",-1,"women hat",-1,"Tall","person hat",-1
+"4580613274.jpg#4r1e","entailment","A person sweeping stairs in a park .","A person outside .","person park",-1,"in","person outside",-1,-1
+"1094462889.jpg#0r1n","neutral","A brown dog plays in a deep pile of snow .","A brown dog is outside and it 's snowing",-1,-1,"brown dog pile snow","snowing","it 's","brown dog"
+"3324049172.jpg#0r1e","entailment","A girl making a snow angel , wearing a black hat and glasses .","A girl is outside in the snow .","girl snow","making angel",-1,"girl snow",-1,"outside in"
+"3763959012.jpg#1r1c","contradiction","Two men in hard hats look at a building while on the side of a street .","2 male humans are sleeping .","men look at","two",-1,"male sleeping",2,"humans"
+"3338210819.jpg#4r1c","contradiction","A silhouette of a man fishing .","A man is sleeping .","man fishing",-1,-1,"man sleeping",-1,-1
+"6936180661.jpg#4r1c","contradiction","People trying to get warm .","People are sleeping .","people trying","get warm",-1,"people sleeping",-1,-1
+"4287405602.jpg#1r1n","neutral","A woman cook in an apron is smiling at the camera with two other cooks in the background .","A woman is in a cooking competition",-1,"woman cook",-1,"competition","woman cooking",-1
+"2944675019.jpg#4r1c","neutral","A woman in a striped shirt holds an infant .","A person is watching TV .",-1,"woman","holds infant","tv","person watching",-1
+"2468921460.jpg#1r1n","neutral","A women 's volleyball team plays in a brown and green gymnasium .","A volleyball team is performing in a national competition .",-1,"volleyball team","plays gymnasium","competition","volleyball team","performing"
+"2537030709.jpg#0r1e","entailment","Man in traditional costume holding small guitar with a silver bike behind him .","A man is holding a musical instrument .","man holding guitar",-1,-1,"man holding instrument","musical",-1
+"4436200118.jpg#1r1n","neutral","A woman in a long , dark coat looks through trashcans in Winter .","A woman older than thirty is outside in winter .",,"woman","looks through in winter","Thirty","woman older than","in winter"
+"5310484815.jpg#1r1c","contradiction","Two young boys are playing with a toy train set on a wood floor .","Two girls are playing with dolls .","Boys","two","train","girls","two","dolls"
+"3624771682.jpg#1r1n","neutral","Two little girls reading a book at the library .","The girls are sisters .",-1,"girls",-1,"Sisters","girls",-1
+"2434710077.jpg#2r1n","neutral","Three young girls and a baby are sitting in the grass on a blue blanket with baby toys scattered on it .","Four sisters play with each other .",-1,"girls","three baby","Sisters",-1,"four"
+"2786996501.jpg#1r1n","neutral","Two smiling young girls wearing plastic sunglasses are lying on the grass .","The two girls are sisters .",-1,"two girls",-1,"Sisters","two girls",-1
+"2904104770.jpg#1r1n","neutral","The female soccer team is getting last minute instruction from their coach .","The soccer team is listening to their coach for their last play to win the soccer game .",-1,"soccer team getting instruction coach",-1,-1,"soccer team listening coach","to win last play soccer game"
+"3436074878.jpg#4r1n","neutral","A dog biting a man 's rear","An animal bit its owner .",-1,"dog biting man",-1,"Owner","animal bit",-1
+"2748929011.jpg#4r1c","contradiction","A golfer shoots his ball out of a sand trap .","A drive off of the first tee .","sand trap","out of","shoots","First","tee","drive off"
+"3403797144.jpg#2r1n","neutral","A surfer is riding a wave in a large body of water .","This is his first wave of the day .",,,,,,
+"6899247616.jpg#4r1n","neutral","A woman finishing a marathon race .","The woman is in first place .",,,,,,
+"2919459517.jpg#4r1n","neutral","Man with blue and yellow shirt rides bike .","a man rides a bike for the first time",,,,,,
+"4799726314.jpg#0r1e","entailment","A baby with a green bottom and red top lying in bed with a brown and white cat and also a black and white cat .","There is a child and two animals .",,,,,,
+"487894806.jpg#0r1c","contradiction","A brown dog wearing a collar is chasing and biting on a red broom .","An animal is sleeping outside .",,,,,,
+"2402462857.jpg#1r1e","entailment","Brown and cream dog with tongue out in front of grassy forest","There is an animal standing outdoors .",,,,,,
+"3354063643.jpg#2r1e","entailment","The dog is in snow , and has a stick in its mouth .","There is an animal outdoors .",,,,,,
+"4871326552.jpg#1r1c","contradiction","The women is photographing statues outdoors on a sunny day .","Two men taking pictures of animals",,,,,,
+"5637347272.jpg#1r1e","entailment","A woman in a striped shirt is walking a horse across a street .","A human and an animal are outdoors .",,,,,,
+"1801188148.jpg#1r1e","entailment","Four dogs of varying breeds running through a field .","Some animals outdoors .",,,,,,
+"200797624.jpg#4r1c","contradiction","Army men grilling a lot of meat while his troop looks on .","No animal products can be seen here .",,,,,,
+"5745422329.jpg#2r1c","contradiction","A man in a green shirt and dark pants and carrying a really big pot turns around to talk to 3 other people .","Nobody has a shirt on",,,,,,
+"2493825916.jpg#4r1c","contradiction","A little boy playing outside on the cement .","A boy is doing homework .",,,,,,
+"3225880532.jpg#4r1n","neutral","Two men talk outdoors .","The men are talking about their wives",,,,,,
+"2311616095.jpg#1r1c","contradiction","Dark-haired man wearing a watch and oven mitt about to cook some meat in the kitchen .","A man is sitting watching TV .",,,,,,
+"3169168282.jpg#2r1c","contradiction","A little boy punching out flashcards from the cardboard they came in .","A boy watches TV .",,,,,,
+"3191805046.jpg#1r1e","entailment","This man dressed in white pants and blue shirt , is standing on a ledge in the snow .","A man is outside in the snow .",,,,,,
+"3465396606.jpg#4r1e","entailment","A woman with a stroller is passing a man walking a dog .","There are people outside .",,,,,,
+"3465396606.jpg#4r1n","neutral","A woman with a stroller is passing a man walking a dog .","There is a black dog outside .",,,,,,
+"3580277210.jpg#4r1c","contradiction","Two people playing badminton .","Two people playing basketball outside .",,,,,,
+"345852737.jpg#1r1e","entailment","A woman in a burgundy coat exits Trader Joe 's with a cart full of groceries .","a woman outside",,,,,,
+"4446142718.jpg#2r1c","contradiction","A boy plays with a motorized car next to a dirty street lined with real cars .","no boy is outside in the streets playing .",,,,,,
+"4274214534.jpg#4r1e","entailment","A woman is walking her dog along a snowy ground .","A woman is with her dog outside .",,,,,,
+"4570069538.jpg#1r1e","entailment","A crowd of people fill the street in front of a McDonald 's .","There is a crowd outside the restaurant .",,,,,,
+"3949924354.jpg#1r1e","entailment","A man in a white shirt and baseball hat is pushing a cart carrying several bags on a street .","A man is walking outside .",,,,,,
+"3205887140.jpg#0r1e","entailment","A woman with red-hair and a leather jacket holds a harp in front of a snowy forest .","The woman is holding an instrument .",,,,,,
+"2325436612.jpg#4r1e","entailment","Two men are looking through microscopes in a room .","There are men using scientific instruments .",,,,,,
+"7582869910.jpg#3r1e","entailment","A group of people cleaning some kins of sea animal .","There is at least one person .",,,,,,
+"3316725440.jpg#4r1e","entailment","A biker races .","A person is riding a bike",,,,,,
