@@ -44,8 +44,7 @@ unsigned write_label(string label)
 		return 1;
 	if(label == "contradiction")
 		return 2;
-	else
-		return 44;
+	return 44;
 }
 
 bool verif(char crochet, unsigned num_word, string& word, char acc, char croch, unsigned num_example)
