@@ -24,7 +24,7 @@ premise -2
 hypothesis -2
 8
 {the}
-[church] 3 #stadium# ACTUAL -1 #chapel# ACTUAL -1 #place# ACTUAL -1
+[church] 3 #stadium# ACTUAL -1 #chapel# ACTUAL -1 #house# ACTUAL -1
 {has}
 [cracks] 3 #songs# ACTUAL -1 #paint# ACTUAL -1 #singers# ACTUAL -1
 [in] 3 #from# ACTUAL -1 #by# ACTUAL -1 #outside# ACTUAL -1
@@ -60,7 +60,7 @@ premise -2
 hypothesis -2
 7
 {the}
-[church] 3 #restaurant# ACTUAL -1 #place# ACTUAL -1 #chapel# ACTUAL -1
+[church] 3 #restaurant# ACTUAL -1 #house# ACTUAL -1 #ocean# ACTUAL -1
 {is}
 [filled] 3 #empty# ACTUAL -1 #here# ACTUAL -1 #full# ACTUAL -1
 [with] 2 #without# ACTUAL -1 #by# ACTUAL -1

@@ -1,5 +1,5 @@
 "pair ID","label","premise","hypothesis","important words in the premise","important words in the hypothesis"
-"2677109430.jpg#1r1n","neutral","This church choir sings to the masses as they sing joyous songs from the book at a church .","The church has cracks in the ceiling .",-1,"cracks 3 ceiling 6"
+"2677109430.jpg#1r1n","neutral","This church choir sings to the masses as they sing joyous songs from the book at a church .","The church has cracks in the ceiling .","church 17","cracks 3 ceiling 6"
 "2677109430.jpg#1r1e","entailment","This church choir sings to the masses as they sing joyous songs from the book at a church .","The church is filled with song .","sings 3 songs 11 church 17","filled 3 song 5 church 1"
 "2677109430.jpg#1r1c","contradiction","This church choir sings to the masses as they sing joyous songs from the book at a church .","A choir singing at a baseball game .","sings 3 at 15 church 17","singing 2 baseball_game 5 "
 "6160193920.jpg#4r1n","neutral","A woman with a green headscarf , blue shirt and a very big grin .","The woman is young .","woman 1","woman 1 young 3"
