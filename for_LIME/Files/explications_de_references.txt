@@ -169,9 +169,6 @@ girl 2 running 8 sitting 23
 boy 1 runs 2
 
 
-#END#
-
-
 3827316480.jpg#0r1e
 entailment
 One tan girl with a wool hat is running and leaning over an object , while another person in a wool hat is sitting on the ground .
@@ -746,8 +743,6 @@ Nobody has a shirt on
 1
 man 1 in 2 shirt 5
 nobody 0 shirt 3
-
-
 
 
 2493825916.jpg#4r1c
