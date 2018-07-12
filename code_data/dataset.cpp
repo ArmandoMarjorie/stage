@@ -236,9 +236,16 @@ void DataSet::reset_data(Data const& data_copy, unsigned num_sample)
 }
 
 
+unsigned DataSet::get_nb_switch_words(bool is_premise, unsigned num_expr, unsigned num_sample)
+{
+	return dataset[num_sample]->get_nb_switch_words(is_premise, num_expr);
+}
 
 
-
-
+void DataSet::modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words, unsigned num_sample)
+{
+	return dataset[num_sample]->modif_word(is_premise, num_expr, num_sw_words);
+	
+}
 
 

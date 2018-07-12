@@ -244,6 +244,90 @@ void Data::modif_LIME(bool is_premise, unsigned position)
 		}
 	}
 }
+
+
+void Data::modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words)
+{
+	cout << "MODIF WORD\n";
+
+	unsigned replacing_word;
+	unsigned nb_word_in_sw;
+	if(is_premise)
+		nb_word_in_sw = premise[num_expr]->get_nb_of_sw(num_sw_words); //nb de bloc "SW" dans l'expression qui va remplacer 
+	else
+		nb_word_in_sw = hypothesis[num_expr]->get_nb_of_sw(num_sw_words);
+	
+	cout << "nb_word_in_sw = " <<nb_word_in_sw << endl;
+
+	unsigned type;
+
+	for(unsigned i=0; i < nb_word_in_sw; ++i)
+	{
+		if(is_premise)
+		{
+			type = premise[num_expr]->get_type_sw(num_sw_words, i); //le bloc numéro i du switch word numéro "num_sw_words"
+			if(type == PREV) 
+			{
+				cout << " PREV \n";
+				if(num_expr-1 >= 0)
+					premise[num_expr-1]->modif_BoW(*(premise[num_expr]), num_sw_words, i, premise[num_expr-1]->expr_is_important());
+				else
+				{
+					cout << "le prev a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}				
+			}				
+			else if(type == ACTUAL)
+			{
+				cout << " ACTUAL \n";
+				premise[num_expr]->modif_BoW(num_sw_words, i, premise[num_expr]->expr_is_important());
+			}
+			else if(type == NEXT)
+			{
+				
+				if(num_expr+1 < premise.size())
+				{
+					cout << " NEXT (num_expr = " << num_expr+1 << " )\n";
+					premise[num_expr+1]->modif_BoW(*(premise[num_expr]), num_sw_words, i, premise[num_expr+1]->expr_is_important());
+					cout << "OK \n";
+				}
+				else
+				{
+					cout << "le next a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}
+				
+			}
+		}
+		else
+		{
+			type = hypothesis[num_expr]->get_type_sw(num_sw_words, i); //le bloc numéro i du numéro 'num_sw_words' du switch word choisi
+			if(type == PREV)
+			{ 
+				if(num_expr-1 >= 0)
+					hypothesis[num_expr-1]->modif_BoW(*(hypothesis[num_expr]), num_sw_words, i, hypothesis[num_expr-1]->expr_is_important());
+				else
+				{
+					cout << "le prev a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}				
+			}
+			else if(type == ACTUAL)
+				hypothesis[num_expr]->modif_BoW(num_sw_words, i, hypothesis[num_expr]->expr_is_important());
+			else if(type == NEXT)
+			{
+				if(num_expr+1 < hypothesis.size())
+					hypothesis[num_expr+1]->modif_BoW( *(hypothesis[num_expr]), num_sw_words, i, hypothesis[num_expr+1]->expr_is_important());	
+				else
+				{
+					cout << "le next a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}
+			}	
+			
+		}
+	}
+}
 void Data::modif_LIME_random(bool is_premise, unsigned position)
 {
 	cout << "MODIF LIME\n";

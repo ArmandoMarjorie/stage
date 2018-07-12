@@ -27,6 +27,8 @@
 			unsigned get_word_id(unsigned sentence, unsigned num_expr, unsigned num_words);	
 			unsigned get_nb_imp_words(bool is_premise);		
 			
+			void modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words);
+			
 			void modif_LIME(bool is_premise, unsigned position);
 			void modif_LIME_random(bool is_premise, unsigned position);
 			unsigned search_position(bool is_premise, unsigned num_buffer_in);

@@ -30,6 +30,7 @@
 			
 			Data* get_data_object(unsigned num_sample);
 			unsigned get_word_id(unsigned sentence, unsigned num_sample, unsigned num_expr, unsigned num_words);
+			unsigned get_nb_switch_words(bool is_premise, unsigned num_expr, unsigned num_sample);
 			
 			unsigned get_nb_inf();
 			unsigned get_nb_neutral();
@@ -44,6 +45,8 @@
 			
 			void modif_LIME(char* buffer_in, unsigned num_sample);
 			void modif_LIME_random(char* buffer_in, unsigned num_sample);
+			
+			void modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words, unsigned num_sample);
 	
 			void print_everything();
 			bool expr_is_important(unsigned num_sample, bool is_premise, unsigned num_expr);

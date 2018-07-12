@@ -401,31 +401,34 @@ void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_sample
 	
 }
 
-void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set, Embeddings& embedding, unsigned word_position,
-	bool is_premise, unsigned word, vector<float>& original_probs, vector<vector<float>>& max_DI, vector<vector<unsigned>>& save, unsigned num_sample,
-	vector<Switch_Words*>& sw_vect)
+void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, DataSet& explication_set, Embeddings& embedding, unsigned num_expr,
+	bool is_premise, unsigned word, vector<float>& original_probs, vector<pair<unsigned,float>>& max_DI, unsigned num_sample, Data* copy)
 {
-	vector<float> vect_DI(NB_CLASSES, -999); // contient DI pour neutral, inf, contradiction
-	std::vector<float>::iterator index_min_it;
+	//vector<float> vect_DI(NB_CLASSES, -999); // contient DI pour neutral, inf, contradiction
+	float DI = -9999; //le DI de l'expression courrante. ça sera le max des DI calculés avec les expr de remplacement.
+	
+	//std::vector<float>::iterator index_min_it;
 	unsigned index_min, label_predicted;
 	unsigned nb_changing_words;
 	unsigned changing_word;
-	double proba_log=0;
-	vector<float> result(NB_CLASSES, 0.0);
+	//double proba_log=0;
 	
-	for(unsigned label_explained=0; label_explained < NB_CLASSES; ++label_explained)
+
+	nb_changing_words = explication_set.get_nb_switch_words(is_premise, num_expr, num_sample);
+	
+	//recherche de l'expression de remplacement qui va maximiser le DI ( = le plus important des expr de remplacement)
+	for(unsigned nb=0; nb<nb_changing_words; ++nb)
 	{
-		nb_changing_words = sw_vect[label_explained]->get_nb_switch_words(word_position, is_premise, num_sample);
+		cg.clear();
 		
-		for(unsigned nb=0; nb<nb_changing_words; ++nb)
-		{
-			cg.clear();
-			changing_word = sw_vect[label_explained]->get_switch_word(word_position, is_premise, nb, num_sample);
-			explication_set.set_word(is_premise, word_position, changing_word, num_sample);
-			vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
-			explain_label(probs, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample)); //max de ça = l'importance du mot
-		}
+		explication_set.modif_word(is_premise, num_expr, nb, num_sample);
+		
+		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
+		explain_label(probs, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample)); //max de ça = l'importance du mot. A CHANGER (ON EN EST LA) !!!!!!!!!!!!
+		
+		reset_data(*copy, num_sample);
 	}
+	
 		
 	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
 	{
@@ -440,7 +443,6 @@ void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set,
 		}										
 	}	
 	
-	explication_set.set_word(is_premise, word_position, word, num_sample);
 }
 
 void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
@@ -479,7 +481,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 	unsigned pos = 0;  
 	Data* copy=NULL;
 	
-	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque label
+	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque instance...
 	{
 		//nb_imp_words_prem = explication_set.get_nb_important_words(true, i);
 		//nb_imp_words_hyp = explication_set.get_nb_important_words(false, i);
@@ -515,7 +517,8 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		// In the premise
 		for( position=0; position < explication_set.get_nb_expr(1,i); ++position)
 		{
-			imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI_prem, save_prem, i, sw_vect);
+			if(explication_set.expr_is_important(i, true, position))
+				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI, i, copy);
 			//cout << premise[position] << endl;
 		}
 		
@@ -524,7 +527,8 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		// In the hypothesis
 		for(position=0; position < explication_set.get_nb_expr(2,i); ++position)
 		{	
-			imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI_hyp, save_hyp, i, sw_vect);
+			if(explication_set.expr_is_important(i, false, position))
+				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI, i, copy);
 			//cout << hypothesis[position] << endl;
 		}
 		/*
