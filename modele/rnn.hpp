@@ -14,6 +14,7 @@
 	#include "dynet/hsm-builder.h"
 	#include "dynet/globals.h"
 	#include "dynet/io.h"
+	#include <functional>
 	#include "../code_data/dataset.hpp"
 	//#include "../tokenizer/detoken_explication.hpp"
 
@@ -22,16 +23,20 @@
 	*/
 	
 	
-	class ExplainationsBAXI
+	struct ExplainationsBAXI
 	{
-		private:
-			unsigned num_expr;
-			bool is_premise;
-			float DI;
-			std::map<unsigned,std::string> id_to_word;
 		
-		public:
-			ExplainationsBAXI(unsigned n, bool prem, float d);
+		unsigned num_expr;
+		bool is_premise;
+		float DI;
+		std::map<unsigned,std::string> id_to_word;
+	
+		ExplainationsBAXI(unsigned n, bool prem, float d);
+		
+		bool operator > (const ExplainationsBAXI& eb) const
+		{
+			return DI > eb.DI;
+		}
 	};
 
 	class RNN

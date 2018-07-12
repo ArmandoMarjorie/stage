@@ -318,6 +318,11 @@ ExplainationsBAXI::ExplainationsBAXI(unsigned n, bool prem, float d) :
 	
 }
 
+string ExplainationsBAXI::detoken()
+{
+	// utiliser id_to_word, et voir tous les mots dans l'expr (rajouté un _ dans les espaces)
+}
+
 
 void explain_label(vector<float>& probs, vector<float>& original_probs, float& DI, unsigned label_explained)
 {
@@ -337,12 +342,13 @@ void explain_label(vector<float>& probs, vector<float>& original_probs, float& D
 }
 
 
-
+/*
 void affichage_vect_DI(vector<float>& vect_DI)
 {
 	for(unsigned i=0; i<vect_DI.size(); ++i)
 		cout << "vect_di[" <<i <<"] =" << vect_DI[i] << endl;
 }
+
 
 void affichage_max_DI(vector<vector<float>>& max_DI)
 {
@@ -352,9 +358,9 @@ void affichage_max_DI(vector<vector<float>>& max_DI)
 			cout << "max_DI[" <<i << "][" << j << "] = "<< max_DI[i][j] << " ";
 		cout << endl;
 	}
-}
+}*/
 
-void init_DI_words(unsigned taille, vector<ExplainationsBAXI*>& max_DI)
+void init_DI_words(unsigned taille, vector<ExplainationsBAXI>& max_DI)
 {
 	for(unsigned i=0; i < taille; ++i)
 		max_DI.push_back(NULL);
@@ -410,7 +416,7 @@ void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_sample
 
 // Calcule l'importance de chaque expression.
 void calcul_importance(RNN& rnn, ComputationGraph& cg, DataSet& explication_set, Embeddings& embedding, unsigned num_expr,
-	bool is_premise, vector<float>& original_probs, vector<ExplainationsBAXI*>& max_DI, unsigned num_sample, Data* copy)
+	bool is_premise, vector<float>& original_probs, vector<ExplainationsBAXI>& max_DI, unsigned num_sample, Data* copy)
 {
 	float DI = -9999; //le DI de l'expression courrante. ça sera le max des DI calculés avec les expr de remplacement.
 	
@@ -435,23 +441,29 @@ void calcul_importance(RNN& rnn, ComputationGraph& cg, DataSet& explication_set,
 	}
 	
 		
-	max_DI[num_expr] = new ExplainationsBAXI(num_expr, is_premise, DI); 
+	max_DI[num_expr] = ExplainationsBAXI(num_expr, is_premise, DI); 
 	
 }
 
 //a refaire
-bool sortbyDI(const pair<unsigned,float> &a, const pair<unsigned,float> &b)
+bool sort_explainations(vector<ExplainationsBAXI>& max_DI)
 {
-    return a.second > b.second;
+    
 }
 
 
-void write_explainations(ofstream& output, vector<ExplainationsBAXI*>& max_DI)
+void write_explainations(ofstream& output, vector<ExplainationsBAXI>& max_DI)
 {
 	for(unsigned i=0; i < max_DI.size(); ++i)
 		if(max_DI[i] != NULL)
-			output << "('" << max_DI[i]->detoken() << "'), " <<  max_DI[i]->get_DI() << endl; //fct  a faire
+			output << "('" << max_DI[i].detoken() << "'), " <<  max_DI[i].DI << endl; //fct  a faire
 	output << "-3\n\n\n";
+}
+
+void detruire_max_DI(vector<ExplainationsBAXI>& max_DI)
+{
+	for(unsigned i=0; i<max_DI.size(); ++i)
+		delete max_DI[i];
 }
 
 void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
@@ -490,7 +502,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 	
 	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque instance...
 	{
-		vector<pair<unsigned,float>> max_DI;
+		vector<ExplainationsBAXI> max_DI;
 		
 		cout << "SAMPLE " << i << "\n";
 		ComputationGraph cg;
@@ -530,8 +542,10 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 			//cout << hypothesis[position] << endl;
 		}
 		
-		sort(max_DI.begin(), max_DI.end(), sortbysec);
+		sort(max_DI.begin(), max_DI.end(), greater<ExplainationsBAXI>()); 
 		write_explainations(output, max_DI);
+		detruire_max_DI(max_DI);
+		
 		
 		
 		/* Calcul pour les taux */
