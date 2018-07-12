@@ -32,6 +32,7 @@ unsigned RNN::get_nb_layers(){ return nb_layers; }
 unsigned RNN::get_input_dim(){ return input_dim; }
 unsigned RNN::get_hidden_dim(){ return hidden_dim; }
 
+
 void softmax_vect(vector<float>& tmp, vector<vector<float>>& alpha, unsigned& colonne)
 {
 	float x,y;
@@ -77,6 +78,7 @@ vector<float> RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_
 {
 	//vector<float> probs = as_vector(cg.forward(x));
 	vector<float> probs = as_vector(cg.forward(x));
+	
 	softmax_vect(probs);
 	argmax=0;
 
@@ -91,7 +93,7 @@ vector<float> RNN::predict_algo(Expression& x, ComputationGraph& cg, bool print_
 	return probs;
 }
 
-unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, unsigned nb_of_sentences_dev, unsigned& best)
+unsigned predict_dev_and_test(RNN& rnn, DataSet& dev_set, Embeddings& embedding, unsigned nb_of_sentences_dev, unsigned& best)
 {
 	unsigned positive = 0;
 	unsigned positive_inf = 0;
@@ -130,7 +132,7 @@ unsigned predict_dev_and_test(RNN& rnn, Data& dev_set, Embeddings& embedding, un
 
 		/* Predictions algorithms (handlers) */
 
-void run_predict(RNN& rnn, ParameterCollection& model, Data& test_set, Embeddings& embedding, char* parameters_filename)
+void run_predict(RNN& rnn, ParameterCollection& model, DataSet& test_set, Embeddings& embedding, char* parameters_filename)
 {
 	// Load preexisting weights
 	cerr << "Loading parameters ...\n";
@@ -146,13 +148,13 @@ void run_predict(RNN& rnn, ParameterCollection& model, Data& test_set, Embedding
 }
 
 
-vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& embedding, bool print_label)
+vector<float> run_predict_for_server_lime(RNN& rnn, DataSet& test_set, Embeddings& embedding, bool print_label, unsigned num_sample)
 {
 	//cerr << "Testing ...\n";
 	unsigned label_predicted;
 	rnn.disable_dropout();
 	ComputationGraph cg;
-	vector<float> probas = rnn.predict(test_set, embedding, 0, cg, false, label_predicted, NULL);
+	vector<float> probas = rnn.predict(test_set, embedding, num_sample, cg, false, label_predicted, NULL);
 	cout << "predict ok\n";
 	//if(print_label)
 		//cerr << "True label = " << test_set.get_label(0) << ", label predicted = " << label_predicted << endl;
@@ -160,7 +162,7 @@ vector<float> run_predict_for_server_lime(RNN& rnn, Data& test_set, Embeddings& 
 }
 
 
-
+/*
 void write_sentences(ofstream& output, vector<unsigned>& premise, vector<unsigned>& hypothesis)
 {
 	unsigned i;
@@ -172,7 +174,7 @@ void write_sentences(ofstream& output, vector<unsigned>& premise, vector<unsigne
 	output << "-1\n";
 }
 
-void save_sentences(Data& explication_set,vector<unsigned>& premise,vector<unsigned>& hypothesis, unsigned num_sample)
+void save_sentences(DataSet& explication_set,vector<unsigned>& premise,vector<unsigned>& hypothesis, unsigned num_sample)
 {
 	for(unsigned sentence=1; sentence <= 2; ++sentence)
 	{
@@ -185,96 +187,19 @@ void save_sentences(Data& explication_set,vector<unsigned>& premise,vector<unsig
 		}	
 	}
 }
-
-
-
-/* Sans coeff pour l'instant */
-float calculate_DI(vector<float>& probs, vector<float>& original_probs, unsigned label_predicted)
-{
-	float distance;
-	float DI = 0;
-	for(unsigned label = 0; label < NB_CLASSES; ++label)
-	{
-		distance = probs[label] - original_probs[label];
-		if(label == label_predicted)
-		{
-			distance = -distance;
-		}
-		DI += distance;
-	}
-	return DI;
-}
-
-/* Calcul de DI pour chaque label (comme Lime)*/
-void calculate_DI_label(vector<float>& probs, vector<float>& original_probs, vector<float>& DI)
-{
-	float distance;
-	for(unsigned label_ref = 0; label_ref < NB_CLASSES; ++label_ref)
-	{
-		for(unsigned label = 0; label < NB_CLASSES; ++label)
-		{
-			distance = probs[label] - original_probs[label];
-			if(label == label_ref)
-			{
-				distance = -distance;
-			}
-			DI[label_ref] += distance;
-		}
-	}
-}
-
-// surligne les couples importants dans la matrice de co attention
-void run_prediction_expl_for_sys_4(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
-{
-	cerr << "Loading parameters ...\n";
-	TextFileLoader loader(parameters_filename);
-	loader.populate(model);
-	cerr << "Parameters loaded !\n";
-
-	cerr << "Testing ...\n";
-	unsigned label_predicted;
-	unsigned label_predicted_true_sample;
-	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
-	rnn.disable_dropout();
-	char* name = "Files/expl_sys4_token";
-	ofstream output(name, ios::out | ios::trunc);
-	if(!output)
-	{
-		cerr << "Problem with the output file " << name << endl;
-		exit(EXIT_FAILURE);
-	}	
-	unsigned important_couple[4] = {0};
-	unsigned i,k;
-	for(i=0; i < nb_of_sentences; ++i)
-	{
-		ComputationGraph cg;
-		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, important_couple);
-		output << explication_set.get_label(i) << endl << label_predicted_true_sample << endl;
-		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
-		for(k=0; k<4; k+=2)
-			output << important_couple[k] << " " << important_couple[k+1] << "\n";
-		explication_set.print_sentences_of_a_sample(i, output);
-		output << "-3\n";
-	}
-	output.close();
-	char* name_detok = "Files/expl_sys4_detoken";
-	detoken_expl_sys4(lexique_filename, name, name_detok);
-}
-
-
-
+*/
 
 
 
 	/* Negative log softmax algorithms */
 
-Expression get_neg_log_softmax(RNN& rnn, Data& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg)
+Expression get_neg_log_softmax(RNN& rnn, DataSet& set, Embeddings& embedding, unsigned num_sentence, ComputationGraph& cg)
 {
 	Expression loss_expr = rnn.get_neg_log_softmax(set, embedding, num_sentence, cg);
 	return loss_expr;
 }
 
-Expression RNN::get_neg_log_softmax_algo(Expression& score, unsigned num_sentence, Data& set)
+Expression RNN::get_neg_log_softmax_algo(Expression& score, unsigned num_sentence, DataSet& set)
 {
 	const unsigned label = set.get_label(num_sentence);
 	Expression loss_expr = pickneglogsoftmax(score, label);
@@ -284,7 +209,7 @@ Expression RNN::get_neg_log_softmax_algo(Expression& score, unsigned num_sentenc
 
 	/* Training algorithm */
 
-void run_train(RNN& rnn, ParameterCollection& model, Data& train_set, Data& dev_set, Embeddings& embedding, char* output_emb_filename, unsigned nb_epoch, unsigned batch_size)
+void run_train(RNN& rnn, ParameterCollection& model, DataSet& train_set, DataSet& dev_set, Embeddings& embedding, char* output_emb_filename, unsigned nb_epoch, unsigned batch_size)
 {
 	Trainer* trainer = new AdamTrainer(model);
 
@@ -318,7 +243,7 @@ void run_train(RNN& rnn, ParameterCollection& model, Data& train_set, Data& dev_
 	
 	for(unsigned completed_epoch=0; completed_epoch < nb_epoch; ++completed_epoch) 
 	{
-		// Reshuffle the dataset
+		// Reshuffle the DataSetset
 		cerr << "\n**SHUFFLE\n";
 		random_shuffle(order.begin(), order.end());
 		Timer iteration("completed in");
@@ -333,7 +258,7 @@ void run_train(RNN& rnn, ParameterCollection& model, Data& train_set, Data& dev_
 }
 
 
-void train_score(RNN& rnn, Data& train_set, Embeddings& embedding, unsigned nb_batches, 
+void train_score(RNN& rnn, DataSet& train_set, Embeddings& embedding, unsigned nb_batches, 
         unsigned& nb_samples, unsigned batch_size, unsigned completed_epoch, unsigned nb_of_sentences, Trainer* trainer, vector<unsigned>& order, unsigned& numero_sentence)
 {
 	double loss = 0;
@@ -370,7 +295,7 @@ void train_score(RNN& rnn, Data& train_set, Embeddings& embedding, unsigned nb_b
 	}
 }
 
-void dev_score(RNN& rnn, ParameterCollection& model, Data& dev_set, Embeddings& embedding, string parameter_filename, unsigned nb_of_sentences_dev, unsigned& best, char* output_emb_filename)
+void dev_score(RNN& rnn, ParameterCollection& model, DataSet& dev_set, Embeddings& embedding, string parameter_filename, unsigned nb_of_sentences_dev, unsigned& best, char* output_emb_filename)
 {
 	unsigned positive = predict_dev_and_test(rnn, dev_set, embedding, nb_of_sentences_dev, best);
 	if (positive > best) //save the model if it's better than before
@@ -426,12 +351,12 @@ void affichage_max_DI(vector<vector<float>>& max_DI)
 	}
 }
 
-void init_DI_words(unsigned size, vector<vector<float>>& max_DI)
+void init_DI_words(unsigned taille, vector<pair<unsigned,float>>& max_DI)
 {
-	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-		if(size != 0)
-			std::fill(max_DI[lab].begin(), max_DI[lab].end(), -99999);
+	for(unsigned i=0; i < taille; ++i)
+		max_DI.push_back(make_pair(i, -99999));
 }
+
 unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_sample, bool is_premise)
 {
 	unsigned correct = 0;
@@ -518,8 +443,7 @@ void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, Data& explication_set,
 	explication_set.set_word(is_premise, word_position, word, num_sample);
 }
 
-void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
-	vector<Switch_Words*>& sw_vect)
+void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
 {
 	cerr << "Loading parameters ...\n";
 	TextFileLoader loader(parameters_filename);
@@ -538,11 +462,8 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 		cerr << "Problem with the output file " << name << endl;
 		exit(EXIT_FAILURE);
 	}		
-	vector<unsigned> premise;
-	vector<unsigned> hypothesis;
-	/*vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(3));
-	vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(3));
-	vector<vector<float>> max_DI(NB_CLASSES, vector<float>(3)); // 3 DI for each label*/
+	//vector<unsigned> premise;
+	//vector<unsigned> hypothesis;
 	
 	
 	unsigned prem_size, hyp_size, position;
@@ -550,64 +471,63 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 	unsigned nb_imp_words_prem;
 	unsigned nb_imp_words_hyp;
 	unsigned true_label;
-	vector<unsigned> correct(NB_CLASSES,0);  
-	vector<unsigned> nb_label(NB_CLASSES,0);  
-	vector<unsigned> positive(NB_CLASSES,0);  
-	unsigned pos = 0;  
 	
-	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 13
+	//on s'occupera de l'accuracy par label plus tard
+	/*vector<unsigned> correct(NB_CLASSES,0);  
+	vector<unsigned> nb_label(NB_CLASSES,0);  
+	vector<unsigned> positive(NB_CLASSES,0);  */
+	unsigned pos = 0;  
+	Data* copy=NULL;
+	
+	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque label
 	{
-		nb_imp_words_prem = explication_set.get_nb_important_words(true, i);
-		nb_imp_words_hyp = explication_set.get_nb_important_words(false, i);
+		//nb_imp_words_prem = explication_set.get_nb_important_words(true, i);
+		//nb_imp_words_hyp = explication_set.get_nb_important_words(false, i);
 		
-		vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(nb_imp_words_prem));
-		vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(nb_imp_words_hyp));
-		vector<vector<float>> max_DI_prem(NB_CLASSES, vector<float>(nb_imp_words_prem));
-		vector<vector<float>> max_DI_hyp(NB_CLASSES, vector<float>(nb_imp_words_hyp));
+		//vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(nb_imp_words_prem));
+		//vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(nb_imp_words_hyp));
+		//vector<vector<float>> max_DI_prem(NB_CLASSES, vector<float>(nb_imp_words_prem));
+		vector<pair<unsigned,float>> max_DI;
 		
-		cout << "SAMPLE " << i+1 << "\n";
+		cout << "SAMPLE " << i << "\n";
 		ComputationGraph cg;
-		save_sentences(explication_set, premise, hypothesis, i);
+		copy = new Data(explication_set.get_data_object(i)); // COPY DATA
 		
 			// original prediction
 		true_label = explication_set.get_label(i);
-		++nb_label[true_label];
+		//++nb_label[true_label];
 		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
-		if(label_predicted_true_sample == true_label)
+		/*if(label_predicted_true_sample == true_label)
 		{
 			++pos;
 			++positive[label_predicted_true_sample];
-		}
+		}*/
 			
 		output << true_label << endl << label_predicted_true_sample << endl;
 		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
 		
 			// init DI of words
-		init_DI_words(nb_imp_words_prem, max_DI_prem);
-		init_DI_words(nb_imp_words_hyp, max_DI_hyp);
+		init_DI_words(explication_set.get_nb_expr(1,i) + explication_set.get_nb_expr(2,i), max_DI);
 		
-		prem_size = explication_set.get_nb_words(1,i);
-		hyp_size = explication_set.get_nb_words(2,i);
+		//prem_size = explication_set.get_nb_words(1,i);
+		//hyp_size = explication_set.get_nb_words(2,i);
 		
 		// In the premise
-		if(nb_imp_words_prem != 0)
+		for( position=0; position < explication_set.get_nb_expr(1,i); ++position)
 		{
-			for( position=0; position<prem_size; ++position)
-			{
-				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI_prem, save_prem, i, sw_vect);
-				cout << premise[position] << endl;
-			}
+			imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI_prem, save_prem, i, sw_vect);
+			//cout << premise[position] << endl;
 		}
+		
+		
 		cout << "HYP :\n";
 		// In the hypothesis
-		if(nb_imp_words_hyp != 0)
-		{
-			for(position=0; position<hyp_size; ++position)
-			{	
-				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI_hyp, save_hyp, i, sw_vect);
-				cout << hypothesis[position] << endl;
-			}
+		for(position=0; position < explication_set.get_nb_expr(2,i); ++position)
+		{	
+			imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI_hyp, save_hyp, i, sw_vect);
+			//cout << hypothesis[position] << endl;
 		}
+		/*
 		
 		premise.clear();
 		hypothesis.clear();
@@ -626,13 +546,13 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 		
 		explication_set.print_sentences_of_a_sample(i, output);
 		output << "-3\n";
-		
+		*/
 		/* Calcul pour les taux */
-		correct[true_label] +=  nb_correct(explication_set, save_prem[true_label], i, true);  //nb de correct dans la prémisse du sample i
-		correct[true_label] +=  nb_correct(explication_set, save_hyp[true_label], i, false);  //nb de correct dans l'hypothèse du sample i
+		/*correct[true_label] +=  nb_correct(explication_set, save_prem[true_label], i, true);  //nb de correct dans la prémisse du sample i
+		correct[true_label] +=  nb_correct(explication_set, save_hyp[true_label], i, false);  //nb de correct dans l'hypothèse du sample i*/
 	}	
 	//output.close();
-	cout << "Success Rate = " << 100 * (pos / (double)19) << endl;
+	/*cout << "Success Rate = " << 100 * (pos / (double)19) << endl;
 	cout << "\tSuccess Rate neutral = " << 100 * (positive[0] / (double)nb_label[0]) << endl;
 	cout << "\tSuccess Rate entailment = " << 100 * (positive[1] / (double)nb_label[1]) << endl;
 	cout << "\tSuccess Rate contradiction = " << 100 * (positive[2] / (double)nb_label[2]) << endl;
@@ -644,9 +564,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, Data& explica
 	mesure(explication_set,correct,19);
 	output.close();
 	char* name_detok = "Files/expl_detoken_changing_word";
-	detoken_expl(lexique_filename, name, name_detok);
-	//char* name_detok = "Files/expl_detoken_changing_word";
-	//detoken_expl(lexique_filename, name, name_detok);
+	detoken_expl(lexique_filename, name, name_detok);*/
 }
 
 

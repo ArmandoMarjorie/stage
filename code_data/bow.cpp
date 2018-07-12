@@ -172,3 +172,7 @@ void BagOfWords::print()
 		switch_words[i]->print();
 	}
 }
+
+
+
+
