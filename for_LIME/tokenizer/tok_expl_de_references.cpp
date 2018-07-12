@@ -98,7 +98,7 @@ void acc(char* expl_ref_filename, char* expl_filename )
 	while(getline(expl_ref,word)) //lit l'id
 	{	
 		cout << "SAMPLE" << word << endl;
-		if(word == "")
+		if(word == "#END#")
 			break;
 		
 		vector<string> mots_expl_ref;
