@@ -20,6 +20,19 @@
 	/**
 	 * \file rnn.hpp
 	*/
+	
+	
+	class ExplainationsBAXI
+	{
+		private:
+			unsigned num_expr;
+			bool is_premise;
+			float DI;
+			std::map<unsigned,std::string> id_to_word;
+		
+		public:
+			ExplainationsBAXI(unsigned n, bool prem, float d);
+	};
 
 	class RNN
 	{
@@ -65,8 +78,7 @@
 	
 	std::vector<float> run_predict_for_server_lime(RNN& rnn, DataSet& test_set, Embeddings& embedding, bool print_label, unsigned num_sample);
 	//void run_prediction_expl_for_sys_4(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
-	void change_words_for_mesure(RNN& rnn, dynet::ParameterCollection& model, Data& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename,
-		std::vector<Switch_Words*>& sw_vect);
+	void change_words_for_mesure(RNN& rnn, dynet::ParameterCollection& model, DataSet& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename);
 	
 
 #endif

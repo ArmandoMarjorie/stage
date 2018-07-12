@@ -312,7 +312,11 @@ void dev_score(RNN& rnn, ParameterCollection& model, DataSet& dev_set, Embedding
 
 	/* BAXI !!!! */
 
-
+ExplainationsBAXI::ExplainationsBAXI(unsigned n, bool prem, float d) :
+	num_expr(n), is_premise(prem), DI(d)
+{
+	
+}
 
 
 void explain_label(vector<float>& probs, vector<float>& original_probs, float& DI, unsigned label_explained)
@@ -350,12 +354,14 @@ void affichage_max_DI(vector<vector<float>>& max_DI)
 	}
 }
 
-void init_DI_words(unsigned taille, vector<pair<unsigned,float>>& max_DI)
+void init_DI_words(unsigned taille, vector<ExplainationsBAXI*>& max_DI)
 {
 	for(unsigned i=0; i < taille; ++i)
-		max_DI.push_back(make_pair(i, -99999));
+		max_DI.push_back(NULL);
 }
 
+
+//pas encore touché
 unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_sample, bool is_premise)
 {
 	unsigned correct = 0;
@@ -370,6 +376,7 @@ unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_
 	
 }
 
+//pas encore touché
 void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_samples)
 {
 	//float precision;
@@ -400,8 +407,10 @@ void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_sample
 	
 }
 
-void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, DataSet& explication_set, Embeddings& embedding, unsigned num_expr,
-	bool is_premise, unsigned word, vector<float>& original_probs, vector<pair<unsigned,float>>& max_DI, unsigned num_sample, Data* copy)
+
+// Calcule l'importance de chaque expression.
+void calcul_importance(RNN& rnn, ComputationGraph& cg, DataSet& explication_set, Embeddings& embedding, unsigned num_expr,
+	bool is_premise, vector<float>& original_probs, vector<ExplainationsBAXI*>& max_DI, unsigned num_sample, Data* copy)
 {
 	float DI = -9999; //le DI de l'expression courrante. ça sera le max des DI calculés avec les expr de remplacement.
 	
@@ -426,8 +435,23 @@ void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, DataSet& explication_s
 	}
 	
 		
-	max_DI[num_expr] = DI;
+	max_DI[num_expr] = new ExplainationsBAXI(num_expr, is_premise, DI); 
 	
+}
+
+//a refaire
+bool sortbyDI(const pair<unsigned,float> &a, const pair<unsigned,float> &b)
+{
+    return a.second > b.second;
+}
+
+
+void write_explainations(ofstream& output, vector<ExplainationsBAXI*>& max_DI)
+{
+	for(unsigned i=0; i < max_DI.size(); ++i)
+		if(max_DI[i] != NULL)
+			output << "('" << max_DI[i]->detoken() << "'), " <<  max_DI[i]->get_DI() << endl; //fct  a faire
+	output << "-3\n\n\n";
 }
 
 void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
@@ -449,8 +473,6 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		cerr << "Problem with the output file " << name << endl;
 		exit(EXIT_FAILURE);
 	}		
-	//vector<unsigned> premise;
-	//vector<unsigned> hypothesis;
 	
 	
 	unsigned prem_size, hyp_size, position;
@@ -468,12 +490,6 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 	
 	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque instance...
 	{
-		//nb_imp_words_prem = explication_set.get_nb_important_words(true, i);
-		//nb_imp_words_hyp = explication_set.get_nb_important_words(false, i);
-		
-		//vector<vector<unsigned>> save_prem(NB_CLASSES, vector<unsigned>(nb_imp_words_prem));
-		//vector<vector<unsigned>> save_hyp(NB_CLASSES, vector<unsigned>(nb_imp_words_hyp));
-		//vector<vector<float>> max_DI_prem(NB_CLASSES, vector<float>(nb_imp_words_prem));
 		vector<pair<unsigned,float>> max_DI;
 		
 		cout << "SAMPLE " << i << "\n";
@@ -491,19 +507,16 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		}*/
 			
 		output << true_label << endl << label_predicted_true_sample << endl;
-		output << original_probs[0] << " " << original_probs[1] << " " << original_probs[2] << endl;
+		output << "neutral : " << original_probs[0] << ", entailment : " << original_probs[1] << ", contradiction : " << original_probs[2] << endl;
 		
 			// init DI of words
 		init_DI_words(explication_set.get_nb_expr(1,i) + explication_set.get_nb_expr(2,i), max_DI);
-		
-		//prem_size = explication_set.get_nb_words(1,i);
-		//hyp_size = explication_set.get_nb_words(2,i);
 		
 		// In the premise
 		for( position=0; position < explication_set.get_nb_expr(1,i); ++position)
 		{
 			if(explication_set.expr_is_important(i, true, position))
-				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, premise[position], original_probs, max_DI, i, copy);
+				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, original_probs, max_DI, i, copy);
 			//cout << premise[position] << endl;
 		}
 		
@@ -513,29 +526,14 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		for(position=0; position < explication_set.get_nb_expr(2,i); ++position)
 		{	
 			if(explication_set.expr_is_important(i, false, position))
-				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, hypothesis[position], original_probs, max_DI, i, copy);
+				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, original_probs, max_DI, i, copy);
 			//cout << hypothesis[position] << endl;
 		}
-		/*
 		
-		premise.clear();
-		hypothesis.clear();
-		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-		{
-			for(unsigned j=0; j<max_DI_prem[lab].size(); ++j)
-				output << save_prem[lab][j] << " ";
-			output << "-1\n";
-		}
-		for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-		{
-			for(unsigned j=0; j<max_DI_hyp[lab].size(); ++j)
-				output << save_hyp[lab][j] << " ";
-			output << "-1\n";
-		}
+		sort(max_DI.begin(), max_DI.end(), sortbysec);
+		write_explainations(output, max_DI);
 		
-		explication_set.print_sentences_of_a_sample(i, output);
-		output << "-3\n";
-		*/
+		
 		/* Calcul pour les taux */
 		/*correct[true_label] +=  nb_correct(explication_set, save_prem[true_label], i, true);  //nb de correct dans la prémisse du sample i
 		correct[true_label] +=  nb_correct(explication_set, save_hyp[true_label], i, false);  //nb de correct dans l'hypothèse du sample i*/
