@@ -315,8 +315,7 @@ void dev_score(RNN& rnn, ParameterCollection& model, DataSet& dev_set, Embedding
 
 
 
-void explain_label(vector<float>& probs, vector<float>& original_probs, vector<float>& DI, unsigned label_explained, 
-	unsigned true_label)
+void explain_label(vector<float>& probs, vector<float>& original_probs, float& DI, unsigned label_explained)
 {
 	float distance;
 	float di_tmp = 0;
@@ -329,8 +328,8 @@ void explain_label(vector<float>& probs, vector<float>& original_probs, vector<f
 		di_tmp += distance;
 	}
 	
-	if(di_tmp > DI[label_explained])
-		DI[label_explained] = di_tmp;
+	if(di_tmp > DI)
+		DI = di_tmp;
 }
 
 
@@ -404,14 +403,11 @@ void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_sample
 void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, DataSet& explication_set, Embeddings& embedding, unsigned num_expr,
 	bool is_premise, unsigned word, vector<float>& original_probs, vector<pair<unsigned,float>>& max_DI, unsigned num_sample, Data* copy)
 {
-	//vector<float> vect_DI(NB_CLASSES, -999); // contient DI pour neutral, inf, contradiction
 	float DI = -9999; //le DI de l'expression courrante. ça sera le max des DI calculés avec les expr de remplacement.
 	
-	//std::vector<float>::iterator index_min_it;
 	unsigned index_min, label_predicted;
 	unsigned nb_changing_words;
 	unsigned changing_word;
-	//double proba_log=0;
 	
 
 	nb_changing_words = explication_set.get_nb_switch_words(is_premise, num_expr, num_sample);
@@ -424,24 +420,13 @@ void imp_words_for_mesure(RNN& rnn, ComputationGraph& cg, DataSet& explication_s
 		explication_set.modif_word(is_premise, num_expr, nb, num_sample);
 		
 		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
-		explain_label(probs, original_probs, vect_DI, label_explained, explication_set.get_label(num_sample)); //max de ça = l'importance du mot. A CHANGER (ON EN EST LA) !!!!!!!!!!!!
+		explain_label(probs, original_probs, DI, explication_set.get_label(num_sample)); //max de ça = l'importance du mot. 
 		
 		reset_data(*copy, num_sample);
 	}
 	
 		
-	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-	{
-		index_min_it = std::min_element(max_DI[lab].begin(), max_DI[lab].end());
-		index_min = std::distance(std::begin(max_DI[lab]), index_min_it);
-		
-		
-		if(vect_DI[lab] > max_DI[lab][index_min]) 
-		{
-			max_DI[lab][index_min] = vect_DI[lab];
-			save[lab][index_min] = word_position; 
-		}										
-	}	
+	max_DI[num_expr] = DI;
 	
 }
 
