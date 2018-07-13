@@ -39,32 +39,32 @@ entailment
 premise -2
 19
 {this}
-[church] 3 #great# ACTUAL -1 #chapel# ACTUAL -1 #baseball# ACTUAL -1
-[choir] 3 #singer# ACTUAL -1 #dog# ACTUAL -1 #person# ACTUAL -1
-[sings] 3 #looks# ACTUAL #at# NEXT -1 #eats# ACTUAL #with# NEXT -1 #chants# ACTUAL -1
+[church] 3 #bar# ACTUAL -1 #building# ACTUAL -1 #baseball# ACTUAL -1
+[choir] 3 #dancer# ACTUAL -1 #dog# ACTUAL -1 #person# ACTUAL -1
+[sings] 3 #looks# ACTUAL #at# NEXT -1 #eats# ACTUAL #with# NEXT -1 #reads# ACTUAL -1
 {to}
 {the}
 [masses] 3 #dogs# ACTUAL -1 #persons# ACTUAL -1 #birds# ACTUAL -1
 {as}
 {they}
-[sing] 3 #write# ACTUAL -1 #look at# ACTUAL -1 #chant# ACTUAL -1
-[joyous] 3 #sad# ACTUAL -1 #good# ACTUAL -1 #full# ACTUAL -1
-[songs] 3 #things# ACTUAL -1 #chants# ACTUAL -1 #yells# ACTUAL -1
+[sing] 3 #write# ACTUAL -1 #look at# ACTUAL -1 #read# ACTUAL -1
+[joyous] 3 #sad# ACTUAL -1 #good# ACTUAL -1 #empty# ACTUAL -1
+[songs] 3 #things# ACTUAL -1 #barks# ACTUAL -1 #yells# ACTUAL -1
 [from] 3 #by# ACTUAL -1 #with# ACTUAL -1 #at# ACTUAL -1
 {the}
-[book] 3 #restaurant# ACTUAL -1 #manual# ACTUAL -1 #bible# ACTUAL -1
+[book] 3 #restaurant# ACTUAL -1 #manual# ACTUAL -1 #diary# ACTUAL -1
 [at] 3 #from# ACTUAL -1 #in front of# ACTUAL -1 #in# ACTUAL -1
 {a}
-[church] 3 #baseball game# ACTUAL -1 #chapel# ACTUAL -1 #place# ACTUAL -1
+[church] 3 #baseball game# ACTUAL -1 #mountain# ACTUAL -1 #bar# ACTUAL -1
 {.}
 hypothesis -2
 7
 {the}
-[church] 3 #restaurant# ACTUAL -1 #house# ACTUAL -1 #ocean# ACTUAL -1
+[church] 3 #restaurant# ACTUAL -1 #mountain# ACTUAL -1 #ocean# ACTUAL -1
 {is}
-[filled] 3 #empty# ACTUAL -1 #here# ACTUAL -1 #full# ACTUAL -1
+[filled] 3 #empty# ACTUAL -1 #here# ACTUAL -1 #lacking# ACTUAL #of# NEXT -1
 [with] 2 #without# ACTUAL -1 #by# ACTUAL -1
-[song] 3 #masses# ACTUAL -1 #dogs# ACTUAL -1 #benches# ACTUAL -1
+[song] 3 #atheist# ACTUAL -1 #dogs# ACTUAL -1 #benches# ACTUAL -1
 {.} 
 -3
 
@@ -74,32 +74,32 @@ contradiction
 premise -2
 19
 {this}
-[church] 3 #great# ACTUAL -1 #chapel# ACTUAL -1 #baseball# ACTUAL -1
-[choir] 3 #player# ACTUAL -1 #dog# ACTUAL -1 #person# ACTUAL -1
-[sings] 3 #looks# ACTUAL #at# NEXT -1 #plays# ACTUAL #with# NEXT -1 #chants# ACTUAL -1
+[church] 3 #great# ACTUAL -1 #stadium# ACTUAL -1 #baseball# ACTUAL -1
+[choir] 3 #player# ACTUAL -1 #supporter# ACTUAL -1 #person# ACTUAL -1
+[sings] 3 #looks# ACTUAL #at# NEXT -1 #plays# ACTUAL #with# NEXT -1 #performs# ACTUAL -1
 {to}
 {the}
-[masses] 3 #supporters# ACTUAL -1 #people# ACTUAL -1 #dogs# ACTUAL -1
+[masses] 3 #supporters# ACTUAL -1 #players# ACTUAL -1 #dogs# ACTUAL -1
 {as}
 {they}
-[sing] 3 #write# ACTUAL -1 #look at# ACTUAL -1 #chant# ACTUAL -1
+[sing] 3 #play# ACTUAL -1 #look at# ACTUAL -1 #perform# ACTUAL -1
 [joyous] 3 #supportive# ACTUAL -1 #sad# ACTUAL -1 #great# ACTUAL -1
 [songs] 3 #chants# ACTUAL -1 #things# ACTUAL -1 #yells# ACTUAL -1
 [from] 3 #by# ACTUAL -1 #with# ACTUAL -1 #at# ACTUAL -1
 {the}
-[book] 3 #ball# ACTUAL -1 #manual# ACTUAL -1 #chapel# ACTUAL -1
-[at] 3 #from# ACTUAL -1 #in front of# ACTUAL -1 #in# ACTUAL -1
+[book] 3 #ball# ACTUAL -1 #manual# ACTUAL -1 #stadium# ACTUAL -1
+[at] 3 #from# ACTUAL -1 #in front of# ACTUAL -1 #outside# ACTUAL -1
 {a}
-[church] 3 #baseball stadium# ACTUAL -1 #chapel# ACTUAL -1 #place# ACTUAL -1
+[church] 3 #baseball game# ACTUAL -1 #stadium# ACTUAL -1 #baseball stadium# ACTUAL -1
 {.} 
 hypothesis -2
 7
 {a}
-[choir] 3 #person# ACTUAL -1 #dog# ACTUAL -1 #singer# ACTUAL -1
+[choir] 3 #person# ACTUAL -1 #dog# ACTUAL -1 #player# ACTUAL -1
 [singing] 3 #sleeping# ACTUAL -1 #chanting# ACTUAL -1 #not# ACTUAL -1
-[at] 3 #watching# ACTUAL -1 #supporting# ACTUAL -1 #on# ACTUAL -1
+[at] 3 #watching# ACTUAL -1 #supporting# ACTUAL -1 #outside# ACTUAL -1
 {a}
-[baseball game] 3 #church# ACTUAL -1 #mountain# ACTUAL -1 #place# ACTUAL -1
+[baseball game] 3 #church# ACTUAL -1 #chapel# ACTUAL -1 #place# ACTUAL -1
 {.}
 -3
 
@@ -109,7 +109,7 @@ neutral
 premise -2
 15
 {a}
-[woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
+[woman] 3 #man# ACTUAL -1 #guy# ACTUAL -1 #dog# ACTUAL -1
 [with] 3 #without# ACTUAL -1 #wearing# ACTUAL -1 #selling# ACTUAL -1
 {a}
 [green] 3 #red# ACTUAL -1 #an# PREV #old# ACTUAL -1 #new# ACTUAL -1
@@ -121,14 +121,14 @@ premise -2
 {a}
 [very] 3 #huge# ACTUAL -1 #an# PREV #old# ACTUAL -1 #tiny# ACTUAL -1
 [big] 3 #huge# ACTUAL -1 #old# ACTUAL -1 #tiny# ACTUAL -1
-[grin] 3 #child# ACTUAL -1 #smile# ACTUAL -1 #old woman# ACTUAL -1
+[grin] 3 #child# ACTUAL -1 #smile# ACTUAL -1 #man# ACTUAL -1
 {.}
 hypothesis -2
 5
 {the}
-[woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
+[woman] 3 #man# ACTUAL -1 #guy# ACTUAL -1 #dog# ACTUAL -1
 [is] 2 #is not# ACTUAL -1 #was# ACTUAL -1
-[young] 3 #depressed# ACTUAL -1 #smiling# ACTUAL -1 #old# ACTUAL -1
+[young] 3 #depressed# ACTUAL -1 #smiling# ACTUAL -1 #naked# ACTUAL -1
 {.} 
 -3
 
@@ -138,7 +138,7 @@ entailment
 premise -2
 15
 {a}
-[woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
+[woman] 3 #man# ACTUAL -1 #guy# ACTUAL -1 #dog# ACTUAL -1
 [with] 3 #without# ACTUAL -1 #wearing# ACTUAL -1 #selling# ACTUAL -1
 {a}
 [green] 3 #colorful# ACTUAL -1 #red# ACTUAL -1 #an# PREV #old# ACTUAL -1
@@ -150,15 +150,15 @@ premise -2
 {a}
 [very] 3 #huge# ACTUAL -1 #an# PREV #old# ACTUAL -1 #tiny# ACTUAL -1
 [big] 3 #huge# ACTUAL -1 #old# ACTUAL -1 #tiny# ACTUAL -1
-[grin] 3 #dog# ACTUAL -1 #smile# ACTUAL -1 #man# ACTUAL -1
+[grin] 3 #depression# ACTUAL -1 #sadness# ACTUAL -1 #man# ACTUAL -1
 {.}
 hypothesis -2
 6
 {the}
-[woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
+[woman] 3 #man# ACTUAL -1 #guy# ACTUAL -1 #dog# ACTUAL -1
 [is] 2 #is not# ACTUAL -1 #was# ACTUAL -1
-[very] 3 #not# ACTUAL -1 #really# ACTUAL -1 #liking being# ACTUAL -1
-[happy] 3 #depressed# ACTUAL -1 #dressed# ACTUAL -1 #old# ACTUAL -1
+[very] 3 #not# ACTUAL -1 #looking# ACTUAL -1 #liking being# ACTUAL -1
+[happy] 3 #depressed# ACTUAL -1 #sad# ACTUAL -1 #old# ACTUAL -1
 {.} 
 -3
 
@@ -179,15 +179,15 @@ premise -2
 [and] 2 #without# ACTUAL -1 #wearing# ACTUAL -1
 {a}
 [very] 3 #huge# ACTUAL -1 #an# PREV #old# ACTUAL -1 #tiny# ACTUAL -1
-[big] 3 #huge# ACTUAL -1 #old# ACTUAL -1 #tiny# ACTUAL -1
-[grin] 3 #injury# ACTUAL -1 #sandwich# ACTUAL -1 #man# ACTUAL -1
+[big] 3 #sad# ACTUAL -1 #old# ACTUAL -1 #tiny# ACTUAL -1
+[grin] 3 #injury# ACTUAL -1 #gun# ACTUAL -1 #hurt# ACTUAL -1
 {.}
 hypothesis -2
 5
 {the}
 [woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
 [has been] 3 #likes to# ACTUAL -1 #had been# ACTUAL -1 #has not been# ACTUAL -1
-[shot] 3 #smiling# ACTUAL -1 #depressed# ACTUAL -1 #old# ACTUAL -1
+[shot] 3 #smiling# ACTUAL -1 #happy# ACTUAL -1 #old# ACTUAL -1
 {.} 
 -3
 
@@ -197,24 +197,24 @@ entailment
 premise -2
 11
 {an}
-[old] 3 #a# PREV #posing# ACTUAL -1 #a# PREV #moving# ACTUAL -1 #a# PREV #small# ACTUAL -1
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
+[old] 3 #a# PREV #posing# ACTUAL -1 #a# PREV #still# ACTUAL -1 #a# PREV #small# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #cat# ACTUAL -1
 [with] 3 #without# ACTUAL -1 #breaking# ACTUAL -1 #posing# ACTUAL -1
 {a}
 [package] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #an# PREV #ad# ACTUAL -1
-[poses] 3 #runs# ACTUAL -1 #eats# ACTUAL -1 #still# ACTUAL -1
+[poses] 3 #runs# ACTUAL -1 #eats# ACTUAL -1 #sleeps# ACTUAL -1
 [in front of] 3 #outside# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
 {an}
-[advertisement] 3 #ad# ACTUAL -1 #restaurant# ACTUAL -1 #place# ACTUAL -1
+[advertisement] 3 #a# PREV #tv# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #mountain# ACTUAL -1
 {.}
 hypothesis -2
 7
 {a}
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
-[poses] 3 #runs# ACTUAL -1 #eats# ACTUAL -1 #still# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #cat# ACTUAL -1
+[poses] 3 #runs# ACTUAL -1 #eats# ACTUAL -1 #sleeps# ACTUAL -1
 [in front of] 3 #outside# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
 {an}
-[ad] 3 #advertisement# ACTUAL -1 #restaurant# ACTUAL -1 #place# ACTUAL -1
+[ad] 3 #a# PREV #tv# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #mountain# ACTUAL -1
 {.} 
 -3
 
@@ -224,26 +224,26 @@ neutral
 premise -2
 11
 {an}
-[old] 3 #a# PREV #posing# ACTUAL -1 #a# PREV #moving# ACTUAL -1 #a# PREV #small# ACTUAL -1
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
+[old] 3 #a# PREV #posing# ACTUAL -1 #a# PREV #still# ACTUAL -1 #a# PREV #small# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #cat# ACTUAL -1
 [with] 3 #without# ACTUAL -1 #breaking# ACTUAL -1 #posing# ACTUAL -1
 {a}
 [package] 3 #woman# ACTUAL -1 #beer# ACTUAL -1 #an# PREV #ad# ACTUAL -1
-[poses] 3 #runs# ACTUAL -1 #eats# ACTUAL -1 #is still# ACTUAL -1
+[poses] 3 #runs# ACTUAL -1 #walks# ACTUAL -1 #sleeps# ACTUAL -1
 [in front of] 3 #outside# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
 {an}
-[advertisement] 3 #ad# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #place# ACTUAL -1
+[advertisement] 3 #a# PREV #tv# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #mountain# ACTUAL -1
 {.}
 hypothesis -2
 9
 {a}
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
-[poses] 3 #runs# ACTUAL -1 #eats# ACTUAL -1 #still# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #cat# ACTUAL -1
+[poses] 3 #runs# ACTUAL -1 #walks# ACTUAL -1 #sleeps# ACTUAL -1
 [in front of] 3 #outside# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
 {an}
-[ad] 3 #advertisement# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #place# ACTUAL -1
+[ad] 3 #a# PREV #shop# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #place# ACTUAL -1
 [for] 3 #drinking# ACTUAL -1 #with a# ACTUAL -1 #without a# ACTUAL -1
-[beer] 3 #woman# ACTUAL -1 #man# ACTUAL -1 #dogs# ACTUAL -1
+[beer] 3 #woman# ACTUAL -1 #man# ACTUAL -1 #package# ACTUAL -1
 {.} 
 -3
 
@@ -253,24 +253,24 @@ contradiction
 premise -2
 11
 {an}
-[old] 3 #a# PREV #walking# ACTUAL -1 #a# PREV #small# ACTUAL -1 #a# PREV #posing# ACTUAL -1
+[old] 3 #a# PREV #walking# ACTUAL -1 #a# PREV #small# ACTUAL -1 #a# PREV #young# ACTUAL -1
 [man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
-[with] 3 #without# ACTUAL -1 #breaking# ACTUAL -1 #posing# ACTUAL -1
+[with] 3 #without# ACTUAL -1 #breaking# ACTUAL -1 #walking# ACTUAL -1
 {a}
 [package] 3 #bag# ACTUAL -1 #beer# ACTUAL -1 #an# PREV #ad# ACTUAL -1
-[poses] 3 #walks# ACTUAL -1 #eats# ACTUAL -1 #is still# ACTUAL -1
-[in front of] 3 #outside# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
+[poses] 3 #walks# ACTUAL -1 #eats# ACTUAL -1 #moves# ACTUAL -1
+[in front of] 3 #next to# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
 {an}
-[advertisement] 3 #ad# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #place# ACTUAL -1
+[advertisement] 3 #ad# ACTUAL -1 #a# PREV #place# ACTUAL -1 #a# PREV #street# ACTUAL -1
 {.}
 hypothesis -2
 7
 {a}
 [man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
-[walks] 3 #poses# ACTUAL -1 #runs# ACTUAL -1 #eats# ACTUAL -1
-[by] 3 #in front of# ACTUAL -1 #outside# ACTUAL -1 #beside# ACTUAL -1
+[walks] 3 #poses# ACTUAL -1 #still# ACTUAL -1 #eats# ACTUAL -1
+[by] 3 #in front of# ACTUAL -1 #next to# ACTUAL -1 #beside# ACTUAL -1
 {an}
-[ad] 3 #advertisement# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #place# ACTUAL -1
+[ad] 3 #advertisement# ACTUAL -1 #a# PREV #place# ACTUAL -1 #a# PREV #street# ACTUAL -1
 {.} 
 -3
 
@@ -280,25 +280,25 @@ entailment
 premise -2
 8
 {a}
-[land rover] 3 #car# ACTUAL -1 #bike# ACTUAL -1 #vehicle# ACTUAL -1
+[land rover] 3 #bus# ACTUAL -1 #bike# ACTUAL -1 #plane# ACTUAL -1
 [is being] 1 #were# ACTUAL -1
 [driven] 3 #painted# ACTUAL -1 #broke# ACTUAL -1 #fixed# ACTUAL -1
 [across] 3 #beside# ACTUAL -1 #by# ACTUAL -1 #outside# ACTUAL -1
 {a}
-[river] 3 #restaurant# ACTUAL -1 #lake# ACTUAL -1 #field# ACTUAL -1
+[river] 3 #restaurant# ACTUAL -1 #mountain# ACTUAL -1 #street# ACTUAL -1
 {.} 
 hypothesis -2
 11
 {a}
-[land rover] 3 #car# ACTUAL -1 #bike# ACTUAL -1 #vehicle# ACTUAL -1
+[land rover] 3 #bus# ACTUAL -1 #bike# ACTUAL -1 #plane# ACTUAL -1
 {is}
-[splashing] 3 #painting# ACTUAL -1 #crossing# ACTUAL -1 #avoiding# ACTUAL -1
+[splashing] 3 #painting# ACTUAL -1 #full of# ACTUAL -1 #avoiding# ACTUAL -1
 [water] 3 #blood# ACTUAL -1 #paint# ACTUAL -1 #drops# ACTUAL -1
 [as] 3 #while# ACTUAL -1 #later# ACTUAL -1 #previously# ACTUAL -1
 {it}
 [crosses] 3 #flies over# ACTUAL -1 #touches# ACTUAL -1 #cleans# ACTUAL -1
 {a}
-[river] 3 #restaurant# ACTUAL -1 #lake# ACTUAL -1 #field# ACTUAL -1
+[river] 3 #restaurant# ACTUAL -1 #mountain# ACTUAL -1 #street# ACTUAL -1
 {.} 
 -3
 
@@ -308,21 +308,21 @@ entailment
 premise -2
 8
 {a}
-[land rover] 3 #car# ACTUAL -1 #bike# ACTUAL -1 #vehicle# ACTUAL -1
+[land rover] 3 #bus# ACTUAL -1 #bike# ACTUAL -1 #plane# ACTUAL -1
 [is being] 2 #was being# ACTUAL -1 #has been# ACTUAL -1
 [driven] 3 #painted# ACTUAL -1 #broke# ACTUAL -1 #fixed# ACTUAL -1
-[across] 3 #beside# ACTUAL -1 #by# ACTUAL -1 #outside# ACTUAL -1
+[across] 3 #beside# ACTUAL -1 #next to# ACTUAL -1 #outside# ACTUAL -1
 {a}
-[river] 3 #restaurant# ACTUAL -1 #lake# ACTUAL -1 #field# ACTUAL -1
+[river] 3 #restaurant# ACTUAL -1 #mountain# ACTUAL -1 #street# ACTUAL -1
 {.} 
 hypothesis -2
 7
 {a}
-[vehicle] 3 #car# ACTUAL -1 #bike# ACTUAL -1 #land rover# ACTUAL -1
+[vehicle] 3 #bus# ACTUAL -1 #bike# ACTUAL -1 #plane# ACTUAL -1
 [is] 2 #was# ACTUAL -1 #rolling# ACTUAL -1
-[crossing] 3 #watching# ACTUAL -1 #feeling# ACTUAL -1 #parking at# ACTUAL -1
+[crossing] 3 #watching# ACTUAL -1 #outside# ACTUAL -1 #parking at# ACTUAL -1
 {a}
-[river] 3 #restaurant# ACTUAL -1 #lake# ACTUAL -1 #field# ACTUAL -1
+[river] 3 #restaurant# ACTUAL -1 #mountain# ACTUAL -1 #street# ACTUAL -1
 {.}
 -3
 
@@ -332,22 +332,22 @@ contradiction
 premise -2
 8
 {a}
-[land rover] 3 #car# ACTUAL -1 #bike# ACTUAL -1 #sedan# ACTUAL -1
+[land rover] 3 #bus# ACTUAL -1 #bike# ACTUAL -1 #plane# ACTUAL -1
 [is being] 2 #was being# ACTUAL -1 #has been# ACTUAL -1
-[driven] 3 #stuck# ACTUAL -1 #rolled# ACTUAL -1 #watched# ACTUAL -1
-[across] 3 #beside# ACTUAL -1 #by# ACTUAL -1 #outside# ACTUAL -1
+[driven] 3 #stuck# ACTUAL -1 #still# ACTUAL -1 #watched# ACTUAL -1
+[across] 3 #beside# ACTUAL -1 #next to# ACTUAL -1 #outside# ACTUAL -1
 {a}
-[river] 3 #restaurant# ACTUAL -1 #lake# ACTUAL -1 #field# ACTUAL -1
+[river] 3 #restaurant# ACTUAL -1 #mountain# ACTUAL -1 #street# ACTUAL -1
 {.} 
 hypothesis -2
 8
 {a}
-[sedan] 3 #car# ACTUAL -1 #bike# ACTUAL -1 #land rover# ACTUAL -1
+[sedan] 3 #bus# ACTUAL -1 #bike# ACTUAL -1 #plane# ACTUAL -1
 {is}
 [stuck] 3 #driving# ACTUAL -1 #crossing# ACTUAL -1 #still# ACTUAL -1
 [in the middle of] 3 #through# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
 {a}
-[river] 3 #restaurant# ACTUAL -1 #lake# ACTUAL -1 #field# ACTUAL -1
+[river] 3 #restaurant# ACTUAL -1 #mountain# ACTUAL -1 #street# ACTUAL -1
 {.}
 -3
 
@@ -361,9 +361,9 @@ premise -2
 [playing] 3 #looking at# ACTUAL -1 #breaking# ACTUAL -1 #holding# ACTUAL -1
 {an}
 [electric] 3 #accoustic# ACTUAL -1 #a# PREV #small# ACTUAL -1 #a# PREV #red# ACTUAL -1
-[guitar] 3 #banjo# ACTUAL -1 #instrument# ACTUAL -1 #piano# ACTUAL -1
-[on] 3 #from# ACTUAL -1 #beside a# ACTUAL -1 #in front of a# ACTUAL -1
-[stage] 3 #the floor# ACTUAL -1 #scene# ACTUAL -1 #outside# ACTUAL -1
+[guitar] 2 #banjo# ACTUAL -1 #instrument# ACTUAL -1
+[on] 3 #down a# ACTUAL -1 #beside a# ACTUAL -1 #in front of a# ACTUAL -1
+[stage] 3 #the floor# ACTUAL -1 #scene# ACTUAL -1 #the outside# ACTUAL -1
 {.}
 hypothesis -2
 8
@@ -383,22 +383,22 @@ entailment
 premise -2
 9
 {a}
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
-[playing] 3 #looking at# ACTUAL -1 #breaking# ACTUAL -1 #holding# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #cat# ACTUAL -1
+[playing] 3 #watching# ACTUAL -1 #breaking# ACTUAL -1 #fixing# ACTUAL -1
 {an}
 [electric] 3 #accoustic# ACTUAL -1 #a# PREV #small# ACTUAL -1 #a# PREV #red# ACTUAL -1
 [guitar] 3 #banjo# ACTUAL -1 #instrument# ACTUAL -1 #piano# ACTUAL -1
 [on] 3 #at the# ACTUAL -1 #beside a# ACTUAL -1 #in front of a# ACTUAL -1
-[stage] 3 #the floor# ACTUAL -1 #scene# ACTUAL -1 #outside# ACTUAL -1
+[stage] 3 #the floor# ACTUAL -1 #scene# ACTUAL -1 #the outside# ACTUAL -1
 {.}
 hypothesis -2
 7
 {a}
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
-[playing] 3 #looking at# ACTUAL -1 #breaking# ACTUAL -1 #holding# ACTUAL -1
-[guitar] 3 #banjo# ACTUAL -1 #an instrument# ACTUAL -1 #piano# ACTUAL -1
-[on] 3 #at the# ACTUAL -1 #beside a# ACTUAL -1 #in front of a# ACTUAL -1
-[stage] 3 #the floor# ACTUAL -1 #scene# ACTUAL -1 #outside# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #cat# ACTUAL -1
+[playing] 3 #watching# ACTUAL -1 #breaking# ACTUAL -1 #fixing# ACTUAL -1
+[guitar] 3 #banjo# ACTUAL -1 #flute# ACTUAL -1 #piano# ACTUAL -1
+[on] 3 #next to the# ACTUAL -1 #beside a# ACTUAL -1 #in front of a# ACTUAL -1
+[stage] 3 #the floor# ACTUAL -1 #scene# ACTUAL -1 #the outside# ACTUAL -1
 {.}
 -3
 
@@ -408,8 +408,8 @@ neutral
 premise -2
 9
 {a}
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
-[playing] 3 #looking at# ACTUAL -1 #breaking# ACTUAL -1 #holding# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #lady# ACTUAL -1
+[playing] 3 #performing# ACTUAL -1 #breaking# ACTUAL -1 #eating# ACTUAL -1
 {an}
 [electric] 3 #accoustic# ACTUAL -1 #a# PREV #small# ACTUAL -1 #a# PREV #red# ACTUAL -1
 [guitar] 3 #banjo# ACTUAL -1 #instrument# ACTUAL -1 #piano# ACTUAL -1
@@ -419,13 +419,15 @@ premise -2
 hypothesis -2
 7
 {a}
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #lady# ACTUAL -1
 {is}
 [performing] 3 #playing# ACTUAL -1 #eating# ACTUAL -1 #sleeping# ACTUAL -1
-[for] 3 #with# ACTUAL -1 #looking at# ACTUAL -1 #counting# ACTUAL -1
+[for] 3 #with# ACTUAL -1 #playing# ACTUAL -1 #counting# ACTUAL -1
 [cash] 3 #the public# ACTUAL -1 #women# ACTUAL -1 #dogs# ACTUAL -1
 {.}
 -3
+
+======================================================================================
 
 
 -3
