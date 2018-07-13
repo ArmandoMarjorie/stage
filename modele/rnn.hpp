@@ -22,16 +22,58 @@
 	 * \file rnn.hpp
 	*/
 	
+	struct Detokenisation
+	{
+		std::map<unsigned,std::string> id_to_word;
+		
+		
+		Detokenisation(char* lexique_filename)
+		{
+			std::ifstream lexique_file(lexique_filename, std::ios::in);
+			if(!lexique_file)
+			{ 
+				std::cerr << "Impossible to open the file " << lexique_filename << std::endl;
+				exit(EXIT_FAILURE);
+			}
+			std::string word;
+			int id;
+			while(lexique_file >> word && lexique_file >> id)
+				id_to_word[id] = word;
+			lexique_file.close();
+		}
+		
+		std::string detoken(unsigned num_expr, bool is_premise, Data& data_copy)
+		{
+			std::string word, tmp="";
+			unsigned nb_word, sentence;
+			if(is_premise)
+				sentence=1;
+			else
+				sentence=2;
+			
+			nb_word = data_copy.get_nb_words(sentence, num_expr);
+			for(unsigned i=0; i<nb_word; ++i)
+			{
+				tmp = tmp + id_to_word[data_copy.get_word_id(sentence, num_expr, i)];
+				tmp = tmp + "_";
+			}		
+			
+			return tmp;
+		}
+	};
 	
 	struct ExplainationsBAXI
 	{
-		
 		unsigned num_expr;
 		bool is_premise;
 		float DI;
-		std::map<unsigned,std::string> id_to_word;
+		
 	
-		ExplainationsBAXI(unsigned n, bool prem, float d);
+		ExplainationsBAXI(unsigned n, bool prem, float d) :
+			num_expr(n), is_premise(prem), DI(d)
+		{
+			
+		}
 		
 		bool operator > (const ExplainationsBAXI& eb) const
 		{

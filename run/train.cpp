@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 
 	// Build model -----------------------------------------------------------------------------------
 	ParameterCollection model;
-
+/*
 	// Load dataset ----------------------------------------------------------------------------------
 	Data train_set(argv[1]);
 	Data dev_set(argv[2]);
@@ -63,8 +63,6 @@ int main(int argc, char** argv)
 	if(systeme < 3 || systeme == 5)
 	{
 		cerr << "** SYSTEM " << systeme << " **\n";
-		/*unsigned batch_size = static_cast<unsigned>(atoi(argv[8]));
-		unsigned nb_epoch=      static_cast<unsigned>(atoi(argv[7]));*/
 		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), static_cast<unsigned>(systeme), model);
 		run_train(rnn, model, train_set, dev_set, embedding, argv[11], static_cast<unsigned>(atoi(argv[7])), static_cast<unsigned>(atoi(argv[8])));
 	}
@@ -75,6 +73,6 @@ int main(int argc, char** argv)
 		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), static_cast<unsigned>(systeme), model);
 		run_train(rnn, model, train_set, dev_set, embedding, argv[11], static_cast<unsigned>(atoi(argv[7])), static_cast<unsigned>(atoi(argv[8])) );
 	}
-
+*/
 	return 0;
 }

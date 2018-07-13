@@ -312,18 +312,6 @@ void dev_score(RNN& rnn, ParameterCollection& model, DataSet& dev_set, Embedding
 
 	/* BAXI !!!! */
 
-ExplainationsBAXI::ExplainationsBAXI(unsigned n, bool prem, float d) :
-	num_expr(n), is_premise(prem), DI(d)
-{
-	
-}
-
-string ExplainationsBAXI::detoken()
-{
-	// utiliser id_to_word, et voir tous les mots dans l'expr (rajouté un _ dans les espaces)
-}
-
-
 void explain_label(vector<float>& probs, vector<float>& original_probs, float& DI, unsigned label_explained)
 {
 	float distance;
@@ -359,18 +347,18 @@ void affichage_max_DI(vector<vector<float>>& max_DI)
 		cout << endl;
 	}
 }*/
-
+/*
 void init_DI_words(unsigned taille, vector<ExplainationsBAXI>& max_DI)
 {
 	for(unsigned i=0; i < taille; ++i)
 		max_DI.push_back(NULL);
-}
+}*/
 
 
 //pas encore touché
 unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_sample, bool is_premise)
 {
-	unsigned correct = 0;
+	/*unsigned correct = 0;
 	unsigned true_imp_position;
 	for(unsigned word = 0; word < save.size(); ++word)
 	{
@@ -378,13 +366,14 @@ unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_
 		if( std::find(save.begin(), save.end(), true_imp_position) != save.end() )
 			++correct;
 	}
-	return correct;
+	return correct;*/
 	
 }
 
 //pas encore touché
 void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_samples)
 {
+	/*
 	//float precision;
 	float recall;
 	//float f_mesure;
@@ -396,9 +385,7 @@ void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_sample
 		correct_total += correct[i];	
 	}
 	
-	/*unsigned total_size = explication_set.get_nb_words_total();
-	precision = correct_total / (double)total_size;
-	*/
+	
 	unsigned total_imp_size = explication_set.get_nb_words_imp_total(nb_samples);
 	recall = correct_total / (double)total_imp_size;
 	//cout << "correct_total = " << correct_total << " total_imp_size = " << total_imp_size << endl;
@@ -410,7 +397,7 @@ void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_sample
 	cout << "\tAccurracy for neutral = " <<correct[0] <<"/"<< (double)nb_label[0] << endl;
 	cout << "\tAccurracy for entailment = " << correct[1] <<"/"<< (double)nb_label[1] << endl;
 	cout << "\tAccurracy for contradiction = " << correct[2] <<"/"<< (double)nb_label[2] << endl;
-	
+	*/
 }
 
 
@@ -437,34 +424,23 @@ void calcul_importance(RNN& rnn, ComputationGraph& cg, DataSet& explication_set,
 		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
 		explain_label(probs, original_probs, DI, explication_set.get_label(num_sample)); //max de ça = l'importance du mot. 
 		
-		reset_data(*copy, num_sample);
+		explication_set.reset_data(*copy, num_sample);
 	}
 	
 		
-	max_DI[num_expr] = ExplainationsBAXI(num_expr, is_premise, DI); 
+	max_DI.push_back(ExplainationsBAXI(num_expr, is_premise, DI)); 
 	
 }
 
-//a refaire
-bool sort_explainations(vector<ExplainationsBAXI>& max_DI)
-{
-    
-}
 
 
-void write_explainations(ofstream& output, vector<ExplainationsBAXI>& max_DI)
+void write_explainations(ofstream& output, vector<ExplainationsBAXI>& max_DI, Detokenisation& detok, Data* copy)
 {
 	for(unsigned i=0; i < max_DI.size(); ++i)
-		if(max_DI[i] != NULL)
-			output << "('" << max_DI[i].detoken() << "'), " <<  max_DI[i].DI << endl; //fct  a faire
+		output << "('" << detok.detoken(max_DI[i].num_expr, max_DI[i].is_premise, *copy) << "'), " <<  max_DI[i].DI << endl;
 	output << "-3\n\n\n";
 }
 
-void detruire_max_DI(vector<ExplainationsBAXI>& max_DI)
-{
-	for(unsigned i=0; i<max_DI.size(); ++i)
-		delete max_DI[i];
-}
 
 void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& explication_set, Embeddings& embedding, char* parameters_filename, char* lexique_filename)
 {
@@ -499,6 +475,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 	vector<unsigned> positive(NB_CLASSES,0);  */
 	unsigned pos = 0;  
 	Data* copy=NULL;
+	Detokenisation detok(lexique_filename);
 	
 	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque instance...
 	{
@@ -506,7 +483,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		
 		cout << "SAMPLE " << i << "\n";
 		ComputationGraph cg;
-		copy = new Data(explication_set.get_data_object(i)); // COPY DATA
+		copy = new Data( *(explication_set.get_data_object(i)) ); // COPY DATA
 		
 			// original prediction
 		true_label = explication_set.get_label(i);
@@ -522,13 +499,13 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		output << "neutral : " << original_probs[0] << ", entailment : " << original_probs[1] << ", contradiction : " << original_probs[2] << endl;
 		
 			// init DI of words
-		init_DI_words(explication_set.get_nb_expr(1,i) + explication_set.get_nb_expr(2,i), max_DI);
+		//init_DI_words(explication_set.get_nb_expr(1,i) + explication_set.get_nb_expr(2,i), max_DI);
 		
 		// In the premise
 		for( position=0; position < explication_set.get_nb_expr(1,i); ++position)
 		{
 			if(explication_set.expr_is_important(i, true, position))
-				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, true, original_probs, max_DI, i, copy);
+				calcul_importance(rnn, cg, explication_set, embedding, position, true, original_probs, max_DI, i, copy);
 			//cout << premise[position] << endl;
 		}
 		
@@ -538,13 +515,12 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		for(position=0; position < explication_set.get_nb_expr(2,i); ++position)
 		{	
 			if(explication_set.expr_is_important(i, false, position))
-				imp_words_for_mesure(rnn, cg, explication_set, embedding, position, false, original_probs, max_DI, i, copy);
+				calcul_importance(rnn, cg, explication_set, embedding, position, false, original_probs, max_DI, i, copy);
 			//cout << hypothesis[position] << endl;
 		}
 		
 		sort(max_DI.begin(), max_DI.end(), greater<ExplainationsBAXI>()); 
-		write_explainations(output, max_DI);
-		detruire_max_DI(max_DI);
+		write_explainations(output, max_DI, detok, copy);
 		
 		
 		
