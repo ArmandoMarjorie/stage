@@ -44,8 +44,7 @@ unsigned write_label(string label)
 		return 1;
 	if(label == "contradiction")
 		return 2;
-	else
-		return 44;
+	return 44;
 }
 
 bool verif(char crochet, unsigned num_word, string& word, char acc, char croch, unsigned num_example)
@@ -97,14 +96,14 @@ void tokeniser_nouveau_remplacement(char* lexique, char* file, char* output_f)
 	
 	map< string, int >::iterator it;
 	string word, w, word2;
-	unsigned nb_words, num_example=0, nb_words_remplacement, nb_line=0;
+	unsigned nb_words, num_example=0, nb_words_remplacement, nb_line=0, prev;
 	bool crochet = true;
 	
 	while(f >> word) //lit "-3"
 	{
 		output << word_to_id[word] << endl; //écrit "-3"
 		++nb_line;
-		f >> word; f >> word; //lit "label:" et le label
+		f >> word; //lit le label
 		++nb_line;
 		output << write_label(word) << endl; //écrit le label
 		
@@ -152,6 +151,7 @@ void tokeniser_nouveau_remplacement(char* lexique, char* file, char* output_f)
 					else
 						output << word_to_id[w] << " ";
 				}
+				output.seekp(-1, ios::cur);
 				output << word[word.size()-1] << " ";
 				
 				// EXPRESSIONS DE REMPLACEMENT
@@ -169,6 +169,7 @@ void tokeniser_nouveau_remplacement(char* lexique, char* file, char* output_f)
 							word = word + word2;
 						}
 						//cout << "EXPRESSION DE REMPLACEMENT = " << word << endl;
+						prev = 0;
 						while(word != "-1")
 						{
 							output << word[0];
@@ -190,8 +191,14 @@ void tokeniser_nouveau_remplacement(char* lexique, char* file, char* output_f)
 								else
 									output << word_to_id[w] << " ";						
 							}
+							output.seekp(-1, ios::cur);
 							output << word[word.size()-1] << " ";
 							f >> word; //lit ACTUAL, NEXT ou PREV
+							if(word == "PREV")
+								++prev;
+							if(prev > 1)
+								cout << "sample " << num_example << " : 2 prev\n";
+							
 							//cout << "\tIL EST = " << word << endl;
 							output << word_to_id[word] << " "; 
 							f >> word; //lit une expression de remplacement
@@ -241,26 +248,26 @@ void verif_nb_expressions(char* file)
 	std::string::size_type sz;
 	while(getline(f,word)) //lit "-3"
 	{	
+		//cout << "SAMPLE " << num << endl;
 		getline(f,word); //lit "label:" et le label
 		getline(f,word);//lit "premise" et "-2"
 		
 		for(unsigned nb_phrase=0; nb_phrase<2; ++nb_phrase)
 		{
-			
 			getline(f,word);
-			nb_words = std::stoi (word,&sz);	//chelou	
+			nb_words = std::stoi (word,&sz);
 			
-			cout << "NB MOTS = " <<  nb_words << endl;
+			//cout << "NB MOTS = " <<  nb_words << endl;
 			nb=0;
 			getline(f,word);
 			while(word != "-3" && word != "hypothesis -2")
 			{
-				cout << "ligne = " << word << endl;
+				//cout << "ligne = " << word << endl;
 				
 				++nb;
 				getline(f,word);
 			}
-			cout << "ligne = " << word << endl;
+			//cout << "ligne = " << word << endl;
 			
 			if(nb != nb_words)
 			{
@@ -271,10 +278,86 @@ void verif_nb_expressions(char* file)
 			
 		}
 		++num;
-		
+		getline(f,word);
+		getline(f,word);		
 	}
 	
 }
+
+
+void fichier_pour_lime(char* file, char* output_f)
+{
+	ifstream f(file, ios::in);
+	if(!f)
+	{ 
+		cerr << "Impossible to open the file " << file << endl;
+		exit(EXIT_FAILURE);
+	}		
+	ofstream output(output_f, ios::out | ios::trunc);
+	if(!output)
+	{
+		cerr << "Problem with the output file "<< output_f << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	
+	string word, word2;
+	unsigned nb_words;
+	std::string::size_type sz;
+	unsigned n_samp=0;
+	
+	while(getline(f,word)) //lit "-3"
+	{
+		cout << "SAMPLE " << n_samp << endl;
+		output << word << endl; //écrit "-3"
+		cout << word << endl;
+		getline(f,word); //lit le label
+		cout << word << endl;
+		output << word << endl; //écrit le label
+		
+		for(unsigned nb_phrase=0; nb_phrase<2; ++nb_phrase)
+		{
+			getline(f,word); output << word << endl; //lit "premise" et "-2"
+			cout << word << endl;
+			getline(f,word);
+			nb_words = std::stoi (word,&sz);
+			
+			cout << nb_words << endl;
+			output << nb_words << endl;
+			
+			for(unsigned i=0; i < nb_words; ++i) //pour toutes les expressions composant la phrase
+			{
+				// EXPRESSION DE LA PHRASE
+				f >> word;
+				
+				
+				//cout << "word = " << word << endl;
+				while(word[word.size()-1] != ']' && word[word.size()-1] != '}')
+				{
+					
+					f >> word2;
+					word = word + "_";
+					word = word + word2;
+				}
+				if(word[0] == '[')
+					output << word << " ";
+				getline(f,word);
+				cout << "mot = " << word << endl;
+			}
+			output << endl;
+		}
+		getline(f,word);getline(f,word);getline(f,word);
+		++n_samp;
+		output << "-3" << endl << endl << endl;
+
+	}
+	
+	f.close();	
+	output.close();
+}
+
+
+
 
 int main(int argc, char** argv)
 {
@@ -287,8 +370,8 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 	
-
-	verif_nb_expressions(argv[2]);
-	//tokeniser_nouveau_remplacement(argv[1], argv[2], argv[3]);
+	//fichier_pour_lime(argv[2], argv[3]);
+	tokeniser_nouveau_remplacement(argv[1], argv[2], argv[3]);
+	//verif_nb_expressions(argv[2]);
 	return 0;
 }

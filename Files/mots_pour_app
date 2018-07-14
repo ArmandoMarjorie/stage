@@ -1079,14 +1079,13 @@ hypothesis -2
 {.}
 -3
 
-============================================================================================
 
 -3
 neutral
 premise -2
 22
 {a}
-[person] 3 #woman# ACTUAL -1 #human# ACTUAL -1 #cat# ACTUAL -1
+[person] 3 #dog# ACTUAL -1 #an# PREV #animal# ACTUAL -1 #cat# ACTUAL -1
 [wearing] 3 #without# ACTUAL -1 #selling# ACTUAL -1 #in# ACTUAL -1
 {a}
 [straw] 3 #wool# ACTUAL -1 #coconuts# ACTUAL -1 #red# ACTUAL -1
@@ -1100,9 +1099,9 @@ premise -2
 [apparatus] 3 #machine# ACTUAL -1 #coconut# ACTUAL -1 #shop# ACTUAL -1
 [with] 3 #without# ACTUAL -1 #near# ACTUAL -1 #looking at# ACTUAL -1
 {a}
-[pile] 3 #an# PREV #advertisement# ACTUAL -1 #heap# ACTUAL -1 #hole# ACTUAL -1
+[pile] 3 #an# PREV #advertisement# ACTUAL -1 #heap# ACTUAL -1 #lot# ACTUAL -1
 {of}
-[coconuts] 3 #fruits# ACTUAL -1 #dogs# ACTUAL -1 #coco# ACTUAL -1
+[coconuts] 3 #chairs# ACTUAL -1 #dogs# ACTUAL -1 #meat# ACTUAL -1
 {on}
 {the}
 [ground] 3 #billboard# ACTUAL -1 #shop# ACTUAL -1 #floor# ACTUAL -1
@@ -1110,10 +1109,10 @@ premise -2
 hypothesis -2
 6
 {a}
-[person] 3 #woman# ACTUAL -1 #human# ACTUAL -1 #cat# ACTUAL -1
+[person] 3 #dog# ACTUAL -1 #an# PREV #animal# ACTUAL -1 #cat# ACTUAL -1
 {is}
-[selling] 3 #hating# ACTUAL -1 #with# ACTUAL -1 #far from# ACTUAL -1
-[coconuts] 3 #fruits# ACTUAL -1 #dogs# ACTUAL -1 #things# ACTUAL -1
+[selling] 3 #near# ACTUAL -1 #with# ACTUAL -1 #far from# ACTUAL -1
+[coconuts] 3 #chairs# ACTUAL -1 #dogs# ACTUAL -1 #tv# ACTUAL -1
 {.}
 -3
 
@@ -1124,7 +1123,7 @@ premise -2
 22
 {a}
 [person] 3 #woman# ACTUAL -1 #human# ACTUAL -1 #cat# ACTUAL -1
-[wearing] 3 #without# ACTUAL -1 #burning# ACTUAL -1 #in# ACTUAL -1
+[wearing] 3 #liking# ACTUAL -1 #burning# ACTUAL -1 #in# ACTUAL -1
 {a}
 [straw] 3 #funny# ACTUAL -1 #fire# ACTUAL -1 #red# ACTUAL -1
 [hat] 3 #coconuts# ACTUAL -1 #cap# ACTUAL -1 #pile# ACTUAL -1
@@ -1149,10 +1148,10 @@ hypothesis -2
 {a}
 [person] 3 #woman# ACTUAL -1 #human# ACTUAL -1 #cat# ACTUAL -1
 {is}
-[burning] 3 #wearing# ACTUAL -1 #enjoying# ACTUAL -1 #without# ACTUAL -1
+[burning] 3 #wearing# ACTUAL -1 #in# ACTUAL -1 #without# ACTUAL -1
 {a}
-[straw] 3 #funny# ACTUAL -1 #coconuts# ACTUAL -1 #red# ACTUAL -1
-[hat] 3 #coconuts# ACTUAL -1 #cap# ACTUAL -1 #pile# ACTUAL -1
+[straw] 3 #funny# ACTUAL -1 #big# ACTUAL -1 #red# ACTUAL -1
+[hat] 3 #outside# ACTUAL -1 #cap# ACTUAL -1 #pile# ACTUAL -1
 {.}
 -3
 
@@ -1165,8 +1164,8 @@ premise -2
 [in] 3 #with# ACTUAL -1 #without# ACTUAL -1 #wearing# ACTUAL -1
 {a}
 [blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #colorful# ACTUAL -1
-[jacket] 3 #shirt# ACTUAL -1 #clothe# ACTUAL -1 #hat# ACTUAL -1
-[decides] 3 #wants# ACTUAL -1 #agrees# ACTUAL -1 #refuses# ACTUAL -1
+[jacket] 3 #car# ACTUAL -1 #clothe# ACTUAL -1 #hat# ACTUAL -1
+[decides] 3 #does not# ACTUAL #NOWORD# NEXT -1 #disagree# ACTUAL -1 #refuses# ACTUAL -1
 {to}
 [lay in] 3 #roll on# ACTUAL -1 #stay on# ACTUAL -1 #sleep on# ACTUAL -1
 {the}
@@ -1176,7 +1175,7 @@ hypothesis -2
 8
 {the}
 [guy] 3 #woman# ACTUAL -1 #male# ACTUAL -1 #person# ACTUAL -1
-[in] 3 #with# ACTUAL -1 #without# ACTUAL -1 #wearing# ACTUAL -1
+[in] 3 #not in# ACTUAL -1 #without# ACTUAL -1 #not wearing# ACTUAL -1
 [yellow] 3 #blue# ACTUAL -1 #green# ACTUAL -1 #color# ACTUAL -1
 {is}
 [rolling on] 3 #laying in# ACTUAL -1 #staying on# ACTUAL -1 #sleeping on# ACTUAL -1
@@ -1189,30 +1188,30 @@ hypothesis -2
 entailment
 premise -2
 11
-[male] 3 #woman# ACTUAL -1 #guy# ACTUAL -1 #person# ACTUAL -1
-[in] 3 #with# ACTUAL -1 #without# ACTUAL -1 #wearing# ACTUAL -1
+[male] 3 #woman# ACTUAL -1 #lady# ACTUAL -1 #dog# ACTUAL -1
+[in] 3 #not in# ACTUAL -1 #without# ACTUAL -1 #not wearing# ACTUAL -1
 {a}
-[blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #colorful# ACTUAL -1
-[jacket] 3 #shirt# ACTUAL -1 #clothe# ACTUAL -1 #hat# ACTUAL -1
-[decides] 3 #wants# ACTUAL -1 #agrees# ACTUAL -1 #refuses# ACTUAL -1
+[blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #red# ACTUAL -1
+[jacket] 3 #shirt# ACTUAL -1 #bikini# ACTUAL -1 #hat# ACTUAL -1
+[decides] 3 #does not# ACTUAL #NOWORD# NEXT -1 #disagree# ACTUAL -1 #refuses# ACTUAL -1
 {to}
-[lay in] 3 #roll on# ACTUAL -1 #stay on# ACTUAL -1 #sleep on# ACTUAL -1
+[lay in] 3 #roll on# ACTUAL -1 #walk on# ACTUAL -1 #run on# ACTUAL -1
 {the}
-[grass] 3 #bed# ACTUAL -1 #floor# ACTUAL -1 #dirt# ACTUAL -1
+[grass] 3 #bed# ACTUAL -1 #blanket# ACTUAL -1 #couch# ACTUAL -1
 {.}
 hypothesis -2
 11
 {the}
-[guy] 3 #woman# ACTUAL -1 #male# ACTUAL -1 #person# ACTUAL -1
-[wearing] 3 #in# ACTUAL -1 #looking at# ACTUAL -1 #without# ACTUAL -1
+[guy] 3 #woman# ACTUAL -1 #female# ACTUAL -1 #dog# ACTUAL -1
+[wearing] 3 #not in# ACTUAL -1 #without# ACTUAL -1 #not wearing# ACTUAL -1
 {a}
-[blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #colorful# ACTUAL -1
-[jacket] 3 #shirt# ACTUAL -1 #clothe# ACTUAL -1 #hat# ACTUAL -1
+[blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #red# ACTUAL -1
+[jacket] 3 #shirt# ACTUAL -1 #bikini# ACTUAL -1 #hat# ACTUAL -1
 {is}
-[laying on] 3 #sleeping on# ACTUAL -1 #rolling on# ACTUAL -1 #staying on# ACTUAL -1
+[laying on] 3 #walking on# ACTUAL -1 #rolling on# ACTUAL -1 #running on# ACTUAL -1
 {the}
 [green] 3 #blue# ACTUAL -1 #dirty# ACTUAL -1 #yellow# ACTUAL -1
-[grass] 3 #bed# ACTUAL -1 #floor# ACTUAL -1 #dirt# ACTUAL -1
+[grass] 3 #bed# ACTUAL -1 #blanket# ACTUAL -1 #couch# ACTUAL -1
 -3
 
 
@@ -1220,31 +1219,31 @@ hypothesis -2
 neutral
 premise -2
 11
-[male] 3 #woman# ACTUAL -1 #guy# ACTUAL -1 #person# ACTUAL -1
-[in] 3 #with# ACTUAL -1 #without# ACTUAL -1 #wearing# ACTUAL -1
+[male] 3 #woman# ACTUAL -1 #lady# ACTUAL -1 #dog# ACTUAL -1
+[in] 3 #not in# ACTUAL -1 #without# ACTUAL -1 #not wearing# ACTUAL -1
 {a}
-[blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #colorful# ACTUAL -1
-[jacket] 3 #shirt# ACTUAL -1 #clothe# ACTUAL -1 #hat# ACTUAL -1
-[decides] 3 #wants# ACTUAL -1 #agrees# ACTUAL -1 #refuses# ACTUAL -1
+[blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #red# ACTUAL -1
+[jacket] 3 #shirt# ACTUAL -1 #bikini# ACTUAL -1 #hat# ACTUAL -1
+[decides] 3 #does not# ACTUAL #NOWORD# NEXT -1 #disagree# ACTUAL -1 #refuses# ACTUAL -1
 {to}
-[lay in] 3 #roll on# ACTUAL -1 #stay on# ACTUAL -1 #sleep on# ACTUAL -1
+[lay in] 3 #roll on# ACTUAL -1 #walk on# ACTUAL -1 #run on# ACTUAL -1
 {the}
-[grass] 3 #bed# ACTUAL -1 #floor# ACTUAL -1 #dirt# ACTUAL -1
+[grass] 3 #bed# ACTUAL -1 #blanket# ACTUAL -1 #couch# ACTUAL -1
 {.}
 hypothesis -2
 13
 {the}
-[guy] 3 #woman# ACTUAL -1 #male# ACTUAL -1 #person# ACTUAL -1
-[wearing] 3 #in# ACTUAL -1 #without# ACTUAL -1 #looking at# ACTUAL -1
+[guy] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #girl# ACTUAL -1
+[wearing] 3 #not in# ACTUAL -1 #without# ACTUAL -1 #not wearing# ACTUAL -1
 {a}
-[blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #colorful# ACTUAL -1
-[jacket] 3 #shirt# ACTUAL -1 #clothe# ACTUAL -1 #hat# ACTUAL -1
+[blue] 3 #yellow# ACTUAL -1 #green# ACTUAL -1 #red# ACTUAL -1
+[jacket] 3 #shirt# ACTUAL -1 #bikini# ACTUAL -1 #hat# ACTUAL -1
 {is}
-[laying on] 3 #sleeping on# ACTUAL -1 #rolling on# ACTUAL -1 #staying on# ACTUAL -1
+[laying on] 3 #sleeping on# ACTUAL -1 #sitting on# ACTUAL -1 #running on# ACTUAL -1
 {the}
-[green] 3 #blue# ACTUAL -1 #dirty# ACTUAL -1 #yellow# ACTUAL -1
-[grass] 3 #bed# ACTUAL -1 #floor# ACTUAL -1 #dirt# ACTUAL -1
-[taking a nap] 3 #taking a shower# ACTUAL -1 #sleeping on it# ACTUAL -1 #laying on it# ACTUAL -1
+[green] 3 #blue# ACTUAL -1 #green# ACTUAL -1 #yellow# ACTUAL -1
+[grass] 3 #bed# ACTUAL -1 #blanket# ACTUAL -1 #couch# ACTUAL -1
+[taking a nap] 3 #running# ACTUAL -1 #rolling# ACTUAL -1 #dying# ACTUAL -1
 {.}
 -3
 
@@ -1254,15 +1253,15 @@ contradiction
 premise -2
 5
 {a}
-[golden retriever] 3 #dog# ACTUAL -1 #an# PREV #animal# ACTUAL -1 #cat# ACTUAL -1
-[nurses] 3 #looks at# ACTUAL -1 #eats# ACTUAL -1 #takes care of# ACTUAL -1
+[golden retriever] 2 #cat# ACTUAL -1 #an# PREV #animal# ACTUAL -1
+[nurses] 2 #looks at# ACTUAL -1 #eats# ACTUAL -1
 [puppies] 3 #cats# ACTUAL -1 #animals# ACTUAL -1 #humans# ACTUAL -1
 {.}
 hypothesis -2
 4
 {a}
-[cat] 3 #an# PREV #animal# ACTUAL -1 #golden retriever# ACTUAL -1 #man# ACTUAL -1
-[nurses] 3 #looks at# ACTUAL -1 #eats# ACTUAL -1 #takes care of# ACTUAL -1
+[cat] 2 #an# PREV #animal# ACTUAL -1 #golden retriever# ACTUAL -1
+[nurses] 2 #looks at# ACTUAL -1 #eats# ACTUAL -1
 [puppies] 3 #golden retriever# ACTUAL -1 #animals# ACTUAL -1 #humans# ACTUAL -1
 -3
 
@@ -1271,22 +1270,22 @@ hypothesis -2
 neutral
 premise -2
 8
-[during] 3 #first# ACTUAL -1 #in# ACTUAL -1 #with# ACTUAL -1
-[calf roping] 3 #horse riding# ACTUAL -1 #dinner# ACTUAL -1 #sport# ACTUAL -1
+[during] 3 #first time# ACTUAL -1 #in# ACTUAL -1 #with# ACTUAL -1
+[calf roping] 3 #horse riding# ACTUAL -1 #dinner# ACTUAL -1 #race# ACTUAL -1
 {a}
-[cowboy] 3 #man# ACTUAL -1 #cook# ACTUAL -1 #roper# ACTUAL -1
-[calls off] 3 #falls off# ACTUAL -1 #washes# ACTUAL -1 #looks at# ACTUAL -1
+[cowboy] 3 #man# ACTUAL -1 #cook# ACTUAL -1 #firefighter# ACTUAL -1
+[calls off] 3 #falls off# ACTUAL -1 #rides# ACTUAL -1 #eats# ACTUAL -1
 [his] 2 #her# ACTUAL -1 #the# ACTUAL -1
-[horse] 3 #pet# ACTUAL -1 #dog# ACTUAL -1 #animal# ACTUAL -1
+[horse] 3 #wife# ACTUAL -1 #dog# ACTUAL -1 #cat# ACTUAL -1
 {.}
 hypothesis -2
 7
 {a}
-[first time] 3 #tall# ACTUAL -1 #calf# ACTUAL -1 #horse# ACTUAL -1
-[roper] 3 #cowboy# ACTUAL -1 #cook# ACTUAL -1 #man# ACTUAL -1
-[falls off] 3 #calls off# ACTUAL -1 #washes# ACTUAL -1 #looks at# ACTUAL -1
+[first time] 3 #cowboy# ACTUAL -1 #calf# ACTUAL -1 #horse# ACTUAL -1
+[roper] 3 #firefighter# ACTUAL -1 #cook# ACTUAL -1 #man# ACTUAL -1
+[falls off] 3 #calls off# ACTUAL -1 #washes# ACTUAL -1 #eats# ACTUAL -1
 [his] 2 #her# ACTUAL -1 #the# ACTUAL -1
-[horse] 3 #pet# ACTUAL -1 #dog# ACTUAL -1 #animal# ACTUAL -1
+[horse] 3 #plane# ACTUAL -1 #dog# ACTUAL -1 #car# ACTUAL -1
 {.}
 -3
 
@@ -1295,13 +1294,13 @@ hypothesis -2
 neutral
 premise -2
 15
-[cheerleaders] 3 #girls# ACTUAL -1 #people# ACTUAL -1 #boys# ACTUAL -1
+[cheerleaders] 3 #girls# ACTUAL -1 #dogs# ACTUAL -1 #boys# ACTUAL -1
 [in] 3 #with# ACTUAL -1 #without# ACTUAL -1 #wearing# ACTUAL -1
 [blue] 3 #pom poms# ACTUAL -1 #red# ACTUAL -1 #colors# ACTUAL -1
-[performing] 3 #shaking# ACTUAL -1 #sleeping# ACTUAL -1 #are# ACTUAL -1
+[performing] 3 #shaking# ACTUAL -1 #sleeping# ACTUAL -1 #running# ACTUAL -1
 [on] 3 #outside# ACTUAL -1 #beside# ACTUAL -1 #in# ACTUAL -1
 {a}
-[football] 3 #baseball# ACTUAL -1 #big# ACTUAL -1 #stadium# ACTUAL -1
+[football] 3 #men 's# ACTUAL -1 #big# ACTUAL -1 #stadium# ACTUAL -1
 [field] 3 #stadium# ACTUAL -1 #tv show# ACTUAL -1 #player# ACTUAL -1
 [underneath] 3 #beside# ACTUAL -1 #by# ACTUAL -1 #on# ACTUAL -1
 {a}
@@ -1313,11 +1312,11 @@ premise -2
 hypothesis -2
 7
 {a}
-[group] 3 #family# ACTUAL -1 #crowd# ACTUAL -1 #band# ACTUAL -1
+[group] 3 #family# ACTUAL -1 #few# ACTUAL #NOWORD# NEXT -1 #band# ACTUAL -1
 {of}
-[girls] 3 #cheerleaders# ACTUAL -1 #people# ACTUAL -1 #boys# ACTUAL -1
-[shake] 3 #performing with# ACTUAL -1 #with# ACTUAL -1 #looking at# ACTUAL -1
-[pom poms] 3 #goal# ACTUAL -1 #player# ACTUAL -1 #things# ACTUAL -1
+[girls] 3 #cheerleaders# ACTUAL -1 #dogs# ACTUAL -1 #boys# ACTUAL -1
+[shake] 3 #performing with# ACTUAL -1 #sleeping on# ACTUAL -1 #eat# ACTUAL -1
+[pom poms] 3 #drinks# ACTUAL -1 #player# ACTUAL -1 #dogs# ACTUAL -1
 {.}
 -3
 
@@ -1326,25 +1325,25 @@ hypothesis -2
 neutral
 premise -2
 6
-[two] 3 #group of# ACTUAL -1 #some# ACTUAL -1 #no# ACTUAL -1
-[women] 3 #fathers# ACTUAL -1 #mothers# ACTUAL -1 #people# ACTUAL -1
-[on] 3 #looking at# ACTUAL -1 #outside# ACTUAL -1 #at# ACTUAL -1
+[two] 3 #few# ACTUAL -1 #three# ACTUAL -1 #no# ACTUAL -1
+[women] 3 #fathers# ACTUAL -1 #men# ACTUAL -1 #dogs# ACTUAL -1
+[on] 3 #looking at# ACTUAL -1 #outside# ACTUAL -1 #liking# ACTUAL -1
 {a}
-[beach] 3 #lake# ACTUAL -1 #restaurant# ACTUAL -1 #place# ACTUAL -1
+[beach] 3 #church# ACTUAL -1 #restaurant# ACTUAL -1 #bed# ACTUAL -1
 {.}
 hypothesis -2
 12
-[two] 3 #group of# ACTUAL -1 #some# ACTUAL -1 #no# ACTUAL -1
-[mothers] 3 #men# ACTUAL -1 #women# ACTUAL -1 #people# ACTUAL -1
+[two] 3 #few# ACTUAL -1 #three# ACTUAL -1 #no# ACTUAL -1
+[mothers] 3 #men# ACTUAL -1 #women# ACTUAL -1 #guys# ACTUAL -1
 [enjoy] 3 #hate# ACTUAL -1 #want# ACTUAL -1 #looking for# ACTUAL -1
 {a}
 [day] 3 #night# ACTUAL -1 #dream# ACTUAL -1 #sandwich# ACTUAL -1
 [at] 3 #on# ACTUAL -1 #outside# ACTUAL -1 #looking at# ACTUAL -1
 {the}
-[beach] 3 #lake# ACTUAL -1 #restaurant# ACTUAL -1 #place# ACTUAL -1
+[beach] 3 #church# ACTUAL -1 #restaurant# ACTUAL -1 #mountain# ACTUAL -1
 [with] 3 #without# ACTUAL -1 #thinking about# ACTUAL -1 #talking with# ACTUAL -1
 {their}
-[husbands] 3 #wives# ACTUAL -1 #pets# ACTUAL -1 #swimsuits# ACTUAL -1
+[husbands] 3 #bikini# ACTUAL -1 #tv# ACTUAL -1 #coat# ACTUAL -1
 {.}
 -3
 
@@ -1355,9 +1354,9 @@ premise -2
 18
 [four] 3 #no# ACTUAL -1 #some# ACTUAL -1 #group of# ACTUAL -1
 [men] 3 #women# ACTUAL -1 #guys# ACTUAL -1 #people# ACTUAL -1
-[playing] 3 #dreaming about# ACTUAL -1 #breaking# ACTUAL -1 #beside# ACTUAL -1
+[playing] 3 #dreaming about# ACTUAL -1 #next to# ACTUAL -1 #beside# ACTUAL -1
 [drums] 3 #piano# ACTUAL -1 #on bed# ACTUAL -1 #in motel# ACTUAL -1
-[in] 3 #with# ACTUAL -1 #without# ACTUAL -1 #looking at# ACTUAL -1
+[in] 3 #with# ACTUAL -1 #without# ACTUAL -1 #under# ACTUAL -1
 [very] 3 #light# ACTUAL -1 #little# ACTUAL -1 #heavy# ACTUAL -1
 [orange] 3 #red# ACTUAL -1 #green# ACTUAL -1 #night# ACTUAL -1
 [lighting] 3 #night light# ACTUAL -1 #beds# ACTUAL -1 #motel# ACTUAL -1
@@ -1365,7 +1364,7 @@ premise -2
 [one of them] 3 #a man# ACTUAL -1 #a person# ACTUAL -1 #a woman# ACTUAL -1
 {is}
 {also}
-[drinking] 3 #sleeping on# ACTUAL -1 #beside# ACTUAL -1 #playing with# ACTUAL -1
+[drinking] 3 #sleeping on# ACTUAL -1 #asleep on# ACTUAL -1 #dreaming about# ACTUAL -1
 [something] 3 #water# ACTUAL -1 #thing# ACTUAL -1 #sleeping pill# ACTUAL -1
 [out of] 2 #from# ACTUAL -1 #flowing of# ACTUAL -1
 {a}
@@ -1376,10 +1375,10 @@ hypothesis -2
 {the}
 [men] 3 #women# ACTUAL -1 #people# ACTUAL -1 #guys# ACTUAL -1
 {are}
-[asleep] 3 #playing# ACTUAL -1 #drinking# ACTUAL -1 #reading# ACTUAL -1
+[asleep] 3 #playing# ACTUAL -1 #drinking# ACTUAL -1 #tall# ACTUAL -1
 [in] 3 #outside# ACTUAL -1 #at# ACTUAL -1 #dreaming about# ACTUAL -1
 {the}
-[motel] 3 #bottle# ACTUAL -1 #drums# ACTUAL -1 #snow# ACTUAL -1
+[motel] 3 #bottle# ACTUAL -1 #drums# ACTUAL -1 #lighting# ACTUAL -1
 -3
 
 
@@ -1387,12 +1386,12 @@ hypothesis -2
 contradiction
 premise -2
 11
-[two] 3 #some# ACTUAL -1 #no# ACTUAL -1 #three# ACTUAL -1
+[two] 3 #some# ACTUAL -1 #no# ACTUAL -1 #few# ACTUAL -1
 [men] 3 #women# ACTUAL -1 #people# ACTUAL -1 #guys# ACTUAL -1
-[have] 2 #had# ACTUAL -1 #like# ACTUAL -1
+[have] 3 #had# ACTUAL -1 #like# ACTUAL -1 #dreaming about# ACTUAL -1
 {an}
 [after dinner] 3 #a# PREV #sleepy# ACTUAL -1 #a# PREV #tired# ACTUAL -1 #a# PREV #great# ACTUAL -1
-[discussion] 3 #nap# ACTUAL -1 #fight# ACTUAL -1 #yawn# ACTUAL -1
+[discussion] 3 #nap# ACTUAL -1 #sleep# ACTUAL -1 #yawn# ACTUAL -1
 [at] 2 #outside# ACTUAL -1 #by# ACTUAL -1
 {the}
 [dinner] 3 #motel# ACTUAL -1 #big# ACTUAL -1 #red# ACTUAL -1
@@ -1402,8 +1401,8 @@ hypothesis -2
 7
 {the}
 [men] 3 #women# ACTUAL -1 #NOWORD# PREV #people# ACTUAL -1 #guys# ACTUAL -1
-[are] 2 #were# ACTUAL -1 #really# ACTUAL -1
-[asleep] 3 #talking# ACTUAL -1 #sleeping# ACTUAL -1 #not# ACTUAL -1
+[are] 2 #were# ACTUAL -1 #not# ACTUAL -1
+[asleep] 3 #talking# ACTUAL -1 #speaking# ACTUAL -1 #tall# ACTUAL -1
 [in] 2 #outside# ACTUAL -1 #by# ACTUAL -1
 {the}
 [motel] 3 #dinner table# ACTUAL -1 #table# ACTUAL -1 #place# ACTUAL -1
@@ -1414,27 +1413,27 @@ hypothesis -2
 entailment
 premise -2
 12
-[man] 3 #person# ACTUAL -1 #woman# ACTUAL -1 #dog# ACTUAL -1
-[on] 2 #with# ACTUAL -1 #without# ACTUAL -1
-[phone] 3 #drugs# ACTUAL -1 #horse# ACTUAL -1 #telephone# ACTUAL -1
-[in] 3 #wearing# ACTUAL -1 #without# ACTUAL -1 #on# ACTUAL -1
-[business] 3 #red# ACTUAL -1 #outdoors# ACTUAL -1 #inside# ACTUAL -1
-[suit] 3 #outdoors# ACTUAL -1 #inside# ACTUAL -1 #phone# ACTUAL -1
-[walking] 3 #sleeping# ACTUAL -1 #running# ACTUAL -1 #is# ACTUAL -1
-[down] 2 #outside# ACTUAL -1 #by# ACTUAL -1
+[man] 3 #dog# ACTUAL -1 #animal# ACTUAL -1 #cat# ACTUAL -1
+[on] 2 #looking at# ACTUAL -1 #without# ACTUAL -1
+[phone] 3 #drugs# ACTUAL -1 #horse# ACTUAL -1 #a car# ACTUAL -1
+[in] 3 #wearing# ACTUAL -1 #without# ACTUAL -1 #selling# ACTUAL -1
+[business] 3 #red# ACTUAL -1 #shoes# ACTUAL -1 #inside# ACTUAL -1
+[suit] 3 #shoes# ACTUAL -1 #inside# ACTUAL -1 #phone# ACTUAL -1
+[walking] 3 #sleeping# ACTUAL -1 #running# ACTUAL -1 #rolling# ACTUAL -1
+[down] 2 #outside# ACTUAL -1 #in front of# ACTUAL -1
 {a}
 [busy] 3 #quiet# ACTUAL -1 #women# ACTUAL -1 #men# ACTUAL -1
-[street] 3 #restaurant# ACTUAL -1 #field# ACTUAL -1 #house# ACTUAL -1
+[street] 3 #restaurant# ACTUAL -1 #church# ACTUAL -1 #house# ACTUAL -1
 {.}
 hypothesis -2
 7
 {a}
-[person] 3 #man# ACTUAL -1 #woman# ACTUAL -1 #human# ACTUAL -1
-[on] 2 #with# ACTUAL -1 #without# ACTUAL -1
+[person] 3 #dog# ACTUAL -1 #an# PREV #animal# ACTUAL -1 #cat# ACTUAL -1
+[on] 2 #looking at# ACTUAL -1 #without# ACTUAL -1
 {a}
-[phone] 3 #drug# ACTUAL -1 #horse# ACTUAL -1 #telephone# ACTUAL -1
-[is] 3 #liking the# ACTUAL -1 #and# ACTUAL -1 #not# ACTUAL -1
-[outdoors] 3 #inside# ACTUAL -1 #on a street# ACTUAL -1 #somewhere# ACTUAL -1
+[phone] 3 #car# ACTUAL -1 #horse# ACTUAL -1 #roof# ACTUAL -1
+[is] 3 #liking the# ACTUAL -1 #hating the# ACTUAL -1 #not# ACTUAL -1
+[outdoors] 3 #inside# ACTUAL -1 #sleeping# ACTUAL -1 #lost# ACTUAL -1
 -3
 
 
@@ -1444,12 +1443,12 @@ premise -2
 15
 {a}
 [woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
-[in] 3 #without# ACTUAL -1 #wearing# ACTUAL -1 #looking at# ACTUAL -1
+[in] 3 #without# ACTUAL -1 #not wearing# ACTUAL -1 #liking# ACTUAL -1
 [jeans] 3 #bikini# ACTUAL -1 #swimsuit# ACTUAL -1 #clothe# ACTUAL -1
 {and}
 {a}
 [woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
-[in] 3 #without# ACTUAL -1 #wearing# ACTUAL -1 #looking at# ACTUAL -1
+[in] 3 #without# ACTUAL -1 #not wearing# ACTUAL -1 #liking# ACTUAL -1
 [shorts] 3 #bikini# ACTUAL -1 #swimsuit# ACTUAL -1 #clothe# ACTUAL -1
 [are] 2 #were# ACTUAL -1 #like# ACTUAL -1
 [petting] 3 #looking at# ACTUAL -1 #nursing# ACTUAL -1 #laughing at# ACTUAL -1
@@ -1462,7 +1461,7 @@ hypothesis -2
 {the}
 [woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
 {are}
-[wearing] 3 #without# ACTUAL -1 #in# ACTUAL -1 #looking at# ACTUAL -1
+[wearing] 3 #without# ACTUAL -1 #not in# ACTUAL -1 #looking at# ACTUAL -1
 [bikinis] 3 #jeans# ACTUAL -1 #shorts# ACTUAL -1 #clothes# ACTUAL -1
 {and}
 [petting] 3 #looking at# ACTUAL -1 #nursing# ACTUAL -1 #laughing at# ACTUAL -1
@@ -1470,7 +1469,7 @@ hypothesis -2
 [elephant] 3 #a# PREV #kangaroo# ACTUAL -1 #animal# ACTUAL -1 #a# PREV #dog# ACTUAL -1
 {.}
 -3
-
+=======================
 
 -3
 neutral
