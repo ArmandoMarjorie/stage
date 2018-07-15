@@ -55,7 +55,7 @@
 			for(unsigned i=0; i<nb_word; ++i)
 			{
 				tmp = tmp + id_to_word[data_copy.get_word_id(sentence, num_expr, i)];
-				if(nb_word>1 || i!=nb_word-1)
+				if(nb_word>1 && i<nb_word-1)
 					tmp = tmp + "_";
 			}		
 			

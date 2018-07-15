@@ -43,7 +43,7 @@ neutral : 0.578687, entailment : 0.395653, contradiction : 0.02566
 2
 1
 neutral : 0.307217, entailment : 0.607013, contradiction : 0.0857706
-('baseball_game_'), 0.167886
+('baseball_game'), 0.167886
 ('church'), 0.166862
 ('church'), 0.164472
 ('book'), 0.124444
@@ -104,7 +104,7 @@ neutral : 0.57201, entailment : 0.408669, contradiction : 0.0193216
 0
 neutral : 0.549641, entailment : 0.299226, contradiction : 0.151133
 ('shot'), 0.297999
-('has_been_'), 0.272382
+('has_been'), 0.272382
 ('woman'), 0.0485393
 ('woman'), 0.00878011
 ('green'), 0.00770538
@@ -126,13 +126,13 @@ neutral : 0.166356, entailment : 0.786795, contradiction : 0.0468492
 ('man'), 1.57122
 ('man'), 1.553
 ('ad'), 1.5455
-('in_front_of_'), 0.920141
+('in_front_of'), 0.920141
 ('poses'), 0.302533
 ('package'), 0.270554
 ('old'), 0.234904
 ('with'), 0.222439
 ('advertisement'), 0.14731
-('in_front_of_'), 0.0253342
+('in_front_of'), 0.0253342
 -3
 
 
@@ -150,8 +150,8 @@ neutral : 0.843554, entailment : 0.009367, contradiction : 0.147079
 ('advertisement'), 0.0915017
 ('old'), 0.0895912
 ('ad'), 0.0411829
-('in_front_of_'), 0.0347075
-('in_front_of_'), -0.0144991
+('in_front_of'), 0.0347075
+('in_front_of'), -0.0144991
 -3
 
 
@@ -167,7 +167,7 @@ neutral : 0.201036, entailment : 0.50344, contradiction : 0.295523
 ('ad'), 0.21098
 ('package'), 0.116044
 ('by'), 0.0391231
-('in_front_of_'), 0.00180463
+('in_front_of'), 0.00180463
 ('man'), -0.0232272
 -3
 
@@ -176,15 +176,15 @@ neutral : 0.201036, entailment : 0.50344, contradiction : 0.295523
 0
 neutral : 0.613088, entailment : 0.29365, contradiction : 0.0932615
 ('river'), 0.581563
-('land_rover_'), 0.568539
+('land_rover'), 0.568539
 ('splashing'), 0.561894
 ('water'), 0.54885
 ('river'), 0.546712
 ('as'), 0.534481
-('land_rover_'), 0.52008
+('land_rover'), 0.52008
 ('crosses'), 0.463175
 ('driven'), 0.2572
-('is_being_'), -0.0114678
+('is_being'), -0.0114678
 ('across'), -0.031259
 -3
 
@@ -197,10 +197,10 @@ neutral : 0.113303, entailment : 0.855113, contradiction : 0.0315847
 ('crossing'), 1.513
 ('river'), 1.14679
 ('is'), 0.952043
-('land_rover_'), 0.409278
+('land_rover'), 0.409278
 ('driven'), 0.113076
 ('across'), 0.0672522
-('is_being_'), -0.0233782
+('is_being'), -0.0233782
 -3
 
 
@@ -210,10 +210,10 @@ neutral : 0.0237027, entailment : 0.00182008, contradiction : 0.974477
 ('driven'), 0.731211
 ('sedan'), 0.197596
 ('stuck'), 0.123439
-('in_the_middle_of_'), 0.0725086
-('land_rover_'), 0.0647713
+('in_the_middle_of'), 0.0725086
+('land_rover'), 0.0647713
 ('across'), 0.0383421
-('is_being_'), 0.00627138
+('is_being'), 0.00627138
 ('river'), -0.0118422
 ('river'), -0.047044
 -3
@@ -272,9 +272,9 @@ neutral : 0.956212, entailment : 0.0349001, contradiction : 0.00888782
 1
 2
 neutral : 0.0420917, entailment : 0.0230268, contradiction : 0.934882
-('looking_at_'), 0.0451572
+('looking_at'), 0.0451572
 ('doctor'), 0.0333658
-('looking_threw_'), 0.0331888
+('looking_threw'), 0.0331888
 ('doctor'), 0.033148
 ('book'), 0.0295283
 ('manuals'), 0.0205244
@@ -283,7 +283,7 @@ neutral : 0.0420917, entailment : 0.0230268, contradiction : 0.934882
 ('new'), 0.0158453
 ('her'), 0.00947017
 ('assistant'), -0.00660445
-('african_american_'), -0.012275
+('african_american'), -0.012275
 -3
 
 
@@ -291,7 +291,7 @@ neutral : 0.0420917, entailment : 0.0230268, contradiction : 0.934882
 2
 neutral : 0.00346327, entailment : 3.42405e-05, contradiction : 0.996502
 ('eating'), 1.29183
-('looking_threw_'), 0.582251
+('looking_threw'), 0.582251
 ('manuals'), 0.0381937
 ('medical'), 0.0360057
 ('man'), 0.00880099
@@ -300,8 +300,8 @@ neutral : 0.00346327, entailment : 3.42405e-05, contradiction : 0.996502
 ('her'), 0.00405412
 ('doctor'), 0.00370495
 ('assistant'), 0.00186079
-('african_american_'), 0.000155976
-('pb_and_j_'), -0.00202949
+('african_american'), 0.000155976
+('pb_and_j'), -0.00202949
 -3
 
 
@@ -312,11 +312,11 @@ neutral : 0.147438, entailment : 0.699867, contradiction : 0.152695
 ('doctor'), 0.13696
 ('doctor'), 0.111114
 ('medical'), 0.106853
-('african_american_'), 0.090662
+('african_american'), 0.090662
 ('assistant'), 0.080155
 ('blond-haired'), 0.0609997
 ('manuals'), 0.0311381
-('looking_threw_'), -0.0121909
+('looking_threw'), -0.0121909
 ('her'), -0.0181602
 ('new'), -0.0600613
 -3
@@ -415,19 +415,19 @@ neutral : 0.656511, entailment : 0.00864971, contradiction : 0.33484
 neutral : 0.963608, entailment : 0.0135962, contradiction : 0.0227958
 ('take'), 1.30044
 ('for'), 1.13118
-('ocean_waves_'), 0.976172
+('ocean_waves'), 0.976172
 ('beach'), 0.900833
 ('child'), 0.314465
 ('woman'), 0.277089
 ('man'), 0.232512
 ('young'), 0.145478
-('first_time_'), 0.0929159
+('first_time'), 0.0929159
 ('to'), 0.0629101
 ('feet'), 0.0601843
 ('enjoys'), 0.0322204
 ('feeling'), 0.0162913
 ('young'), 0.014679
-('lap_at_'), -0.00168082
+('lap_at'), -0.00168082
 ('family'), -0.00433196
 -3
 
@@ -438,14 +438,14 @@ neutral : 0.0605781, entailment : 0.0278245, contradiction : 0.911597
 ('restaurant'), 1.78409
 ('out'), 1.6501
 ('at'), 1.55362
-('ocean_waves_'), 1.16123
+('ocean_waves'), 1.16123
 ('young'), 0.80732
 ('feet'), 0.775145
 ('feeling'), 0.752079
 ('enjoys'), 0.334807
 ('family'), 0.108057
 ('family'), -0.0173385
-('lap_at_'), -0.0703559
+('lap_at'), -0.0703559
 -3
 
 
@@ -454,7 +454,7 @@ neutral : 0.0605781, entailment : 0.0278245, contradiction : 0.911597
 neutral : 0.288433, entailment : 0.681357, contradiction : 0.0302105
 ('is'), 1.36209
 ('beach'), 1.34975
-('ocean_waves_'), 1.31348
+('ocean_waves'), 1.31348
 ('family'), 1.28621
 ('family'), 0.998769
 ('at'), 0.76767
@@ -462,7 +462,7 @@ neutral : 0.288433, entailment : 0.681357, contradiction : 0.0302105
 ('feet'), 0.124821
 ('feeling'), 0.0999059
 ('young'), 0.0576902
-('lap_at_'), -0.0450727
+('lap_at'), -0.0450727
 -3
 
 
@@ -474,7 +474,7 @@ neutral : 0.103565, entailment : 0.886165, contradiction : 0.0102699
 ('walk'), 1.75526
 ('together'), 1.72675
 ('couple'), 1.1958
-('hand_in_hand_'), 0.14435
+('hand_in_hand'), 0.14435
 ('street'), 0.124401
 ('down'), 0.0439917
 -3
@@ -488,7 +488,7 @@ neutral : 0.989958, entailment : 0.00143327, contradiction : 0.00860864
 ('street'), 0.156645
 ('walk'), 0.0348741
 ('couple'), 0.0127076
-('hand_in_hand_'), 0.0121383
+('hand_in_hand'), 0.0121383
 ('down'), 0.000473944
 -3
 
@@ -496,11 +496,11 @@ neutral : 0.989958, entailment : 0.00143327, contradiction : 0.00860864
 2
 2
 neutral : 0.000575366, entailment : 4.46666e-05, contradiction : 0.99938
-('sitting_on_'), 1.18476
+('sitting_on'), 1.18476
 ('walk'), 1.00667
 ('street'), 0.0643497
 ('bench'), 0.0472841
-('hand_in_hand_'), 0.0132463
+('hand_in_hand'), 0.0132463
 ('couple'), 0.00145446
 ('couple'), 0.00081738
 ('down'), 0.000221101
@@ -523,7 +523,7 @@ neutral : 0.000905373, entailment : 0.000293141, contradiction : 0.998801
 ('facing'), 0.00125089
 ('by'), 0.00115471
 ('street'), 0.000562824
-('in_the_middle_of_'), 0.000377911
+('in_the_middle_of'), 0.000377911
 ('camera'), 0.000259754
 ('street'), 9.90866e-05
 ('man'), 2.67111e-05
@@ -536,14 +536,14 @@ neutral : 0.000905373, entailment : 0.000293141, contradiction : 0.998801
 neutral : 0.741877, entailment : 0.243297, contradiction : 0.0148254
 ('people'), 0.486307
 ('picture'), 0.481949
-('hood_wearing_'), 0.463889
+('hood_wearing'), 0.463889
 ('pose'), 0.45992
 ('three'), 0.394869
 ('camera'), 0.199004
 ('man'), 0.148058
 ('quiet'), 0.145168
 ('3'), 0.127741
-('in_the_middle_of_'), 0.109728
+('in_the_middle_of'), 0.109728
 ('young'), 0.0946207
 ('hoods'), 0.0862117
 ('street'), 0.0243275
@@ -560,7 +560,7 @@ neutral : 0.0438884, entailment : 0.919222, contradiction : 0.0368891
 ('people'), 1.8378
 ('stand'), 1.83051
 ('street'), 1.82091
-('hood_wearing_'), 1.79453
+('hood_wearing'), 1.79453
 ('three'), 1.77419
 ('standing'), 1.77215
 ('man'), 0.808413
@@ -572,7 +572,7 @@ neutral : 0.0438884, entailment : 0.919222, contradiction : 0.0368891
 ('in'), 0.116774
 ('facing'), 0.0850448
 ('quiet'), 0.0324134
-('in_the_middle_of_'), 0.0277566
+('in_the_middle_of'), 0.0277566
 ('in'), 0.0166053
 -3
 
@@ -634,15 +634,15 @@ neutral : 0.299603, entailment : 0.469658, contradiction : 0.23074
 ('firefighter'), 0.50823
 ('fire'), 0.465155
 ('subway'), 0.421911
-('come_out_of_'), 0.263819
+('come_out_of'), 0.263819
 ('firefighters'), 0.261352
 ('subway'), 0.204144
 ('station'), 0.161826
-('putting_out_'), 0.142641
+('putting_out'), 0.142641
 ('station'), 0.113102
 ('three'), 0.0470144
 ('three'), 0.0365777
-('inside_of_'), -0.0856014
+('inside_of'), -0.0856014
 -3
 
 
@@ -654,11 +654,11 @@ neutral : 0.112767, entailment : 0.882329, contradiction : 0.00490453
 ('subway'), 0.743515
 ('subway'), 0.722022
 ('firefighter'), 0.611024
-('come_out_of_'), 0.384077
+('come_out_of'), 0.384077
 ('station'), 0.220211
 ('three'), 0.0385349
 ('three'), 0.000587689
-('coming_up_from_'), -0.137644
+('coming_up_from'), -0.137644
 -3
 
 
@@ -669,7 +669,7 @@ neutral : 0.0750931, entailment : 0.014364, contradiction : 0.910543
 ('subway'), 0.461937
 ('cards'), 0.451815
 ('fire'), 0.428345
-('come_out_of_'), 0.423699
+('come_out_of'), 0.423699
 ('playing'), 0.328132
 ('three'), 0.144568
 ('station'), 0.12005
@@ -752,11 +752,11 @@ neutral : 0.0135098, entailment : 0.00230209, contradiction : 0.984188
 2
 2
 neutral : 0.186613, entailment : 0.0453071, contradiction : 0.76808
-('rolling_on_'), 1.28832
+('rolling_on'), 1.28832
 ('blue'), 0.552703
 ('yellow'), 0.510492
 ('jacket'), 0.226291
-('lay_in_'), 0.0907258
+('lay_in'), 0.0907258
 ('in'), 0.0319848
 ('guy'), 0.000703488
 ('grass'), -0.0387267
@@ -774,11 +774,11 @@ neutral : 0.393246, entailment : 0.567082, contradiction : 0.0396722
 ('grass'), 1.12824
 ('guy'), 1.12727
 ('wearing'), 1.12141
-('lay_in_'), 1.10732
+('lay_in'), 1.10732
 ('male'), 1.10687
 ('decides'), 1.10426
 ('in'), 1.01548
-('laying_on_'), 0.937466
+('laying_on'), 0.937466
 ('blue'), 0.603535
 ('blue'), 0.538337
 ('jacket'), 0.360322
@@ -790,7 +790,7 @@ neutral : 0.393246, entailment : 0.567082, contradiction : 0.0396722
 0
 0
 neutral : 0.521712, entailment : 0.0422989, contradiction : 0.435989
-('lay_in_'), 1.03088
+('lay_in'), 1.03088
 ('guy'), 1.02798
 ('male'), 1.02388
 ('grass'), 1.02215
@@ -800,8 +800,8 @@ neutral : 0.521712, entailment : 0.0422989, contradiction : 0.435989
 ('wearing'), 0.665206
 ('blue'), 0.642731
 ('blue'), 0.556241
-('taking_a_nap_'), 0.407035
-('laying_on_'), 0.387068
+('taking_a_nap'), 0.407035
+('laying_on'), 0.387068
 ('jacket'), 0.0178422
 ('green'), 0.0133475
 ('jacket'), -0.0236026
@@ -813,7 +813,7 @@ neutral : 0.521712, entailment : 0.0422989, contradiction : 0.435989
 neutral : 0.033802, entailment : 0.0010544, contradiction : 0.965144
 ('cat'), 1.90287
 ('puppies'), 1.82321
-('golden_retriever_'), 1.71433
+('golden_retriever'), 1.71433
 ('nurses'), 0.177061
 ('puppies'), 0.0216981
 ('nurses'), -0.0369486
@@ -823,14 +823,14 @@ neutral : 0.033802, entailment : 0.0010544, contradiction : 0.965144
 0
 0
 neutral : 0.782722, entailment : 0.00667395, contradiction : 0.210604
-('falls_off_'), 1.52703
+('falls_off'), 1.52703
 ('horse'), 1.50442
-('first_time_'), 1.34612
+('first_time'), 1.34612
 ('roper'), 1.20957
 ('horse'), 0.654483
 ('during'), 0.585062
-('calf_roping_'), 0.398585
-('calls_off_'), 0.0856217
+('calf_roping'), 0.398585
+('calls_off'), 0.0856217
 ('cowboy'), 0.0739624
 ('his'), 0.0122126
 ('his'), 0.00786397
@@ -846,7 +846,7 @@ neutral : 0.0448818, entailment : 0.00204175, contradiction : 0.953076
 ('football'), 0.0889635
 ('shake'), 0.0773936
 ('girls'), 0.0717652
-('pom_poms_'), 0.0685578
+('pom_poms'), 0.0685578
 ('performing'), 0.0337452
 ('football'), 0.0297429
 ('field'), 0.0256439
@@ -895,9 +895,9 @@ neutral : 0.000165892, entailment : 5.06537e-07, contradiction : 0.999834
 ('while'), 9.81515e-05
 ('men'), 3.48511e-05
 ('very'), 3.29239e-05
-('one_of_them_'), 8.59535e-06
+('one_of_them'), 8.59535e-06
 ('men'), 8.34544e-06
-('out_of_'), 5.15825e-07
+('out_of'), 5.15825e-07
 -3
 
 
@@ -910,7 +910,7 @@ neutral : 0.000169846, entailment : 1.94692e-06, contradiction : 0.999828
 ('have'), 0.0717789
 ('motel'), 0.0225064
 ('two'), 0.019567
-('after_dinner_'), 0.00889956
+('after_dinner'), 0.00889956
 ('dinner'), 0.00620457
 ('table'), 0.00429545
 ('in'), 0.000587223
@@ -967,7 +967,7 @@ neutral : 0.271046, entailment : 0.0854816, contradiction : 0.643472
 neutral : 0.996596, entailment : 0.000149673, contradiction : 0.00325447
 ('tall'), 1.94418
 ('in'), 0.507953
-('face_paint_'), 0.0215797
+('face_paint'), 0.0215797
 ('white'), 0.0214563
 ('person'), 0.0138999
 ('wears'), 0.0105229
@@ -978,7 +978,7 @@ neutral : 0.996596, entailment : 0.000149673, contradiction : 0.00325447
 ('whistle'), 0.00152431
 ('teenager'), 0.000937341
 ('yellow'), 0.000860851
-('face_paint_'), -0.00178729
+('face_paint'), -0.00178729
 ('teen'), -0.00198358
 -3
 
@@ -1015,7 +1015,7 @@ neutral : 0.997578, entailment : 6.00379e-05, contradiction : 0.00236228
 ('beige'), 0.0396518
 ('hat'), 0.0211986
 ('women'), 0.00757576
-('in_front_of_'), 0.00528396
+('in_front_of'), 0.00528396
 ('wall'), 0.00507752
 ('back'), 0.00474122
 ('her'), 0.00459867
@@ -1047,7 +1047,7 @@ neutral : 0.00595206, entailment : 0.993642, contradiction : 0.000405668
 neutral : 0.345593, entailment : 0.625627, contradiction : 0.0287802
 ('is'), 0.687649
 ('dog'), 0.680947
-('it_'s_'), 0.62595
+('it_'s'), 0.62595
 ('snowing'), 0.316445
 ('dog'), 0.277645
 ('plays'), 0.256091
@@ -1067,7 +1067,7 @@ neutral : 0.113361, entailment : 0.884415, contradiction : 0.00222413
 ('is'), 1.76783
 ('snow'), 1.75654
 ('girl'), 1.69093
-('snow_angel_'), 1.67991
+('snow_angel'), 1.67991
 ('outside'), 1.6796
 ('girl'), 1.58285
 ('glasses'), 0.287519
@@ -1083,7 +1083,7 @@ neutral : 0.113361, entailment : 0.884415, contradiction : 0.00222413
 2
 neutral : 0.00229186, entailment : 0.000979029, contradiction : 0.996729
 ('sleeping'), 1.97477
-('look_at_'), 1.93193
+('look_at'), 1.93193
 ('in'), 0.768164
 ('two'), 0.246804
 ('hats'), 0.122729
@@ -1114,7 +1114,7 @@ neutral : 0.00134546, entailment : 0.000180109, contradiction : 0.998474
 neutral : 0.00110345, entailment : 8.27787e-05, contradiction : 0.998814
 ('trying'), 1.96867
 ('sleeping'), 1.96659
-('get_warm_'), 1.66677
+('get_warm'), 1.66677
 ('are'), 0.0242404
 ('people'), 0.00735856
 ('people'), 0.00187616
@@ -1132,7 +1132,7 @@ neutral : 0.952567, entailment : 0.0425108, contradiction : 0.00492248
 ('background'), 0.091694
 ('in'), 0.0753152
 ('in'), 0.0704712
-('smiling_at_'), 0.0241791
+('smiling_at'), 0.0241791
 ('cook'), 0.010559
 ('two'), 0.00318017
 ('cooks'), -0.0115866
@@ -1167,7 +1167,7 @@ neutral : 0.969947, entailment : 0.0155515, contradiction : 0.0145015
 ('green'), 0.190293
 ('national'), 0.15276
 ('plays'), 0.09288
-('women_'s_'), 0.0105883
+('women_'s'), 0.0105883
 ('in'), 0.0104806
 ('team'), 0.00511465
 ('team'), -0.00172093
@@ -1209,7 +1209,7 @@ neutral : 0.519937, entailment : 0.439512, contradiction : 0.0405505
 ('coat'), 0.368989
 ('in'), 0.335087
 ('outside'), 0.332735
-('looks_through_'), 0.270803
+('looks_through'), 0.270803
 ('older'), 0.268884
 ('dark'), 0.233487
 ('winter'), 0.159868
@@ -1260,12 +1260,12 @@ neutral : 0.865462, entailment : 0.000408724, contradiction : 0.134129
 ('sisters'), 1.72749
 ('girls'), 1.72686
 ('four'), 1.46681
-('each_other_'), 1.38471
+('each_other'), 1.38471
 ('play'), 1.18627
 ('young'), 0.925964
 ('baby'), 0.7316
 ('baby'), 0.690164
-('sitting_in_'), 0.478607
+('sitting_in'), 0.478607
 ('blue'), 0.358513
 ('three'), 0.201905
 ('toys'), 0.109356
@@ -1290,7 +1290,7 @@ neutral : 0.996005, entailment : 5.73538e-05, contradiction : 0.00393741
 ('girls'), 0.0117923
 ('wearing'), 0.0108581
 ('sunglasses'), 0.00306844
-('lying_on_'), 0.00144281
+('lying_on'), 0.00144281
 ('two'), 0.00112464
 ('two'), 0.000231951
 -3
@@ -1301,14 +1301,14 @@ neutral : 0.996005, entailment : 5.73538e-05, contradiction : 0.00393741
 neutral : 0.853698, entailment : 0.0868875, contradiction : 0.0594148
 ('soccer'), 1.58586
 ('soccer'), 1.1166
-('listening_to_'), 0.411638
+('listening_to'), 0.411638
 ('win'), 0.384675
 ('female'), 0.33342
 ('coach'), 0.273194
 ('minute'), 0.26823
 ('coach'), 0.205649
 ('last'), 0.160078
-('soccer_game_'), 0.111347
+('soccer_game'), 0.111347
 ('instruction'), 0.0721125
 ('team'), 0.0567877
 ('getting'), 0.0465999
@@ -1325,7 +1325,7 @@ neutral : 0.853698, entailment : 0.0868875, contradiction : 0.0594148
 neutral : 0.893795, entailment : 0.0820081, contradiction : 0.0241966
 ('animal'), 1.751
 ('owner'), 1.68391
-('man_'s_'), 1.30271
+('man_'s'), 1.30271
 ('rear'), 0.356419
 ('biting'), 0.240476
 ('dog'), 0.169722
@@ -1337,14 +1337,14 @@ neutral : 0.893795, entailment : 0.0820081, contradiction : 0.0241966
 2
 0
 neutral : 0.704915, entailment : 0.00840978, contradiction : 0.286675
-('drive_off_'), 0.540288
+('drive_off'), 0.540288
 ('tee'), 0.497162
 ('first'), 0.41006
 ('golfer'), 0.289517
 ('ball'), 0.286583
-('sand_trap_'), 0.0744272
+('sand_trap'), 0.0744272
 ('his'), 0.0181347
-('out_of_'), 0.0138927
+('out_of'), 0.0138927
 ('shoots'), -0.123997
 -3
 
@@ -1361,7 +1361,7 @@ neutral : 0.994441, entailment : 0.00129589, contradiction : 0.00426354
 ('day'), 0.0112158
 ('his'), 0.00881891
 ('riding'), 0.00784787
-('this_is_'), 0.00592313
+('this_is'), 0.00592313
 ('body'), 0.00257525
 ('in'), 0.00229466
 -3
@@ -1387,7 +1387,7 @@ neutral : 0.997221, entailment : 0.000208877, contradiction : 0.00257042
 ('for'), 1.71078
 ('man'), 1.10938
 ('man'), 0.999094
-('first_time_'), 0.542032
+('first_time'), 0.542032
 ('rides'), 0.149743
 ('bike'), 0.10356
 ('bike'), 0.0933097
@@ -1403,7 +1403,7 @@ neutral : 0.997221, entailment : 0.000208877, contradiction : 0.00257042
 1
 neutral : 0.0358809, entailment : 0.9337, contradiction : 0.0304192
 ('two'), 1.57053
-('there_is_'), 1.48624
+('there_is'), 1.48624
 ('child'), 1.11897
 ('animals'), 0.650027
 ('lying'), 0.0703858
@@ -1446,7 +1446,7 @@ neutral : 0.00294005, entailment : 0.000359206, contradiction : 0.996701
 1
 1
 neutral : 0.00337543, entailment : 0.996493, contradiction : 0.000131945
-('there_is_'), 1.7783
+('there_is'), 1.7783
 ('standing'), 1.61458
 ('outdoors'), 1.18943
 ('brown'), 0.0430987
@@ -1455,8 +1455,8 @@ neutral : 0.00337543, entailment : 0.996493, contradiction : 0.000131945
 ('cream'), 0.0220697
 ('dog'), 0.0198085
 ('grassy'), 0.00739088
-('tongue_out_'), 0.00492026
-('in_front_of_'), 0.00288994
+('tongue_out'), 0.00492026
+('in_front_of'), 0.00288994
 ('with'), 1.61339e-05
 -3
 
@@ -1465,7 +1465,7 @@ neutral : 0.00337543, entailment : 0.996493, contradiction : 0.000131945
 1
 neutral : 0.0261942, entailment : 0.972567, contradiction : 0.00123886
 ('animal'), 1.94129
-('there_is_'), 1.88563
+('there_is'), 1.88563
 ('snow'), 0.735629
 ('outdoors'), 0.354706
 ('dog'), 0.0420813
@@ -1521,7 +1521,7 @@ neutral : 0.00900082, entailment : 0.990775, contradiction : 0.000224369
 ('outdoors'), 1.74171
 ('field'), 0.241238
 ('four'), 0.0458621
-('running_through_'), 0.0175904
+('running_through'), 0.0175904
 ('varying'), 0.0120093
 ('dogs'), 0.0099588
 ('breeds'), 0.0076778
@@ -1533,15 +1533,15 @@ neutral : 0.00900082, entailment : 0.990775, contradiction : 0.000224369
 neutral : 0.00137292, entailment : 0.000108441, contradiction : 0.998519
 ('no'), 1.98601
 ('army'), 1.53699
-('looks_on_'), 0.0252466
+('looks_on'), 0.0252466
 ('animal'), 0.0119708
 ('here'), 0.0097575
-('can_be_'), 0.00405467
+('can_be'), 0.00405467
 ('seen'), 0.00358822
 ('grilling'), 0.00185598
 ('men'), 0.00168619
 ('his'), 0.00120363
-('a_lot_of_'), 0.00105764
+('a_lot_of'), 0.00105764
 ('meat'), 0.000287636
 ('troop'), 2.85082e-05
 ('products'), -0.000399353
@@ -1554,11 +1554,11 @@ neutral : 1.75676e-06, entailment : 1.98651e-08, contradiction : 0.999998
 ('nobody'), 1.98027
 ('man'), 0.000281812
 ('people'), 5.31623e-05
-('talk_to_'), 2.7795e-05
+('talk_to'), 2.7795e-05
 ('on'), 2.51845e-05
 ('shirt'), 2.48986e-05
 ('has'), 1.06294e-05
-('turns_around_'), 8.24784e-06
+('turns_around'), 8.24784e-06
 ('big'), 7.03776e-06
 ('pants'), 5.39534e-06
 ('green'), 3.3436e-06
@@ -1633,7 +1633,7 @@ neutral : 0.0328648, entailment : 0.00444555, contradiction : 0.96269
 ('watches'), 0.821689
 ('came'), 0.563372
 ('boy'), 0.0294416
-('punching_out_'), 0.00655648
+('punching_out'), 0.00655648
 ('boy'), -0.0263502
 -3
 
@@ -1649,7 +1649,7 @@ neutral : 0.0254915, entailment : 0.97402, contradiction : 0.000487978
 ('man'), 1.52537
 ('man'), 1.26556
 ('ledge'), 0.229529
-('standing_on_'), 0.0875832
+('standing_on'), 0.0875832
 ('in'), 0.0404178
 ('white'), 0.0294019
 ('blue'), 0.0195546
@@ -1663,7 +1663,7 @@ neutral : 0.0254915, entailment : 0.97402, contradiction : 0.000487978
 1
 1
 neutral : 0.0426617, entailment : 0.954289, contradiction : 0.00304918
-('there_are_'), 1.88057
+('there_are'), 1.88057
 ('outside'), 0.861664
 ('people'), 0.419209
 ('stroller'), 0.0817413
@@ -1681,7 +1681,7 @@ neutral : 0.0426617, entailment : 0.954289, contradiction : 0.00304918
 neutral : 0.701293, entailment : 0.211613, contradiction : 0.0870937
 ('black'), 1.35099
 ('outside'), 0.725311
-('there_is_'), 0.638137
+('there_is'), 0.638137
 ('dog'), 0.534755
 ('dog'), 0.301283
 ('stroller'), 0.237627
@@ -1713,7 +1713,7 @@ neutral : 0.295478, entailment : 0.163595, contradiction : 0.540927
 neutral : 0.205872, entailment : 0.72199, contradiction : 0.0721385
 ('woman'), 1.44006
 ('groceries'), 0.955952
-('trader_joe_'s_'), 0.830447
+('trader_joe_'s'), 0.830447
 ('woman'), 0.758234
 ('outside'), 0.398402
 ('exits'), 0.36584
@@ -1742,7 +1742,7 @@ neutral : 0.0525544, entailment : 0.0132159, contradiction : 0.93423
 ('cars'), 0.0511533
 ('street'), 0.0263637
 ('motorized'), 0.00659358
-('next_to_'), 0.00478829
+('next_to'), 0.00478829
 ('lined'), -0.0170887
 ('real'), -0.0351717
 ('car'), -0.0395075
@@ -1773,14 +1773,14 @@ neutral : 0.0728726, entailment : 0.924712, contradiction : 0.00241571
 1
 1
 neutral : 0.0293109, entailment : 0.968537, contradiction : 0.00215242
-('there_is_'), 1.92739
+('there_is'), 1.92739
 ('outside'), 1.4431
 ('restaurant'), 0.7623
 ('crowd'), 0.507366
-('mcdonald_'s_'), 0.364139
+('mcdonald_'s'), 0.364139
 ('street'), 0.244589
 ('people'), 0.0357808
-('in_front_of_'), 0.0104422
+('in_front_of'), 0.0104422
 ('fill'), 0.00345301
 ('crowd'), 0.00205034
 -3
@@ -1818,7 +1818,7 @@ neutral : 0.100637, entailment : 0.888725, contradiction : 0.010638
 ('harp'), 0.149661
 ('with'), 0.0370416
 ('snowy'), 0.0291732
-('in_front_of_'), 0.0183534
+('in_front_of'), 0.0183534
 ('leather'), 0.0147601
 ('holds'), -0.00464117
 ('jacket'), -0.00615748
@@ -1830,14 +1830,14 @@ neutral : 0.100637, entailment : 0.888725, contradiction : 0.010638
 1
 1
 neutral : 0.0163743, entailment : 0.98162, contradiction : 0.00200619
-('there_are_'), 1.96203
+('there_are'), 1.96203
 ('men'), 1.83096
 ('men'), 1.79127
 ('scientific'), 1.75539
 ('using'), 0.475173
 ('instruments'), 0.36463
 ('two'), 0.0760314
-('looking_through_'), 0.0113633
+('looking_through'), 0.0113633
 ('microscopes'), 0.00796505
 ('room'), 0.0036479
 ('in'), 0.00312945
@@ -1847,11 +1847,11 @@ neutral : 0.0163743, entailment : 0.98162, contradiction : 0.00200619
 1
 1
 neutral : 0.00627232, entailment : 0.992401, contradiction : 0.00132665
-('at_least_'), 1.98424
+('at_least'), 1.98424
 ('person'), 0.980542
-('there_is_'), 0.441938
+('there_is'), 0.441938
 ('sea'), 0.026997
-('kins_of_'), 0.0164831
+('kins_of'), 0.0164831
 ('group'), 0.0156771
 ('animal'), 0.00952409
 ('people'), 0.00392119
@@ -1870,4 +1870,5 @@ neutral : 0.0432573, entailment : 0.944539, contradiction : 0.0122033
 ('bike'), 0.724449
 ('person'), 0.327678
 -3
+
 
