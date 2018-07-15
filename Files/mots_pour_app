@@ -2695,25 +2695,25 @@ entailment
 premise -2
 11
 {a}
-[woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
+[woman] 3 #man# ACTUAL -1 #child# ACTUAL -1 #baby# ACTUAL -1
 {is}
 [walking] 3 #watching# ACTUAL -1 #thinking about# ACTUAL -1 #playing with# ACTUAL -1
 [her] 2 #his# ACTUAL -1 #the# ACTUAL -1
-[dog] 3 #pet# ACTUAL -1 #cat# ACTUAL -1 #golden retriever# ACTUAL -1
-[along] 3 #on# ACTUAL -1 #outside# ACTUAL -1 #by# ACTUAL -1
+[dog] 3 #horse# ACTUAL -1 #cat# ACTUAL -1 #golden retriever# ACTUAL -1
+[along] 3 #next to# ACTUAL -1 #outside# ACTUAL -1 #by# ACTUAL -1
 {a}
 [snowy] 3 #dirty# ACTUAL -1 #house# ACTUAL -1 #long# ACTUAL -1
-[ground] 3 #restaurant# ACTUAL -1 #floor# ACTUAL -1 #park# ACTUAL -1
+[ground] 3 #restaurant# ACTUAL -1 #floor# ACTUAL -1 #inside# ACTUAL -1
 {.}
 hypothesis -2
 8
 {a}
-[woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
-[is] 3 #walks# ACTUAL -1 #eats# ACTUAL -1 #sleeps# ACTUAL -1
+[woman] 3 #man# ACTUAL -1 #child# ACTUAL -1 #baby# ACTUAL -1
+[is] 3 #sits# ACTUAL -1 #eats# ACTUAL -1 #fights# ACTUAL -1
 [with] 3 #by# ACTUAL -1 #beside# ACTUAL -1 #without# ACTUAL -1
 [her] 2 #his# ACTUAL -1 #the# ACTUAL -1
-[dog] 3 #pet# ACTUAL -1 #cat# ACTUAL -1 #golden retriever# ACTUAL -1
-[outside] 3 #inside# ACTUAL -1 #somewhere# ACTUAL -1 #in the snow# ACTUAL -1
+[dog] 3 #horse# ACTUAL -1 #cat# ACTUAL -1 #golden retriever# ACTUAL -1
+[outside] 3 #inside# ACTUAL -1 #at the restaurant# ACTUAL -1 #at the church# ACTUAL -1
 {.}
 -3
 
@@ -2723,24 +2723,24 @@ entailment
 premise -2
 11
 {a}
-[crowd] 3 #group# ACTUAL -1 #wave# ACTUAL -1 #lot# ACTUAL -1
+[crowd] 3 #group# ACTUAL -1 #wave# ACTUAL -1 #few# ACTUAL #NOWORD# NEXT -1
 {of}
-[people] 3 #dogs# ACTUAL -1 #women# ACTUAL -1 #persons# ACTUAL -1
+[people] 3 #dogs# ACTUAL -1 #animals# ACTUAL -1 #cows# ACTUAL -1
 [fill] 3 #on# ACTUAL -1 #outside# ACTUAL -1 #beside# ACTUAL -1
 {the}
 [street] 3 #road# ACTUAL -1 #restaurant# ACTUAL -1 #house# ACTUAL -1
-[in front of] 3 #beside# ACTUAL -1 #by# ACTUAL -1 #in# ACTUAL -1
+[in front of] 3 #inside# ACTUAL -1 #by# ACTUAL -1 #in# ACTUAL -1
 {a}
-[mcdonald 's] 3 #restaurant# ACTUAL -1 #park# ACTUAL -1 #house# ACTUAL -1
+[mcdonald 's] 3 #church# ACTUAL -1 #park# ACTUAL -1 #house# ACTUAL -1
 {.}
 hypothesis -2
 7
 [there is] 3 #not# ACTUAL -1 #with# ACTUAL -1 #by# ACTUAL -1
 {a}
-[crowd] 3 #girl# ACTUAL -1 #group# ACTUAL -1 #dog# ACTUAL -1
-[outside] 3 #inside# ACTUAL -1 #beside# ACTUAL -1 #in front of# ACTUAL -1
+[crowd] 3 #girl# ACTUAL -1 #cat# ACTUAL -1 #dog# ACTUAL -1
+[outside] 3 #inside# ACTUAL -1 #beside# ACTUAL -1 #far from# ACTUAL -1
 {the}
-[restaurant] 3 #mcdonald 's# ACTUAL -1 #park# ACTUAL -1 #place# ACTUAL -1
+[restaurant] 3 #church# ACTUAL -1 #park# ACTUAL -1 #house# ACTUAL -1
 {.}
 -3
 
@@ -2750,7 +2750,7 @@ entailment
 premise -2
 20
 {a}
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #girl# ACTUAL -1 #dog# ACTUAL -1
 [in] 3 #wearing# ACTUAL -1 #liking# ACTUAL -1 #without# ACTUAL -1
 {a}
 [white] 3 #women# ACTUAL -1 #dog# ACTUAL -1 #red# ACTUAL -1
@@ -2759,23 +2759,23 @@ premise -2
 [baseball] 3 #women# ACTUAL -1 #dog# ACTUAL -1 #red# ACTUAL -1
 [hat] 3 #shirt# ACTUAL -1 #cap# ACTUAL -1 #pajamas# ACTUAL -1
 {is}
-[pushing] 3 #walking# ACTUAL -1 #beside# ACTUAL -1 #with# ACTUAL -1
+[pushing] 3 #running# ACTUAL -1 #beside# ACTUAL -1 #with# ACTUAL -1
 {a}
 [cart] 3 #dog# ACTUAL -1 #woman# ACTUAL -1 #toy# ACTUAL -1
-[carrying] 3 #with# ACTUAL -1 #pushing# ACTUAL -1 #walking with# ACTUAL -1
+[carrying] 3 #with# ACTUAL -1 #pushing# ACTUAL -1 #running with# ACTUAL -1
 [several] 3 #some# ACTUAL -1 #a lot of# ACTUAL -1 #red# ACTUAL -1
 [bags] 3 #beds# ACTUAL -1 #dogs# ACTUAL -1 #women# ACTUAL -1
 [on] 3 #outside# ACTUAL -1 #inside# ACTUAL -1 #in# ACTUAL -1
 {a}
-[street] 3 #restaurant# ACTUAL -1 #road# ACTUAL -1 #place# ACTUAL -1
+[street] 3 #restaurant# ACTUAL -1 #church# ACTUAL -1 #house# ACTUAL -1
 {.}
 hypothesis -2
 6
 {a}
-[man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
+[man] 3 #woman# ACTUAL -1 #girl# ACTUAL -1 #dog# ACTUAL -1
 {is}
-[walking] 3 #sleeping# ACTUAL -1 #dressed# ACTUAL -1 #running# ACTUAL -1
-[outside] 3 #inside# ACTUAL -1 #a dog# ACTUAL -1 #on a street# ACTUAL -1
+[walking] 3 #sleeping# ACTUAL -1 #naked# ACTUAL -1 #running# ACTUAL -1
+[outside] 3 #inside# ACTUAL -1 #a dog# ACTUAL -1 #at home# ACTUAL -1
 {.}
 -3
 
@@ -2785,16 +2785,16 @@ entailment
 premise -2
 16
 {a}
-[woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
+[woman] 3 #man# ACTUAL -1 #boy# ACTUAL -1 #child# ACTUAL -1
 [with] 3 #wearing# ACTUAL -1 #without# ACTUAL -1 #in# ACTUAL -1
 [red-hair] 3 #guitars# ACTUAL -1 #men# ACTUAL -1 #dogs# ACTUAL -1
 {and}
 {a}
 [leather] 3 #red# ACTUAL -1 #men# ACTUAL -1 #blue# ACTUAL -1
-[jacket] 3 #instrument# ACTUAL -1 #guitar# ACTUAL -1 #dress# ACTUAL -1
-[holds] 3 #plays# ACTUAL -1 #sells# ACTUAL -1 #looking at# ACTUAL -1
+[jacket] 3 #piano# ACTUAL -1 #guitar# ACTUAL -1 #dress# ACTUAL -1
+[holds] 3 #buys# ACTUAL -1 #sells# ACTUAL -1 #burns# ACTUAL -1
 {a}
-[harp] 3 #dog# ACTUAL -1 #an# PREV #instrument# ACTUAL -1 #something# ACTUAL -1
+[harp] 3 #dog# ACTUAL -1 #cat# ACTUAL -1 #tv# ACTUAL -1
 [in front of] 3 #beside# ACTUAL -1 #in# ACTUAL -1 #outside# ACTUAL -1
 {a}
 [snowy] 3 #grassy# ACTUAL -1 #green# ACTUAL -1 #big# ACTUAL -1
@@ -2803,11 +2803,11 @@ premise -2
 hypothesis -2
 7
 {the}
-[woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
+[woman] 3 #man# ACTUAL -1 #boy# ACTUAL -1 #child# ACTUAL -1
 {is}
-[holding] 3 #carying# ACTUAL -1 #playing# ACTUAL -1 #breaking# ACTUAL -1
+[holding] 3 #buying# ACTUAL -1 #burning# ACTUAL -1 #breaking# ACTUAL -1
 {an}
-[instrument] 3 #a# PREV #dog# ACTUAL -1 #a# PREV #harp# ACTUAL -1 #something# ACTUAL -1
+[instrument] 3 #a# PREV #dog# ACTUAL -1 #a# PREV #guitar# ACTUAL -1 #a# PREV #tv# ACTUAL -1
 {.}
 -3
 
@@ -2816,22 +2816,22 @@ hypothesis -2
 entailment
 premise -2
 9
-[two] 3 #some# ACTUAL -1 #no# ACTUAL -1 #three# ACTUAL -1
-[men] 3 #women# ACTUAL -1 #scientists# ACTUAL -1 #people# ACTUAL -1
+[two] 3 #few# ACTUAL -1 #no# ACTUAL -1 #three# ACTUAL -1
+[men] 3 #women# ACTUAL -1 #girls# ACTUAL -1 #dogs# ACTUAL -1
 {are}
-[looking through] 3 #selling# ACTUAL -1 #using# ACTUAL -1 #watching# ACTUAL -1
-[microscopes] 3 #trashcans# ACTUAL -1 #scientific instruments# ACTUAL -1 #instruments# ACTUAL -1
+[looking through] 3 #selling# ACTUAL -1 #burning# ACTUAL -1 #enjoying# ACTUAL -1
+[microscopes] 3 #trashcans# ACTUAL -1 #guitars# ACTUAL -1 #bottles# ACTUAL -1
 [in] 3 #outside# ACTUAL -1 #by# ACTUAL -1 #inside# ACTUAL -1
 {a}
-[room] 3 #laboratory# ACTUAL -1 #restaurant# ACTUAL -1 #bed# ACTUAL -1
+[room] 3 #church# ACTUAL -1 #restaurant# ACTUAL -1 #bed# ACTUAL -1
 {.}
 hypothesis -2
 6
-[there are] 3 #no# ACTUAL -1 #some# ACTUAL -1 #two# ACTUAL -1
-[men] 3 #women# ACTUAL -1 #scientists# ACTUAL -1 #people# ACTUAL -1
-[using] 3 #looking through# ACTUAL -1 #selling# ACTUAL -1 #enjoying# ACTUAL -1
-[scientific] 3 #some# ACTUAL -1 #musical# ACTUAL -1 #expensive# ACTUAL -1
-[instruments] 3 #tools# ACTUAL -1 #microscopes# ACTUAL -1 #manuals# ACTUAL -1
+[there are] 3 #no# ACTUAL -1 #four# ACTUAL -1 #three# ACTUAL -1
+[men] 3 #women# ACTUAL -1 #girls# ACTUAL -1 #dogs# ACTUAL -1
+[using] 3 #selling# ACTUAL -1 #burning# ACTUAL -1 #enjoying# ACTUAL -1
+[scientific] 3 #no# ACTUAL -1 #musical# ACTUAL -1 #expensive# ACTUAL -1
+[instruments] 3 #tools# ACTUAL -1 #glasses# ACTUAL -1 #manuals# ACTUAL -1
 {.}
 -3
 
@@ -2841,9 +2841,9 @@ entailment
 premise -2
 10
 {a}
-[group] 3 #family# ACTUAL -1 #crowd# ACTUAL -1 #band# ACTUAL -1
+[group] 3 #few# ACTUAL #NOWORD# NEXT -1 #crowd# ACTUAL -1 #band# ACTUAL -1
 {of}
-[people] 3 #dogs# ACTUAL -1 #persons# ACTUAL -1 #women# ACTUAL -1
+[people] 3 #dogs# ACTUAL -1 #cats# ACTUAL -1 #animals# ACTUAL -1
 [cleaning] 3 #watching# ACTUAL -1 #eating# ACTUAL -1 #walking# ACTUAL -1
 [some] 2 #a lot of# ACTUAL -1 #a# ACTUAL -1
 [kins of] 3 #deep# ACTUAL -1 #tall# ACTUAL -1 #red# ACTUAL -1
@@ -2852,10 +2852,10 @@ premise -2
 {.}
 hypothesis -2
 5
-[there is] 2 #we can see# ACTUAL -1 #maybe# ACTUAL -1
-[at least] 3 #here# ACTUAL -1 #a tall# ACTUAL -1 #at most# ACTUAL -1
-[one] 3 #two# ACTUAL -1 #some# ACTUAL -1 #three# ACTUAL -1
-[person] 3 #tv# ACTUAL -1 #animal# ACTUAL -1 #beer# ACTUAL -1
+[there is] 2 #not# ACTUAL -1 #maybe# ACTUAL -1
+[at least] 3 #inside# ACTUAL -1 #a tall# ACTUAL -1 #at most# ACTUAL -1
+[one] 3 #no# ACTUAL -1 #some# ACTUAL -1 #three# ACTUAL -1
+[person] 3 #restaurant# ACTUAL -1 #dog# ACTUAL -1 #beer# ACTUAL -1
 {.}
 -3
 
@@ -2866,15 +2866,15 @@ premise -2
 4
 {a}
 [biker] 3 #truck# ACTUAL -1 #great# ACTUAL -1 #vehicle# ACTUAL -1
-[races] 3 #sleeping# ACTUAL -1 #competing# ACTUAL -1 #playing# ACTUAL -1
+[races] 3 #sleeping# ACTUAL -1 #naked# ACTUAL -1 #playing# ACTUAL -1
 {.}
 hypothesis -2
 6
 {a}
-[person] 3 #biker# ACTUAL -1 #dog# ACTUAL -1 #person# ACTUAL -1
+[person] 3 #man# ACTUAL -1 #dog# ACTUAL -1 #woman# ACTUAL -1
 {is}
-[riding] 3 #painting# ACTUAL -1 #selling# ACTUAL -1 #on# ACTUAL -1
+[riding] 3 #painting# ACTUAL -1 #selling# ACTUAL -1 #buying# ACTUAL -1
 {a}
-[bike] 3 #horse# ACTUAL -1 #bicycle# ACTUAL -1 #vehicle# ACTUAL -1
+[bike] 3 #horse# ACTUAL -1 #plane# ACTUAL -1 #vehicle# ACTUAL -1
 -3
 
