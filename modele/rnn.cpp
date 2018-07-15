@@ -469,15 +469,13 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 	unsigned nb_imp_words_hyp;
 	unsigned true_label;
 	
-	//on s'occupera de l'accuracy par label plus tard
-	/*vector<unsigned> correct(NB_CLASSES,0);  
-	vector<unsigned> nb_label(NB_CLASSES,0);  
-	vector<unsigned> positive(NB_CLASSES,0);  */
+	
+	vector<unsigned> positive(NB_CLASSES,0); 
 	unsigned pos = 0;  
 	Data* copy=NULL;
 	Detokenisation detok(lexique_filename);
 	
-	for(unsigned i=0; i<19; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque instance...
+	for(unsigned i=0; i<nb_of_sentences; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque instance...
 	{
 		vector<ExplainationsBAXI> max_DI;
 		
@@ -487,19 +485,15 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		
 			// original prediction
 		true_label = explication_set.get_label(i);
-		//++nb_label[true_label];
 		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
-		/*if(label_predicted_true_sample == true_label)
+		if(label_predicted_true_sample == true_label)
 		{
 			++pos;
 			++positive[label_predicted_true_sample];
-		}*/
+		}
 			
 		output << true_label << endl << label_predicted_true_sample << endl;
 		output << "neutral : " << original_probs[0] << ", entailment : " << original_probs[1] << ", contradiction : " << original_probs[2] << endl;
-		
-			// init DI of words
-		//init_DI_words(explication_set.get_nb_expr(1,i) + explication_set.get_nb_expr(2,i), max_DI);
 		
 		// In the premise
 		for( position=0; position < explication_set.get_nb_expr(1,i); ++position)
@@ -523,56 +517,13 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		write_explainations(output, max_DI, detok, copy);
 		
 		
-		
-		/* Calcul pour les taux */
-		/*correct[true_label] +=  nb_correct(explication_set, save_prem[true_label], i, true);  //nb de correct dans la prémisse du sample i
-		correct[true_label] +=  nb_correct(explication_set, save_hyp[true_label], i, false);  //nb de correct dans l'hypothèse du sample i*/
 	}	
-	//output.close();
-	/*cout << "Success Rate = " << 100 * (pos / (double)19) << endl;
-	cout << "\tSuccess Rate neutral = " << 100 * (positive[0] / (double)nb_label[0]) << endl;
-	cout << "\tSuccess Rate entailment = " << 100 * (positive[1] / (double)nb_label[1]) << endl;
-	cout << "\tSuccess Rate contradiction = " << 100 * (positive[2] / (double)nb_label[2]) << endl;
-	
-	cout << "\tRate neutral = " << 100 * (nb_label[0] / (double)19) << endl;
-	cout << "\tRate entailment = " << 100 * (nb_label[1] / (double)19) << endl;
-	cout << "\tRate contradiction = " << 100 * (nb_label[2] / (double)19) << endl;
-	
-	mesure(explication_set,correct,19);
 	output.close();
-	char* name_detok = "Files/expl_detoken_changing_word";
-	detoken_expl(lexique_filename, name, name_detok);*/
+	cout << "Success Rate = " << 100 * (pos / (double)nb_of_sentences) << endl;
+	cout << "\tSuccess Rate neutral = " << 100 * (positive[0] / (double)explication_set.get_nb_neutral()) << endl;
+	cout << "\tSuccess Rate entailment = " << 100 * (positive[1] / (double)explication_set.get_nb_inf()) << endl;
+	cout << "\tSuccess Rate contradiction = " << 100 * (positive[2] / (double)explication_set.get_nb_contradiction()) << endl;
+
 }
 
-
-	
-
-
-
-
-/*
-void write_imp_words(ofstream& output, unsigned position_imp_expr, bool is_premise, Switch_Words* sw_vect, unsigned num_sample)
-{
-	for(unsigned i=0; i<sw_vect->get_nb_token(is_premise, num_sample, position_imp_expr); ++i)
-		output << sw_vect->get_real_word_position(is_premise, num_sample, position_imp_expr, i) << " ";
-	
-}
-void write_in_file(ofstream& output, vector<vector<float>>& max_DI, vector<Switch_Words*>& sw_vect, unsigned num_sample, vector<vector<unsigned>>& save)
-{
-	for(unsigned lab=0; lab<NB_CLASSES; ++lab)
-	{
-		for(unsigned j=0; j<max_DI[lab].size(); ++j)
-			write_imp_words(output, save[lab][j], false, sw_vect[lab], num_sample);
-		output << "-1\n";
-	}
-}
-
-void write_in_file(ofstream& output, vector<vector<float>>& max_DI, vector<Switch_Words*>& sw_vect, unsigned num_sample, vector<vector<unsigned>>& save, Data& explication_set)
-{
-	write_in_file(output, max_DI, sw_vect, num_sample, save);
-	
-	explication_set.print_sentences_of_a_sample(num_sample, output);
-	output << "-3\n";
-}
-*/
 

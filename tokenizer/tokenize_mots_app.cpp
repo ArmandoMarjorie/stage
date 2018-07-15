@@ -129,7 +129,7 @@ void tokeniser_nouveau_remplacement(char* lexique, char* file, char* output_f)
 					word = word + word2;
 				}
 				
-				//cout << "EXPRESSION DANS LA PHRASE = " << word << endl;
+				cout << "EXPRESSION DANS LA PHRASE = " << word << endl;
 				crochet = type_word(word[0], word[word.size()-1], i,word, num_example); //crocher = true si [mot], false si {mot}
 				output << word[0];
 				//extract mots entre crochets

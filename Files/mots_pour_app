@@ -226,7 +226,7 @@ premise -2
 {an}
 [old] 3 #a# PREV #posing# ACTUAL -1 #a# PREV #still# ACTUAL -1 #a# PREV #small# ACTUAL -1
 [man] 3 #woman# ACTUAL -1 #dog# ACTUAL -1 #cat# ACTUAL -1
-[with] 3 #without# ACTUAL -1 #breaking# ACTUAL -1 #posing# ACTUAL -1
+[with] 3 #without# ACTUAL -1 #in# ACTUAL -1 #next to# ACTUAL -1
 {a}
 [package] 3 #woman# ACTUAL -1 #beer# ACTUAL -1 #an# PREV #ad# ACTUAL -1
 [poses] 3 #runs# ACTUAL -1 #walks# ACTUAL -1 #sleeps# ACTUAL -1
@@ -255,7 +255,7 @@ premise -2
 {an}
 [old] 3 #a# PREV #walking# ACTUAL -1 #a# PREV #small# ACTUAL -1 #a# PREV #young# ACTUAL -1
 [man] 3 #woman# ACTUAL -1 #person# ACTUAL -1 #guy# ACTUAL -1
-[with] 3 #without# ACTUAL -1 #breaking# ACTUAL -1 #walking# ACTUAL -1
+[with] 3 #without# ACTUAL -1 #in# ACTUAL -1 #next to# ACTUAL -1
 {a}
 [package] 3 #bag# ACTUAL -1 #beer# ACTUAL -1 #an# PREV #ad# ACTUAL -1
 [poses] 3 #walks# ACTUAL -1 #eats# ACTUAL -1 #moves# ACTUAL -1
@@ -2315,7 +2315,7 @@ premise -2
 [walking] 3 #looking at# ACTUAL -1 #thinking about# ACTUAL -1 #washing# ACTUAL -1
 {a}
 [horse] 3 #child# ACTUAL -1 #NOWORD# PREV #someone# ACTUAL -1 #man# ACTUAL -1
-[across] 2 #outside# ACTUAL -1 #in front of# ACTUAL -1 #outside# ACTUAL -1
+[across] 2 #outside# ACTUAL -1 #in front of# ACTUAL -1
 {a}
 [street] 3 #restaurant# ACTUAL -1 #church# ACTUAL -1 #house# ACTUAL -1
 {.}
@@ -2424,7 +2424,7 @@ premise -2
 [little] 3 #working# ACTUAL -1 #tall# ACTUAL -1 #student# ACTUAL -1
 [boy] 3 #girl# ACTUAL -1 #child# ACTUAL -1 #guy# ACTUAL -1
 [playing] 3 #studying# ACTUAL -1 #learning# ACTUAL -1 #reading# ACTUAL -1
-[outside] 2 #inside# ACTUAL -1 #in desk# ACTUAL -1 #in school# ACTUAL -1
+[outside] 3 #inside# ACTUAL -1 #in desk# ACTUAL -1 #in school# ACTUAL -1
 {on}
 {the}
 [cement] 3 #school# ACTUAL -1 #home# ACTUAL -1 #desk# ACTUAL -1
@@ -2616,7 +2616,7 @@ premise -2
 [two] 3 #no# ACTUAL -1 #some# ACTUAL -1 #three# ACTUAL -1
 [people] 3 #basketball players# ACTUAL -1 #dogs# ACTUAL -1 #women# ACTUAL -1
 [playing] 3 #watching# ACTUAL -1 #thinking about# ACTUAL -1 #supporting# ACTUAL -1
-[badminton] 2 #basketball# ACTUAL -1 #sport# ACTUAL
+[badminton] 2 #basketball# ACTUAL -1 #sport# ACTUAL -1
 {.}
 hypothesis -2
 6
