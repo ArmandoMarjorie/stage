@@ -10,14 +10,24 @@
 
 using namespace std;
 
-
-void extract_words_ref(ifstream& expl_ref, unsigned& nb_expl_ref, vector<string>& mots_expl_ref)
+void extract_words_ref(ifstream& expl_ref, unsigned& nb_expl_ref, vector<string>& mots_expl_ref, int& label)
 {
 	cout << "EXPL REF\n";
-	string word,w;
-	for(unsigned tmp=0; tmp<4; ++tmp)
+	string word,w, lab;
+	getline(expl_ref, lab);
+	stringstream ss(lab);
+	ss >> word;
+	cout << word;
+	if(word == "neutral")
+		label = 0;
+	else if(word == "entailment")	
+		label=1;
+	else	
+		label=2;
+	
+	for(unsigned tmp=0; tmp<3; ++tmp)
 	{
-		getline(expl_ref,word);//lit le label, la prem, l'hyp, le nb d'expl (1 seule)
+		getline(expl_ref,word);//la prem, l'hyp, le nb d'expl (1 seule)
 		cout << word << endl;
 	}
 	for(unsigned nb_phrase=0; nb_phrase<2; ++nb_phrase)
@@ -68,11 +78,18 @@ void extract_words_lime(ifstream& expl, unsigned nb_expl_ref, vector<string>& mo
 		
 }
 
-void calcul_score(vector<string>& mots_expl_ref, vector<string>& mots_expl, unsigned& nb_corrects)
+unsigned calcul_score(vector<string>& mots_expl_ref, vector<string>& mots_expl, unsigned& nb_corrects)
 {
+	unsigned c=0;
 	for(unsigned i=0; i<mots_expl.size(); ++i)
+	{
 		if ( std::find(mots_expl_ref.begin(), mots_expl_ref.end(), mots_expl[i]) != mots_expl_ref.end() ) //mot correct
+		{
 			++nb_corrects;
+			++c;
+		}
+	}
+	return c;
 }
 
 void acc(char* expl_ref_filename, char* expl_filename )
@@ -93,7 +110,14 @@ void acc(char* expl_ref_filename, char* expl_filename )
 
 	string word;
 	unsigned nb_words_expl=0;
-	unsigned nb_corrects=0;
+	unsigned nb_corrects=0, c;
+	int label;
+	vector<unsigned> correct_per_labels(3);
+	vector<unsigned> nb_labels(3);
+	for(unsigned i=0; i<3; ++i)
+	{
+		nb_labels[i] = correct_per_labels[i] = 0;
+	}
 	
 	while(getline(expl_ref,word)) //lit l'id
 	{	
@@ -103,17 +127,27 @@ void acc(char* expl_ref_filename, char* expl_filename )
 		
 		vector<string> mots_expl_ref;
 		unsigned nb_expl_ref=0;
-		extract_words_ref(expl_ref, nb_expl_ref, mots_expl_ref);
+		extract_words_ref(expl_ref, nb_expl_ref, mots_expl_ref, label);
+		
 		nb_words_expl += nb_expl_ref;
+		nb_labels[label] += nb_expl_ref;
 
 		vector<string> mots_expl;
 		extract_words_lime(expl, nb_expl_ref, mots_expl);
 		
-		calcul_score(mots_expl_ref, mots_expl, nb_corrects);
+		cout << "EXPL\n";
+		for(unsigned i=0; i<mots_expl.size(); ++i)
+			cout << mots_expl[i] << " ";
+		cout << endl;
+		
+		c = calcul_score(mots_expl_ref, mots_expl, nb_corrects);
+		correct_per_labels[label] += c;
 	}
 	 
 	cout << "ACCURACY = " << (double)nb_corrects/(double)nb_words_expl << "(" << nb_corrects << "/" << nb_words_expl << ")" << endl;
-	
+	for(unsigned i=0; i<3; ++i)
+		cout << "ACC " << i << " = " << correct_per_labels[i] / (double) nb_labels[i] << endl <<
+			"(" << correct_per_labels[i] << "/" << nb_labels[i] << ")" << endl;	
 	expl.close();
 	expl_ref.close();
 }
@@ -137,3 +171,4 @@ int main(int argc, char** argv)
 	//verif_nb_expressions(argv[2]);
 	return 0;
 }
+
