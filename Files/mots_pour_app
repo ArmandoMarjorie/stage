@@ -1243,7 +1243,7 @@ hypothesis -2
 {the}
 [green] 3 #blue# ACTUAL -1 #green# ACTUAL -1 #yellow# ACTUAL -1
 [grass] 3 #bed# ACTUAL -1 #blanket# ACTUAL -1 #couch# ACTUAL -1
-[taking a nap] 3 #running# ACTUAL -1 #rolling# ACTUAL -1 #dying# ACTUAL -1
+[taking a nap] 3 #running# ACTUAL -1 #laying# ACTUAL -1 #standing# ACTUAL -1
 {.}
 -3
 
@@ -1365,7 +1365,7 @@ premise -2
 {is}
 {also}
 [drinking] 3 #sleeping on# ACTUAL -1 #asleep on# ACTUAL -1 #dreaming about# ACTUAL -1
-[something] 3 #water# ACTUAL -1 #thing# ACTUAL -1 #sleeping pill# ACTUAL -1
+[something] 3 #water# ACTUAL -1 #thing# ACTUAL -1 #juice# ACTUAL -1
 [out of] 2 #from# ACTUAL -1 #flowing of# ACTUAL -1
 {a}
 [bottle] 3 #motel# ACTUAL -1 #glass# ACTUAL -1 #thing# ACTUAL -1

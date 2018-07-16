@@ -314,15 +314,17 @@ void dev_score(RNN& rnn, ParameterCollection& model, DataSet& dev_set, Embedding
 
 void explain_label(vector<float>& probs, vector<float>& original_probs, float& DI, unsigned label_explained)
 {
-	float distance;
+	float distance=0;
 	float di_tmp = 0;
 
 	for(unsigned label=0; label < NB_CLASSES; ++label)
 	{
 		distance = probs[label] - original_probs[label];
 		if(label == label_explained)
+		{
 			distance = -distance;
-		di_tmp += distance;
+			di_tmp += distance;
+		}
 	}
 	
 	if(di_tmp > DI)
@@ -475,7 +477,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 	Data* copy=NULL;
 	Detokenisation detok(lexique_filename);
 	
-	for(unsigned i=0; i<nb_of_sentences; ++i) // POUR L'INSTANT ON EN A FAIT 19 ___  pour chaque instance...
+	for(unsigned i=0; i<nb_of_sentences; ++i) // pour chaque instance...
 	{
 		vector<ExplainationsBAXI> max_DI;
 		
