@@ -11,7 +11,7 @@ class_names = ["neutral","entailment","contradiction"]
 
 
 instance = []
-labels = []
+labels_instance = []
 
 """ Lecture du fichier mots_pour_app contenant les phrases en brut """
 test_file = open(sys.argv[1], "r")
@@ -19,12 +19,13 @@ n_samp = 0
 
 for line in test_file: #lit -3 de début
     l = test_file.readline() #lit le label
-    if line.rstrip('\n\r') == "neutral":
-        labels.append(0)
-    elif line.rstrip('\n\r') == "entailment":
-        labels.append(1)
+    li = l.rstrip('\n\r')
+    if li == "neutral":
+        labels_instance.append(0)
+    elif li == "entailment":
+        labels_instance.append(1)
     else:
-        labels.append(2)
+        labels_instance.append(2)
         
     string_tmp = ""
     for j in range(2):
@@ -73,30 +74,37 @@ import operator
 explainer = LimeTextExplainer(class_names=class_names)
 imp_file = open(sys.argv[2], "w")
 for i in range(len(instance)) :
-	#num_features = array_len[n_samp] pas encore fait
-	#num_features = 3
-	exp = explainer.explain_instance(instance[i], socket, labels=[0, 1, 2], num_features=len(instance[i]))
-	
-	str_samp = 'Sample numero '+ str(i) + '\n'
-	imp_file.write(str_samp)
-	
-	imp_file.write( 'Explanation for class neutral \n') # Les mots en faveur de la classe neutral
-	str_weight = '\n'.join(map(str, exp.as_list(label=0)))
-	imp_file.write(str_weight)
-	imp_file.write('\n')
-	
-	imp_file.write('Explanation for class entailment \n') # Les mots en faveur de la classe entailment
-	str_weight = '\n'.join(map(str, exp.as_list(label=1)))
-	imp_file.write(str_weight)
-	imp_file.write('\n')
-	
-	imp_file.write('Explanation for class contradiction \n') # Les mots en faveur de la classe contradiction
-	str_weight = '\n'.join(map(str, exp.as_list(label=2)))
-	imp_file.write(str_weight)
-	imp_file.write('\n\n')
-	
-	str_name = "sample_" + str(i) + ".html"
-	exp.save_to_file(str_name)
+    #num_features = array_len[n_samp] pas encore fait
+    #num_features = 3
+    exp = explainer.explain_instance(instance[i], socket, labels=[0, 1, 2], num_features=len(instance[i]))
+    
+    str_samp = 'Sample numero '+ str(i) + '\n'
+    imp_file.write(str_samp)
+    if(labels_instance[i]==0):
+        str_label = "neutral" + "\n"
+    elif(labels_instance[i]==0):
+        str_label = "entailment" + "\n"
+    else:
+        str_label = "contradiction" + "\n"
+    
+    imp_file.write( str_label ) # Les mots en faveur de la classe
+    str_weight = '\n'.join(map(str, exp.as_list(label=labels_instance[i])))
+    imp_file.write(str_weight)
+    imp_file.write('\n-3\n')
+    
+    """
+    imp_file.write('Explanation for class entailment \n') # Les mots en faveur de la classe entailment
+    str_weight = '\n'.join(map(str, exp.as_list(label=1)))
+    imp_file.write(str_weight)
+    imp_file.write('\n')
+    
+    imp_file.write('Explanation for class contradiction \n') # Les mots en faveur de la classe contradiction
+    str_weight = '\n'.join(map(str, exp.as_list(label=2)))
+    imp_file.write(str_weight)
+    imp_file.write('\n\n')
+    """
+    str_name = "sample_" + str(i) + ".html"
+    exp.save_to_file(str_name)
 
  
 

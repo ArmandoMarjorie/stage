@@ -233,7 +233,7 @@ class LimeTextExplainer(object):
                          labels,
                          num_features,
                          top_labels=None,
-                         num_samples=500,
+                         num_samples=5000,
                          distance_metric='cosine',
                          model_regressor=None):
         """Generates explanations for a prediction.

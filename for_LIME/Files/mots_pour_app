@@ -214,7 +214,7 @@ hypothesis -2
 [poses] 3 #runs# ACTUAL -1 #eats# ACTUAL -1 #still# ACTUAL -1
 [in front of] 3 #outside# ACTUAL -1 #by# ACTUAL -1 #beside# ACTUAL -1
 {an}
-[ad] 3 #advertisement# ACTUAL -1 #restaurant# ACTUAL -1 #place# ACTUAL -1
+[ad] 3 #advertisement# ACTUAL -1 #a# PREV #restaurant# ACTUAL -1 #a# PREV #place# ACTUAL -1
 {.} 
 -3
 
@@ -2117,7 +2117,7 @@ hypothesis -2
 7
 {the}
 [woman] 3 #man# ACTUAL -1 #person# ACTUAL -1 #lady# ACTUAL -1
-[is] 3 #likes# ACTUAL #the# NEXT -1 #wants# ACTUAL the# NEXT -1 #runs# ACTUAL for# NEXT -1
+[is] 3 #likes# ACTUAL #the# NEXT -1 #wants# ACTUAL #the# NEXT -1 #runs# ACTUAL #for# NEXT -1
 {in}
 [first] 3 #a# ACTUAL -1 #marathon# ACTUAL -1 #second# ACTUAL -1
 [place] 3 #marathon# ACTUAL -1 #competition# ACTUAL -1 #race# ACTUAL -1

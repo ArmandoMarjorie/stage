@@ -45,7 +45,7 @@ void extract_words_lime(ifstream& expl, unsigned nb_expl_ref, vector<string>& mo
 	string word,w;
 	char tmp[100];
 	unsigned nb=0,j,i;
-	for(i=0; i<3; ++i)
+	for(i=0; i<2; ++i)
 	{
 		getline(expl, word);
 		cout << word << endl;
