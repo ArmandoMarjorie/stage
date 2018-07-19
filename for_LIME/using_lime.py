@@ -82,7 +82,7 @@ for i in range(len(instance)) :
     imp_file.write(str_samp)
     if(labels_instance[i]==0):
         str_label = "neutral" + "\n"
-    elif(labels_instance[i]==0):
+    elif(labels_instance[i]==1):
         str_label = "entailment" + "\n"
     else:
         str_label = "contradiction" + "\n"
