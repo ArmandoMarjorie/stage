@@ -522,9 +522,9 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 	}	
 	output.close();
 	cout << "Success Rate = " << 100 * (pos / (double)nb_of_sentences) << endl;
-	cout << "\tSuccess Rate neutral = " << 100 * (positive[0] / (double)explication_set.get_nb_neutral()) << endl;
-	cout << "\tSuccess Rate entailment = " << 100 * (positive[1] / (double)explication_set.get_nb_inf()) << endl;
-	cout << "\tSuccess Rate contradiction = " << 100 * (positive[2] / (double)explication_set.get_nb_contradiction()) << endl;
+	cout << "\tSuccess Rate neutral = " << 100 * (positive[0] / (double)explication_set.get_nb_neutral()) << endl << "\t" << positive[0] << " / "<< explication_set.get_nb_neutral() << endl;
+	cout << "\tSuccess Rate entailment = " << 100 * (positive[1] / (double)explication_set.get_nb_inf()) << endl << "\t" << positive[1] << " / "<< explication_set.get_nb_inf() << endl;
+	cout << "\tSuccess Rate contradiction = " << 100 * (positive[2] / (double)explication_set.get_nb_contradiction()) << endl << "\t" << positive[2] << " / "<< explication_set.get_nb_contradiction() << endl;
 
 }
 
