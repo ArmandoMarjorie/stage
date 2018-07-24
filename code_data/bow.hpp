@@ -3,12 +3,29 @@
 
 	#include "switch_words.hpp"
 
+	/**
+	 * \file bow.hpp
+	*/
+
+	/** 
+	 * \class BagOfWords
+	 * \brief Class representing a word/an expression of a sentence (the premisse or the hypothesis). 
+	*/
 	class BagOfWords
 	{
 		private:
-			std::vector<unsigned> words;
-			bool important_bag = true;
-			std::vector<SwitchWords*> switch_words;
+			std::vector<unsigned> words; 			/*!< The expression.
+														 Ex : "in front of" : 
+														 words[0] = in
+														 words[1] = front
+														 words[2] = of */ 
+														 
+			bool important_bag = true; 				/*!< True if we evaluate the expression importance, 
+														 False otherwise. (We do not evaluate "the" for example).*/
+			
+			std::vector<SwitchWords*> switch_words; /*!< All the alternative expressions (up to 3). 
+														 Ex : the alternative expressions are "in front of", "outside", and "next to". 
+														 Then : switch_words[0] = in front of, switch_words[1] = outside, switch_words[2] = next to */ 
 			
 		public:
 			BagOfWords(std::string& line);

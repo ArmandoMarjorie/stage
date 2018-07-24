@@ -849,7 +849,7 @@ entailment
 A crowd of people fill the street in front of a McDonald 's .
 There is a crowd outside the restaurant .
 1
-crowd 1 in_front_of 7 McDonald_ 9
+crowd 1 in_front_of 7 mcdonald_'s 9
 crowd 2 outside 3 restaurant 5
 
 

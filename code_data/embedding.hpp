@@ -28,13 +28,13 @@
 
 	/** 
 	 * \class Embeddings
-	 * \brief Class representing the different embeddings 
+	 * \brief Class representing the different embeddings. 
 	*/
 	class Embeddings
 	{
 		private:
-			dynet::LookupParameter p_c; /*!< table containing each word embedding*/ 
-			unsigned dim_embedding = 100; /*!< dimension of the embedding*/ 
+			dynet::LookupParameter p_c; /*!< Table containing each word embedding. */ 
+			unsigned dim_embedding = 100; /*!< The embedding dimension. */ 
 
 		public:
 			Embeddings(dynet::ParameterCollection& model, unsigned dim);

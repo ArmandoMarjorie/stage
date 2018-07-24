@@ -17,13 +17,23 @@
 	#include "embedding.hpp"
 	#include "data.hpp"
 	
+	
+	/**
+	 * \file dataset.hpp
+	*/
+
+	/** 
+	 * \class DataSet
+	 * \brief Class representing all the instances from the testing_token_id_texts file. 
+	*/
 	class DataSet
 	{
 		private:
-			std::vector<Data*> dataset;
-			unsigned nb_inf=0;
-			unsigned nb_neutral=0;
-			unsigned nb_contradiction=0;
+			std::vector<Data*> dataset;  /*!< All the instances. */
+			unsigned nb_inf=0;			 /*!< Number of 'entailment' instances. */
+			unsigned nb_neutral=0; 		 /*!< Number of 'neutral' instances. */
+			unsigned nb_contradiction=0; /*!< Number of 'contradiction' instances. */
+			
 		public:
 			DataSet(char* filename);
 			~DataSet();

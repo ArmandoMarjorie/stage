@@ -70,32 +70,32 @@
 "2904104770.jpg#1r1n","neutral","The female soccer team is getting last minute instruction from their coach .","The soccer team is listening to their coach for their last play to win the soccer game .","soccer 2 team 3 getting 5 instruction 8 coach 11","soccer 1 team 2 listening_to 4 coach 6 last 9 play 10"
 "3436074878.jpg#4r1n","neutral","A dog biting a man 's rear","An animal bit its owner .","dog 1 biting 2 man_'s 4","animal 1 bit 2 owner 4"
 "2748929011.jpg#4r1c","contradiction","A golfer shoots his ball out of a sand trap .","A drive off of the first tee .","out_of 5 sand_trap 7","first 4 tee 5"
-"3403797144.jpg#2r1n","neutral","A surfer is riding a wave in a large body of water .","This is his first wave of the day .",,
-"6899247616.jpg#4r1n","neutral","A woman finishing a marathon race .","The woman is in first place .",,
-"2919459517.jpg#4r1n","neutral","Man with blue and yellow shirt rides bike .","a man rides a bike for the first time",,
-"4799726314.jpg#0r1e","entailment","A baby with a green bottom and red top lying in bed with a brown and white cat and also a black and white cat .","There is a child and two animals .",,
-"487894806.jpg#0r1c","contradiction","A brown dog wearing a collar is chasing and biting on a red broom .","An animal is sleeping outside .",,
-"2402462857.jpg#1r1e","entailment","Brown and cream dog with tongue out in front of grassy forest","There is an animal standing outdoors .",,
-"3354063643.jpg#2r1e","entailment","The dog is in snow , and has a stick in its mouth .","There is an animal outdoors .",,
-"4871326552.jpg#1r1c","contradiction","The women is photographing statues outdoors on a sunny day .","Two men taking pictures of animals",,
-"5637347272.jpg#1r1e","entailment","A woman in a striped shirt is walking a horse across a street .","A human and an animal are outdoors .",,
-"1801188148.jpg#1r1e","entailment","Four dogs of varying breeds running through a field .","Some animals outdoors .",,
-"200797624.jpg#4r1c","contradiction","Army men grilling a lot of meat while his troop looks on .","No animal products can be seen here .",,
-"5745422329.jpg#2r1c","contradiction","A man in a green shirt and dark pants and carrying a really big pot turns around to talk to 3 other people .","Nobody has a shirt on",,
-"2493825916.jpg#4r1c","contradiction","A little boy playing outside on the cement .","A boy is doing homework .",,
-"3225880532.jpg#4r1n","neutral","Two men talk outdoors .","The men are talking about their wives",,
-"2311616095.jpg#1r1c","contradiction","Dark-haired man wearing a watch and oven mitt about to cook some meat in the kitchen .","A man is sitting watching TV .",,
-"3169168282.jpg#2r1c","contradiction","A little boy punching out flashcards from the cardboard they came in .","A boy watches TV .",,
-"3191805046.jpg#1r1e","entailment","This man dressed in white pants and blue shirt , is standing on a ledge in the snow .","A man is outside in the snow .",,
-"3465396606.jpg#4r1e","entailment","A woman with a stroller is passing a man walking a dog .","There are people outside .",,
-"3465396606.jpg#4r1n","neutral","A woman with a stroller is passing a man walking a dog .","There is a black dog outside .",,
-"3580277210.jpg#4r1c","contradiction","Two people playing badminton .","Two people playing basketball outside .",,
-"345852737.jpg#1r1e","entailment","A woman in a burgundy coat exits Trader Joe 's with a cart full of groceries .","a woman outside",,
-"4446142718.jpg#2r1c","contradiction","A boy plays with a motorized car next to a dirty street lined with real cars .","no boy is outside in the streets playing .",,
-"4274214534.jpg#4r1e","entailment","A woman is walking her dog along a snowy ground .","A woman is with her dog outside .",,
-"4570069538.jpg#1r1e","entailment","A crowd of people fill the street in front of a McDonald 's .","There is a crowd outside the restaurant .",,
-"3949924354.jpg#1r1e","entailment","A man in a white shirt and baseball hat is pushing a cart carrying several bags on a street .","A man is walking outside .",,
-"3205887140.jpg#0r1e","entailment","A woman with red-hair and a leather jacket holds a harp in front of a snowy forest .","The woman is holding an instrument .",,
-"2325436612.jpg#4r1e","entailment","Two men are looking through microscopes in a room .","There are men using scientific instruments .",,
-"7582869910.jpg#3r1e","entailment","A group of people cleaning some kins of sea animal .","There is at least one person .",,
-"3316725440.jpg#4r1e","entailment","A biker races .","A person is riding a bike",,
+"3403797144.jpg#2r1n","neutral","A surfer is riding a wave in a large body of water .","This is his first wave of the day .","wave 5","first 2 wave 3"
+"6899247616.jpg#4r1n","neutral","A woman finishing a marathon race .","The woman is in first place .","woman 1 marathon 2","woman 1 first 4 place 5"
+"2919459517.jpg#4r1n","neutral","Man with blue and yellow shirt rides bike .","a man rides a bike for the first time","man 0 rides 6 bike 7","man 1 rides 2 bike 4 first_time 5 "
+"4799726314.jpg#0r1e","entailment","A baby with a green bottom and red top lying in bed with a brown and white cat and also a black and white cat .","There is a child and two animals .","baby 1 cat 17 cat 24","child 2 two 4 animals 5"
+"487894806.jpg#0r1c","contradiction","A brown dog wearing a collar is chasing and biting on a red broom .","An animal is sleeping outside .","dog 2 chasing 7","animal 1 sleeping 3"
+"2402462857.jpg#1r1e","entailment","Brown and cream dog with tongue out in front of grassy forest","There is an animal standing outdoors .","dog 3 in_front_of 6 forest 8","animal 2 outdoors 4"
+"3354063643.jpg#2r1e","entailment","The dog is in snow , and has a stick in its mouth .","There is an animal outdoors .","dog 1 is 2 in 3 snow 4","animal 2 outdoors 3"
+"4871326552.jpg#1r1c","contradiction","The women is photographing statues outdoors on a sunny day .","Two men taking pictures of animals","women 1 photographing 3 statues 4","men 1 taking 2 pictures 3 animals 5"
+"5637347272.jpg#1r1e","entailment","A woman in a striped shirt is walking a horse across a street .","A human and an animal are outdoors .","woman 1 horse 9 street 12","human 1 animal 4 outdoors 6"
+"1801188148.jpg#1r1e","entailment","Four dogs of varying breeds running through a field .","Some animals outdoors .","dogs 1 field 7","animals 1 outdoors 2"
+"200797624.jpg#4r1c","contradiction","Army men grilling a lot of meat while his troop looks on .","No animal products can be seen here .","meat 4","no 0 animal 1 products 2"
+"5745422329.jpg#2r1c","contradiction","A man in a green shirt and dark pants and carrying a really big pot turns around to talk to 3 other people .","Nobody has a shirt on","man 1 in 2 shirt 5","nobody 0 shirt 3"
+"2493825916.jpg#4r1c","contradiction","A little boy playing outside on the cement .","A boy is doing homework .","boy 2 playing 3","boy 1 doing 3 homework 4"
+"3225880532.jpg#4r1n","neutral","Two men talk outdoors .","The men are talking about their wives","men 1 talk 2","men 1 talking 3 about 4 wives 6"
+"2311616095.jpg#1r1c","contradiction","Dark-haired man wearing a watch and oven mitt about to cook some meat in the kitchen .","A man is sitting watching TV .","man 1 about 8 cook 10","man 1 sitting 3 watching 4 tv 5"
+"3169168282.jpg#2r1c","contradiction","A little boy punching out flashcards from the cardboard they came in .","A boy watches TV .","boy 2 punching_out 3 flashcards 4","boy 1 watches 2 TV 3"
+"3191805046.jpg#1r1e","entailment","This man dressed in white pants and blue shirt , is standing on a ledge in the snow .","A man is outside in the snow .","man 1 standing_on 11 snow 16","man 1 outside 3 snow 6"
+"3465396606.jpg#4r1e","entailment","A woman with a stroller is passing a man walking a dog .","There are people outside .","woman 1 man 8 walking 9 dog 11","people 1 outside 2"
+"3465396606.jpg#4r1n","neutral","A woman with a stroller is passing a man walking a dog .","There is a black dog outside .","dog 11","black 2 dog 3"
+"3580277210.jpg#4r1c","contradiction","Two people playing badminton .","Two people playing basketball outside .","two 0 people 1 badminton 3","two 0 people 1 basketball 3"
+"345852737.jpg#1r1e","entailment","A woman in a burgundy coat exits Trader Joe 's with a cart full of groceries .","a woman outside","woman 1 exits 6","woman 1 outside 2"
+"4446142718.jpg#2r1c","contradiction","A boy plays with a motorized car next to a dirty street lined with real cars .","no boy is outside in the streets playing .","boy 1 plays 2 street 10","no 0 boy 1 streets 6 playing 7"
+"4274214534.jpg#4r1e","entailment","A woman is walking her dog along a snowy ground .","A woman is with her dog outside .","woman 1 dog 5 snowy 8 ground 9","woman 1 dog 5 outside 6"
+"4570069538.jpg#1r1e","entailment","A crowd of people fill the street in front of a McDonald 's .","There is a crowd outside the restaurant .","crowd 1 in_front_of 7 mcdonald_'s 9","crowd 2 outside 3 restaurant 5"
+"3949924354.jpg#1r1e","entailment","A man in a white shirt and baseball hat is pushing a cart carrying several bags on a street .","A man is walking outside .","man 1 street 18","man 1 outside 4"
+"3205887140.jpg#0r1e","entailment","A woman with red-hair and a leather jacket holds a harp in front of a snowy forest .","The woman is holding an instrument .","woman 1 holds 8 harp 10","woman 1 holding 3 instrument 5"
+"2325436612.jpg#4r1e","entailment","Two men are looking through microscopes in a room .","There are men using scientific instruments .","men 1 microscopes 4","men 1 scientific 3 instruments 4"
+"7582869910.jpg#3r1e","entailment","A group of people cleaning some kins of sea animal .","There is at least one person .","group 1 people 3","at_least 1 one 2 person 3"
+"3316725440.jpg#4r1e","entailment","A biker races .","A person is riding a bike","biker 1","riding 3 bike 5"

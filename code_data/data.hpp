@@ -4,14 +4,25 @@
 	
 	#include "bow.hpp"
 	
-	
+	/**
+	 * \file data.hpp
+	*/
+
+	/** 
+	 * \class Data
+	 * \brief Class representing an instance. 
+	*/
 	class Data
 	{
 		private:
-			unsigned label;
-			std::vector<BagOfWords*> premise;
-			std::vector<BagOfWords*> hypothesis;
-			
+			unsigned label; 						/*!< The label : 
+														 Entailment, 
+														 Contradiction, 
+														 Neutral */ 
+			std::vector<BagOfWords*> premise; 		/*!< The premise. 
+														 Each case is a word or an expression. */ 
+			std::vector<BagOfWords*> hypothesis;	/*!< The hypothesis. 
+														 Each case is a word or an expression. */ 
 			
 		public:
 			Data(std::ifstream& database);
