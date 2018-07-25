@@ -1,17 +1,17 @@
-#ifndef BOW_HPP
-#define BOW_HPP
+#ifndef INSTANCE_EXPR_HPP
+#define INSTANCE_EXPR_HPP
 
 	#include "switch_words.hpp"
 
 	/**
-	 * \file bow.hpp
+	 * \file instance_expression.hpp
 	*/
 
 	/** 
-	 * \class BagOfWords
+	 * \class InstanceExpression
 	 * \brief Class representing a word/an expression of a sentence (the premisse or the hypothesis). 
 	*/
-	class BagOfWords
+	class InstanceExpression
 	{
 		private:
 			std::vector<unsigned> words; 			/*!< The expression.
@@ -28,10 +28,10 @@
 														 Then : switch_words[0] = in front of, switch_words[1] = outside, switch_words[2] = next to */ 
 			
 		public:
-			BagOfWords(std::string& line);
-			BagOfWords(const std::vector<unsigned>& wordsID, bool imp);
-			BagOfWords(BagOfWords const& copy);
-			~BagOfWords();
+			InstanceExpression(std::string& line);
+			InstanceExpression(const std::vector<unsigned>& wordsID, bool imp);
+			InstanceExpression(InstanceExpression const& copy);
+			~InstanceExpression();
 			
 			unsigned get_nb_words();
 			unsigned get_word_id(unsigned num_words);
@@ -40,8 +40,8 @@
 			
 			void modif_BoW_random(bool imp);
 			void modif_BoW(unsigned num_switch_words, unsigned num_sw, bool imp);
-			void modif_BoW(BagOfWords& bow);
-			void modif_BoW(BagOfWords const& current_bow, unsigned num_switch_words, unsigned num_sw, bool imp);
+			void modif_BoW(InstanceExpression& bow);
+			void modif_BoW(InstanceExpression const& current_bow, unsigned num_switch_words, unsigned num_sw, bool imp);
 			
 			unsigned get_nb_switch_words();
 			

@@ -305,8 +305,8 @@ Expression BiLSTM::run_KIM(DataSet& set, Embeddings& embedding, unsigned num_sen
 	 cout << "ligne 294\n";
 	vector<Expression> premise_lstm_repr;
 	vector<Expression> hypothesis_lstm_repr;
-	words_representation(embedding, set, 1, cg, num_sentence, premise_lstm_repr);
-	words_representation(embedding, set, 2, cg, num_sentence, hypothesis_lstm_repr);
+	words_representation(embedding, set, true, cg, num_sentence, premise_lstm_repr);
+	words_representation(embedding, set, false, cg, num_sentence, hypothesis_lstm_repr);
 
 	/* Creating attention matrix */
 	vector< vector<float> > attention_matrix(premise_lstm_repr.size(), vector<float>(hypothesis_lstm_repr.size()) );

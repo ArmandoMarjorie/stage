@@ -2,7 +2,7 @@
 #define DATA_HPP
 	
 	
-	#include "bow.hpp"
+	#include "instance_expression.hpp"
 	
 	/**
 	 * \file data.hpp
@@ -19,9 +19,9 @@
 														 Entailment, 
 														 Contradiction, 
 														 Neutral */ 
-			std::vector<BagOfWords*> premise; 		/*!< The premise. 
+			std::vector<InstanceExpression*> premise; 		/*!< The premise. 
 														 Each case is a word or an expression. */ 
-			std::vector<BagOfWords*> hypothesis;	/*!< The hypothesis. 
+			std::vector<InstanceExpression*> hypothesis;	/*!< The hypothesis. 
 														 Each case is a word or an expression. */ 
 			
 		public:

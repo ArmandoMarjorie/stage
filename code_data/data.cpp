@@ -20,10 +20,10 @@ using namespace std;
 Data::~Data()
 {
 	for(unsigned i=0; i<premise.size(); ++i)
-		premise[i]->~BagOfWords();
+		premise[i]->~InstanceExpression();
 	
 	for(unsigned i=0; i<hypothesis.size(); ++i)
-		hypothesis[i]->~BagOfWords();
+		hypothesis[i]->~InstanceExpression();
 	
 }
 
@@ -53,9 +53,9 @@ Data::Data(ifstream& database)
 			getline(database, word);
 			
 			if(nb_sentences==0)
-				premise.push_back(new BagOfWords(word));
+				premise.push_back(new InstanceExpression(word));
 			else
-				hypothesis.push_back(new BagOfWords(word));
+				hypothesis.push_back(new InstanceExpression(word));
 		}	
 	}
 	
@@ -71,9 +71,9 @@ Data::Data(ifstream& database)
 Data::Data(Data const& copy)
 {
 	for(unsigned i=0; i<copy.premise.size(); ++i)
-		this->premise.push_back(new BagOfWords( *(copy.premise[i]) ));
+		this->premise.push_back(new InstanceExpression( *(copy.premise[i]) ));
 	for(unsigned i=0; i<copy.hypothesis.size(); ++i)
-		this->hypothesis.push_back(new BagOfWords( *(copy.hypothesis[i]) ) );
+		this->hypothesis.push_back(new InstanceExpression( *(copy.hypothesis[i]) ) );
 	this->label = copy.label;
 	
 }

@@ -7,11 +7,11 @@ EXEC= Training Testing
 
 all: $(EXEC)
 
-Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o bow.o
-	$(CC) -o Training train.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o bow.o $(LDFLAGS)
+Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o
+	$(CC) -o Training train.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o $(LDFLAGS)
 
-Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o bow.o
-	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o bow.o $(LDFLAGS)
+Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o
+	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o $(LDFLAGS)
 
 predict.o: run/predict.cpp modele/rnn.hpp code_data/dataset.hpp 
 	$(CC) -o predict.o -c run/predict.cpp $(CFLAGS)
@@ -40,8 +40,8 @@ embedding.o: code_data/embedding.cpp code_data/embedding.hpp
 sw.o: code_data/switch_words.cpp code_data/switch_words.hpp
 	$(CC) -o sw.o -c code_data/switch_words.cpp $(CFLAGS)
 	
-bow.o: code_data/bow.cpp code_data/bow.hpp
-	$(CC) -o bow.o -c code_data/bow.cpp $(CFLAGS)
+instance_expression.o: code_data/instance_expression.cpp code_data/instance_expression.hpp
+	$(CC) -o instance_expression.o -c code_data/instance_expression.cpp $(CFLAGS)
 
 
 	

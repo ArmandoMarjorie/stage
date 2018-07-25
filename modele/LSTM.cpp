@@ -105,8 +105,8 @@ Expression LSTM::run(DataSet& set, Embeddings& embedding, unsigned num_sentence,
         ComputationGraph& cg) 
 {
 	vector<Expression> h(2);
-	h[0] = sentence_representation(set, embedding, 1, num_sentence, cg);
-	h[1] = sentence_representation(set, embedding, 2, num_sentence, cg);
+	h[0] = sentence_representation(set, embedding, true, num_sentence, cg);
+	h[1] = sentence_representation(set, embedding, false, num_sentence, cg);
 
 	Expression W = parameter(cg, p_W); 
 	Expression bias = parameter(cg, p_bias); 
@@ -126,8 +126,8 @@ Expression LSTM::run_sys5(DataSet& set, Embeddings& embedding, unsigned num_sent
 {
 	vector<Expression> premise_repr;
 	vector<Expression> hyp_repr;
-	words_representation(set, embedding, 1, num_sentence, cg, premise_repr);
-	words_representation(set, embedding, 2, num_sentence, cg, hyp_repr);
+	words_representation(set, embedding, true, num_sentence, cg, premise_repr);
+	words_representation(set, embedding, false, num_sentence, cg, hyp_repr);
 
 	Expression W = parameter(cg, p_W); 
 	Expression bias = parameter(cg, p_bias); 
