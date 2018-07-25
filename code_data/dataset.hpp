@@ -48,7 +48,7 @@
 			
 			unsigned get_nb_words(bool is_premise, unsigned num_sample, unsigned num_expr);
 			unsigned get_nb_expr(bool is_premise, unsigned num_sample);
-			unsigned get_nb_sentences();
+			unsigned get_nb_instances();
 			
 			unsigned get_label(unsigned num_sample);
 			void print_a_sample(unsigned num_sample);

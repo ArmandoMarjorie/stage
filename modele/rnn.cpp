@@ -141,7 +141,7 @@ void run_predict(RNN& rnn, ParameterCollection& model, DataSet& test_set, Embedd
 	cerr << "Parameters loaded !\n";
 
 	cerr << "Testing ...\n";
-	unsigned nb_of_sentences = test_set.get_nb_sentences();
+	unsigned nb_of_sentences = test_set.get_nb_intances();
 	unsigned best = 0;
 	rnn.disable_dropout();
 	predict_dev_and_test(rnn, test_set, embedding, nb_of_sentences, best);
@@ -202,8 +202,8 @@ void run_train(RNN& rnn, ParameterCollection& model, DataSet& train_set, DataSet
 	unsigned best = 0; 
 	unsigned si;
 	unsigned nb_samples;
-	unsigned nb_of_sentences = train_set.get_nb_sentences();
-	unsigned nb_of_sentences_dev = dev_set.get_nb_sentences();
+	unsigned nb_of_sentences = train_set.get_nb_intances();
+	unsigned nb_of_sentences_dev = dev_set.get_nb_intances();
 
 	// Number of batches in training set
 	unsigned nb_batches = nb_of_sentences / batch_size; 
@@ -358,7 +358,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 	cerr << "Testing ...\n";
 	unsigned label_predicted;
 	unsigned label_predicted_true_sample;
-	const unsigned nb_of_sentences = explication_set.get_nb_sentences();
+	const unsigned nb_of_sentences = explication_set.get_nb_intances();
 	rnn.disable_dropout();
 	char* name = "Files/expl_token_changing_word";
 	ofstream output(name, ios::out | ios::trunc);
