@@ -44,10 +44,10 @@ Expression LSTM::get_neg_log_softmax(DataSet& set, Embeddings& embedding, unsign
 
 	/* LSTM system */
 
-Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, unsigned sentence, unsigned num_sentence, 
+Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, bool is_premise, unsigned num_sentence, 
         ComputationGraph& cg)
 {
-	const unsigned nb_expr = set.get_nb_expr(sentence, num_sentence);
+	const unsigned nb_expr = set.get_nb_expr(is_premise, num_sentence);
 	unsigned nb_words; //nb de mots dans l'expression courante
 
 	if (apply_dropout) 
@@ -62,10 +62,10 @@ Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, un
 
 	for(unsigned i=0; i<nb_expr; ++i)
 	{
-		nb_words = set.get_nb_words(sentence, num_sentence, i);
+		nb_words = set.get_nb_words(is_premise, num_sentence, i);
 		for(unsigned j=0; j < nb_words; ++j)
 		{
-			if( (wordID = set.get_word_id(sentence, num_sentence, i, j) ) == 0) // 0 means "this is not a word, there is no word here !"
+			if( (wordID = set.get_word_id(is_premise, num_sentence, i, j) ) == 0) // 0 means "this is not a word, there is no word here !"
 				continue;
 			repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, wordID) );
 		}
@@ -76,10 +76,10 @@ Expression LSTM::sentence_representation(DataSet& set, Embeddings& embedding, un
 	return repr;//vect_sentence[nb_words-1];
 }
 
-void LSTM::words_representation(DataSet& set, Embeddings& embedding, unsigned sentence, unsigned num_sentence, 
+void LSTM::words_representation(DataSet& set, Embeddings& embedding, bool is_premise, unsigned num_sentence, 
         ComputationGraph& cg, vector<Expression>& sentence_repr)
 {
-	const unsigned nb_expr = set.get_nb_expr(sentence, num_sentence);
+	const unsigned nb_expr = set.get_nb_expr(is_premise, num_sentence);
 	unsigned nb_words; //nb de mots dans l'expression courante
 	
 	if (apply_dropout)
@@ -95,9 +95,9 @@ void LSTM::words_representation(DataSet& set, Embeddings& embedding, unsigned se
 	/* Run forward LSTM */
 	for(i=0; i<nb_expr; ++i)
 	{
-		nb_words = set.get_nb_words(sentence, num_sentence, i);
+		nb_words = set.get_nb_words(is_premise, num_sentence, i);
 		for(j=0; j < nb_words; ++j)
-			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(sentence, num_sentence, i, j)) ) );
+			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, set.get_word_id(is_premise, num_sentence, i, j)) ) );
 	}
 }
 

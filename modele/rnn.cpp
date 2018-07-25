@@ -162,32 +162,7 @@ vector<float> run_predict_for_server_lime(RNN& rnn, DataSet& test_set, Embedding
 }
 
 
-/*
-void write_sentences(ofstream& output, vector<unsigned>& premise, vector<unsigned>& hypothesis)
-{
-	unsigned i;
-	for(i=0; i<premise.size(); ++i)
-		output << premise[i] << " ";
-	output << "-1\n";
-	for(i=0; i<hypothesis.size(); ++i)
-		output << hypothesis[i] << " ";	
-	output << "-1\n";
-}
 
-void save_sentences(DataSet& explication_set,vector<unsigned>& premise,vector<unsigned>& hypothesis, unsigned num_sample)
-{
-	for(unsigned sentence=1; sentence <= 2; ++sentence)
-	{
-		for(unsigned i =0; i<explication_set.get_nb_words(sentence, num_sample); ++i)
-		{
-			if(sentence==1)
-				premise.push_back(explication_set.get_word_id(sentence, num_sample, i));
-			else
-				hypothesis.push_back(explication_set.get_word_id(sentence, num_sample, i));
-		}	
-	}
-}
-*/
 
 
 
@@ -332,77 +307,6 @@ void explain_label(vector<float>& probs, vector<float>& original_probs, float& D
 }
 
 
-/*
-void affichage_vect_DI(vector<float>& vect_DI)
-{
-	for(unsigned i=0; i<vect_DI.size(); ++i)
-		cout << "vect_di[" <<i <<"] =" << vect_DI[i] << endl;
-}
-
-
-void affichage_max_DI(vector<vector<float>>& max_DI)
-{
-	for(unsigned i=0; i<max_DI.size(); ++i)
-	{
-		for(unsigned j=0; j<max_DI[i].size(); ++j)
-			cout << "max_DI[" <<i << "][" << j << "] = "<< max_DI[i][j] << " ";
-		cout << endl;
-	}
-}*/
-/*
-void init_DI_words(unsigned taille, vector<ExplainationsBAXI>& max_DI)
-{
-	for(unsigned i=0; i < taille; ++i)
-		max_DI.push_back(NULL);
-}*/
-
-
-//pas encore touché
-unsigned nb_correct(Data& explication_set, vector<unsigned>& save, unsigned num_sample, bool is_premise)
-{
-	/*unsigned correct = 0;
-	unsigned true_imp_position;
-	for(unsigned word = 0; word < save.size(); ++word)
-	{
-		true_imp_position = explication_set.get_important_words_position(is_premise, num_sample, word);
-		if( std::find(save.begin(), save.end(), true_imp_position) != save.end() )
-			++correct;
-	}
-	return correct;*/
-	
-}
-
-//pas encore touché
-void mesure(Data& explication_set, vector<unsigned>& correct, unsigned nb_samples)
-{
-	/*
-	//float precision;
-	float recall;
-	//float f_mesure;
-	vector<unsigned> nb_label(NB_CLASSES,0);
-	unsigned correct_total = 0;
-	for(unsigned i=0; i<NB_CLASSES; ++i)
-	{
-		nb_label[i] = explication_set.get_nb_important_words_in_label(i, nb_samples);
-		correct_total += correct[i];	
-	}
-	
-	
-	unsigned total_imp_size = explication_set.get_nb_words_imp_total(nb_samples);
-	recall = correct_total / (double)total_imp_size;
-	//cout << "correct_total = " << correct_total << " total_imp_size = " << total_imp_size << endl;
-	//f_mesure = (2 * precision * recall) / (double)(precision + recall);
-	
-	//cout << "P = "<< precision << "\nR = " << recall << "\nF = " << f_mesure << endl;
-	cout << "Accuracy total imp. words = " << recall << endl;
-	cout << "\ttotal imp. words = " << total_imp_size << endl;
-	cout << "\tAccurracy for neutral = " <<correct[0] <<"/"<< (double)nb_label[0] << endl;
-	cout << "\tAccurracy for entailment = " << correct[1] <<"/"<< (double)nb_label[1] << endl;
-	cout << "\tAccurracy for contradiction = " << correct[2] <<"/"<< (double)nb_label[2] << endl;
-	*/
-}
-
-
 // Calcule l'importance de chaque expression.
 void calcul_importance(RNN& rnn, ComputationGraph& cg, DataSet& explication_set, Embeddings& embedding, unsigned num_expr,
 	bool is_premise, vector<float>& original_probs, vector<ExplainationsBAXI>& max_DI, unsigned num_sample, Data* copy)
@@ -498,7 +402,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		output << "neutral : " << original_probs[0] << ", entailment : " << original_probs[1] << ", contradiction : " << original_probs[2] << endl;
 		
 		// In the premise
-		for( position=0; position < explication_set.get_nb_expr(1,i); ++position)
+		for( position=0; position < explication_set.get_nb_expr(true,i); ++position)
 		{
 			if(explication_set.expr_is_important(i, true, position))
 				calcul_importance(rnn, cg, explication_set, embedding, position, true, original_probs, max_DI, i, copy);
@@ -508,7 +412,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		
 		cout << "HYP :\n";
 		// In the hypothesis
-		for(position=0; position < explication_set.get_nb_expr(2,i); ++position)
+		for(position=0; position < explication_set.get_nb_expr(false,i); ++position)
 		{	
 			if(explication_set.expr_is_important(i, false, position))
 				calcul_importance(rnn, cg, explication_set, embedding, position, false, original_probs, max_DI, i, copy);

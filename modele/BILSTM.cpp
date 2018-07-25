@@ -64,10 +64,10 @@ Expression BiLSTM::get_neg_log_softmax(DataSet& set, Embeddings& embedding, unsi
         * \param sentence_repr : matrix of size (number of words in the sentence, hidden dimension). 
         * sentence_repr[i] = representation of the i_th word
 */
-void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, unsigned sentence,
+void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, bool is_premise,
 	ComputationGraph& cg, unsigned num_sentence, vector<Expression>& sentence_repr)
 {
-	const unsigned nb_expr = set.get_nb_expr(sentence, num_sentence);
+	const unsigned nb_expr = set.get_nb_expr(is_premise, num_sentence);
 	unsigned nb_words;
 	if (apply_dropout)
 	{ 
@@ -92,10 +92,10 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, unsigned 
 	for(i=0; i<nb_expr; ++i)
 	{
 
-		nb_words = set.get_nb_words(sentence, num_sentence, i);
+		nb_words = set.get_nb_words(is_premise, num_sentence, i);
 		for(unsigned k=0; k < nb_words; ++k)
 		{
-			if( (wordID = set.get_word_id(sentence, num_sentence, i, k) ) == 0)
+			if( (wordID = set.get_word_id(is_premise, num_sentence, i, k) ) == 0)
 				continue;
 			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, wordID) ) );
 		}
@@ -104,10 +104,10 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, unsigned 
 	for(j=nb_expr-1; j>=0; --j)
 	{
 		
-		nb_words = set.get_nb_words(sentence, num_sentence, static_cast<unsigned>(j));
+		nb_words = set.get_nb_words(is_premise, num_sentence, static_cast<unsigned>(j));
 		for(unsigned k=0; k < nb_words; ++k)
 		{
-			if( (wordID = set.get_word_id(sentence, num_sentence, static_cast<unsigned>(j), k) ) == 0)
+			if( (wordID = set.get_word_id(is_premise, num_sentence, static_cast<unsigned>(j), k) ) == 0)
 				continue;
 			tmp.push_back(backward_lstm->add_input( 
 					embedding.get_embedding_expr(cg, wordID) ) );

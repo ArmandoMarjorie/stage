@@ -73,21 +73,21 @@ bool DataSet::expr_is_important(unsigned num_sample, bool is_premise, unsigned n
 }
 
 
-unsigned DataSet::get_word_id(unsigned sentence, unsigned num_sample, unsigned num_expr, unsigned num_words)
+unsigned DataSet::get_word_id(bool is_premise, unsigned num_sample, unsigned num_expr, unsigned num_words)
 {
-	return dataset[num_sample]->get_word_id(sentence, num_expr, num_words);
+	return dataset[num_sample]->get_word_id(is_premise, num_expr, num_words);
 }
 
 //nb de mot dans l'expression num_expr
-unsigned DataSet::get_nb_words(unsigned sentence, unsigned num_sample, unsigned num_expr)
+unsigned DataSet::get_nb_words(bool is_premise, unsigned num_sample, unsigned num_expr)
 {
-	return dataset[num_sample]->get_nb_words(sentence, num_expr);
+	return dataset[num_sample]->get_nb_words(is_premise, num_expr);
 	
 }
 
-unsigned DataSet::get_nb_expr(unsigned sentence, unsigned num_sample)
+unsigned DataSet::get_nb_expr(bool is_premise, unsigned num_sample)
 {
-	return dataset[num_sample]->get_nb_expr(sentence);
+	return dataset[num_sample]->get_nb_expr(is_premise);
 }
 
 

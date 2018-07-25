@@ -33,9 +33,9 @@
 			
 			unsigned get_label();
 			unsigned get_nb_switch_words(bool is_premise, unsigned num_expr);
-			unsigned get_nb_words(unsigned sentence, unsigned num_expr);
-			unsigned get_nb_expr(unsigned sentence);
-			unsigned get_word_id(unsigned sentence, unsigned num_expr, unsigned num_words);	
+			unsigned get_nb_words(bool is_premise, unsigned num_expr);
+			unsigned get_nb_expr(bool is_premise);
+			unsigned get_word_id(bool is_premise, unsigned num_expr, unsigned num_words);	
 			unsigned get_nb_imp_words(bool is_premise);		
 			
 			void modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words);

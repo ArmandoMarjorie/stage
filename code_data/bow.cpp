@@ -3,6 +3,18 @@
 
 using namespace std;
 
+
+/**
+ * \file bow.cpp
+*/
+
+
+	/* Constructors, Destructor */
+
+
+/**
+	* \brief BagOfWords Destructor. Release the allocated memory.
+*/
 BagOfWords::~BagOfWords()
 {
 	words.clear();
@@ -83,6 +95,10 @@ BagOfWords::BagOfWords(BagOfWords const& copy)
 	this->important_bag = copy.important_bag;
 }
 
+
+	/* Getters */
+
+
 unsigned BagOfWords::get_nb_words()
 {
 	return words.size();
@@ -99,6 +115,25 @@ bool BagOfWords::expr_is_important()
 	return important_bag;
 	
 }
+
+
+unsigned BagOfWords::get_nb_switch_words()
+{
+	return switch_words.size();
+}
+
+unsigned BagOfWords::get_type_sw(unsigned num_switch_word, unsigned num_sw)
+{
+	return switch_words[num_switch_word]->get_type_sw(num_sw);
+}
+
+unsigned BagOfWords::get_nb_of_sw(unsigned num_switch_word)
+{
+	return switch_words[num_switch_word]->get_nb_of_sw();
+}
+
+
+	/* Setters (expressions/words modifications) */ 
 
 void BagOfWords::modif_BoW(unsigned num_switch_words, unsigned num_sw, bool imp)
 {
@@ -144,35 +179,19 @@ void BagOfWords::modif_BoW(BagOfWords& bow) //appelé quand on reset l'instance
 	this->important_bag = bow.important_bag;
 }
 
+
+	/* Printing functions */ 
+
+
 void BagOfWords::print_a_sample()
 {
 	for(unsigned i=0; i<words.size(); ++i)
 		cout << words[i] << " ";
 }
 
-unsigned BagOfWords::get_nb_switch_words()
-{
-	return switch_words.size();
-}
-
-unsigned BagOfWords::get_type_sw(unsigned num_switch_word, unsigned num_sw)
-{
-	return switch_words[num_switch_word]->get_type_sw(num_sw);
-}
-
-unsigned BagOfWords::get_nb_of_sw(unsigned num_switch_word)
-{
-	return switch_words[num_switch_word]->get_nb_of_sw();
-}
 
 void BagOfWords::print()
 {
 	for(unsigned i=0; i<switch_words.size(); ++i)
-	{
 		switch_words[i]->print();
-	}
 }
-
-
-
-

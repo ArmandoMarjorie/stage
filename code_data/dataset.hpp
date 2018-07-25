@@ -39,15 +39,15 @@
 			~DataSet();
 			
 			Data* get_data_object(unsigned num_sample);
-			unsigned get_word_id(unsigned sentence, unsigned num_sample, unsigned num_expr, unsigned num_words);
+			unsigned get_word_id(bool is_premise, unsigned num_sample, unsigned num_expr, unsigned num_words);
 			unsigned get_nb_switch_words(bool is_premise, unsigned num_expr, unsigned num_sample);
 			
 			unsigned get_nb_inf();
 			unsigned get_nb_neutral();
 			unsigned get_nb_contradiction();
 			
-			unsigned get_nb_words(unsigned sentence, unsigned num_sample, unsigned num_expr);
-			unsigned get_nb_expr(unsigned sentence, unsigned num_sample);
+			unsigned get_nb_words(bool is_premise, unsigned num_sample, unsigned num_expr);
+			unsigned get_nb_expr(bool is_premise, unsigned num_sample);
 			unsigned get_nb_sentences();
 			
 			unsigned get_label(unsigned num_sample);

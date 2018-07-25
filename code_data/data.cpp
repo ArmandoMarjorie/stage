@@ -15,7 +15,7 @@ using namespace std;
 
 
 /**
-	* \brief SwitchWords Destructor. Release the allocated memory.
+	* \brief Data Destructor. Release the allocated memory.
 */
 Data::~Data()
 {
@@ -81,18 +81,15 @@ Data::Data(Data const& copy)
 
 	/* Getters */
 	
-/* ICI */
+
 /**
 	* \name get_nb_switch_words
-	* \brief Give the id of the "num_word_in_sw"th word in the "num_sw"th alternative expression's piece. For example:
-	* switch_w[0] = "a", PREV
-	* switch_w[1] = "big dog", ACTUAL
-	* And you want the "big"'s ID, then num_sw = 1 and num_word_in_sw = 0.
+	* \brief Give the number of alternative expressions for the "num_expr"th expression.
 	* 
-	* \param num_sw : numero of the "piece" of the alternative expression. 
-	* \param num_word_in_sw : numero of the word in the "piece" of the alternative expression.
+	* \param is_premise : true if we process the premise, else false. 
+	* \param num_expr : numero of the expression/word in the premise or the hypothesis.
 	* 
-	* \return The id of the "num_word_in_sw"th word in the "num_sw"th alternative expression's piece.
+	* \return The number of alternative expressions for the "num_expr"th expression.
 */
 unsigned Data::get_nb_switch_words(bool is_premise, unsigned num_expr)
 {
@@ -102,34 +99,84 @@ unsigned Data::get_nb_switch_words(bool is_premise, unsigned num_expr)
 }
 
 
+/**
+	* \name get_label
+	* \brief Give the instance's label.
+	* 
+	* \return The instance's label.
+*/
 unsigned Data::get_label()
 {
 	return label;
 }
 
-unsigned Data::get_nb_expr(unsigned sentence)
+
+/**
+	* \name get_nb_expr
+	* \brief Give the number of expressions in the premise or in the hypothesis.
+	* 
+	* \param is_premise : true if we process the premise, else false.
+	* 
+	* \return The number of expressions in the premise or in the hypothesis.
+*/
+unsigned Data::get_nb_expr(bool is_premise)
 {
-	if(sentence==1)
+	if(is_premise)
 		return premise.size();
 	return hypothesis.size();
 }
 
 
-unsigned Data::get_nb_words(unsigned sentence, unsigned num_expr)
+/**
+	* \name get_nb_words
+	* \brief Give the number of words in the "num_expr"th expression in the premise or in the hypothesis.
+	* For example : "an animal in front of a forest"
+	* premise[2] = "in front of"
+	* Then it returns 3.
+	* 
+	* \param is_premise : true if we process the premise, else false.
+	* \param num_expr : numero of the expression in the premise or in the hypothesis.
+	* 
+	* \return The number of words in the "num_expr"th expressio in the premise or in the hypothesis.
+*/
+unsigned Data::get_nb_words(bool is_premise, unsigned num_expr)
 {
-	if(sentence==1)
+	if(is_premise)
 		return premise[num_expr]->get_nb_words();
 	return hypothesis[num_expr]->get_nb_words();
 }
 
-unsigned Data::get_word_id(unsigned sentence, unsigned num_expr, unsigned num_words)
+
+/**
+	* \name get_word_id
+	* \brief Give the word ID of the "num_words"th word in the "num_expr"th expression (in the premise or in the hypothesis).
+	* For example : "an animal in front of a forest"
+	* premise[2] = "in front of"
+	* num_expr = 2, num_words = 0
+	* Then it returns "in"'s ID.
+	* 
+	* \param is_premise : true if we process the premise, else false.
+	* \param num_expr : numero of the expression in the premise or in the hypothesis.
+	* \param num_words : numero of the word in the expression (in the premise or in the hypothesis).
+	* 
+	* \return The word ID of the "num_words"th word in the "num_expr"th expression (in the premise or in the hypothesis).
+*/
+unsigned Data::get_word_id(bool is_premise, unsigned num_expr, unsigned num_words)
 {
-	if(sentence==1)
+	if(is_premise)
 		return premise[num_expr]->get_word_id(num_words);
 	return hypothesis[num_expr]->get_word_id(num_words);
 }
 
 
+/**
+	* \name get_nb_imp_words
+	* \brief Give number of expressions which their importance are evaluated (in the premise or in the hypothesis).
+	* 
+	* \param is_premise : true if we process the premise, else false.
+	* 
+	* \return The number of expressions which their importance are evaluated (in the premise or in the hypothesis).
+*/
 unsigned Data::get_nb_imp_words(bool is_premise)
 {
 	unsigned cpt=0;
@@ -150,7 +197,37 @@ unsigned Data::get_nb_imp_words(bool is_premise)
 }
 
 
+/**
+	* \name expr_is_important
+	* \brief Tells if the "num_expr"th expression's importance is evaluated 
+	* (in the premise or in the hypothesis).
+	* 
+	* \param is_premise : true if we process the premise, else false.
+	* \param num_expr : numero of the expression in the premise or in the hypothesis.
+	* 
+	* \return True if the "num_expr"th expression's importance is evaluated, else false.
+*/
+bool Data::expr_is_important(bool is_premise, unsigned num_expr)
+{
+	if(is_premise)
+		return premise[num_expr]->expr_is_important();
+	return hypothesis[num_expr]->expr_is_important();
+}
 
+
+	/* Setters (expressions/words modifications) */ 
+
+
+/* A FAIRE */
+/**
+	* \name search_position
+	* \brief Give number of expressions which their importance are evaluated (in the premise or in the hypothesis).
+	* 
+	* \param is_premise : true if we process the premise, else false.
+	* \param num_buffer_in : true if we process the premise, else false.
+	* 
+	* \return The number of expressions which their importance are evaluated (in the premise or in the hypothesis).
+*/
 unsigned Data::search_position(bool is_premise, unsigned num_buffer_in)
 {
 	unsigned nb_imp=0;
@@ -177,6 +254,9 @@ unsigned Data::search_position(bool is_premise, unsigned num_buffer_in)
 	return position-1;
 	
 }
+
+
+
 
 void Data::modif_LIME(bool is_premise, unsigned position)
 {
@@ -352,35 +432,21 @@ void Data::modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words)
 }
 void Data::modif_LIME_random(bool is_premise, unsigned position)
 {
-	cout << "MODIF LIME\n";
-
-	
 	if(is_premise)
 		premise[position]->modif_BoW_random(premise[position]->expr_is_important());
 	else
 		hypothesis[position]->modif_BoW_random(hypothesis[position]->expr_is_important());	
-
 }
-
-void Data::reset_data(Data const& data_copy)
-{
-	for(unsigned i=0; i<data_copy.premise.size(); ++i)
-		this->premise[i]->modif_BoW(*(data_copy.premise[i]));
-		
-	for(unsigned i=0; i<data_copy.hypothesis.size(); ++i)
-		this->hypothesis[i]->modif_BoW(*(data_copy.hypothesis[i]));
-		
-	this->label = data_copy.label;	
-}
+/* -----*/
 
 
-bool Data::expr_is_important(bool is_premise, unsigned num_expr)
-{
-	if(is_premise)
-		return premise[num_expr]->expr_is_important();
-	return hypothesis[num_expr]->expr_is_important();
-}
+	/* Others */
 
+
+/**
+	* \name print_a_sample
+	* \brief Print an instance.
+*/
 void Data::print_a_sample()
 {
 	char c_o, c_f;
@@ -423,7 +489,32 @@ void Data::print_a_sample()
 	
 }
 
+
+/**
+	* \name get_data_object
+	* \brief Returns the instance itself to be saved.
+	* 
+	* \return The instance itself.
+*/
 Data* Data::get_data_object()
 {
 	return this;
+}
+
+
+/**
+	* \name reset_data
+	* \brief Reset the instance with the original instance.
+	* 
+	* \param data_copy : the original instance we want to reset with.
+*/
+void Data::reset_data(Data const& data_copy)
+{
+	for(unsigned i=0; i<data_copy.premise.size(); ++i)
+		this->premise[i]->modif_BoW(*(data_copy.premise[i]));
+		
+	for(unsigned i=0; i<data_copy.hypothesis.size(); ++i)
+		this->hypothesis[i]->modif_BoW(*(data_copy.hypothesis[i]));
+		
+	this->label = data_copy.label;	
 }
