@@ -52,13 +52,13 @@
 		private:
 			std::vector<SW*> switch_w; /*!< An alternative expression. 
 											For example, the sentence is "an animal..." and the alternative expression for "animal" is "big dog". 
-											Then we have two SW :  
+											Then we have two SW to make a "real" sentence :  
 											"a" PREV
 											"big dog" ACTUAL
 											
 											Then : 
-											switch_w[0] = a
-											switch_w[1] = big dog */ 	
+											switch_w[0] = "a", PREV
+											switch_w[1] = "big dog", ACTUAL */ 	
 		public:
 			SwitchWords(std::stringstream& fluxstring);
 			SwitchWords(SwitchWords const& copy);

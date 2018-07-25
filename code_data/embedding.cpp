@@ -9,13 +9,15 @@ using namespace dynet;
  * \file embedding.cpp
 */
 
+
 	/* Constructors */
 
+
 /**
-	* \brief Embeddings Constructor (training phase -- random embedding)
+	* \brief Embeddings Constructor (training phase, initializes random embedding).
 	*
-	* \param model : The model
-	* \param dim : The dimension of the embeddings
+	* \param model : the model.
+	* \param dim : the embeddings dimension.
 */
 Embeddings::Embeddings(ParameterCollection& model, unsigned dim) : p_c(), dim_embedding(dim)
 {
@@ -25,13 +27,15 @@ Embeddings::Embeddings(ParameterCollection& model, unsigned dim) : p_c(), dim_em
 	p_c.initialize(0, vector_zero);
 }
 
+
 /**
-	* \brief Embeddings Constructor (with a file containing pre-trained embedding)
-	* Initialize the word embedding with a file
+	* \brief Embeddings Constructor (with a file containing pre-trained embedding). 
+	* Initialize the word embedding with a file.
 	* 
-	* \param embedding_filename : File containing the embedding
-	* \param model : The model
-	* \param dim : The dimension of the embeddings
+	* \param embedding_filename : file containing the embeddings.
+	* \param model : the model.
+	* \param dim : the embeddings dimension.
+	* \param testing : true if it's the testing phase, else false.
 */
 Embeddings::Embeddings(char* embedding_filename, ParameterCollection& model, unsigned dim, bool testing) : p_c(), dim_embedding(dim)
 {
@@ -63,38 +67,38 @@ Embeddings::Embeddings(char* embedding_filename, ParameterCollection& model, uns
 	emb_file.close();
 }
 
+
 	/* Getter */
+
 
 /**
 	* \name get_embedding_expr
-	* \brief Give the embedding of the word
+	* \brief Give the embedding of the word ID "index".
 	*
-	* \param cg : The computation graph
-	* \param index : The id of the word
+	* \param cg : the computation graph.
+	* \param index : the id of the word.
 	* 
-	* \return The embedding of the word as an Expression
+	* \return The embedding of the word as a DyNet Expression.
 */
 Expression Embeddings::get_embedding_expr(ComputationGraph& cg, unsigned index)
 {
-	int num = static_cast<int>(index);
-	if(num > VOCAB_SIZE)
+	if(index > VOCAB_SIZE)
 	{
-		cerr << "the vocab size need to be bigger (vocab size = " << VOCAB_SIZE <<", word id = "<< num << endl;
+		cerr << "the vocab size need to be bigger (vocab size = " << VOCAB_SIZE <<", word id = "<< index << endl;
 		exit(EXIT_FAILURE);
 	}
-	/*
-	if(index > 28649)
-		return const_lookup(cg, p_c, num);*/
-	return lookup(cg, p_c, num);
+	return lookup(cg, p_c, index);
 }
+
 
 	/* Printing function */
 
+
 /**
 	* \name print_embedding
-	* \brief Print the embedding of each words in a file.
+	* \brief Print the embedding of each word in a file.
 	*
-	* \param name : The name of the output file
+	* \param name : the name of the output file.
 */
 void Embeddings::print_embedding(char* output_filename)
 {
@@ -118,7 +122,7 @@ void Embeddings::print_embedding(char* output_filename)
 	* \name print_embedding
 	* \brief Print the embedding of a specific word. Just to debug.
 	*
-	* \param word_id : The word's id
+	* \param word_id : the word ID.
 */
 void Embeddings::print_one_embedding(unsigned word_id)
 {

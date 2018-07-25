@@ -6,6 +6,17 @@
 using namespace std;
 
 
+/**
+ * \file data.cpp
+*/
+
+
+	/* Constructors, Destructor */
+
+
+/**
+	* \brief SwitchWords Destructor. Release the allocated memory.
+*/
 Data::~Data()
 {
 	for(unsigned i=0; i<premise.size(); ++i)
@@ -16,45 +27,47 @@ Data::~Data()
 	
 }
 
+
+/**
+	* \brief Data Constructor. Initializes the label, the premise and 
+	* the hypothesis of an instance.
+	*
+	* \param database : file containing every instances.
+*/
 Data::Data(ifstream& database)
 {
 	string word, word2;
 	database >> label;
 	
-	unsigned nb_bow;
+	unsigned nb_expr; 
 	
 	for(unsigned nb_sentences=0; nb_sentences < 2; ++nb_sentences)
 	{
-		database >> nb_bow; 
-		cout << "lu nb_bow : \"" << nb_bow << "\"\n";
+		database >> nb_expr; 
 		getline(database, word);
-		cout << "lu apres nb_bow : \"" << word << "\"\n";
 		
-		for(unsigned nb=0; nb < nb_bow; ++nb)
+		// for each expression/word in the premise or the hypothesis
+		for(unsigned nb=0; nb < nb_expr; ++nb)
 		{
-			//database >> word;
+			// read the instance's expression with its alternative expressions
 			getline(database, word);
-			cout << "lu : \"" << word << "\"\n";
-			/*while(word[word.size()-1] != ']' && word[word.size()-1] != '}')
-			{
-				database >> word2;
-				word = word + " ";
-				word = word + word2;
-			}*/
 			
-			//BagOfWords bow = new BagOfWords(word);
 			if(nb_sentences==0)
 				premise.push_back(new BagOfWords(word));
 			else
 				hypothesis.push_back(new BagOfWords(word));
-				
-
 		}	
 	}
 	
-	database >> word; //lit -3 de fin
+	database >> word; // read -3 (end symbol for an instance)
 }
 
+
+/**
+	* \brief Data copy Constructor.
+	*
+	* \param copy : the Data we want to copy.
+*/
 Data::Data(Data const& copy)
 {
 	for(unsigned i=0; i<copy.premise.size(); ++i)
@@ -65,6 +78,22 @@ Data::Data(Data const& copy)
 	
 }
 
+
+	/* Getters */
+	
+/* ICI */
+/**
+	* \name get_nb_switch_words
+	* \brief Give the id of the "num_word_in_sw"th word in the "num_sw"th alternative expression's piece. For example:
+	* switch_w[0] = "a", PREV
+	* switch_w[1] = "big dog", ACTUAL
+	* And you want the "big"'s ID, then num_sw = 1 and num_word_in_sw = 0.
+	* 
+	* \param num_sw : numero of the "piece" of the alternative expression. 
+	* \param num_word_in_sw : numero of the word in the "piece" of the alternative expression.
+	* 
+	* \return The id of the "num_word_in_sw"th word in the "num_sw"th alternative expression's piece.
+*/
 unsigned Data::get_nb_switch_words(bool is_premise, unsigned num_expr)
 {
 	if(is_premise)
@@ -120,38 +149,31 @@ unsigned Data::get_nb_imp_words(bool is_premise)
 	return cpt;
 }
 
+
+
 unsigned Data::search_position(bool is_premise, unsigned num_buffer_in)
 {
 	unsigned nb_imp=0;
 	unsigned position=0;
-	//cout << "je cherche la position\n";	
 	if(is_premise)
 	{
 		while(nb_imp != num_buffer_in)
 		{
-			if( premise[position]->expr_is_important() )
-			{
-				//cout << "(POS " << position << " est imp) ";  
+			if( premise[position]->expr_is_important() ) 
 				++nb_imp;
-			}
 			++position;
 		}
-		//cout << "[PREM] ";
 	}
 	else
 	{
-		//cout << "je vais chercher dans l'hypothese\n";
-		while(nb_imp < num_buffer_in) //erreur de segmentation ici WTF !!!!
+		while(nb_imp < num_buffer_in) 
 		{
-			//cout << "(search) position = " << position << " ";
 			if( hypothesis[position]->expr_is_important() )
 				++nb_imp;
 			++position;
 		}
-		//cout << "trouve!\n";
 	}
 	
-	//cout << "(POS) " << static_cast<int>(position-1) << " "; 
 	return position-1;
 	
 }
