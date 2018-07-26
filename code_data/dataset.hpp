@@ -45,17 +45,15 @@
 			unsigned get_nb_inf();
 			unsigned get_nb_neutral();
 			unsigned get_nb_contradiction();
-			
 			unsigned get_nb_words(bool is_premise, unsigned num_sample, unsigned num_expr);
 			unsigned get_nb_expr(bool is_premise, unsigned num_sample);
 			unsigned get_nb_instances();
-			
 			unsigned get_label(unsigned num_sample);
+			
 			void print_a_sample(unsigned num_sample);
 			
 			void modif_LIME(char* buffer_in, unsigned num_sample);
 			void modif_LIME_random(char* buffer_in, unsigned num_sample);
-			
 			void modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words, unsigned num_sample);
 	
 			void print_everything();

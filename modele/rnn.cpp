@@ -108,7 +108,7 @@ unsigned predict_dev_and_test(RNN& rnn, DataSet& dev_set, Embeddings& embedding,
 	for (unsigned i=0; i<nb_of_sentences_dev; ++i)
 	{
 		ComputationGraph cg;
-		rnn.predict(dev_set, embedding, i, cg, false, label_predicted, NULL);
+		rnn.predict(dev_set, embedding, i, cg, false, label_predicted);
 		if (label_predicted == dev_set.get_label(i))
 		{
 			positive++;
@@ -154,7 +154,7 @@ vector<float> run_predict_for_server_lime(RNN& rnn, DataSet& test_set, Embedding
 	unsigned label_predicted;
 	rnn.disable_dropout();
 	ComputationGraph cg;
-	vector<float> probas = rnn.predict(test_set, embedding, num_sample, cg, false, label_predicted, NULL);
+	vector<float> probas = rnn.predict(test_set, embedding, num_sample, cg, false, label_predicted);
 	cout << "predict ok\n";
 	//if(print_label)
 		//cerr << "True label = " << test_set.get_label(0) << ", label predicted = " << label_predicted << endl;
@@ -327,7 +327,7 @@ void calcul_importance(RNN& rnn, ComputationGraph& cg, DataSet& explication_set,
 		
 		explication_set.modif_word(is_premise, num_expr, nb, num_sample);
 		
-		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted, NULL);
+		vector<float> probs = rnn.predict(explication_set, embedding, num_sample, cg, false, label_predicted);
 		explain_label(probs, original_probs, DI, explication_set.get_label(num_sample)); //max de ça = l'importance du mot. 
 		
 		explication_set.reset_data(*copy, num_sample);
@@ -391,7 +391,7 @@ void change_words_for_mesure(RNN& rnn, ParameterCollection& model, DataSet& expl
 		
 			// original prediction
 		true_label = explication_set.get_label(i);
-		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample, NULL);
+		vector<float> original_probs = rnn.predict(explication_set, embedding, i, cg, false, label_predicted_true_sample);
 		if(label_predicted_true_sample == true_label)
 		{
 			++pos;
