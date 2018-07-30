@@ -15,13 +15,13 @@
 	class Data
 	{
 		private:
-			unsigned label; 						/*!< The label : 
-														 Entailment, 
-														 Contradiction, 
-														 Neutral */ 
-			std::vector<InstanceExpression*> premise; 		/*!< The premise. 
+			unsigned label; 							/*!< The label : 
+															Entailment, 
+															Contradiction, 
+															Neutral */ 
+			std::vector<InstanceExpression*> premise; 	/*!< The premise. 
 														 Each case is a word or an expression. */ 
-			std::vector<InstanceExpression*> hypothesis;	/*!< The hypothesis. 
+			std::vector<InstanceExpression*> hypothesis;/*!< The hypothesis. 
 														 Each case is a word or an expression. */ 
 			
 		public:

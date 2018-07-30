@@ -5,8 +5,25 @@
 using namespace std;
 using namespace dynet;
 
-	/* Constructors */
 
+/**
+ * \file BILSTM.cpp
+*/
+
+
+	/* Constructor */
+	
+	
+/**
+	* \brief RNN Constructor. Initializes a RNN.
+	*
+	* \param nblayer : number of layer.
+	* \param inputdim : inputs dimension (embeddings dimension).
+	* \param hiddendim : hidden states dimension.
+	* \param dropout : dropout.
+	* \param s : numero of the system used (1, 2 or 3).
+	* \param model : the model.
+*/	
 RNN::RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, ParameterCollection& model) :
 	nb_layers(nblayer), input_dim(inputdim), hidden_dim(hiddendim), dropout_rate(dropout), systeme(s)
 {
@@ -15,21 +32,63 @@ RNN::RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout,
 	p_bias = model.add_parameters({NB_CLASSES});
 }
 
+
 	/* Getters and setters */
 
+
+/**
+	* \name disable_dropout
+	* \brief Disable the dropout.
+*/	
 void RNN::disable_dropout()
 {
 	apply_dropout = false;
 }
 
+
+/**
+	* \name enable_dropout
+	* \brief Enable the dropout.
+*/
 void RNN::enable_dropout()
 {
 	apply_dropout = true;
 }
 
+
+/**
+	* \name get_dropout_rate
+	* \brief Gives the dropout rate.
+	* 
+	* \return The dropout rate.
+*/
 float RNN::get_dropout_rate(){ return dropout_rate; }
+
+
+/**
+	* \name get_nb_layers
+	* \brief Gives the number of layer.
+	* 
+	* \return The number of layer.
+*/
 unsigned RNN::get_nb_layers(){ return nb_layers; }
+
+
+/**
+	* \name get_input_dim
+	* \brief Gives the input dimension.
+	* 
+	* \return The input dimension.
+*/
 unsigned RNN::get_input_dim(){ return input_dim; }
+
+
+/**
+	* \name get_hidden_dim
+	* \brief Gives the hidden states dimension.
+	* 
+	* \return The hidden states dimension.
+*/
 unsigned RNN::get_hidden_dim(){ return hidden_dim; }
 
 
@@ -218,7 +277,7 @@ void run_train(RNN& rnn, ParameterCollection& model, DataSet& train_set, DataSet
 	
 	for(unsigned completed_epoch=0; completed_epoch < nb_epoch; ++completed_epoch) 
 	{
-		// Reshuffle the DataSetset
+		// Reshuffle the DataSet
 		cerr << "\n**SHUFFLE\n";
 		random_shuffle(order.begin(), order.end());
 		Timer iteration("completed in");
