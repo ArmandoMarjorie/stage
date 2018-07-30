@@ -56,7 +56,7 @@ struct Detokenisation
 
 	/**
 		* \name detoken
-		* \brief Detoken an expression.
+		* \brief Detokens an expression.
 		*
 		* \param num_expr : numero of the expression.
 		* \param is_premise : true if the expression is in the premise, 
@@ -90,7 +90,7 @@ struct Detokenisation
  * \struct Detokenisation
  * \brief Represents an explanation by the BAXI method.
 */
-struct ExplainationsBAXI
+struct ExplanationsBAXI
 {
 	unsigned num_expr; /*!< Numero of the expression in the sentence. */ 
 	bool is_premise;   /*!< True if the expression is in the premise, else false. */ 
@@ -104,7 +104,7 @@ struct ExplainationsBAXI
 		* \param prem : true if the expression is in the premise, else false.
 		* \param d : expression's importance.
 	*/	
-	ExplainationsBAXI(unsigned n, bool prem, float d) :
+	ExplanationsBAXI(unsigned n, bool prem, float d) :
 		num_expr(n), is_premise(prem), DI(d)
 	{
 		
@@ -113,11 +113,11 @@ struct ExplainationsBAXI
 
 	/**
 		* \brief > operator on the expression's importance. 
-		* Sort an ExplanationsBAXI vector (from best importance to worst).
+		* Sorts an ExplanationsBAXI vector (from best importance to worst).
 		*
 		* \param eb : ExplanationsBAXI to be compared with.
 	*/		
-	bool operator > (const ExplainationsBAXI& eb) const
+	bool operator > (const ExplanationsBAXI& eb) const
 	{
 		return DI > eb.DI;
 	}
@@ -197,16 +197,6 @@ void run_predict(RNN& rnn,
 				 DataSet& test_set, 
 				 Embeddings& embedding, 
 				 char* parameters_filename);
-
-/*
-dynet::Expression get_neg_log_softmax(RNN& rnn, DataSet& set, Embeddings& embedding, unsigned num_sentence, dynet::ComputationGraph& cg);
-void train_score(RNN& rnn, DataSet& train_set, Embeddings& embedding, unsigned nb_batches, 
-	unsigned& nb_samples, unsigned batch_size, unsigned completed_epoch, unsigned nb_of_sentences, dynet::Trainer* trainer, std::vector<unsigned>& order, unsigned& numero_sentence);
-unsigned predict_dev_and_test(RNN& rnn, DataSet& dev_set, Embeddings& embedding, unsigned nb_of_sentences_dev, unsigned& best);
-void dev_score(RNN& rnn, dynet::ParameterCollection& model, DataSet& dev_set, Embeddings& embedding, std::string parameter_filename, unsigned nb_of_sentences_dev,
-	unsigned& best, char* output_emb_filename);
-*/
-
 
 
 std::vector<float> run_predict_for_server_lime(RNN& rnn, 
