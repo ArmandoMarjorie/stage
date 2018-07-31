@@ -22,10 +22,10 @@ void usage(char* exe_name)
 		 << "dropout <float> : dropout rate (between 0 and 1)\n"                                     //6
 		 << "nb_epoch <int> : number of times the program will do the training phase\n"              //7
 		 << "batch_size <int> : size of batches\n"                                                   //8
-		 << "systeme <int> : which system you want to use (1, 2, 3=KIM, or 4)\n"                     //9
+		 << "systeme <int> : which system you want to use (1, 2, 3)\n"     
 		 << "embedding_file <string> : file containing word embeddings\n"                            //10
-		 << "output_embedding_filename <string> : [optionnal] name of the file containing the word "  //11
-		 << "embedding trained during the training phase. This file have to be used in the testing phase\n\n";
+		 << "output_embedding_filename <string> : [optionnal] name of the file containing the word \
+		 embedding trained during the training phase. This file have to be used in the testing phase\n\n";
 
 	exit(EXIT_SUCCESS);
 }
@@ -43,36 +43,43 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
-	// Fetch dynet params ----------------------------------------------------------------------------
 	auto dyparams = dynet::extract_dynet_params(argc, argv);
 	dynet::initialize(dyparams);
 
-	// Build model -----------------------------------------------------------------------------------
 	ParameterCollection model;
-/*
-	// Load dataset ----------------------------------------------------------------------------------
-	Data train_set(argv[1]);
-	Data dev_set(argv[2]);
-	Embeddings embedding(argv[10], model, static_cast<unsigned>(atoi(argv[4])), false);
-	train_set.print_infos(0);
-	dev_set.print_infos(1);
 
-	int systeme = atoi(argv[9]);
+	DataSet train_set(argv[1],1);
+	DataSet dev_set(argv[2],1);
+	Embeddings embedding(argv[10], model, 
+		static_cast<unsigned>(atoi(argv[4])), false);
+
+	unsigned systeme = static_cast<unsigned>(atoi(argv[9]));
+	cerr << "** SYSTEM " << systeme << " **\n";
 	
-	// Build LSTM -------------------------------------------------------------------------------------
-	if(systeme < 3 || systeme == 5)
+	
+	if(systeme < 3 )
 	{
-		cerr << "** SYSTEM " << systeme << " **\n";
-		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), static_cast<unsigned>(systeme), model);
-		run_train(rnn, model, train_set, dev_set, embedding, argv[11], static_cast<unsigned>(atoi(argv[7])), static_cast<unsigned>(atoi(argv[8])));
+		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), 
+			static_cast<unsigned>(atoi(argv[4])), 
+			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
+			systeme, model);
+			
+		run_train(rnn, model, train_set, dev_set, embedding, argv[11], 
+			static_cast<unsigned>(atoi(argv[7])), 
+			static_cast<unsigned>(atoi(argv[8])));
 	}
 
 	else
 	{
-		cerr << "** SYSTEM KIM **\n";
-		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), static_cast<unsigned>(systeme), model);
-		run_train(rnn, model, train_set, dev_set, embedding, argv[11], static_cast<unsigned>(atoi(argv[7])), static_cast<unsigned>(atoi(argv[8])) );
+		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), 
+			static_cast<unsigned>(atoi(argv[4])), 
+			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
+			systeme, model);
+			
+		run_train(rnn, model, train_set, dev_set, embedding, argv[11], 
+			static_cast<unsigned>(atoi(argv[7])), 
+			static_cast<unsigned>(atoi(argv[8])));
 	}
-*/
+
 	return 0;
 }
