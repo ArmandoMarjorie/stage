@@ -112,7 +112,8 @@ void BAXI(RNN& rnn,
 		  DataSet& explication_set, 
 		  Embeddings& embedding, 
 		  char* parameters_filename, 
-		  char* lexique_filename);
+		  char* lexique_filename,
+		  char* output_filename);
 
 
 #endif

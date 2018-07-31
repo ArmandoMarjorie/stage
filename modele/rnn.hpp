@@ -84,6 +84,9 @@ class RNN
 };
 
 
+void populate_from_file(char* parameters_filename, 
+						ParameterCollection& model);
+
 
 void run_train(RNN& rnn, 
 			   dynet::ParameterCollection& model, 

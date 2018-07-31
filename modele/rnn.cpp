@@ -33,7 +33,7 @@ RNN::RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout,
 }
 
 
-	/* Getters and setters */
+	/* Getters and others functions */
 
 
 /**
@@ -148,6 +148,23 @@ void softmax_vect(vector<float>& tmp)
 }
 
 
+/**
+	* \name populate_from_file
+	* \brief Load model parameters.
+	* 
+	* \param parameters_filename : file containing the parameters to load.
+	* \param model : the model.
+*/
+void populate_from_file(char* parameters_filename, 
+	ParameterCollection& model)
+{
+	cerr << "Loading parameters ...\n";
+	TextFileLoader loader(parameters_filename);
+	loader.populate(model);
+	cerr << "Parameters loaded !\n";
+}
+
+
 	/* Predictions algorithms */
 
 
@@ -255,10 +272,7 @@ void run_predict(RNN& rnn, ParameterCollection& model, DataSet& set,
 	Embeddings& embedding, char* parameters_filename)
 {
 	// Load preexisting weights
-	cerr << "Loading parameters ...\n";
-	TextFileLoader loader(parameters_filename);
-	loader.populate(model);
-	cerr << "Parameters loaded !\n";
+	populate_from_file(parameters_filename, model);
 
 	cerr << "Testing ...\n";
 	unsigned nb_of_instances = set.get_nb_intances();
