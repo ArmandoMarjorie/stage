@@ -43,30 +43,67 @@ DataSet::DataSet(char* filename)
 		dataset.push_back(new Data(database));
 		lab = dataset[num_sample]->get_label();
 		
-		switch(lab)
-		{
-			case 0:
-			{
-				++nb_neutral;
-				break;
-			}
-			case 1:
-			{
-				++nb_inf;
-				break;
-			}			
-			case 2:
-			{
-				++nb_contradiction;
-				break;
-			}
-			default:
-			{
-				cerr << "This is not a valid label (instance " << num_sample << ")\n";
-				exit(EXIT_FAILURE);
-			}			
-		}
+		init_labels_infos(lab, num_sample);
 		
+		++num_sample;
+	}
+	
+	database.close();
+}
+
+
+inline void DataSet::init_labels_infos(unsigned lab, unsigned num_sample)
+{
+	switch(lab)
+	{
+		case 0:
+		{
+			++nb_neutral;
+			break;
+		}
+		case 1:
+		{
+			++nb_inf;
+			break;
+		}			
+		case 2:
+		{
+			++nb_contradiction;
+			break;
+		}
+		default:
+		{
+			cerr << "This is not a valid label (instance " 
+				 << num_sample << ")\n";
+			exit(EXIT_FAILURE);
+		}			
+	}
+}
+
+
+/* A CHANGER */
+/**
+	* \brief Data constructor not used for interpretation
+	* 
+	* \param data_filename : File containing the samples in this form :
+	*       label
+	*       premise -1 premise's length
+	*       hypothesis -1 hypothesis' length
+*/
+DataSet::DataSet(char* data_filename, int not_interpret)
+{
+	ifstream database(data_filename, ios::in);
+	if(!database)
+	{ 
+		cerr << "Impossible to open the file " << data_filename << endl;
+		exit(EXIT_FAILURE);
+	}
+	int word;
+	unsigned num_sample=0, lab;
+	while(database >> lab)
+	{
+		dataset.push_back(new Data(database, lab));
+		init_labels_infos(lab, num_sample);
 		++num_sample;
 	}
 	
@@ -193,12 +230,12 @@ unsigned DataSet::get_nb_contradiction(){return nb_contradiction;}
 
 
 /**
-	* \name get_nb_intances
+	* \name get_nb_instances
 	* \brief Gives the number of instances.
 	* 
 	* \return The number of instances.
 */
-unsigned DataSet::get_nb_intances()
+unsigned DataSet::get_nb_instances()
 {
 	return dataset.size();
 }

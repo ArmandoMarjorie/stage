@@ -231,6 +231,7 @@ unsigned predict_dev_and_test(RNN& rnn, DataSet& set,
 	{
 		ComputationGraph cg;
 		rnn.predict(set, embedding, i, cg, false, label_predicted);
+		cout << label_predicted << endl;
 		if (label_predicted == set.get_label(i))
 		{
 			positive++;
@@ -243,11 +244,11 @@ unsigned predict_dev_and_test(RNN& rnn, DataSet& set,
 		}
 	}
 
-	cerr << "Accuracy in general = " << positive / (double) nb_of_sentences_dev << endl;
+	cerr << "Accuracy in general = " << positive / (double) nb_of_instances << endl;
 	
-	cerr << "\tNeutral Accuracy = " << positive_neutral / nb_of_neutral << endl;	
-	cerr << "\tEntailment Accuracy = " << positive_inf / nb_of_inf << endl;
-	cerr << "\tContradiction Accuracy = " << positive_contradiction / nb_of_contradiction << endl;
+	cerr << "\tNeutral Accuracy = " << positive_neutral <<"/"<< nb_of_neutral << endl;	
+	cerr << "\tEntailment Accuracy = " << positive_inf <<"/"<< nb_of_inf << endl;
+	cerr << "\tContradiction Accuracy = " << positive_contradiction <<"/"<< nb_of_contradiction << endl;
 	
 	
 	return positive;
@@ -275,7 +276,7 @@ void run_predict(RNN& rnn, ParameterCollection& model, DataSet& set,
 	populate_from_file(parameters_filename, model);
 
 	cerr << "Testing ...\n";
-	unsigned nb_of_instances = set.get_nb_intances();
+	unsigned nb_of_instances = set.get_nb_instances();
 	unsigned best = 0;
 	rnn.disable_dropout();
 	predict_dev_and_test(rnn, set, embedding, nb_of_instances, best);
@@ -483,8 +484,8 @@ void run_train(RNN& rnn, ParameterCollection& model, DataSet& set,
 	unsigned best = 0; 
 	unsigned si;
 	unsigned nb_samples;
-	unsigned nb_of_instances = set.get_nb_intances();
-	unsigned nb_of_instances_dev = dev_set.get_nb_intances();
+	unsigned nb_of_instances = set.get_nb_instances();
+	unsigned nb_of_instances_dev = dev_set.get_nb_instances();
 
 	// Number of batches in training set
 	unsigned nb_batches = nb_of_instances / batch_size; 

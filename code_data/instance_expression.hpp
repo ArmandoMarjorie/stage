@@ -9,7 +9,8 @@
 
 	/** 
 	 * \class InstanceExpression
-	 * \brief Class representing a word/an expression of a sentence (the premisse or the hypothesis). 
+	 * \brief Class representing a word/an expression of a sentence 
+	 * (the premise or the hypothesis). 
 	*/
 	class InstanceExpression
 	{
@@ -29,6 +30,7 @@
 			
 		public:
 			InstanceExpression(std::string& line);
+			InstanceExpression(unsigned word);
 			InstanceExpression(const std::vector<unsigned>& wordsID, bool imp);
 			InstanceExpression(InstanceExpression const& copy);
 			~InstanceExpression();

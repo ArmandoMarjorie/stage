@@ -21,7 +21,7 @@ void usage(char* exe_name)
 		 << "hidden_dim <int> : hidden states dimension\n"
 		 << "parameters_file <string> : file containing the parameters \
 			(weight and bias) updated in the training step\n"
-		 << "system <int> : which system you want to use (1, 2 or 3)\n"
+		 << "system <int> : which system you want to use (1, 2 or 3)\n";
 	exit(EXIT_SUCCESS);
 }
 
@@ -45,15 +45,16 @@ int main(int argc, char** argv)
 	// Load word embeddings
 	Embeddings embedding(argv[2], model, 
 		static_cast<unsigned>(atoi(argv[4])), true);
+	unsigned systeme = static_cast<unsigned>(atoi(argv[7]));
 	
 	if(systeme < 3)
 	{
 		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
 			static_cast<unsigned>(atoi(argv[5])), 0, 
-			static_cast<unsigned>(atoi(argv[7])), model);
+			systeme, model);
 			
-		DataSet set(argv[1]);
+		DataSet set(argv[1],1);
 		run_predict(rnn, model, set, embedding, argv[6]);
 		
 	}
@@ -63,9 +64,9 @@ int main(int argc, char** argv)
 		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
 			static_cast<unsigned>(atoi(argv[5])), 0, 
-			static_cast<unsigned>(systeme), model);
+			systeme, model);
 			
-		DataSet set(argv[1]);
+		DataSet set(argv[1],1);
 		run_predict(rnn, model, set, embedding, argv[6]);
 	}
 	

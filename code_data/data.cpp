@@ -63,6 +63,37 @@ Data::Data(ifstream& database)
 }
 
 
+/* A CHANGER */
+/**
+	* \brief Data Constructor. Initializes the label, the premise and 
+	* the hypothesis of an instance.
+	*
+	* \param database : file containing every instances.
+*/
+Data::Data(ifstream& database, unsigned lab)
+{
+	int word=0;
+	label = lab;
+	for(unsigned nb_sentences=0; nb_sentences<2; ++nb_sentences)
+	{
+		database >> word;
+		while(word != -1)
+		{
+			if(nb_sentences==0)
+				premise.push_back(
+					new InstanceExpression(static_cast<unsigned>(word)));	
+			else
+				hypothesis.push_back(
+					new InstanceExpression(static_cast<unsigned>(word)));	
+					
+			database >> word;
+		}
+		database >> word; //read the sentence's length
+	}
+	
+}
+
+
 /**
 	* \brief Data copy Constructor.
 	*

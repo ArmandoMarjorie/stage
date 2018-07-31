@@ -35,12 +35,11 @@ void evaluate_importance(RNN& rnn, ComputationGraph& cg,
 	Data* copy)
 {
 	float max_importance = -9999; 
-	float importance;
+	float importance = -9999; 
 	
 	unsigned label_predicted;
 	unsigned label_explained = explication_set.get_label(num_sample);
-	unsigned nb_alternative_words = 
-		explication_set.get_nb_switch_words(is_premise, num_expr, num_sample);
+	unsigned nb_alternative_words;
 	unsigned nb_expr = explication_set.get_nb_expr(is_premise, num_sample);
 	
 	// For every expression in the given sentence
@@ -50,6 +49,9 @@ void evaluate_importance(RNN& rnn, ComputationGraph& cg,
 		if(! explication_set.expr_is_important(num_sample, 
 			is_premise, num_expr))
 			continue;
+			
+		nb_alternative_words = 
+			explication_set.get_nb_switch_words(is_premise, num_expr, num_sample);
 			
 		//Search the alternative expression that maximises the importance
 		for(unsigned nb=0; nb<nb_alternative_words; ++nb)
@@ -113,11 +115,11 @@ void write_explanations(ofstream& output,
 	* \param correct_label : vector containing, for each label, the 
 	* number of labels correctly predicted.
 */
-void print_labels_accuracy(unsigned total, 
+void print_labels_accuracy(DataSet& explication_set, unsigned total, 
 	vector<unsigned>& correct_label)
 {
 	double nb_of_instances = 
-		static_cast<double>(explication_set.get_nb_intances());
+		static_cast<double>(explication_set.get_nb_instances());
 	double nb_neutral = 
 		static_cast<double>(explication_set.get_nb_neutral());
 	double nb_entailment = 
@@ -160,20 +162,20 @@ void print_labels_accuracy(unsigned total,
 	* 
 	* \return Vector containing each label's probabilities.
 */
-vector<float> original_prediction(DataSet& explication_set, 
+vector<float> original_prediction(RNN& rnn, DataSet& explication_set, 
 	Embeddings& embedding, unsigned num_sample, ComputationGraph& cg, 
 	unsigned& total, vector<unsigned>& correct_label, ofstream& output)
 {
 	unsigned label_predicted;
-	unsigned true_label = explication_set.get_label(i);
+	unsigned true_label = explication_set.get_label(num_sample);
 	
 	vector<float> original_probs = rnn.predict(explication_set, 
-		embedding, num_sample, cg, false, label_predicted_true_sample);
+		embedding, num_sample, cg, false, label_predicted);
 		
 	if(label_predicted == true_label)
 	{
 		++total;
-		++correct_label[label_predicted_true_sample];
+		++correct_label[label_predicted];
 	}
 		
 	output << true_label << endl << label_predicted << endl;
@@ -214,7 +216,7 @@ void BAXI(RNN& rnn, ParameterCollection& model,
 		exit(EXIT_FAILURE);
 	}		
 
-	const unsigned nb_of_instances = explication_set.get_nb_intances();
+	const unsigned nb_of_instances = explication_set.get_nb_instances();
 	unsigned total = 0;  
 	vector<unsigned> correct_label(NB_CLASSES,0); 
 	Detokenisation detok(lexique_filename);
@@ -224,13 +226,13 @@ void BAXI(RNN& rnn, ParameterCollection& model,
 	for(unsigned i=0; i<nb_of_instances; ++i) // for every instances
 	{
 		copy = 
-			new Data( *(explication_set.get_data_object(num_sample)) );
+			new Data( *(explication_set.get_data_object(i)) );
 		vector<ExplanationsBAXI> expr_importance;
 		ComputationGraph cg;
 		
 		// Probabilities of labels on the original instance
 		vector<float> original_probs = 
-			original_prediction(explication_set, embedding, i, cg, total, 
+			original_prediction(rnn, explication_set, embedding, i, cg, total, 
 			correct_label, output);
 		
 		// Evaluation of the premise's expressions' importance 
@@ -245,7 +247,7 @@ void BAXI(RNN& rnn, ParameterCollection& model,
 		
 	}	
 	output.close();
-	print_labels_accuracy(total, );
+	print_labels_accuracy(explication_set, total, correct_label);
 
 }
 

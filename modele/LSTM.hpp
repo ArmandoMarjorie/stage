@@ -17,7 +17,7 @@ class LSTM : public RNN
 	private:
 		dynet::Expression sentence_representation(DataSet& set, 
 												  Embeddings& embedding, 
-												  unsigned sentence, 
+												  bool is_premise, 
 												  unsigned num_sentence, 
 												  dynet::ComputationGraph& cg);
 												  

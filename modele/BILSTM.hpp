@@ -17,9 +17,9 @@ class BiLSTM : public RNN
 	private:
 		dynet::VanillaLSTMBuilder* backward_lstm; 	/*!< backward LSTM*/ 
 
-
 		void words_representation(Embeddings& embedding, 
-								  DataSet& set, unsigned sentence,
+								  DataSet& set,
+								  bool is_premise,
 								  dynet::ComputationGraph& cg, 
 								  unsigned num_sentence, 
 								  std::vector<dynet::Expression>& sentence_repr);
@@ -31,24 +31,20 @@ class BiLSTM : public RNN
 								  dynet::ComputationGraph& cg);
 				
 				
-		void create_attention_matrix(dynet::ComputationGraph& cg, 
-									 std::vector< std::vector<float> >& matrix, 
+		void create_attention_matrix(std::vector< std::vector<float> >& matrix, 
 									 std::vector<dynet::Expression>& premise_lstm_repr, 
 									 std::vector<dynet::Expression>& hypothesis_lstm_repr);
 				
 				
-		void compute_beta(dynet::ComputationGraph& cg, 
-						  std::vector< std::vector<float> >& beta_matrix, 
+		void compute_beta(std::vector< std::vector<float> >& beta_matrix, 
 						  std::vector< std::vector<float> >& matrix);
 				
 				
-		void compute_alpha(dynet::ComputationGraph& cg, 
-						   std::vector< std::vector<float> >& alpha_matrix, 
+		void compute_alpha(std::vector< std::vector<float> >& alpha_matrix, 
 						   std::vector< std::vector<float> >& matrix);
 		
 		
-		void compute_context_vector(dynet::ComputationGraph& cg, 
-									std::vector< std::vector<float> >& matrix, 
+		void compute_context_vector(std::vector< std::vector<float> >& matrix, 
 									std::vector<dynet::Expression>& sentence_repr, 
 									unsigned sentence_size, 
 									unsigned other_sentence_size, 

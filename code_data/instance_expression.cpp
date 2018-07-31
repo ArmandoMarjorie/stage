@@ -80,6 +80,18 @@ InstanceExpression::InstanceExpression(string& line)
 }
 
 
+/**
+	* \brief InstanceExpression Constructor. 
+	* Not used for interpretation.
+	* 
+	* \param word : word ID.
+*/
+InstanceExpression::InstanceExpression(unsigned word)
+{
+	words.push_back(word);
+}
+
+
 /* Pas sûre qu'elle soit utilisée */
 InstanceExpression::InstanceExpression(const vector<unsigned>& wordsID, bool imp)
 {

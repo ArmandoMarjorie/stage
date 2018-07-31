@@ -2,7 +2,8 @@ CC=g++
 CFLAGS=-W -Wall -std=c++11 -pedantic -O3 -I/home/marjorie/Documents/LIB/dynet -I/home/marjorie/Documents/LIB/eigen
 LDFLAGS=-L/home/marjorie/Documents/LIB/dynet/build/dynet -ldynet
 EXEC= Training Testing 
-#Baxi ServeurLime
+#Baxi
+#ServeurLime
 
 all: $(EXEC)
 
@@ -11,7 +12,6 @@ Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instan
 
 Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o
 	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o $(LDFLAGS)
-	
 	
 #Baxi : predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o BAXI.o
 #	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o BAXI.o $(LDFLAGS)

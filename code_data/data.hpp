@@ -26,6 +26,7 @@
 			
 		public:
 			Data(std::ifstream& database);
+			Data(std::ifstream& database, unsigned lab);
 			Data(Data const& copy);
 			~Data();
 			

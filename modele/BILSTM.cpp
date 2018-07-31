@@ -173,7 +173,7 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, bool is_p
 	* \param hypothesis_lstm_repr : vector containing the hidden representation of each hypothesis' word.
 
 */
-void BiLSTM::create_attention_matrix(ComputationGraph& cg, vector< vector<float> >& matrix, 
+void BiLSTM::create_attention_matrix(vector< vector<float> >& matrix, 
 	vector<Expression>& premise_lstm_repr, vector<Expression>& hypothesis_lstm_repr)
 {
 	const unsigned premise_size = premise_lstm_repr.size();
@@ -197,7 +197,8 @@ void BiLSTM::create_attention_matrix(ComputationGraph& cg, vector< vector<float>
 	* \param alpha_matrix : empty normalized attention weight matrice that is initialized by the function.
 	* \param matrix : co-attention matrix.
 */
-void BiLSTM::compute_alpha(ComputationGraph& cg, vector< vector<float> >& alpha_matrix, vector< vector<float> >& matrix)
+void BiLSTM::compute_alpha(vector< vector<float> >& alpha_matrix, 
+	vector< vector<float> >& matrix)
 {
 	const unsigned premise_size = matrix.size();
 	const unsigned hypothesis_size = matrix[0].size();
@@ -223,8 +224,8 @@ void BiLSTM::compute_alpha(ComputationGraph& cg, vector< vector<float> >& alpha_
 	* \param beta_matrix : empty normalized attention weight matrice that is initialized by the function.
 	* \param matrix : co-attention matrix.
 */
-void BiLSTM::compute_beta(ComputationGraph& cg, 
-	vector< vector<float> >& beta_matrix, vector< vector<float> >& matrix)
+void BiLSTM::compute_beta(vector< vector<float> >& beta_matrix, 
+	vector< vector<float> >& matrix)
 {
 	const unsigned premise_size = matrix.size();
 	const unsigned hypothesis_size = matrix[0].size();
@@ -257,7 +258,7 @@ void BiLSTM::compute_beta(ComputationGraph& cg,
 	* else number of words in the hypothesis 
 	* \param context_vect : empty context vector that is initialized by the function.
 */
-void BiLSTM::compute_context_vector(ComputationGraph& cg, vector< vector<float> >& matrix, vector<Expression>& sentence_repr, 
+void BiLSTM::compute_context_vector(vector< vector<float> >& matrix, vector<Expression>& sentence_repr, 
 	unsigned sentence_size, unsigned other_sentence_size, vector<Expression>& context_vect)
 {
 	for(unsigned j=0; j<other_sentence_size; ++j)
@@ -299,7 +300,7 @@ Expression BiLSTM::run_KIM(DataSet& set, Embeddings& embedding, unsigned num_sen
 	// Creating attention matrix
 	vector< vector<float> > attention_matrix(premise_lstm_repr.size(), 
 		vector<float>(hypothesis_lstm_repr.size()) );
-	create_attention_matrix(cg, attention_matrix, premise_lstm_repr, 
+	create_attention_matrix(attention_matrix, premise_lstm_repr, 
 		hypothesis_lstm_repr); 
 
 	// Computing alpha and beta 
@@ -307,15 +308,15 @@ Expression BiLSTM::run_KIM(DataSet& set, Embeddings& embedding, unsigned num_sen
 		vector<float>(hypothesis_lstm_repr.size()) );
 	vector< vector<float> > beta_matrix(premise_lstm_repr.size(), 
 		vector<float>(hypothesis_lstm_repr.size()) );
-	compute_alpha(cg, alpha_matrix, attention_matrix);
-	compute_beta(cg, beta_matrix, attention_matrix); 
+	compute_alpha(alpha_matrix, attention_matrix);
+	compute_beta(beta_matrix, attention_matrix); 
 
 	// Computing context-vector 
 	vector<Expression> premise_c_vect(premise_lstm_repr.size());
 	vector<Expression> hypothesis_c_vect(hypothesis_lstm_repr.size());
-	compute_context_vector(cg, alpha_matrix, hypothesis_lstm_repr, 
+	compute_context_vector(alpha_matrix, hypothesis_lstm_repr, 
 		hypothesis_lstm_repr.size(), premise_lstm_repr.size(), premise_c_vect);
-	compute_context_vector(cg, beta_matrix, premise_lstm_repr, 
+	compute_context_vector(beta_matrix, premise_lstm_repr, 
 		premise_lstm_repr.size(), hypothesis_lstm_repr.size(), hypothesis_c_vect);
 
 	// Mean-pooling 
