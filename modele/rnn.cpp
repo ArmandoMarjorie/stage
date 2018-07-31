@@ -231,7 +231,6 @@ unsigned predict_dev_and_test(RNN& rnn, DataSet& set,
 	{
 		ComputationGraph cg;
 		rnn.predict(set, embedding, i, cg, false, label_predicted);
-		cout << label_predicted << endl;
 		if (label_predicted == set.get_label(i))
 		{
 			positive++;
