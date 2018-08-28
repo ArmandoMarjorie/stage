@@ -31,44 +31,35 @@ int main(int argc, char** argv)
 		usage(argv[0]);
 	if( argc != 8 )
 	{
-		usage(argv[0]);
+		cerr << "See \"" << argv[0] << " -h\" for the right command\n"; 
 		exit(EXIT_FAILURE);
 	}
 
-	// Fetch dynet params 
 	auto dyparams = dynet::extract_dynet_params(argc, argv);
 	dynet::initialize(dyparams);
 
-	// Build model 
 	ParameterCollection model;
 							 
-	// Load word embeddings
 	Embeddings embedding(argv[2], model, 
 		static_cast<unsigned>(atoi(argv[4])), true);
 	unsigned systeme = static_cast<unsigned>(atoi(argv[7]));
+	cerr << "** SYSTEM " << systeme << " **\n";
+	
+	RNN* rnn;
 	
 	if(systeme < 3)
-	{
-		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), 
+		rnn = new LSTM(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
-			static_cast<unsigned>(atoi(argv[5])), 0, 
+			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
 			systeme, model);
-			
-		DataSet set(argv[1],1);
-		run_predict(rnn, model, set, embedding, argv[6]);
-		
-	}
 	else
-	{
-		//test_set.print_infos(3);
-		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), 
+		rnn = new BiLSTM(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
-			static_cast<unsigned>(atoi(argv[5])), 0, 
+			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
 			systeme, model);
 			
-		DataSet set(argv[1],1);
-		run_predict(rnn, model, set, embedding, argv[6]);
-	}
+	DataSet set(argv[1],1);
+	run_predict(*rnn, model, set, embedding, argv[6]);
 	
 
 	return 0;

@@ -12,34 +12,37 @@ using namespace dynet;
 
 void usage(char* exe_name)
 {
-	cerr << "\n**USAGE**\n\t" << exe_name << " train_file dev_file nb_layers input_dim hidden_dim dropout nb_epoch batch_size"
-		 << " systeme output_embedding_filename\n\n"
-		 << "train_file <string> : train file containing exemples of 2 sentences and their labels\n" //1
-		 << "dev_file <string> : dev file containing exemples of 2 sentences and their labels\n"     //2
-		 << "nb_layers <int> : number of layers\n"                                                   //3
-		 << "input_dim <int> : dimension of the word embedding\n"                                    //4
-		 << "hidden_dim <int> : dimension  of the hidden states ht and ct\n"                         //5
-		 << "dropout <float> : dropout rate (between 0 and 1)\n"                                     //6
-		 << "nb_epoch <int> : number of times the program will do the training phase\n"              //7
-		 << "batch_size <int> : size of batches\n"                                                   //8
-		 << "systeme <int> : which system you want to use (1, 2, 3)\n"     
-		 << "embedding_file <string> : file containing word embeddings\n"                            //10
-		 << "output_embedding_filename <string> : [optionnal] name of the file containing the word \
-		 embedding trained during the training phase. This file have to be used in the testing phase\n\n";
+	cerr << "\n**USAGE**\n\t" << exe_name << " train_file dev_file \
+			nb_layers input_dim hidden_dim dropout nb_epoch batch_size \
+			system embedding_file output_embedding_filename \n\n"
+		 << "train_file <string> : train file containing exemples of \
+			2 sentences and their labels\n"
+		 << "dev_file <string> : dev file containing exemples of \
+			2 sentences and their labels\n"    
+		 << "nb_layers <int> : number of layers\n"                                                   
+		 << "input_dim <int> : word embeddings dimension\n"                                   		 
+		 << "hidden_dim <int> : hidden states dimension\n"                         
+		 << "dropout <float> : dropout rate (between 0 and 1)\n"                                    
+		 << "nb_epoch <int> : number of times the program will perform \
+			the training phase\n"              
+		 << "batch_size <int> : batches size\n"                                                   
+		 << "system <int> : which system you want to use (1, 2, 3)\n"     
+		 << "embedding_file <string> : file containing word embeddings\n"                            
+		 << "output_embedding_filename <string> : name of the file \
+			that will containing the word embeddings trained during the \
+			training phase. This file has to be used in the testing \
+			phase\n\n";
 
 	exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char** argv) 
 {
-	if(!strcmp(argv[1], "-h"))
+	if(argc > 0 && !strcmp(argv[1], "-h"))
 		usage(argv[0]);
-	if(argc < 11 || argc > 12)
+	if( argc != 12 )
 	{
-		cerr << "Usage pour entrainer :\n " 
-		<< argv[0] << " train_file " << " dev_file "
-		<< " nb_layers " << " input_dim " << " hidden_dim " 
-		<< " dropout " << " nb_epochs " << " batch_size " << " systeme " << " embedding_file " << " output_embedding_filename\n";
+		cerr << "See \"" << argv[0] << " -h\" for the right command\n"; 
 		exit(EXIT_FAILURE);
 	}
 
@@ -56,30 +59,22 @@ int main(int argc, char** argv)
 	unsigned systeme = static_cast<unsigned>(atoi(argv[9]));
 	cerr << "** SYSTEM " << systeme << " **\n";
 	
+	RNN* rnn;
 	
-	if(systeme < 3 )
-	{
-		LSTM rnn(static_cast<unsigned>(atoi(argv[3])), 
+	if(systeme < 3)
+		rnn = new LSTM(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
 			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
 			systeme, model);
-			
-		run_train(rnn, model, train_set, dev_set, embedding, argv[11], 
-			static_cast<unsigned>(atoi(argv[7])), 
-			static_cast<unsigned>(atoi(argv[8])));
-	}
-
 	else
-	{
-		BiLSTM rnn(static_cast<unsigned>(atoi(argv[3])), 
+		rnn = new BiLSTM(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
 			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
 			systeme, model);
 			
-		run_train(rnn, model, train_set, dev_set, embedding, argv[11], 
-			static_cast<unsigned>(atoi(argv[7])), 
-			static_cast<unsigned>(atoi(argv[8])));
-	}
+	run_train(*rnn, model, train_set, dev_set, embedding, argv[11], 
+		static_cast<unsigned>(atoi(argv[7])), 
+		static_cast<unsigned>(atoi(argv[8])));
 
 	return 0;
 }

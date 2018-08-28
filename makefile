@@ -49,8 +49,8 @@ sw.o: code_data/switch_words.cpp code_data/switch_words.hpp
 instance_expression.o: code_data/instance_expression.cpp code_data/instance_expression.hpp
 	$(CC) -o instance_expression.o -c code_data/instance_expression.cpp $(CFLAGS)
 
-BAXI.o: modele/BAXI.cpp modele/BAXI.hpp
-	$(CC) -o BAXI.o -c modele/BAXI.cpp $(CFLAGS)
+#BAXI.o: modele/BAXI.cpp modele/BAXI.hpp
+#	$(CC) -o BAXI.o -c modele/BAXI.cpp $(CFLAGS)
 	
 clean:
 	rm -rf *.o
