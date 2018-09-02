@@ -38,7 +38,7 @@ void usage(char* exe_name)
 
 int main(int argc, char** argv) 
 {
-	if(argc > 0 && !strcmp(argv[1], "-h"))
+	if(argc > 1 && !strcmp(argv[1], "-h"))
 		usage(argv[0]);
 	if( argc != 12 )
 	{

@@ -27,7 +27,7 @@ void usage(char* exe_name)
 
 int main(int argc, char** argv) 
 { 
-	if(argc > 0 && !strcmp(argv[1], "-h"))
+	if(argc > 1 && !strcmp(argv[1], "-h"))
 		usage(argv[0]);
 	if( argc != 8 )
 	{
@@ -50,12 +50,12 @@ int main(int argc, char** argv)
 	if(systeme < 3)
 		rnn = new LSTM(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
-			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
+			static_cast<unsigned>(atoi(argv[5])), 0, 
 			systeme, model);
 	else
 		rnn = new BiLSTM(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
-			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
+			static_cast<unsigned>(atoi(argv[5])), 0, 
 			systeme, model);
 			
 	DataSet set(argv[1],1);
