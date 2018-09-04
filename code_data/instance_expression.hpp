@@ -40,10 +40,11 @@
 			bool expr_is_important();
 			void print_a_sample();
 			
-			void modif_BoW_random(bool imp);
-			void modif_BoW(unsigned num_switch_words, unsigned num_sw, bool imp);
-			void modif_BoW(InstanceExpression& bow);
-			void modif_BoW(InstanceExpression const& current_bow, unsigned num_switch_words, unsigned num_sw, bool imp);
+			void modif_InstanceExpression_random(bool imp);
+			void modif_InstanceExpression(unsigned num_switch_words, unsigned num_sw, bool imp);
+			void modif_InstanceExpression(InstanceExpression& instance_expression);
+			void modif_InstanceExpression(InstanceExpression const& current_instance_expression, unsigned num_switch_words, unsigned num_sw, bool imp);
+			void modif_InstanceExpression(unsigned UNK, bool imp);
 			
 			unsigned get_nb_switch_words();
 			

@@ -16,9 +16,9 @@ void usage(char* exe_name)
 			nb_layers input_dim hidden_dim dropout nb_epoch batch_size \
 			system embedding_file output_embedding_filename \n\n"
 		 << "train_file <string> : train file containing exemples of \
-			2 sentences and their labels\n"
+			2 sentences and their labels (Files/token_id_texts/test)\n"
 		 << "dev_file <string> : dev file containing exemples of \
-			2 sentences and their labels\n"    
+			2 sentences and their labels (Files/token_id_texts/dev)\n"    
 		 << "nb_layers <int> : number of layers\n"                                                   
 		 << "input_dim <int> : word embeddings dimension\n"                                   		 
 		 << "hidden_dim <int> : hidden states dimension\n"                         
@@ -65,12 +65,12 @@ int main(int argc, char** argv)
 		rnn = new LSTM(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
 			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
-			systeme, model);
+			systeme, model, false);
 	else
 		rnn = new BiLSTM(static_cast<unsigned>(atoi(argv[3])), 
 			static_cast<unsigned>(atoi(argv[4])), 
 			static_cast<unsigned>(atoi(argv[5])), strtof(argv[6], NULL), 
-			systeme, model);
+			systeme, model, false);
 			
 	run_train(*rnn, model, train_set, dev_set, embedding, argv[11], 
 		static_cast<unsigned>(atoi(argv[7])), 

@@ -77,16 +77,12 @@ class DataSet
 		void print_a_sample(unsigned num_sample);
 		
 		void modif_LIME(char* buffer_in, 
-						unsigned num_sample);
+						unsigned num_sample,
+						bool original_lime);
 		
 		void modif_LIME_random(char* buffer_in, 
 							   unsigned num_sample);
 		
-		void modif_word(bool is_premise, 
-						unsigned num_expr, 
-						unsigned num_sw_words, 
-						unsigned num_sample);
-
 		void print_everything();
 		
 		bool expr_is_important(unsigned num_sample, 

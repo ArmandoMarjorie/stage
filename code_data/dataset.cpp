@@ -81,7 +81,6 @@ inline void DataSet::init_labels_infos(unsigned lab, unsigned num_sample)
 }
 
 
-/* A CHANGER */
 /**
 	* \brief Data constructor not used for interpretation
 	* 
@@ -309,14 +308,18 @@ void DataSet::modif_LIME(char* buffer_in, unsigned num_sample)
 			if(nbr_expr <= nb_imp_words_prem)
 			{
 				pos = dataset[num_sample]->search_position(true, cpt_crochet);
-				//modif
-				dataset[num_sample]->modif_LIME(true, pos);
+				if(original_lime)
+					dataset[num_sample]->modif_LIME_original(true, pos); 
+				else
+					dataset[num_sample]->modif_LIME(true, pos);
 			}
 			else
 			{
 				pos = dataset[num_sample]->search_position(false, cpt_crochet);
-				//modif
-				dataset[num_sample]->modif_LIME(false, pos); 
+				if(original_lime)
+					dataset[num_sample]->modif_LIME_original(false, pos); 
+				else
+					dataset[num_sample]->modif_LIME(false, pos); 
 			}			
 		
 		}
@@ -380,13 +383,6 @@ void DataSet::modif_LIME_random(char* buffer_in, unsigned num_sample)
 			cpt_crochet = 0;
 		}
 	}
-}
-
-
-void DataSet::modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words, unsigned num_sample)
-{
-	return dataset[num_sample]->modif_word(is_premise, num_expr, num_sw_words);
-	
 }
 
 

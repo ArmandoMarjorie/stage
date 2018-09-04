@@ -24,8 +24,11 @@ using namespace dynet;
 	* \param s : numero of the system used (1, 2 or 3).
 	* \param model : the model.
 */	
-RNN::RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, ParameterCollection& model) :
-	nb_layers(nblayer), input_dim(inputdim), hidden_dim(hiddendim), dropout_rate(dropout), systeme(s)
+RNN::RNN(unsigned nblayer, unsigned inputdim, unsigned hiddendim, 
+	float dropout, unsigned s, ParameterCollection& model, 
+	bool original_lime) :
+	nb_layers(nblayer), input_dim(inputdim), hidden_dim(hiddendim), 
+	dropout_rate(dropout), systeme(s), original_LIME(original_lime)
 {
 	forward_lstm = new VanillaLSTMBuilder(nb_layers, input_dim, hidden_dim, model); 
 	apply_dropout = (dropout != 0);

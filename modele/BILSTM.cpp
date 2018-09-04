@@ -22,8 +22,10 @@ using namespace dynet;
 	* \param s : numero of the system used (3).
 	* \param model : the model.
 */	
-BiLSTM::BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, float dropout, unsigned s, ParameterCollection& model) :
-	RNN(nblayer, inputdim, hiddendim, dropout, s, model)
+BiLSTM::BiLSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, 
+	float dropout, unsigned s, ParameterCollection& model, 
+	bool original_lime) :
+	RNN(nblayer, inputdim, hiddendim, dropout, s, model, original_lime)
 {
 	backward_lstm = new VanillaLSTMBuilder(nb_layers, input_dim, hidden_dim, model);
 	p_W = model.add_parameters({NB_CLASSES, 4*hidden_dim});
@@ -131,7 +133,7 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, bool is_p
 		nb_words = set.get_nb_words(is_premise, num_sentence, i);
 		for(unsigned k=0; k < nb_words; ++k)
 		{
-			if( (wordID = set.get_word_id(is_premise, num_sentence, i, k) ) == 0) // à changer quand on fera la fusion des codes
+			if(!original_LIME && (wordID = set.get_word_id(is_premise, num_sentence, i, k) ) == 0) // à changer quand on fera la fusion des codes
 				continue;
 			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, wordID) ) );
 		}
@@ -144,7 +146,7 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, bool is_p
 		nb_words = set.get_nb_words(is_premise, num_sentence, static_cast<unsigned>(j));
 		for(unsigned k=0; k < nb_words; ++k)
 		{
-			if( (wordID = set.get_word_id(is_premise, num_sentence, static_cast<unsigned>(j), k) ) == 0) // à changer quand on fera la fusion des codes
+			if(!original_LIME && (wordID = set.get_word_id(is_premise, num_sentence, static_cast<unsigned>(j), k) ) == 0) // à changer quand on fera la fusion des codes
 				continue;
 			tmp.push_back(backward_lstm->add_input( 
 					embedding.get_embedding_expr(cg, wordID) ) );

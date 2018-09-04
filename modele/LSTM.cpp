@@ -23,8 +23,9 @@ using namespace dynet;
 	* \param model : the model.
 */	
 LSTM::LSTM(unsigned nblayer, unsigned inputdim, unsigned hiddendim, 
-	float dropout, unsigned s, ParameterCollection& model) :
-	RNN(nblayer, inputdim, hiddendim, dropout, s, model)
+	float dropout, unsigned s, ParameterCollection& model, 
+	bool original_lime) :
+	RNN(nblayer, inputdim, hiddendim, dropout, s, model, original_lime)
 {
 	if(systeme == 1)
 		p_W = model.add_parameters({NB_CLASSES, 2*hidden_dim});
@@ -124,7 +125,7 @@ Expression LSTM::sentence_representation(DataSet& set,
 		nb_words = set.get_nb_words(is_premise, num_sentence, i);
 		for(unsigned j=0; j < nb_words; ++j)
 		{
-			if( (wordID = set.get_word_id(is_premise, num_sentence, i, j) ) == 0) // 0 means "this is not a word, there is no word here !" A CHANGER QUAND ON FERA LA FUSION AVEC LE SERVEUR LIME
+			if(!original_LIME && (wordID = set.get_word_id(is_premise, num_sentence, i, j) ) == 0) // 0 means "this is not a word, there is no word here !"
 				continue;
 			repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, wordID) );
 		}

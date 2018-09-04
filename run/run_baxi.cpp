@@ -12,8 +12,8 @@ void usage(char* exe_name)
 {
 	cerr << "\n**USAGE**\n\t" << exe_name << " test_file embedding_file \
 			nb_layers input_dim hidden_dim parameters_file system\n\n"
-		 << "test_file <string> : test file containing exemples of 2 \
-			sentences and their labels (Files/token_id_texts/test)\n"
+		 << "test_file <string> : test file \
+			(Files/files_test/testing_token_id_texts)\n"
 		 << "embedding_file <string> : file containing word embeddings \
 			output by the training step\n"
 		 << "nb_layers <int> : number of layers\n"
@@ -21,7 +21,9 @@ void usage(char* exe_name)
 		 << "hidden_dim <int> : hidden states dimension\n"
 		 << "parameters_file <string> : file containing the parameters \
 			(weight and bias) updated in the training step\n"
-		 << "system <int> : which system you want to use (1, 2 or 3)\n";
+		 << "system <int> : which system you want to use (1, 2 or 3)\n"
+		 << "lexique_file <string> : lexique file (Files/snli.lexique)\n"
+		 << "output_name <string> : explanations output file name\n";
 	exit(EXIT_SUCCESS);
 }
 
@@ -29,7 +31,7 @@ int main(int argc, char** argv)
 { 
 	if(argc > 1 && !strcmp(argv[1], "-h"))
 		usage(argv[0]);
-	if( argc != 8 )
+	if( argc != 10 )
 	{
 		cerr << "See \"" << argv[0] << " -h\" for the right command\n"; 
 		exit(EXIT_FAILURE);
@@ -58,9 +60,8 @@ int main(int argc, char** argv)
 			static_cast<unsigned>(atoi(argv[5])), 0, 
 			systeme, model, false);
 			
-	DataSet set(argv[1],1);
-	run_predict(*rnn, model, set, embedding, argv[6]);
-	
-
+	DataSet set(argv[1]);
+	BAXI(*rnn, model, set, embedding, argv[6], argv[8], argv[9]);
+		
 	return 0;
 }

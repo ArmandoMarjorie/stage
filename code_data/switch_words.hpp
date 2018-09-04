@@ -23,7 +23,8 @@
 	class SW
 	{
 		private:
-			std::vector<unsigned> sw; 	/*!< A "piece" of an alternative expression. See the attribute "switch_w" from the class "SwitchWords" to understand better.
+			std::vector<unsigned> sw; 	/*!< A "piece" of an alternative expression. 
+										See the attribute "switch_w" from the class "SwitchWords" to understand better.
 											 Ex : "in front of" ---> sw[0] = in, sw[1] = front, sw[2] = of */ 
 			
 			unsigned type; 				/*!< PREV, ACTUAL or NEXT. Defines where to place the expression "sw" in the sentence. 

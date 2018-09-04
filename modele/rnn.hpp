@@ -37,6 +37,7 @@ class RNN
 		float dropout_rate; 						/*!< dropout rate (between 0 and 1)*/ 
 		unsigned systeme = 1; 						/*!< 1 or 2 for LSTM, 3 for BiLSTM*/
 		bool apply_dropout = true;					/*!< applying dropout or not*/ 
+		bool original_LIME = false;					/*!< explanation mode */
 		dynet::Parameter p_W; 						/*!< weight*/ 
 		dynet::Parameter p_bias; 					/*!< bias*/
 		dynet::VanillaLSTMBuilder* forward_lstm; 	/*!< forward LSTM*/ 
@@ -108,7 +109,6 @@ void run_predict(RNN& rnn,
 std::vector<float> run_predict_for_server_lime(RNN& rnn, 
 											   DataSet& test_set, 
 											   Embeddings& embedding, 
-											   bool print_label, 
 											   unsigned num_sample);
 
 

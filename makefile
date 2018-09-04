@@ -1,9 +1,7 @@
 CC=g++
 CFLAGS=-W -Wall -std=c++11 -pedantic -O3 -I/home/marjorie/Documents/LIB/dynet -I/home/marjorie/Documents/LIB/eigen
 LDFLAGS=-L/home/marjorie/Documents/LIB/dynet/build/dynet -ldynet
-EXEC= Training Testing 
-#Baxi
-#ServeurLime
+EXEC= Training Testing ServeurLime Baxi
 
 all: $(EXEC)
 
@@ -13,17 +11,20 @@ Training: train.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instan
 Testing: predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o
 	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o $(LDFLAGS)
 	
-#Baxi : predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o BAXI.o
-#	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o BAXI.o $(LDFLAGS)
+Baxi : BAXI.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o
+	$(CC) -o Baxi BAXI.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o $(LDFLAGS)
 
-#ServeurLime : predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o
-#	$(CC) -o Testing predict.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o $(LDFLAGS)
+ServeurLime : serveurLime.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o
+	$(CC) -o ServeurLime serveurLime.o rnn.o LSTM.o BILSTM.o data.o embedding.o sw.o dataset.o instance_expression.o $(LDFLAGS)
 
 predict.o: run/predict.cpp modele/rnn.hpp code_data/dataset.hpp 
 	$(CC) -o predict.o -c run/predict.cpp $(CFLAGS)
 
 train.o: run/train.cpp modele/rnn.hpp code_data/dataset.hpp 
 	$(CC) -o train.o -c run/train.cpp $(CFLAGS)
+	
+serveurLime.o: run/serveur_lime.cpp modele/rnn.hpp code_data/dataset.hpp 
+	$(CC) -o serveurLime.o -c run/serveur_lime.cpp $(CFLAGS)
 
 rnn.o: modele/rnn.cpp modele/rnn.hpp code_data/dataset.hpp
 	$(CC) -o rnn.o -c modele/rnn.cpp $(CFLAGS)
@@ -49,8 +50,8 @@ sw.o: code_data/switch_words.cpp code_data/switch_words.hpp
 instance_expression.o: code_data/instance_expression.cpp code_data/instance_expression.hpp
 	$(CC) -o instance_expression.o -c code_data/instance_expression.cpp $(CFLAGS)
 
-#BAXI.o: modele/BAXI.cpp modele/BAXI.hpp
-#	$(CC) -o BAXI.o -c modele/BAXI.cpp $(CFLAGS)
+BAXI.o: modele/BAXI.cpp modele/BAXI.hpp
+	$(CC) -o BAXI.o -c modele/BAXI.cpp $(CFLAGS)
 	
 clean:
 	rm -rf *.o

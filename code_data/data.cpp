@@ -62,8 +62,10 @@ Data::Data(ifstream& database)
 	database >> word; // read -3 (end symbol for an instance)
 }
 
+// METTRE DATA DE ORIGINAL LIME, AVEC SA COPY ETC ...
 
-/* A CHANGER */
+
+
 /**
 	* \brief Data Constructor. Initializes the label, the premise and 
 	* the hypothesis of an instance.
@@ -286,14 +288,20 @@ unsigned Data::search_position(bool is_premise, unsigned num_buffer_in)
 	
 }
 
-
-
+void Data::modif_LIME_original(bool is_premise, unsigned position)
+{
+	
+	if(is_premise)
+		premise[position]->modif_InstanceExpression(0, premise[position]->expr_is_important()); // modif_InstanceExpression  A VOIR
+	else
+		hypothesis[position]->modif_InstanceExpression(0, hypothesis[position]->expr_is_important());
+}
 
 void Data::modif_LIME(bool is_premise, unsigned position)
 {
 	cout << "MODIF LIME\n";
-	unsigned nb_switch_words = get_nb_switch_words(is_premise, position); //nb d'expr (de switch words) pouvant remplacer le bow courant
-	cout << "nb d'expr (de switch words) pouvant remplacer le bow courant = " <<nb_switch_words << endl;
+	unsigned nb_switch_words = get_nb_switch_words(is_premise, position); //nb d'expr (de switch words) pouvant remplacer le instance_expression courant
+	cout << "nb d'expr (de switch words) pouvant remplacer le instance_expression courant = " <<nb_switch_words << endl;
 	
 	unsigned alea = rand() % (nb_switch_words); // le numéro du switch words choisi
 	cout << "switch choisi = " << alea << endl;
@@ -319,7 +327,7 @@ void Data::modif_LIME(bool is_premise, unsigned position)
 			{
 				cout << " PREV \n";
 				if(position-1 >= 0)
-					premise[position-1]->modif_BoW(*(premise[position]), alea, i, premise[position-1]->expr_is_important());
+					premise[position-1]->modif_InstanceExpression(*(premise[position]), alea, i, premise[position-1]->expr_is_important());
 				else
 				{
 					cout << "le prev a dépassé le tableau\n";
@@ -329,7 +337,7 @@ void Data::modif_LIME(bool is_premise, unsigned position)
 			else if(type == ACTUAL)
 			{
 				cout << " ACTUAL \n";
-				premise[position]->modif_BoW(alea, i, premise[position]->expr_is_important());
+				premise[position]->modif_InstanceExpression(alea, i, premise[position]->expr_is_important());
 			}
 			else if(type == NEXT)
 			{
@@ -337,7 +345,7 @@ void Data::modif_LIME(bool is_premise, unsigned position)
 				if(position+1 < premise.size())
 				{
 					cout << " NEXT (position = " << position+1 << " )\n";
-					premise[position+1]->modif_BoW(*(premise[position]), alea, i, premise[position+1]->expr_is_important());
+					premise[position+1]->modif_InstanceExpression(*(premise[position]), alea, i, premise[position+1]->expr_is_important());
 					cout << "OK \n";
 				}
 				else
@@ -354,7 +362,7 @@ void Data::modif_LIME(bool is_premise, unsigned position)
 			if(type == PREV)
 			{ 
 				if(position-1 >= 0)
-					hypothesis[position-1]->modif_BoW(*(hypothesis[position]), alea, i, hypothesis[position-1]->expr_is_important());
+					hypothesis[position-1]->modif_InstanceExpression(*(hypothesis[position]), alea, i, hypothesis[position-1]->expr_is_important());
 				else
 				{
 					cout << "le prev a dépassé le tableau\n";
@@ -362,11 +370,11 @@ void Data::modif_LIME(bool is_premise, unsigned position)
 				}				
 			}
 			else if(type == ACTUAL)
-				hypothesis[position]->modif_BoW(alea, i, hypothesis[position]->expr_is_important());
+				hypothesis[position]->modif_InstanceExpression(alea, i, hypothesis[position]->expr_is_important());
 			else if(type == NEXT)
 			{
 				if(position+1 < hypothesis.size())
-					hypothesis[position+1]->modif_BoW( *(hypothesis[position]), alea, i, hypothesis[position+1]->expr_is_important());	
+					hypothesis[position+1]->modif_InstanceExpression( *(hypothesis[position]), alea, i, hypothesis[position+1]->expr_is_important());	
 				else
 				{
 					cout << "le next a dépassé le tableau\n";
@@ -378,95 +386,13 @@ void Data::modif_LIME(bool is_premise, unsigned position)
 	}
 }
 
-
-void Data::modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words)
-{
-	cout << "MODIF WORD\n";
-
-	unsigned replacing_word;
-	unsigned nb_word_in_sw;
-	if(is_premise)
-		nb_word_in_sw = premise[num_expr]->get_nb_of_sw(num_sw_words); //nb de bloc "SW" dans l'expression qui va remplacer 
-	else
-		nb_word_in_sw = hypothesis[num_expr]->get_nb_of_sw(num_sw_words);
-	
-	cout << "nb_word_in_sw = " <<nb_word_in_sw << endl;
-
-	unsigned type;
-
-	for(unsigned i=0; i < nb_word_in_sw; ++i)
-	{
-		if(is_premise)
-		{
-			type = premise[num_expr]->get_type_sw(num_sw_words, i); //le bloc numéro i du switch word numéro "num_sw_words"
-			if(type == PREV) 
-			{
-				cout << " PREV \n";
-				if(num_expr-1 >= 0)
-					premise[num_expr-1]->modif_BoW(*(premise[num_expr]), num_sw_words, i, premise[num_expr-1]->expr_is_important());
-				else
-				{
-					cout << "le prev a dépassé le tableau\n";
-					exit(EXIT_FAILURE);
-				}				
-			}				
-			else if(type == ACTUAL)
-			{
-				cout << " ACTUAL \n";
-				premise[num_expr]->modif_BoW(num_sw_words, i, premise[num_expr]->expr_is_important());
-			}
-			else if(type == NEXT)
-			{
-				
-				if(num_expr+1 < premise.size())
-				{
-					cout << " NEXT (num_expr = " << num_expr+1 << " )\n";
-					premise[num_expr+1]->modif_BoW(*(premise[num_expr]), num_sw_words, i, premise[num_expr+1]->expr_is_important());
-					cout << "OK \n";
-				}
-				else
-				{
-					cout << "le next a dépassé le tableau\n";
-					exit(EXIT_FAILURE);
-				}
-				
-			}
-		}
-		else
-		{
-			type = hypothesis[num_expr]->get_type_sw(num_sw_words, i); //le bloc numéro i du numéro 'num_sw_words' du switch word choisi
-			if(type == PREV)
-			{ 
-				if(num_expr-1 >= 0)
-					hypothesis[num_expr-1]->modif_BoW(*(hypothesis[num_expr]), num_sw_words, i, hypothesis[num_expr-1]->expr_is_important());
-				else
-				{
-					cout << "le prev a dépassé le tableau\n";
-					exit(EXIT_FAILURE);
-				}				
-			}
-			else if(type == ACTUAL)
-				hypothesis[num_expr]->modif_BoW(num_sw_words, i, hypothesis[num_expr]->expr_is_important());
-			else if(type == NEXT)
-			{
-				if(num_expr+1 < hypothesis.size())
-					hypothesis[num_expr+1]->modif_BoW( *(hypothesis[num_expr]), num_sw_words, i, hypothesis[num_expr+1]->expr_is_important());	
-				else
-				{
-					cout << "le next a dépassé le tableau\n";
-					exit(EXIT_FAILURE);
-				}
-			}	
-			
-		}
-	}
-}
 void Data::modif_LIME_random(bool is_premise, unsigned position)
 {
 	if(is_premise)
-		premise[position]->modif_BoW_random(premise[position]->expr_is_important());
+		premise[position]->modif_InstanceExpression_random(premise[position]->expr_is_important());
 	else
-		hypothesis[position]->modif_BoW_random(hypothesis[position]->expr_is_important());	
+		hypothesis[position]->modif_InstanceExpression_random(hypothesis[position]->expr_is_important());	
+
 }
 /* -----*/
 
@@ -542,10 +468,10 @@ Data* Data::get_data_object()
 void Data::reset_data(Data const& data_copy)
 {
 	for(unsigned i=0; i<data_copy.premise.size(); ++i)
-		this->premise[i]->modif_BoW(*(data_copy.premise[i]));
+		this->premise[i]->modif_InstanceExpression(*(data_copy.premise[i]));
 		
 	for(unsigned i=0; i<data_copy.hypothesis.size(); ++i)
-		this->hypothesis[i]->modif_BoW(*(data_copy.hypothesis[i]));
+		this->hypothesis[i]->modif_InstanceExpression(*(data_copy.hypothesis[i]));
 		
 	this->label = data_copy.label;	
 }

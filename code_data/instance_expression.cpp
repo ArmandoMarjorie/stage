@@ -204,9 +204,9 @@ unsigned InstanceExpression::get_nb_of_sw(unsigned num_switch_word)
 
 	/* Setters (expressions/words modifications) */ 
 
-void InstanceExpression::modif_BoW(unsigned num_switch_words, unsigned num_sw, bool imp)
+void InstanceExpression::modif_InstanceExpression(unsigned num_switch_words, unsigned num_sw, bool imp)
 {
-	cout << "\tmodif bow...\n";
+	cout << "\tmodif instance_expression...\n";
 	words.clear();
 	unsigned nb_expr_in_sw = switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
 	cout << "nb de mot dans la sw = " << nb_expr_in_sw << endl;
@@ -216,36 +216,43 @@ void InstanceExpression::modif_BoW(unsigned num_switch_words, unsigned num_sw, b
 		
 	important_bag = imp;
 }
-void InstanceExpression::modif_BoW_random(bool imp)
+void InstanceExpression::modif_InstanceExpression_random(bool imp)
 {
-	cout << "\tmodif bow...\n";
+	cout << "\tmodif InstanceExpression...\n";
 	words.clear();
 	
-	// (rand() % (MAX - MIN + 1)) + MIN;
 	unsigned alea = (rand() % (36988)) + 1;
 	words.push_back(alea);
 		
 	important_bag = imp;
 }
-void InstanceExpression::modif_BoW(InstanceExpression const& current_bow, unsigned num_switch_words, unsigned num_sw, bool imp)
+void InstanceExpression::modif_InstanceExpression(InstanceExpression const& current_InstanceExpression, unsigned num_switch_words, unsigned num_sw, bool imp)
 {
-	cout << "\tmodif bow...\n";
+	cout << "\tmodif InstanceExpression...\n";
 	words.clear();
-	unsigned nb_expr_in_sw = current_bow.switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
+	unsigned nb_expr_in_sw = current_InstanceExpression.switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
 	cout << "nb de mot dans la sw = " << nb_expr_in_sw << endl;
 	
 	for(unsigned i=0; i < nb_expr_in_sw; ++i)
-		words.push_back(current_bow.switch_words[num_switch_words]->get_word_id_sw(num_sw, i));
+		words.push_back(current_InstanceExpression.switch_words[num_switch_words]->get_word_id_sw(num_sw, i));
 		
 	important_bag = imp;
 }
 
-void InstanceExpression::modif_BoW(InstanceExpression& bow) //appelé quand on reset l'instance
+void InstanceExpression::modif_InstanceExpression(InstanceExpression& instance_expression) //appelé quand on reset l'instance
 {
 	this->words.clear();
-	for(unsigned i=0; i < bow.words.size(); ++i)
-		this->words.push_back(bow.words[i]);
-	this->important_bag = bow.important_bag;
+	for(unsigned i=0; i < instance_expression.words.size(); ++i)
+		this->words.push_back(instance_expression.words[i]);
+	this->important_bag = instance_expression.important_bag;
+}
+
+// for the original LIME
+void InstanceExpression::modif_InstanceExpression(unsigned UNK, bool imp)
+{
+	words.clear();
+	words.push_back(UNK);
+	important_bag = imp;
 }
 
 
