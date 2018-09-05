@@ -36,10 +36,12 @@ class DataSet
 		unsigned nb_neutral=0; 		 /*!< Number of 'neutral' instances. */
 		unsigned nb_contradiction=0; /*!< Number of 'contradiction' instances. */
 		
-		inline void init_labels_infos(unsigned lab, unsigned num_sample);
+		inline void init_labels_infos(unsigned lab, 
+									  unsigned num_sample);
 		
 	public:
-		DataSet(char* filename);
+		DataSet(char* filename,
+				bool original_lime);
 		
 		DataSet(char* data_filename, 
 				int not_interpret);

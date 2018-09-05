@@ -221,7 +221,7 @@ int main(int argc, char** argv)
 	else
 		rnn = new BiLSTM(static_cast<unsigned>(atoi(argv[3])), static_cast<unsigned>(atoi(argv[4])), 
 		static_cast<unsigned>(atoi(argv[5])), 0, static_cast<unsigned>(systeme), model, original_LIME);		
-	DataSet set(argv[1]);
+	DataSet set(argv[1], original_LIME);
 	populate_from_file(argv[6], model);
  
 	// Does the LIME method

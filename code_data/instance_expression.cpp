@@ -22,6 +22,38 @@ InstanceExpression::~InstanceExpression()
 		switch_words[i]->~SwitchWords();
 }
 
+// original lime
+InstanceExpression::InstanceExpression(string& word, bool original_lime)
+{
+	if(word[0] == '{')
+		important_bag = false;
+	else if(word[0] == '[')
+		important_bag = true;
+	else
+	{
+		cout << "IMPORTANCE INCONNUE\n";
+		exit(EXIT_FAILURE);
+	}
+	std::string::size_type sz;
+	int wordID;
+	string w;
+	for(unsigned i=1; i < word.size()-1; ++i)
+	{
+		stringstream ss;
+		while(i < word.size()-1 && word[i] != ' ')
+		{
+			ss << word[i];
+			++i;
+		}
+		w = ss.str();
+		wordID = std::stoi(w,&sz);
+		
+		words.push_back(static_cast<unsigned>(wordID));
+	}
+	
+}
+
+
 
 /**
 	* \brief InstanceExpression Constructor. Initializes an InstanceExpression 

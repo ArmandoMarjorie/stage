@@ -26,6 +26,7 @@
 			
 		public:
 			Data(std::ifstream& database);
+			Data(std::ifstream& database, bool original_lime);
 			Data(std::ifstream& database, unsigned lab);
 			Data(Data const& copy);
 			~Data();
@@ -41,6 +42,7 @@
 			
 			void modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words);
 			void modif_LIME(bool is_premise, unsigned position);
+			void modif_LIME_original(bool is_premise, unsigned position)
 			void modif_LIME_random(bool is_premise, unsigned position);
 			unsigned search_position(bool is_premise, unsigned num_buffer_in);
 			bool expr_is_important(bool is_premise, unsigned num_expr);

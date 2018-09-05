@@ -28,7 +28,7 @@ DataSet::~DataSet()
 	*
 	* \param filename : file containing every instances.
 */
-DataSet::DataSet(char* filename)
+DataSet::DataSet(char* filename, bool original_lime)
 {
 	ifstream database(filename, ios::in);
 	if(!database)
@@ -40,7 +40,10 @@ DataSet::DataSet(char* filename)
 	unsigned num_sample=0, lab;
 	while(database >> word)
 	{
-		dataset.push_back(new Data(database));
+		if(original_lime)
+			dataset.push_back(new Data(database, original_lime));
+		else
+			dataset.push_back(new Data(database));
 		lab = dataset[num_sample]->get_label();
 		
 		init_labels_infos(lab, num_sample);

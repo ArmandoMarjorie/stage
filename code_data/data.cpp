@@ -64,11 +64,43 @@ Data::Data(ifstream& database)
 
 // METTRE DATA DE ORIGINAL LIME, AVEC SA COPY ETC ...
 
+// pour lime original !!
+Data::Data(ifstream& database, bool original_lime)
+{
+	string word, word2;
+	database >> label;
+	
+	unsigned nb_expr;
+	
+	for(unsigned nb_sentences=0; nb_sentences < 2; ++nb_sentences)
+	{
+		database >> nb_expr;
+		
+		for(unsigned nb=0; nb < nb_expr; ++nb)
+		{
+			database >> word;
+			while(word[word.size()-1] != ']' && word[word.size()-1] != '}')
+			{
+				database >> word2;
+				word = word + " ";
+				word = word + word2;
+			}
+			if(nb_sentences==0)
+				premise.push_back(new InstanceExpression(word, original_lime));
+			else
+				hypothesis.push_back(new InstanceExpression(word, original_lime));
+				
+			getline(database, word); //ignore alternative words
+		}	
+	}
+	
+	database >> word; // read -3 (end symbol for an instance)
+}
 
 
 /**
 	* \brief Data Constructor. Initializes the label, the premise and 
-	* the hypothesis of an instance.
+	* the hypothesis of an instance. Not used for interpretation.
 	*
 	* \param database : file containing every instances.
 */

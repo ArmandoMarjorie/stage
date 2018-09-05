@@ -30,25 +30,50 @@
 			
 		public:
 			InstanceExpression(std::string& line);
+			
+			InstanceExpression(std::string& word, 
+							   bool original_lime);
+							   
 			InstanceExpression(unsigned word);
-			InstanceExpression(const std::vector<unsigned>& wordsID, bool imp);
+			
+			InstanceExpression(const std::vector<unsigned>& wordsID, 
+							   bool imp);
+							   
 			InstanceExpression(InstanceExpression const& copy);
+			
 			~InstanceExpression();
 			
 			unsigned get_nb_words();
+			
 			unsigned get_word_id(unsigned num_words);
+			
 			bool expr_is_important();
+			
 			void print_a_sample();
 			
 			void modif_InstanceExpression_random(bool imp);
-			void modif_InstanceExpression(unsigned num_switch_words, unsigned num_sw, bool imp);
-			void modif_InstanceExpression(InstanceExpression& instance_expression);
-			void modif_InstanceExpression(InstanceExpression const& current_instance_expression, unsigned num_switch_words, unsigned num_sw, bool imp);
-			void modif_InstanceExpression(unsigned UNK, bool imp);
+			
+			void modif_InstanceExpression(unsigned num_switch_words, 
+										  unsigned num_sw, 
+										  bool imp);
+			
+			void modif_InstanceExpression(
+				InstanceExpression& instance_expression);
+			
+			void modif_InstanceExpression(
+				InstanceExpression const& current_instance_expression, 
+				unsigned num_switch_words, 
+				unsigned num_sw, 
+				bool imp);
+			
+			void modif_InstanceExpression(unsigned UNK, 
+										  bool imp);
 			
 			unsigned get_nb_switch_words();
 			
-			unsigned get_type_sw(unsigned num_switch_word, unsigned num_sw);
+			unsigned get_type_sw(unsigned num_switch_word, 
+								 unsigned num_sw);
+			
 			unsigned get_nb_of_sw(unsigned num_switch_word);
 			
 			void print();

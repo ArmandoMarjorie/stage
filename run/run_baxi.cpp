@@ -60,7 +60,7 @@ int main(int argc, char** argv)
 			static_cast<unsigned>(atoi(argv[5])), 0, 
 			systeme, model, false);
 			
-	DataSet set(argv[1]);
+	DataSet set(argv[1], false);
 	BAXI(*rnn, model, set, embedding, argv[6], argv[8], argv[9]);
 		
 	return 0;

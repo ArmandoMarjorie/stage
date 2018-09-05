@@ -49,7 +49,8 @@ class RNN
 			unsigned hiddendim, 
 			float dropout, 
 			unsigned s, 
-			dynet::ParameterCollection& model);
+			dynet::ParameterCollection& model,
+			bool original_lime);
 			
 			
 		float get_dropout_rate();
