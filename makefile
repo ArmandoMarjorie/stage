@@ -25,6 +25,11 @@ train.o: run/train.cpp modele/rnn.hpp code_data/dataset.hpp
 	
 serveurLime.o: run/serveur_lime.cpp modele/rnn.hpp code_data/dataset.hpp 
 	$(CC) -o serveurLime.o -c run/serveur_lime.cpp $(CFLAGS)
+	
+	
+	
+	
+	
 
 rnn.o: modele/rnn.cpp modele/rnn.hpp code_data/dataset.hpp
 	$(CC) -o rnn.o -c modele/rnn.cpp $(CFLAGS)
@@ -50,8 +55,8 @@ sw.o: code_data/switch_words.cpp code_data/switch_words.hpp
 instance_expression.o: code_data/instance_expression.cpp code_data/instance_expression.hpp
 	$(CC) -o instance_expression.o -c code_data/instance_expression.cpp $(CFLAGS)
 
-BAXI.o: modele/BAXI.cpp modele/BAXI.hpp
-	$(CC) -o BAXI.o -c modele/BAXI.cpp $(CFLAGS)
+BAXI.o: run/BAXI.cpp modele/BAXI.hpp
+	$(CC) -o BAXI.o -c run/BAXI.cpp $(CFLAGS)
 	
 clean:
 	rm -rf *.o

@@ -18,8 +18,9 @@ using namespace std;
 InstanceExpression::~InstanceExpression()
 {
 	words.clear();
-	for(unsigned i=0; i < switch_words.size(); ++i)
-		switch_words[i]->~SwitchWords();
+	if(!switch_words.empty())
+		for(unsigned i=0; i < switch_words.size(); ++i)
+			switch_words[i]->~SwitchWords();
 }
 
 // original lime
@@ -106,7 +107,7 @@ InstanceExpression::InstanceExpression(string& line)
 	{
 		unsigned nb_expr;
 		fluxstring >> nb_expr;
-		for(int nb=0 ; nb < nb_expr; ++nb)
+		for(unsigned nb=0 ; nb < nb_expr; ++nb)
 			switch_words.push_back(new SwitchWords(fluxstring));
 	}
 }
@@ -138,13 +139,16 @@ InstanceExpression::InstanceExpression(const vector<unsigned>& wordsID, bool imp
 	*
 	* \param copy : the InstanceExpression we want to copy.
 */
-InstanceExpression::InstanceExpression(InstanceExpression const& copy)
+InstanceExpression::InstanceExpression(InstanceExpression const& copy, 
+	bool original_lime)
 {
 	for(unsigned i=0; i < copy.words.size(); ++i)
 		this->words.push_back( copy.words[i] );
 		
-	for(unsigned i=0; i<copy.switch_words.size(); ++i)
-		this->switch_words.push_back( new SwitchWords( *(copy.switch_words[i]) ) );
+	if(!original_lime)
+		for(unsigned i=0; i<copy.switch_words.size(); ++i)
+			this->switch_words.push_back( 
+				new SwitchWords( *(copy.switch_words[i]) ) );
 	
 	this->important_bag = copy.important_bag;
 }
@@ -184,7 +188,8 @@ unsigned InstanceExpression::get_word_id(unsigned num_words)
 	* \name expr_is_important
 	* \brief Tells if the expression's importance is evaluated.
 	* 
-	* \return True if the "num_expr"th expression's importance is evaluated, else false.
+	* \return True if the "num_expr"th expression's importance 
+	* is evaluated, else false.
 */
 bool InstanceExpression::expr_is_important()
 {
@@ -195,7 +200,8 @@ bool InstanceExpression::expr_is_important()
 
 /**
 	* \name get_nb_switch_words
-	* \brief Gives the number of alternative expressions for this expression.
+	* \brief Gives the number of alternative expressions for 
+	* this expression.
 	* 
 	* \return The number of alternative expressions for this expression.
 */
@@ -209,9 +215,11 @@ unsigned InstanceExpression::get_nb_switch_words()
 	* \name get_type_sw
 	* \brief Tells if this expression's importance is evaluated.
 	* 
-	* \return True if this expression's importance is evaluated, else false.
+	* \return True if this expression's importance is evaluated, 
+	* else false.
 */
-unsigned InstanceExpression::get_type_sw(unsigned num_switch_word, unsigned num_sw)
+unsigned InstanceExpression::get_type_sw(unsigned num_switch_word, 
+	unsigned num_sw)
 {
 	return switch_words[num_switch_word]->get_type_sw(num_sw);
 }
@@ -219,7 +227,8 @@ unsigned InstanceExpression::get_type_sw(unsigned num_switch_word, unsigned num_
 
 /**
 	* \name get_nb_of_sw
-	* \brief Give the number of alternative expression pieces, in the alternative expression "num_switch_word". For example: 
+	* \brief Give the number of alternative expression pieces, 
+	* in the alternative expression "num_switch_word". For example: 
 	* Alternative expressions : 
 	* "a", PREV - "big dog", ACTUAL
 	* "woman", ACTUAL
@@ -236,15 +245,18 @@ unsigned InstanceExpression::get_nb_of_sw(unsigned num_switch_word)
 
 	/* Setters (expressions/words modifications) */ 
 
-void InstanceExpression::modif_InstanceExpression(unsigned num_switch_words, unsigned num_sw, bool imp)
+void InstanceExpression::modif_InstanceExpression(
+	unsigned num_switch_words, unsigned num_sw, bool imp)
 {
 	cout << "\tmodif instance_expression...\n";
 	words.clear();
-	unsigned nb_expr_in_sw = switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
+	unsigned nb_expr_in_sw = 
+		switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
 	cout << "nb de mot dans la sw = " << nb_expr_in_sw << endl;
 	
 	for(unsigned i=0; i < nb_expr_in_sw; ++i)
-		words.push_back(switch_words[num_switch_words]->get_word_id_sw(num_sw, i));
+		words.push_back(
+			switch_words[num_switch_words]->get_word_id_sw(num_sw, i));
 		
 	important_bag = imp;
 }
@@ -258,20 +270,26 @@ void InstanceExpression::modif_InstanceExpression_random(bool imp)
 		
 	important_bag = imp;
 }
-void InstanceExpression::modif_InstanceExpression(InstanceExpression const& current_InstanceExpression, unsigned num_switch_words, unsigned num_sw, bool imp)
+void InstanceExpression::modif_InstanceExpression(
+	InstanceExpression const& current_InstanceExpression, 
+	unsigned num_switch_words, unsigned num_sw, bool imp)
 {
 	cout << "\tmodif InstanceExpression...\n";
 	words.clear();
-	unsigned nb_expr_in_sw = current_InstanceExpression.switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
+	unsigned nb_expr_in_sw = 
+		current_InstanceExpression.switch_words[num_switch_words]->get_nb_expr_sw(num_sw);
 	cout << "nb de mot dans la sw = " << nb_expr_in_sw << endl;
 	
 	for(unsigned i=0; i < nb_expr_in_sw; ++i)
-		words.push_back(current_InstanceExpression.switch_words[num_switch_words]->get_word_id_sw(num_sw, i));
+		words.push_back(
+		current_InstanceExpression.switch_words[num_switch_words]->get_word_id_sw(num_sw, i));
 		
 	important_bag = imp;
 }
 
-void InstanceExpression::modif_InstanceExpression(InstanceExpression& instance_expression) //appelé quand on reset l'instance
+//appelé quand on reset l'instance
+void InstanceExpression::modif_InstanceExpression(
+	InstanceExpression& instance_expression) 
 {
 	this->words.clear();
 	for(unsigned i=0; i < instance_expression.words.size(); ++i)
@@ -280,7 +298,8 @@ void InstanceExpression::modif_InstanceExpression(InstanceExpression& instance_e
 }
 
 // for the original LIME
-void InstanceExpression::modif_InstanceExpression(unsigned UNK, bool imp)
+void InstanceExpression::modif_InstanceExpression(unsigned UNK, 
+	bool imp)
 {
 	words.clear();
 	words.push_back(UNK);

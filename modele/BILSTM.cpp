@@ -133,7 +133,8 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, bool is_p
 		nb_words = set.get_nb_words(is_premise, num_sentence, i);
 		for(unsigned k=0; k < nb_words; ++k)
 		{
-			if(!original_LIME && (wordID = set.get_word_id(is_premise, num_sentence, i, k) ) == 0) // à changer quand on fera la fusion des codes
+			wordID = set.get_word_id(is_premise, num_sentence, i, k);
+			if(!original_LIME && wordID == 0) // à changer quand on fera la fusion des codes
 				continue;
 			sentence_repr.push_back(forward_lstm->add_input( embedding.get_embedding_expr(cg, wordID) ) );
 		}
@@ -146,7 +147,8 @@ void BiLSTM::words_representation(Embeddings& embedding, DataSet& set, bool is_p
 		nb_words = set.get_nb_words(is_premise, num_sentence, static_cast<unsigned>(j));
 		for(unsigned k=0; k < nb_words; ++k)
 		{
-			if(!original_LIME && (wordID = set.get_word_id(is_premise, num_sentence, static_cast<unsigned>(j), k) ) == 0) // à changer quand on fera la fusion des codes
+			wordID = set.get_word_id(is_premise, num_sentence, static_cast<unsigned>(j), k);
+			if(!original_LIME && wordID == 0) // à changer quand on fera la fusion des codes
 				continue;
 			tmp.push_back(backward_lstm->add_input( 
 					embedding.get_embedding_expr(cg, wordID) ) );

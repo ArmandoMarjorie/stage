@@ -84,6 +84,11 @@ class DataSet
 		
 		void modif_LIME_random(char* buffer_in, 
 							   unsigned num_sample);
+							   
+		void modif_word(bool is_premise, 
+					    unsigned num_expr, 
+					    unsigned num_sw_words, 
+					    unsigned num_sample);
 		
 		void print_everything();
 		

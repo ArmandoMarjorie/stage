@@ -276,7 +276,8 @@ unsigned DataSet::get_nb_switch_words(bool is_premise, unsigned num_expr, unsign
 	/* Setters (instances modifications) */
 
 
-void DataSet::modif_LIME(char* buffer_in, unsigned num_sample)
+void DataSet::modif_LIME(char* buffer_in, unsigned num_sample,
+	bool original_lime)
 {
 	unsigned cpt_crochet=0;
 	unsigned nbr_expr=0;
@@ -388,7 +389,12 @@ void DataSet::modif_LIME_random(char* buffer_in, unsigned num_sample)
 	}
 }
 
-
+//pour baxi
+void DataSet::modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words, unsigned num_sample)
+{
+	return dataset[num_sample]->modif_word(is_premise, num_expr, num_sw_words);
+	
+}
 	/* Others */
 
 

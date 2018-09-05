@@ -19,12 +19,11 @@ using namespace std;
 */
 Data::~Data()
 {
-	for(unsigned i=0; i<premise.size(); ++i)
-		premise[i]->~InstanceExpression();
-	
-	for(unsigned i=0; i<hypothesis.size(); ++i)
-		hypothesis[i]->~InstanceExpression();
-	
+		for(unsigned i=0; i<premise.size(); ++i)
+			premise[i]->~InstanceExpression();
+		
+		for(unsigned i=0; i<hypothesis.size(); ++i)
+			hypothesis[i]->~InstanceExpression();
 }
 
 
@@ -133,12 +132,14 @@ Data::Data(ifstream& database, unsigned lab)
 	*
 	* \param copy : the Data we want to copy.
 */
-Data::Data(Data const& copy)
+Data::Data(Data const& copy, bool original_lime)
 {
 	for(unsigned i=0; i<copy.premise.size(); ++i)
-		this->premise.push_back(new InstanceExpression( *(copy.premise[i]) ));
+		this->premise.push_back(new InstanceExpression( 
+			*(copy.premise[i]), original_lime ));
 	for(unsigned i=0; i<copy.hypothesis.size(); ++i)
-		this->hypothesis.push_back(new InstanceExpression( *(copy.hypothesis[i]) ) );
+		this->hypothesis.push_back(new InstanceExpression( 
+			*(copy.hypothesis[i]), original_lime ) );
 	this->label = copy.label;
 	
 }
@@ -324,7 +325,7 @@ void Data::modif_LIME_original(bool is_premise, unsigned position)
 {
 	
 	if(is_premise)
-		premise[position]->modif_InstanceExpression(0, premise[position]->expr_is_important()); // modif_InstanceExpression  A VOIR
+		premise[position]->modif_InstanceExpression(0, premise[position]->expr_is_important());
 	else
 		hypothesis[position]->modif_InstanceExpression(0, hypothesis[position]->expr_is_important());
 }
@@ -425,6 +426,91 @@ void Data::modif_LIME_random(bool is_premise, unsigned position)
 	else
 		hypothesis[position]->modif_InstanceExpression_random(hypothesis[position]->expr_is_important());	
 
+}
+
+
+//pour baxi
+void Data::modif_word(bool is_premise, unsigned num_expr, unsigned num_sw_words)
+{
+	cout << "MODIF WORD\n";
+
+	unsigned replacing_word;
+	unsigned nb_word_in_sw;
+	if(is_premise)
+		nb_word_in_sw = premise[num_expr]->get_nb_of_sw(num_sw_words); //nb de bloc "SW" dans l'expression qui va remplacer 
+	else
+		nb_word_in_sw = hypothesis[num_expr]->get_nb_of_sw(num_sw_words);
+	
+	cout << "nb_word_in_sw = " <<nb_word_in_sw << endl;
+
+	unsigned type;
+
+	for(unsigned i=0; i < nb_word_in_sw; ++i)
+	{
+		if(is_premise)
+		{
+			type = premise[num_expr]->get_type_sw(num_sw_words, i); //le bloc numéro i du switch word numéro "num_sw_words"
+			if(type == PREV) 
+			{
+				cout << " PREV \n";
+				if(num_expr-1 >= 0)
+					premise[num_expr-1]->modif_InstanceExpression(*(premise[num_expr]), num_sw_words, i, premise[num_expr-1]->expr_is_important());
+				else
+				{
+					cout << "le prev a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}				
+			}				
+			else if(type == ACTUAL)
+			{
+				cout << " ACTUAL \n";
+				premise[num_expr]->modif_InstanceExpression(num_sw_words, i, premise[num_expr]->expr_is_important());
+			}
+			else if(type == NEXT)
+			{
+				
+				if(num_expr+1 < premise.size())
+				{
+					cout << " NEXT (num_expr = " << num_expr+1 << " )\n";
+					premise[num_expr+1]->modif_InstanceExpression(*(premise[num_expr]), num_sw_words, i, premise[num_expr+1]->expr_is_important());
+					cout << "OK \n";
+				}
+				else
+				{
+					cout << "le next a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}
+				
+			}
+		}
+		else
+		{
+			type = hypothesis[num_expr]->get_type_sw(num_sw_words, i); //le bloc numéro i du numéro 'num_sw_words' du switch word choisi
+			if(type == PREV)
+			{ 
+				if(num_expr-1 >= 0)
+					hypothesis[num_expr-1]->modif_InstanceExpression(*(hypothesis[num_expr]), num_sw_words, i, hypothesis[num_expr-1]->expr_is_important());
+				else
+				{
+					cout << "le prev a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}				
+			}
+			else if(type == ACTUAL)
+				hypothesis[num_expr]->modif_InstanceExpression(num_sw_words, i, hypothesis[num_expr]->expr_is_important());
+			else if(type == NEXT)
+			{
+				if(num_expr+1 < hypothesis.size())
+					hypothesis[num_expr+1]->modif_InstanceExpression( *(hypothesis[num_expr]), num_sw_words, i, hypothesis[num_expr+1]->expr_is_important());	
+				else
+				{
+					cout << "le next a dépassé le tableau\n";
+					exit(EXIT_FAILURE);
+				}
+			}	
+			
+		}
+	}
 }
 /* -----*/
 

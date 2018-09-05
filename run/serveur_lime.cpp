@@ -71,7 +71,8 @@ void init_local_adrr(sockaddr_in& server_adrr)
 }
 
 void handling_instance(Data* data_copy, DataSet& set, bool new_instance, 
-	bool random_words, unsigned num_sample, char* buffer_in, original_LIME)
+	bool random_words, unsigned num_sample, char* buffer_in, 
+	bool original_LIME)
 {
 	// If this is a new instance : save it 
 	if(new_instance)

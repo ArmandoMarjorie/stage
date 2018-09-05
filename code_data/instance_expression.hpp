@@ -39,7 +39,8 @@
 			InstanceExpression(const std::vector<unsigned>& wordsID, 
 							   bool imp);
 							   
-			InstanceExpression(InstanceExpression const& copy);
+			InstanceExpression(InstanceExpression const& copy,
+							   bool original_lime);
 			
 			~InstanceExpression();
 			

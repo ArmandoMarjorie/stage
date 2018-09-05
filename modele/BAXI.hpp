@@ -1,5 +1,5 @@
-#ifndef BILSTM_HPP
-#define BILSTM_HPP
+#ifndef BAXI_HPP
+#define BAXI_HPP
 
 #include "rnn.hpp"
 
@@ -105,15 +105,6 @@ struct ExplanationsBAXI
 		return importance > eb.importance;
 	}
 };
-
-
-void BAXI(RNN& rnn, 
-		  dynet::ParameterCollection& model, 
-		  DataSet& explication_set, 
-		  Embeddings& embedding, 
-		  char* parameters_filename, 
-		  char* lexique_filename,
-		  char* output_filename);
 
 
 #endif

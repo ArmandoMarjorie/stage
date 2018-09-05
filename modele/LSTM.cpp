@@ -125,7 +125,8 @@ Expression LSTM::sentence_representation(DataSet& set,
 		nb_words = set.get_nb_words(is_premise, num_sentence, i);
 		for(unsigned j=0; j < nb_words; ++j)
 		{
-			if(!original_LIME && (wordID = set.get_word_id(is_premise, num_sentence, i, j) ) == 0) // 0 means "this is not a word, there is no word here !"
+			wordID = set.get_word_id(is_premise, num_sentence, i, j);
+			if( wordID == 0 && !original_LIME ) // 0 means "this is not a word, there is no word here !"
 				continue;
 			repr =  forward_lstm->add_input( embedding.get_embedding_expr(cg, wordID) );
 		}
